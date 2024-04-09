@@ -22,6 +22,9 @@
 		7B11DC982BC58D640055D423 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B11DC972BC58D640055D423 /* SnapKit */; };
 		7B11DC9B2BC58DA40055D423 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7B11DC9A2BC58DA40055D423 /* IQKeyboardManagerSwift */; };
 		7B11DCA12BC58F620055D423 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 7B11DCA02BC58F620055D423 /* .gitignore */; };
+		7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCA22BC58FB60055D423 /* APIKey.swift */; };
+		7B11DCA52BC5902A0055D423 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCA42BC5902A0055D423 /* NetworkRouter.swift */; };
+		7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCA62BC590510055D423 /* NetWorkQuery.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,9 @@
 		7B11DC802BC58B740055D423 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		7B11DC842BC58CB90055D423 /* NetWorkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkModel.swift; sourceTree = "<group>"; };
 		7B11DCA02BC58F620055D423 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		7B11DCA22BC58FB60055D423 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		7B11DCA42BC5902A0055D423 /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
+		7B11DCA62BC590510055D423 /* NetWorkQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkQuery.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,7 @@
 		7B11DC5B2BC58AD40055D423 = {
 			isa = PBXGroup;
 			children = (
+				7B11DCA22BC58FB60055D423 /* APIKey.swift */,
 				7B11DCA02BC58F620055D423 /* .gitignore */,
 				7B11DC662BC58AD40055D423 /* CategoryZ */,
 				7B11DC652BC58AD40055D423 /* Products */,
@@ -130,6 +137,7 @@
 		7B11DC822BC58C510055D423 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				7B11DCA42BC5902A0055D423 /* NetworkRouter.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -138,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				7B11DC842BC58CB90055D423 /* NetWorkModel.swift */,
+				7B11DCA62BC590510055D423 /* NetWorkQuery.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -233,8 +242,11 @@
 			files = (
 				7B11DC852BC58CB90055D423 /* NetWorkModel.swift in Sources */,
 				7B11DC682BC58AD40055D423 /* AppDelegate.swift in Sources */,
+				7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */,
 				7B11DC812BC58B740055D423 /* TestViewController.swift in Sources */,
 				7B11DC6A2BC58AD40055D423 /* SceneDelegate.swift in Sources */,
+				7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */,
+				7B11DCA52BC5902A0055D423 /* NetworkRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

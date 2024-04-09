@@ -13,4 +13,3 @@ struct LoginModel: Decodable {
     let refreshToken: String
 }
 
-
