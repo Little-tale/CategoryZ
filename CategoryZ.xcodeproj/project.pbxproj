@@ -108,7 +108,6 @@
 		7B11DC7B2BC58B330055D423 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7B11DC802BC58B740055D423 /* TestViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -116,6 +115,7 @@
 		7B11DC7C2BC58B3A0055D423 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				7B11DC802BC58B740055D423 /* TestViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";

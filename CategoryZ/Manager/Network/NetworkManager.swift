@@ -23,7 +23,7 @@ struct NetworkManager {
 extension NetworkManager {
     
     // MARK: 요청시 해당 함수를 사용. 각각의 모델과 라우터를 잘 지정
-    func fetchNetwork<T:Decodable>(model: T.Type, router: NetworkRouter) -> FetchType<T> {
+    static func fetchNetwork<T:Decodable>(model: T.Type, router: NetworkRouter) -> FetchType<T> {
 
         return FetchType.create { single in
             do {
@@ -47,7 +47,7 @@ extension NetworkManager {
     }
     
     /// 알라모 파이어의 요청 로직입니다.
-    private func fetchNetwork<T:Decodable>(_ urlRequest: URLRequest, _ data: T.Type, handler: @escaping (Result<T, AFError>) -> Void ) {
+    private static func fetchNetwork<T:Decodable>(_ urlRequest: URLRequest, _ data: T.Type, handler: @escaping (Result<T, AFError>) -> Void ) {
         AF.request(urlRequest)
             .validate(statusCode: 200 ..< 300)
             .responseDecodable(of: data) { response in
