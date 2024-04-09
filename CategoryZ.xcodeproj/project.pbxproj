@@ -25,6 +25,7 @@
 		7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCA22BC58FB60055D423 /* APIKey.swift */; };
 		7B11DCA52BC5902A0055D423 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCA42BC5902A0055D423 /* NetworkRouter.swift */; };
 		7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCA62BC590510055D423 /* NetWorkQuery.swift */; };
+		7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCAA2BC591070055D423 /* TargetType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		7B11DCA22BC58FB60055D423 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		7B11DCA42BC5902A0055D423 /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
 		7B11DCA62BC590510055D423 /* NetWorkQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkQuery.swift; sourceTree = "<group>"; };
+		7B11DCAA2BC591070055D423 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 		7B11DC662BC58AD40055D423 /* CategoryZ */ = {
 			isa = PBXGroup;
 			children = (
+				7B11DCA82BC590C10055D423 /* Protocol */,
 				7B11DC7F2BC58B550055D423 /* Model */,
 				7B11DC7E2BC58B4C0055D423 /* Manager */,
 				7B11DC7D2BC58B440055D423 /* ViewModel */,
@@ -147,6 +150,22 @@
 			children = (
 				7B11DC842BC58CB90055D423 /* NetWorkModel.swift */,
 				7B11DCA62BC590510055D423 /* NetWorkQuery.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		7B11DCA82BC590C10055D423 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				7B11DCA92BC590FD0055D423 /* Network */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		7B11DCA92BC590FD0055D423 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				7B11DCAA2BC591070055D423 /* TargetType.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -244,6 +263,7 @@
 				7B11DC682BC58AD40055D423 /* AppDelegate.swift in Sources */,
 				7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */,
 				7B11DC812BC58B740055D423 /* TestViewController.swift in Sources */,
+				7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */,
 				7B11DC6A2BC58AD40055D423 /* SceneDelegate.swift in Sources */,
 				7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */,
 				7B11DCA52BC5902A0055D423 /* NetworkRouter.swift in Sources */,

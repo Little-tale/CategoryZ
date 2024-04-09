@@ -10,4 +10,5 @@ import Foundation
 
 enum NetworkRouter {
     case login(query: LoginQuery)
+    
 }
