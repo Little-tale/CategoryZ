@@ -28,6 +28,7 @@
 		7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCAA2BC591070055D423 /* TargetType.swift */; };
 		7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */; };
 		7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A292BC598D700BCE635 /* NetError.swift */; };
+		7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		7B11DCAA2BC591070055D423 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
 		7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetHTTPHeader.swift; sourceTree = "<group>"; };
 		7BCF4A292BC598D700BCE635 /* NetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetError.swift; sourceTree = "<group>"; };
+		7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 				7B11DCA42BC5902A0055D423 /* NetworkRouter.swift */,
 				7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */,
 				7BCF4A292BC598D700BCE635 /* NetError.swift */,
+				7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				7B11DC682BC58AD40055D423 /* AppDelegate.swift in Sources */,
 				7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */,
 				7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */,
+				7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */,
 				7B11DC812BC58B740055D423 /* TestViewController.swift in Sources */,
 				7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */,
 				7B11DC6A2BC58AD40055D423 /* SceneDelegate.swift in Sources */,

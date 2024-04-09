@@ -12,6 +12,9 @@ enum NetworkError: Error {
     
     case loginError(statusCode: Int, description: String)
     
+    
+    case failMakeURLRequest
+    case unknownError
 }
 
 
@@ -29,6 +32,10 @@ extension NetworkError {
             default:
                 return "알수없는 에러"
             }
+        case .failMakeURLRequest:
+            return "URL Request Error"
+        case .unknownError:
+            return "알수 없는 에러임 잘 찾아봐야...."
         }
     }
     
