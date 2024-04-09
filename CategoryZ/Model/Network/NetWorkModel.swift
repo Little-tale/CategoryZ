@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+/// 로그인 모델
 struct LoginModel: Decodable {
     let accessToken: String
     let refreshToken: String
