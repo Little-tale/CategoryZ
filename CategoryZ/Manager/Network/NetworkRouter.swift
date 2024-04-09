@@ -13,8 +13,6 @@ enum NetworkRouter {
     
 }
 
-
-
 extension NetworkRouter: TargetType {
     
     var baseUrl: URL? {
