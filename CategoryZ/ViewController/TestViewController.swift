@@ -37,7 +37,7 @@ final class TestViewController: UIViewController {
             .asObservable()
             .bind { result in
                 guard case .failure( let fail ) = result else { return }
-                print( fail )
+                print( fail.message )
             }
             .disposed(by: disposeBag
             )
