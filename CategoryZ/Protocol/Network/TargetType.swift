@@ -10,7 +10,7 @@ import Foundation
 
 protocol TargetType: URLRequestConvertible {
     
-    var baseUrl: URL { get }
+    var baseUrl: URL? { get }
     
     var method: HTTPMethod { get }
     
@@ -31,7 +31,7 @@ protocol TargetType: URLRequestConvertible {
 extension TargetType {
     
     func asURLRequest() throws -> URLRequest {
-        
+        guard let baseUrl else { throw URLError(.badURL) }
         let urlString = baseUrl.appendingPathComponent(path, conformingTo: .url)
         
         var urlComponents = URLComponents(url: urlString, resolvingAgainstBaseURL: false)!
