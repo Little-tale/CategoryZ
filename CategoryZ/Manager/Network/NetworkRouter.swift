@@ -68,8 +68,13 @@ extension NetworkRouter: TargetType {
                 return nil
             }
         }
-        
     }
     
+    func errorCase(_ errorCode: Int) -> NetworkError {
+        switch self {
+        case .login:
+            return .loginError(statusCode: errorCode, description: "loginError")
+        }
+    }
     
 }

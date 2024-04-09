@@ -24,7 +24,7 @@ protocol TargetType: URLRequestConvertible {
     
     var body: Data? { get }
     
-    //func errorCase(_ errorCode: Int) -> NetworkErrorCase
+    func errorCase(_ errorCode: Int) -> NetworkError
 }
 
 
