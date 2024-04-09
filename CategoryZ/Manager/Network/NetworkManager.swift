@@ -9,6 +9,13 @@ import Foundation
 import Alamofire
 import RxSwift
 
+protocol NetworkType {
+    // 서버로 부터 데이터를 불러주는 함수입니다.
+    static func fetchNetwork<T:Decodable>(model: T.Type, router: NetworkRouter) -> Single<Result<T, NetworkError>>
+    
+    // 서버로 데이터를 보내는 함수입니다.
+    
+}
 
 struct NetworkManager {
     
