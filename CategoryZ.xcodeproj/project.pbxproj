@@ -38,6 +38,10 @@
 		7BCF4A3F2BC687D600BCE635 /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A3E2BC687D600BCE635 /* TokenStorage.swift */; };
 		7BCF4A422BC688F100BCE635 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 7BCF4A412BC688F100BCE635 /* KeychainAccess */; };
 		7BCF4A442BC6B3A300BCE635 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A432BC6B3A300BCE635 /* Notification.swift */; };
+		7BCF4A462BC6CEB900BCE635 /* RxHomeBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A452BC6CEB900BCE635 /* RxHomeBaseViewController.swift */; };
+		7BCF4A482BC6CEF800BCE635 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A472BC6CEF800BCE635 /* BaseView.swift */; };
+		7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A492BC6CF8600BCE635 /* BaseViewType.swift */; };
+		7BCF4A4C2BC6D05C00BCE635 /* RxBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A4B2BC6D05C00BCE635 /* RxBaseView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +69,10 @@
 		7BCF4A3B2BC6873600BCE635 /* AccessTokkenAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokkenAdapter.swift; sourceTree = "<group>"; };
 		7BCF4A3E2BC687D600BCE635 /* TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
 		7BCF4A432BC6B3A300BCE635 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		7BCF4A452BC6CEB900BCE635 /* RxHomeBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxHomeBaseViewController.swift; sourceTree = "<group>"; };
+		7BCF4A472BC6CEF800BCE635 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		7BCF4A492BC6CF8600BCE635 /* BaseViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewType.swift; sourceTree = "<group>"; };
+		7BCF4A4B2BC6D05C00BCE635 /* RxBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBaseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +216,7 @@
 			children = (
 				7BCF4A2E2BC5A65E00BCE635 /* ViewModelType.swift */,
 				7BCF4A302BC5A8DB00BCE635 /* ReusableIdentifier.swift */,
+				7BCF4A492BC6CF8600BCE635 /* BaseViewType.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -224,6 +233,8 @@
 		7BCF4A352BC5AD2E00BCE635 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF4A472BC6CEF800BCE635 /* BaseView.swift */,
+				7BCF4A4B2BC6D05C00BCE635 /* RxBaseView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -233,6 +244,7 @@
 			children = (
 				7BCF4A372BC5AD7D00BCE635 /* BaseViewController.swift */,
 				7BCF4A392BC5AF4A00BCE635 /* RxBaseViewController.swift */,
+				7BCF4A452BC6CEB900BCE635 /* RxHomeBaseViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -339,9 +351,11 @@
 				7B11DC852BC58CB90055D423 /* NetWorkModel.swift in Sources */,
 				7B11DC682BC58AD40055D423 /* AppDelegate.swift in Sources */,
 				7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */,
+				7BCF4A4C2BC6D05C00BCE635 /* RxBaseView.swift in Sources */,
 				7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */,
 				7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */,
 				7BCF4A382BC5AD7D00BCE635 /* BaseViewController.swift in Sources */,
+				7BCF4A462BC6CEB900BCE635 /* RxHomeBaseViewController.swift in Sources */,
 				7B11DC812BC58B740055D423 /* TestViewController.swift in Sources */,
 				7BCF4A3F2BC687D600BCE635 /* TokenStorage.swift in Sources */,
 				7BCF4A312BC5A8DB00BCE635 /* ReusableIdentifier.swift in Sources */,
@@ -352,7 +366,9 @@
 				7BCF4A2F2BC5A65E00BCE635 /* ViewModelType.swift in Sources */,
 				7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */,
 				7BCF4A342BC5AA4700BCE635 /* ExUIViewController.swift in Sources */,
+				7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */,
 				7BCF4A3C2BC6873600BCE635 /* AccessTokkenAdapter.swift in Sources */,
+				7BCF4A482BC6CEF800BCE635 /* BaseView.swift in Sources */,
 				7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */,
 				7B11DCA52BC5902A0055D423 /* NetworkRouter.swift in Sources */,
 			);
