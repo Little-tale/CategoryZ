@@ -40,7 +40,11 @@ extension NetworkManager {
                     case .success(let success):
                         single(.success(.success(success)))
                     case .failure(let failure):
+                        
                         if let stateCode = failure.responseCode {
+                            if let commonCode = router.commonTest(status: stateCode) {
+                                single(.success(.failure(commonCode)))
+                            }
                             single(.success(.failure(router.errorCase(stateCode))))
                         }
                         single(.success(.failure(.unknownError)))

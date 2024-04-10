@@ -77,4 +77,13 @@ extension NetworkRouter: TargetType {
         }
     }
     
+    func commonTest(status: Int) -> NetworkError? {
+        switch status {
+        case 420, 429, 444, 500:
+            return .commonError(status: status)
+        default:
+            return nil
+        }
+    }
+    
 }

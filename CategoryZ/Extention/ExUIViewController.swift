@@ -20,7 +20,6 @@ extension UIViewController {
         sceneDelegate?.window?.rootViewController = vc
         sceneDelegate?.window?.makeKey()
     }
-    
 }
 
 extension Reactive where Base: UIViewController {
