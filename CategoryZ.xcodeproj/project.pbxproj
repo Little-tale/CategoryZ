@@ -34,6 +34,9 @@
 		7BCF4A342BC5AA4700BCE635 /* ExUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A332BC5AA4700BCE635 /* ExUIViewController.swift */; };
 		7BCF4A382BC5AD7D00BCE635 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A372BC5AD7D00BCE635 /* BaseViewController.swift */; };
 		7BCF4A3A2BC5AF4A00BCE635 /* RxBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A392BC5AF4A00BCE635 /* RxBaseViewController.swift */; };
+		7BCF4A3C2BC6873600BCE635 /* AccessTokkenAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A3B2BC6873600BCE635 /* AccessTokkenAdapter.swift */; };
+		7BCF4A3F2BC687D600BCE635 /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A3E2BC687D600BCE635 /* TokenStorage.swift */; };
+		7BCF4A422BC688F100BCE635 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 7BCF4A412BC688F100BCE635 /* KeychainAccess */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +61,8 @@
 		7BCF4A332BC5AA4700BCE635 /* ExUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUIViewController.swift; sourceTree = "<group>"; };
 		7BCF4A372BC5AD7D00BCE635 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		7BCF4A392BC5AF4A00BCE635 /* RxBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBaseViewController.swift; sourceTree = "<group>"; };
+		7BCF4A3B2BC6873600BCE635 /* AccessTokkenAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessTokkenAdapter.swift; sourceTree = "<group>"; };
+		7BCF4A3E2BC687D600BCE635 /* TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +72,7 @@
 			files = (
 				7B11DC8D2BC58D250055D423 /* RxRelay in Frameworks */,
 				7B11DC9B2BC58DA40055D423 /* IQKeyboardManagerSwift in Frameworks */,
+				7BCF4A422BC688F100BCE635 /* KeychainAccess in Frameworks */,
 				7B11DC952BC58D390055D423 /* Then in Frameworks */,
 				7B11DC8B2BC58D250055D423 /* RxCocoa in Frameworks */,
 				7B11DC982BC58D640055D423 /* SnapKit in Frameworks */,
@@ -100,6 +106,7 @@
 		7B11DC662BC58AD40055D423 /* CategoryZ */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF4A3D2BC687C800BCE635 /* Storage */,
 				7BCF4A322BC5AA2900BCE635 /* Extention */,
 				7B11DCA82BC590C10055D423 /* Protocol */,
 				7B11DC7F2BC58B550055D423 /* Model */,
@@ -163,6 +170,7 @@
 				7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */,
 				7BCF4A292BC598D700BCE635 /* NetError.swift */,
 				7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */,
+				7BCF4A3B2BC6873600BCE635 /* AccessTokkenAdapter.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -226,6 +234,14 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		7BCF4A3D2BC687C800BCE635 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				7BCF4A3E2BC687D600BCE635 /* TokenStorage.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -251,6 +267,7 @@
 				7B11DC942BC58D390055D423 /* Then */,
 				7B11DC972BC58D640055D423 /* SnapKit */,
 				7B11DC9A2BC58DA40055D423 /* IQKeyboardManagerSwift */,
+				7BCF4A412BC688F100BCE635 /* KeychainAccess */,
 			);
 			productName = CategoryZ;
 			productReference = 7B11DC642BC58AD40055D423 /* CategoryZ.app */;
@@ -287,6 +304,7 @@
 				7B11DC932BC58D390055D423 /* XCRemoteSwiftPackageReference "Then" */,
 				7B11DC962BC58D640055D423 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				7B11DC992BC58DA40055D423 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				7BCF4A402BC688F100BCE635 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 			);
 			productRefGroup = 7B11DC652BC58AD40055D423 /* Products */;
 			projectDirPath = "";
@@ -322,6 +340,7 @@
 				7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */,
 				7BCF4A382BC5AD7D00BCE635 /* BaseViewController.swift in Sources */,
 				7B11DC812BC58B740055D423 /* TestViewController.swift in Sources */,
+				7BCF4A3F2BC687D600BCE635 /* TokenStorage.swift in Sources */,
 				7BCF4A312BC5A8DB00BCE635 /* ReusableIdentifier.swift in Sources */,
 				7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */,
 				7B11DC6A2BC58AD40055D423 /* SceneDelegate.swift in Sources */,
@@ -329,6 +348,7 @@
 				7BCF4A2F2BC5A65E00BCE635 /* ViewModelType.swift in Sources */,
 				7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */,
 				7BCF4A342BC5AA4700BCE635 /* ExUIViewController.swift in Sources */,
+				7BCF4A3C2BC6873600BCE635 /* AccessTokkenAdapter.swift in Sources */,
 				7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */,
 				7B11DCA52BC5902A0055D423 /* NetworkRouter.swift in Sources */,
 			);
@@ -603,6 +623,14 @@
 				minimumVersion = 7.0.2;
 			};
 		};
+		7BCF4A402BC688F100BCE635 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -645,6 +673,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B11DC992BC58DA40055D423 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		7BCF4A412BC688F100BCE635 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BCF4A402BC688F100BCE635 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
