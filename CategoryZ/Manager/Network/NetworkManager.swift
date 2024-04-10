@@ -45,7 +45,7 @@ extension NetworkManager {
                             if let commonCode = router.commonTest(status: stateCode) {
                                 single(.success(.failure(commonCode)))
                             }
-                            single(.success(.failure(router.errorCase(stateCode))))
+                            single(.success(.failure(router.errorCase(stateCode, failure.localizedDescription))))
                         }
                         single(.success(.failure(.unknownError)))
                     }

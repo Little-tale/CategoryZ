@@ -9,11 +9,16 @@ import Foundation
 
 
 enum NetworkError: Error {
+    
+    
     /// 로그인 에러 처리
     case loginError(statusCode: Int, description: String)
 
     /// 회원가입 에러
     case joinError(statusCode: Int, description: String)
+    
+    /// 이메일 중복확인 에러
+    case emailValidError(statusCode: Int, description: String)
     
     /// URLRequest 생성중 에러
     case failMakeURLRequest
@@ -52,6 +57,16 @@ extension NetworkError {
                 return "알수 없는 에러 \(description)"
             }
             
+        case .emailValidError(statusCode: let statusCode, description: let description):
+            switch statusCode {
+            case 400:
+                return "필수값을 체워 주세요\nRequest body 필수 누락"
+            case 409:
+                return "사용이 불가한 이메일이에요"
+            default :
+                return "알수 없는 에러 \(description)"
+            }
+            
         case .failMakeURLRequest:
             return "URL Request Error"
             
@@ -72,6 +87,7 @@ extension NetworkError {
                 return "진짜 절대 나오면 안되는 에러"
             }
         
+       
         }
     }
     

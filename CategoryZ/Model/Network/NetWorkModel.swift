@@ -12,10 +12,14 @@ struct LoginModel: Decodable {
     let accessToken: String
     let refreshToken: String
 }
-
+/// 회원가입 모델
 struct JoinModel: Decodable {
     let user_id: String
     let email: String
     let nick: String
 }
 
+/// 이메일 중복 결과 모델
+struct EmailVaild: Decodable {
+    let message: String
+}
