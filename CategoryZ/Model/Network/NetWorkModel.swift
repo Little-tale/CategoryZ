@@ -13,4 +13,9 @@ struct LoginModel: Decodable {
     let refreshToken: String
 }
 
+struct JoinModel: Decodable {
+    let user_id: String
+    let email: String
+    let nick: String
+}
 

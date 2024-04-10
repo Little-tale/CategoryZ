@@ -12,7 +12,7 @@ enum NetworkError: Error {
     /// 로그인 에러 처리
     case loginError(statusCode: Int, description: String)
 
-    /// 회원가입 에얼
+    /// 회원가입 에러
     case joinError(statusCode: Int, description: String)
     
     /// URLRequest 생성중 에러
