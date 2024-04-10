@@ -42,6 +42,15 @@
 		7BCF4A482BC6CEF800BCE635 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A472BC6CEF800BCE635 /* BaseView.swift */; };
 		7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A492BC6CF8600BCE635 /* BaseViewType.swift */; };
 		7BCF4A4C2BC6D05C00BCE635 /* RxBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A4B2BC6D05C00BCE635 /* RxBaseView.swift */; };
+		7BCF4A4E2BC6D27400BCE635 /* ExUiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A4D2BC6D27400BCE635 /* ExUiView.swift */; };
+		7BCF4A512BC6DDE200BCE635 /* GetStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A502BC6DDE200BCE635 /* GetStartViewController.swift */; };
+		7BCF4A542BC6E0ED00BCE635 /* GetStartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A532BC6E0ED00BCE635 /* GetStartView.swift */; };
+		7BCF4A572BC6E1C600BCE635 /* LoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A562BC6E1C600BCE635 /* LoginButton.swift */; };
+		7BCF4A592BC6E20600BCE635 /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A582BC6E20600BCE635 /* BaseButton.swift */; };
+		7BCF4A5C2BC6E35500BCE635 /* JHFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A5B2BC6E35500BCE635 /* JHFont.swift */; };
+		7BCF4A5F2BC6E39700BCE635 /* JHColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A5E2BC6E39700BCE635 /* JHColor.swift */; };
+		7BCF4A612BC6E5BD00BCE635 /* SignUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A602BC6E5BD00BCE635 /* SignUpButton.swift */; };
+		7BCF4A632BC6E87600BCE635 /* ExUIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A622BC6E87600BCE635 /* ExUIWindow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +82,15 @@
 		7BCF4A472BC6CEF800BCE635 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		7BCF4A492BC6CF8600BCE635 /* BaseViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewType.swift; sourceTree = "<group>"; };
 		7BCF4A4B2BC6D05C00BCE635 /* RxBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBaseView.swift; sourceTree = "<group>"; };
+		7BCF4A4D2BC6D27400BCE635 /* ExUiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUiView.swift; sourceTree = "<group>"; };
+		7BCF4A502BC6DDE200BCE635 /* GetStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartViewController.swift; sourceTree = "<group>"; };
+		7BCF4A532BC6E0ED00BCE635 /* GetStartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStartView.swift; sourceTree = "<group>"; };
+		7BCF4A562BC6E1C600BCE635 /* LoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginButton.swift; sourceTree = "<group>"; };
+		7BCF4A582BC6E20600BCE635 /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
+		7BCF4A5B2BC6E35500BCE635 /* JHFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHFont.swift; sourceTree = "<group>"; };
+		7BCF4A5E2BC6E39700BCE635 /* JHColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHColor.swift; sourceTree = "<group>"; };
+		7BCF4A602BC6E5BD00BCE635 /* SignUpButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpButton.swift; sourceTree = "<group>"; };
+		7BCF4A622BC6E87600BCE635 /* ExUIWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUIWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +154,8 @@
 		7B11DC7B2BC58B330055D423 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF4A552BC6E1BD00BCE635 /* Button */,
+				7BCF4A522BC6DDF100BCE635 /* SignUp */,
 				7BCF4A352BC5AD2E00BCE635 /* Base */,
 			);
 			path = View;
@@ -144,6 +164,7 @@
 		7B11DC7C2BC58B3A0055D423 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF4A4F2BC6D7AC00BCE635 /* SignUp */,
 				7BCF4A362BC5AD3600BCE635 /* Base */,
 				7B11DC802BC58B740055D423 /* TestViewController.swift */,
 			);
@@ -168,6 +189,8 @@
 		7B11DC7F2BC58B550055D423 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF4A5D2BC6E38E00BCE635 /* Color */,
+				7BCF4A5A2BC6E34C00BCE635 /* Font */,
 				7B11DC832BC58CAA0055D423 /* Network */,
 			);
 			path = Model;
@@ -226,6 +249,8 @@
 			children = (
 				7BCF4A332BC5AA4700BCE635 /* ExUIViewController.swift */,
 				7BCF4A432BC6B3A300BCE635 /* Notification.swift */,
+				7BCF4A4D2BC6D27400BCE635 /* ExUiView.swift */,
+				7BCF4A622BC6E87600BCE635 /* ExUIWindow.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -235,6 +260,7 @@
 			children = (
 				7BCF4A472BC6CEF800BCE635 /* BaseView.swift */,
 				7BCF4A4B2BC6D05C00BCE635 /* RxBaseView.swift */,
+				7BCF4A582BC6E20600BCE635 /* BaseButton.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -255,6 +281,47 @@
 				7BCF4A3E2BC687D600BCE635 /* TokenStorage.swift */,
 			);
 			path = Storage;
+			sourceTree = "<group>";
+		};
+		7BCF4A4F2BC6D7AC00BCE635 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				7BCF4A502BC6DDE200BCE635 /* GetStartViewController.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		7BCF4A522BC6DDF100BCE635 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				7BCF4A532BC6E0ED00BCE635 /* GetStartView.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		7BCF4A552BC6E1BD00BCE635 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				7BCF4A562BC6E1C600BCE635 /* LoginButton.swift */,
+				7BCF4A602BC6E5BD00BCE635 /* SignUpButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		7BCF4A5A2BC6E34C00BCE635 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				7BCF4A5B2BC6E35500BCE635 /* JHFont.swift */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		7BCF4A5D2BC6E38E00BCE635 /* Color */ = {
+			isa = PBXGroup;
+			children = (
+				7BCF4A5E2BC6E39700BCE635 /* JHColor.swift */,
+			);
+			path = Color;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B11DC852BC58CB90055D423 /* NetWorkModel.swift in Sources */,
+				7BCF4A572BC6E1C600BCE635 /* LoginButton.swift in Sources */,
 				7B11DC682BC58AD40055D423 /* AppDelegate.swift in Sources */,
 				7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */,
 				7BCF4A4C2BC6D05C00BCE635 /* RxBaseView.swift in Sources */,
@@ -356,21 +424,29 @@
 				7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */,
 				7BCF4A382BC5AD7D00BCE635 /* BaseViewController.swift in Sources */,
 				7BCF4A462BC6CEB900BCE635 /* RxHomeBaseViewController.swift in Sources */,
+				7BCF4A542BC6E0ED00BCE635 /* GetStartView.swift in Sources */,
+				7BCF4A592BC6E20600BCE635 /* BaseButton.swift in Sources */,
 				7B11DC812BC58B740055D423 /* TestViewController.swift in Sources */,
 				7BCF4A3F2BC687D600BCE635 /* TokenStorage.swift in Sources */,
+				7BCF4A5F2BC6E39700BCE635 /* JHColor.swift in Sources */,
 				7BCF4A312BC5A8DB00BCE635 /* ReusableIdentifier.swift in Sources */,
+				7BCF4A5C2BC6E35500BCE635 /* JHFont.swift in Sources */,
 				7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */,
 				7B11DC6A2BC58AD40055D423 /* SceneDelegate.swift in Sources */,
+				7BCF4A612BC6E5BD00BCE635 /* SignUpButton.swift in Sources */,
 				7BCF4A3A2BC5AF4A00BCE635 /* RxBaseViewController.swift in Sources */,
 				7BCF4A442BC6B3A300BCE635 /* Notification.swift in Sources */,
 				7BCF4A2F2BC5A65E00BCE635 /* ViewModelType.swift in Sources */,
 				7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */,
 				7BCF4A342BC5AA4700BCE635 /* ExUIViewController.swift in Sources */,
+				7BCF4A512BC6DDE200BCE635 /* GetStartViewController.swift in Sources */,
 				7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */,
 				7BCF4A3C2BC6873600BCE635 /* AccessTokkenAdapter.swift in Sources */,
 				7BCF4A482BC6CEF800BCE635 /* BaseView.swift in Sources */,
 				7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */,
 				7B11DCA52BC5902A0055D423 /* NetworkRouter.swift in Sources */,
+				7BCF4A632BC6E87600BCE635 /* ExUIWindow.swift in Sources */,
+				7BCF4A4E2BC6D27400BCE635 /* ExUiView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

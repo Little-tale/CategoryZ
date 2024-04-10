@@ -11,10 +11,6 @@ protocol ReusableIdentifier {
 
 }
 
-extension UIView: ReusableIdentifier {
-        
-}
-
 extension ReusableIdentifier {
     static var identi: String {
         return String(describing: self)

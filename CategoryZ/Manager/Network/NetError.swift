@@ -10,7 +10,6 @@ import Foundation
 
 enum NetworkError: Error {
     
-    
     /// 로그인 에러 처리
     case loginError(statusCode: Int, description: String)
 
