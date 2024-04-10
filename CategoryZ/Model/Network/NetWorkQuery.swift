@@ -29,3 +29,5 @@ struct JoinQuery: Encodable {
 struct EmailValidationQuery: Encodable {
     let email: String
 }
+
+

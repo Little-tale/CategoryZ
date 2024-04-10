@@ -12,13 +12,14 @@ enum NetworkRouter {
     case login(query: LoginQuery)
     case join(query: JoinQuery)
     case emailVaild(query: EmailValidationQuery)
-    case refreshTokken(loginModel: LoginModel)
+    case refreshTokken(access: String, Refresh: String)
+    case userWithDraw
 }
 
 extension NetworkRouter: TargetType {
     
     var baseUrl: URL? {
-        return URL( string: APIKey.testURL.rawValue )
+        return URL( string: APIKey.baseURL.rawValue )
     }
     
     var method: HTTPMethod {
@@ -26,7 +27,7 @@ extension NetworkRouter: TargetType {
         case .login, .join, .emailVaild:
             return .post
             
-        case .refreshTokken:
+        case .refreshTokken, .userWithDraw:
             return .get
         }
     }
@@ -41,13 +42,15 @@ extension NetworkRouter: TargetType {
             return "/validation/email"
         case .refreshTokken:
             return "/auth/refresh"
+        case .userWithDraw:
+            return "users/withdraw"
         }
     }
     
     var parametters: Parameters? {
         switch self {
         case .login, .join, .emailVaild,
-                .refreshTokken:
+                .refreshTokken, .userWithDraw:
             return nil
         }
     }
@@ -61,14 +64,20 @@ extension NetworkRouter: TargetType {
                 NetHTTPHeader.sesacKey.rawValue :
                     APIKey.sesacKey.rawValue
             ]
-        case .refreshTokken(let loginModel):
+        case .refreshTokken(let access, let refresh):
             return [
-                NetHTTPHeader.contentType.rawValue :
-                    NetHTTPHeader.json.rawValue,
+                NetHTTPHeader.authorization.rawValue :
+                    access,
                 NetHTTPHeader.sesacKey.rawValue :
                     APIKey.sesacKey.rawValue,
                 NetHTTPHeader.refresh.rawValue :
-                    loginModel.refreshToken
+                    refresh
+            ]
+        case .userWithDraw: // 60PFsVaFr9iSRk
+            print("시점: ", TokenStorage.shared.accessToken)
+            return [
+                NetHTTPHeader.sesacKey.rawValue :
+                    APIKey.sesacKey.rawValue
             ]
         }
     }
@@ -85,7 +94,7 @@ extension NetworkRouter: TargetType {
             return jsEncoding(query)
         case .emailVaild(let query):
             return jsEncoding(query)
-        case .refreshTokken:
+        case .refreshTokken, .userWithDraw:
             return nil
         }
     }
@@ -103,7 +112,10 @@ extension NetworkRouter: TargetType {
             return .emailValidError(statusCode: errorCode, description: description)
             
         case .refreshTokken:
-            return.refreshTokkenError(statusCode: errorCode, description: description)
+            return .refreshTokkenError(statusCode: errorCode, description: description)
+            
+        case .userWithDraw:
+            return .usurWithDrawError(statusCode: errorCode, description: description)
         }
     }
     

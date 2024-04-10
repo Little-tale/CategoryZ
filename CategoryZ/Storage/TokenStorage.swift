@@ -31,6 +31,7 @@ final class TokenStorage {
             return try? keyChain.get(TokenStorageKeychain.accessToken.rawValue)
         }
         set {
+            print("새로운 토큰 ::: ",newValue ?? "")
             try? keyChain.set(newValue ?? "", key: TokenStorageKeychain.accessToken.rawValue)
         }
     }

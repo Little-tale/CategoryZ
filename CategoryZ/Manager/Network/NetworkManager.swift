@@ -40,7 +40,7 @@ extension NetworkManager {
                     case .success(let success):
                         single(.success(.success(success)))
                     case .failure(let failure):
-                        
+                        print(failure.responseCode)
                         if let stateCode = failure.responseCode {
                             if let commonCode = router.commonTest(status: stateCode) {
                                 single(.success(.failure(commonCode)))
@@ -59,7 +59,7 @@ extension NetworkManager {
     
     /// 알라모 파이어의 요청 로직입니다.
     private static func fetchNetwork<T:Decodable>(_ urlRequest: URLRequest, _ data: T.Type, handler: @escaping (Result<T, AFError>) -> Void ) {
-        AF.request(urlRequest)
+        AF.request(urlRequest, interceptor: AccessTokkenAdapter())
             .validate(statusCode: 200 ..< 300)
             .responseDecodable(of: data) { response in
                 switch response.result {
@@ -69,8 +69,35 @@ extension NetworkManager {
                     handler(.failure(failure))
                 }
             }
-        
     }
+    
 }
 
-
+// Request Refresh
+extension NetworkManager {
+    
+    static func requestRefreshTokken( complite: @escaping( (Result<RefreshModel, RefreshError>) -> Void)) {
+        
+        guard let accessToken = TokenStorage.shared.accessToken,
+              let refreshToken = TokenStorage.shared.refreshToken else {
+            complite(.failure(.cantReadTokken))
+            return
+        }
+        let urlRequest = try? NetworkRouter.refreshTokken(access: accessToken, Refresh: refreshToken).asURLRequest()
+        
+        guard let urlRequest else {
+            print("테스트")
+            complite(.failure(.reqeustFail))
+            return
+        }
+        
+        fetchNetwork(urlRequest, RefreshModel.self) { result in
+            switch result {
+            case .success(let success):
+                complite(.success(success))
+            case .failure(_):
+                complite(.failure(.reqeustFail))
+            }
+        }
+    }
+}

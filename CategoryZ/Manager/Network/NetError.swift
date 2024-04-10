@@ -23,6 +23,8 @@ enum NetworkError: Error {
     /// 리프레시 토큰 에러
     case refreshTokkenError(statusCode: Int, description: String)
     
+    case usurWithDrawError(statusCode: Int, description: String)
+    
     /// URLRequest 생성중 에러
     case failMakeURLRequest
     
@@ -82,6 +84,18 @@ extension NetworkError {
                 return "알수 없는 에러 \(description)"
             }
             
+        case .usurWithDrawError(let statusCode, let description) :
+            switch statusCode {
+            case 401 :
+                return "유효하지 않은 토큰"
+            case 403 :
+                return "접근 권한이 없습니다."
+            case 419 :
+                return "엑세스 토큰이 만료되었습니다."
+            default :
+                return "알수 없는 에러 \(description)"
+            }
+            
         case .failMakeURLRequest:
             return "URL Request Error"
             
@@ -101,10 +115,9 @@ extension NetworkError {
             default :
                 return "진짜 절대 나오면 안되는 에러"
             }
-            
         }
+        
     }
-    
     /// 특정 상황의 에러 코드 별 대응 준비 ex) 418 이면 로그인 화면 전환
     var errorCode: Int {
         switch self {
@@ -125,4 +138,11 @@ extension NetworkError {
         
     }
     
+}
+
+enum RefreshError: Error {
+    
+    case cantReadTokken
+    
+    case reqeustFail
 }

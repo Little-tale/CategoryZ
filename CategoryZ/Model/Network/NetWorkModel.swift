@@ -26,3 +26,15 @@ struct JoinModel: Decodable {
 struct EmailVaildModel: Decodable {
     let message: String
 }
+
+/// 리프레시
+struct RefreshModel: Decodable {
+    let accessToken: String
+}
+
+/// 삭제된 유저 모델
+struct UserWithDraw: Decodable {
+    let user_id: String
+    let email: String
+    let nick: String
+}
