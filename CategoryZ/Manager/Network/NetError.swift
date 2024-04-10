@@ -20,6 +20,9 @@ enum NetworkError: Error {
     /// 이메일 중복확인 에러
     case emailValidError(statusCode: Int, description: String)
     
+    /// 리프레시 토큰 에러
+    case refreshTokkenError(statusCode: Int, description: String)
+    
     /// URLRequest 생성중 에러
     case failMakeURLRequest
     
@@ -67,6 +70,18 @@ extension NetworkError {
                 return "알수 없는 에러 \(description)"
             }
             
+        case .refreshTokkenError(statusCode: let statusCode, description: let description):
+            switch statusCode {
+            case 401:
+                return "인증할 수 없는 엑세스 토큰 입니다."
+            case 403:
+                return "접근 권한이 없습니다."
+            case 418:
+                return "리프레시 토큰이 만료 되었습니다.\n다시 로그인 하세요"
+            default :
+                return "알수 없는 에러 \(description)"
+            }
+            
         case .failMakeURLRequest:
             return "URL Request Error"
             
@@ -86,9 +101,28 @@ extension NetworkError {
             default :
                 return "진짜 절대 나오면 안되는 에러"
             }
-        
-       
+            
         }
+    }
+    
+    /// 특정 상황의 에러 코드 별 대응 준비 ex) 418 이면 로그인 화면 전환
+    var errorCode: Int {
+        switch self {
+        case .loginError(let statusCode, _):
+            return statusCode
+        case .joinError(let statusCode, _):
+            return statusCode
+        case .emailValidError(let statusCode, _):
+            return statusCode
+        case .refreshTokkenError(let statusCode, _):
+            return statusCode
+        case .commonError(let status):
+            return status
+            
+        default :
+            return 9999
+        }
+        
     }
     
 }

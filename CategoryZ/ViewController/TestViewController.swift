@@ -18,7 +18,7 @@ final class TestViewController: UIViewController {
         super.viewDidLoad()
         
         let start = NetworkManager.fetchNetwork(
-            model: LoginModel.self, router: .login(query: .init(email: "통신보안", password: "0000"))
+            model: LoginModel.self, router: .login(query: .init(email: "King@skip.com", password: "1234"))
         )
         
         start

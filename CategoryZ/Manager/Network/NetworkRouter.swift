@@ -12,7 +12,7 @@ enum NetworkRouter {
     case login(query: LoginQuery)
     case join(query: JoinQuery)
     case emailVaild(query: EmailValidationQuery)
-    
+    case refreshTokken(loginModel: LoginModel)
 }
 
 extension NetworkRouter: TargetType {
@@ -23,12 +23,11 @@ extension NetworkRouter: TargetType {
     
     var method: HTTPMethod {
         switch self {
-        case .login:
+        case .login, .join, .emailVaild:
             return .post
-        case .join:
-            return .post
-        case .emailVaild:
-            return .post
+            
+        case .refreshTokken:
+            return .get
         }
     }
     
@@ -40,12 +39,15 @@ extension NetworkRouter: TargetType {
             return "/users/join"
         case .emailVaild:
             return "/validation/email"
+        case .refreshTokken:
+            return "/auth/refresh"
         }
     }
     
     var parametters: Parameters? {
         switch self {
-        case .login, .join, .emailVaild:
+        case .login, .join, .emailVaild,
+                .refreshTokken:
             return nil
         }
     }
@@ -59,7 +61,15 @@ extension NetworkRouter: TargetType {
                 NetHTTPHeader.sesacKey.rawValue :
                     APIKey.sesacKey.rawValue
             ]
-       
+        case .refreshTokken(let loginModel):
+            return [
+                NetHTTPHeader.contentType.rawValue :
+                    NetHTTPHeader.json.rawValue,
+                NetHTTPHeader.sesacKey.rawValue :
+                    APIKey.sesacKey.rawValue,
+                NetHTTPHeader.refresh.rawValue :
+                    loginModel.refreshToken
+            ]
         }
     }
     
@@ -75,6 +85,8 @@ extension NetworkRouter: TargetType {
             return jsEncoding(query)
         case .emailVaild(let query):
             return jsEncoding(query)
+        case .refreshTokken:
+            return nil
         }
     }
     
@@ -83,10 +95,15 @@ extension NetworkRouter: TargetType {
         switch self {
         case .login:
             return .loginError(statusCode: errorCode, description: description)
+            
         case .join:
             return .joinError(statusCode: errorCode, description: description)
+            
         case .emailVaild:
             return .emailValidError(statusCode: errorCode, description: description)
+            
+        case .refreshTokken:
+            return.refreshTokkenError(statusCode: errorCode, description: description)
         }
     }
     
