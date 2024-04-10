@@ -7,9 +7,18 @@
 
 import Foundation
 
+// 요청 바디
 
 // HTTP POST
 struct LoginQuery: Encodable {
     let email: String
     let password: String
+}
+
+struct JoinQuery: Encodable {
+    let email: String
+    let password: String
+    let nick: String
+    let phoneNNum: String?
+    let birthDay: String?
 }

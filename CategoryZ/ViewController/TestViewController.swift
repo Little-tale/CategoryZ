@@ -16,7 +16,17 @@ final class TestViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-               
+        
+        let start = NetworkManager.fetchNetwork(
+            model: LoginModel.self,
+            router: .login(
+                query: .init(
+                    email: "King@skip.com",
+                    password: "1234"
+                )
+            )
+        )
+       
     
     }
     

@@ -10,7 +10,7 @@ import Alamofire
 
 enum NetworkRouter {
     case login(query: LoginQuery)
-    
+    case join(query: JoinQuery)
 }
 
 extension NetworkRouter: TargetType {
@@ -23,6 +23,8 @@ extension NetworkRouter: TargetType {
         switch self {
         case .login:
             return .post
+        case .join:
+            return .post
         }
     }
     
@@ -30,6 +32,8 @@ extension NetworkRouter: TargetType {
         switch self {
         case .login:
             return "/users/login"
+        case .join:
+            return "/users/join"
         }
     }
     
@@ -37,18 +41,21 @@ extension NetworkRouter: TargetType {
         switch self {
         case .login:
             return nil
+        case .join:
+            return nil
         }
     }
     
     var headers: [String : String] {
         switch self {
-        case .login :
+        case .login, .join:
             return [
                 NetHTTPHeader.contentType.rawValue :
                     NetHTTPHeader.json.rawValue,
                 NetHTTPHeader.sesacKey.rawValue :
                     APIKey.sesacKey.rawValue
             ]
+       
         }
     }
     
@@ -59,14 +66,9 @@ extension NetworkRouter: TargetType {
     var body: Data? {
         switch self {
         case .login(let query):
-            let encoder = JSONEncoder()
-            encoder.keyEncodingStrategy = .convertToSnakeCase
-            
-            do {
-                return try encoder.encode(query)
-            } catch {
-                return nil
-            }
+            return jsEncoding(query)
+        case .join(let query):
+            return jsEncoding(query)
         }
     }
     
@@ -74,6 +76,8 @@ extension NetworkRouter: TargetType {
         switch self {
         case .login:
             return .loginError(statusCode: errorCode, description: "loginError")
+        case .join:
+            return .joinError(statusCode: errorCode, description: "회원가입 문제 확실")
         }
     }
     
@@ -86,4 +90,18 @@ extension NetworkRouter: TargetType {
         }
     }
     
+}
+
+
+extension NetworkRouter {
+    fileprivate func jsEncoding(_ target: Encodable) -> Data? {
+        
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        do {
+            return try encoder.encode(target)
+        } catch {
+            return nil
+        }
+    }
 }

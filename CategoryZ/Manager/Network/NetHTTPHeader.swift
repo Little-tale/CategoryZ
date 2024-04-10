@@ -7,7 +7,11 @@
 
 import Foundation
 
-
+/*
+ 공지사항
+ 모든 요청에는 SeSackey 가 필요헙니다.
+ - 회원 요청을 제외한 모든 요청에는 Autorization이 필요합니다.
+ */
 enum NetHTTPHeader: String {
     
     case authorization = "Authorization"
