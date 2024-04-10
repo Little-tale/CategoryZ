@@ -20,6 +20,6 @@ struct JoinModel: Decodable {
 }
 
 /// 이메일 중복 결과 모델
-struct EmailVaild: Decodable {
+struct EmailVaildModel: Decodable {
     let message: String
 }
