@@ -39,10 +39,10 @@ extension NetworkError {
         switch self {
         case .loginError(let statusCode, let description):
             switch statusCode {
+            case 400:
+                return "필수값을 채워 주세요"
             case 401:
-                return "401 에러 메시지"
-            case 402:
-                return "402 에러 메시지"
+                return "계정을 확인하여 주세요"
             default:
                 return "알수없는 에러 \(description)"
             }

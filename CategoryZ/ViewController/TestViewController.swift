@@ -18,7 +18,7 @@ final class TestViewController: UIViewController {
         super.viewDidLoad()
         
         let start = NetworkManager.fetchNetwork(
-            model: EmailVaildModel.self, router: .emailVaild(query: .init(email: "KingSmith@skip.com"))
+            model: LoginModel.self, router: .login(query: .init(email: "통신보안", password: "0000"))
         )
         
         start
@@ -28,6 +28,7 @@ final class TestViewController: UIViewController {
                 print(data)
             }
             .disposed(by: disposeBag)
+        
        start
             .asObservable()
             .bind { result in
