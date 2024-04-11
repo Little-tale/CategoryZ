@@ -15,6 +15,7 @@ protocol NetworkType {
     
     // 서버로 데이터를 보내는 함수입니다.
     
+    
 }
 
 struct NetworkManager {

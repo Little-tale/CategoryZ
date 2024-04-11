@@ -35,19 +35,26 @@ extension NetworkRouter: TargetType {
     var path: String {
         switch self {
         case .login:
-            return "/users/login"
+            return "users/login"
         case .join:
-            return "/users/join"
+            return "users/join"
         case .emailVaild:
-            return "/validation/email"
+            return "validation/email"
         case .refreshTokken:
-            return "/auth/refresh"
+            return "auth/refresh"
         case .userWithDraw:
             return "users/withdraw"
         }
     }
     
-    var parametters: Parameters? {
+    var version: String {
+        switch self {
+        case .login,.join, .emailVaild, .refreshTokken,.userWithDraw:
+            return "v1/"
+        }
+    }
+    
+    var parametters: Parameters? { // get
         switch self {
         case .login, .join, .emailVaild,
                 .refreshTokken, .userWithDraw:
@@ -74,7 +81,7 @@ extension NetworkRouter: TargetType {
                     refresh
             ]
         case .userWithDraw: // 60PFsVaFr9iSRk
-            print("시점: ", TokenStorage.shared.accessToken)
+            print("시점: ", TokenStorage.shared.accessToken ?? "토큰 없쪄")
             return [
                 NetHTTPHeader.sesacKey.rawValue :
                     APIKey.sesacKey.rawValue
@@ -86,7 +93,7 @@ extension NetworkRouter: TargetType {
         return nil
     }
     
-    var body: Data? {
+    var body: Data? { // Post ->
         switch self {
         case .login(let query):
             return jsEncoding(query)
@@ -133,14 +140,21 @@ extension NetworkRouter: TargetType {
 
 
 extension NetworkRouter {
+    
     fileprivate func jsEncoding(_ target: Encodable) -> Data? {
-        
+
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
         do {
-            return try encoder.encode(target)
+            let result = try  encoder.encode(target)
+            print(result)
+            return result
         } catch {
             return nil
         }
+
     }
 }
+
+
+

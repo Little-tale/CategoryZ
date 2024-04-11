@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import TextFieldEffects
 
 
 final class GetStartView: RxBaseView {
@@ -24,6 +25,7 @@ final class GetStartView: RxBaseView {
         $0.textAlignment = .center
         $0.textColor = JHColor.black
     }
+    
     private let subLabel = UILabel().then {
         $0.text = "여러분들의 추억을 공유해보세요!"
         $0.font = JHFont.UIKit.li20
@@ -31,10 +33,11 @@ final class GetStartView: RxBaseView {
         $0.textColor = JHColor.black
     }
     
-    private let loginButton = LoginInButton(title: "Log in")
+    let loginButton = PointButton(title: "Log in")
     
-    private let signUpButton = SignUpButton(title: "Sign Up")
+    let signUpButton = SignUpButton(title: "Sign Up")
     
+
     
     override func configureHierarchy() {
         addSubview(imageView)
@@ -48,7 +51,7 @@ final class GetStartView: RxBaseView {
     override func configureLayout() {
         startLabel.snp.makeConstraints { make in
             make.center.equalTo(safeAreaLayoutGuide)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
+            let constraint = make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
         }
         
         imageView.snp.makeConstraints { make in
@@ -74,4 +77,5 @@ final class GetStartView: RxBaseView {
             make.bottom.equalTo(safeAreaLayoutGuide).inset(12)
         }
     }
+    
 }

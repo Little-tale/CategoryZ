@@ -10,10 +10,4 @@ import UIKit
 
 class RxBaseView: BaseView, RxBaseViewType {
     
-    
-    
-    
-    func subscribe() {
-        
-    }
 }

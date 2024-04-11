@@ -28,11 +28,13 @@ final class AccessTokkenAdapter: RequestInterceptor {
             
             // 현재 요청의 URL 경로를 확인
             if let urlPath = urlRequest.url?.path {
-                print("재시도")
+                
                 // 요청 URL이 특정 경로를 포함하지 않는 경우에만 액세스 토큰 추가
                 let requiresToken = !pathsWithoutToken.contains(where: urlPath.contains)
-                print("\n재시도2")
-                if requiresToken, let accessToken = TokenStorage.shared.accessToken {
+                
+                if requiresToken,
+                    let accessToken = TokenStorage.shared.accessToken {
+                    print("\n재시도")
                     urlRequest.headers.add(name: NetHTTPHeader.authorization.rawValue, value: accessToken)
                 }
             }
@@ -64,7 +66,7 @@ final class AccessTokkenAdapter: RequestInterceptor {
                         
                         TokenStorage.shared.accessToken = success.accessToken
                         
-                        requestsToRetry.forEach { $0(.retry) }
+                        requestsToRetry.forEach { $0(.retryWithDelay(100)) }
                         
                     case .failure(_):
                         requestsToRetry.forEach { $0(.doNotRetry) }
@@ -78,7 +80,7 @@ final class AccessTokkenAdapter: RequestInterceptor {
             print("리프레시 토큰 다이") // 목록에 많이 쌓인거?
             requestsToRetry.forEach { $0(.doNotRetry) }
             requestsToRetry.removeAll()
-            completion(.doNotRetry)
+            completion(.doNotRetryWithError(error))
             
         default:
             completion(.doNotRetry)

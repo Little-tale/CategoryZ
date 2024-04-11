@@ -16,6 +16,8 @@ final class SignUpButton: BaseButton {
         setTitleColor(JHColor.black, for: .normal)
         backgroundColor = .clear
         layer.cornerRadius = 10
+        isMultipleTouchEnabled = false
+        isExclusiveTouch = true
     }
     
     required init?(coder: NSCoder) {

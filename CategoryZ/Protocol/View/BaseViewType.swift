@@ -24,7 +24,4 @@ protocol BaseViewType {
 
 protocol RxBaseViewType: BaseViewType {
     
-    /// 구독
-    func subscribe()
-    
 }

@@ -51,6 +51,11 @@
 		7BCF4A5F2BC6E39700BCE635 /* JHColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A5E2BC6E39700BCE635 /* JHColor.swift */; };
 		7BCF4A612BC6E5BD00BCE635 /* SignUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A602BC6E5BD00BCE635 /* SignUpButton.swift */; };
 		7BCF4A632BC6E87600BCE635 /* ExUIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A622BC6E87600BCE635 /* ExUIWindow.swift */; };
+		7BCF4A6D2BC7C6E400BCE635 /* TextFieldEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 7BCF4A6C2BC7C6E400BCE635 /* TextFieldEffects */; };
+		7BCF4A6F2BC7D96400BCE635 /* UserInfoRegView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A6E2BC7D96400BCE635 /* UserInfoRegView.swift */; };
+		7BCF4A712BC7D9A900BCE635 /* UserInfoRegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A702BC7D9A900BCE635 /* UserInfoRegViewController.swift */; };
+		7BCF4A742BC7DE4B00BCE635 /* whitePointTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A732BC7DE4B00BCE635 /* whitePointTextField.swift */; };
+		7BCF4A772BC7E72100BCE635 /* UserInfoRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A762BC7E72100BCE635 /* UserInfoRegisterViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +96,10 @@
 		7BCF4A5E2BC6E39700BCE635 /* JHColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHColor.swift; sourceTree = "<group>"; };
 		7BCF4A602BC6E5BD00BCE635 /* SignUpButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpButton.swift; sourceTree = "<group>"; };
 		7BCF4A622BC6E87600BCE635 /* ExUIWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExUIWindow.swift; sourceTree = "<group>"; };
+		7BCF4A6E2BC7D96400BCE635 /* UserInfoRegView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRegView.swift; sourceTree = "<group>"; };
+		7BCF4A702BC7D9A900BCE635 /* UserInfoRegViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRegViewController.swift; sourceTree = "<group>"; };
+		7BCF4A732BC7DE4B00BCE635 /* whitePointTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = whitePointTextField.swift; sourceTree = "<group>"; };
+		7BCF4A762BC7E72100BCE635 /* UserInfoRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRegisterViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +116,7 @@
 				7B11DC8F2BC58D250055D423 /* RxSwift in Frameworks */,
 				7B11DC882BC58CF20055D423 /* Alamofire in Frameworks */,
 				7B11DC922BC58D2F0055D423 /* Kingfisher in Frameworks */,
+				7BCF4A6D2BC7C6E400BCE635 /* TextFieldEffects in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +164,7 @@
 		7B11DC7B2BC58B330055D423 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF4A722BC7DE2A00BCE635 /* TextField */,
 				7BCF4A552BC6E1BD00BCE635 /* Button */,
 				7BCF4A522BC6DDF100BCE635 /* SignUp */,
 				7BCF4A352BC5AD2E00BCE635 /* Base */,
@@ -174,6 +185,7 @@
 		7B11DC7D2BC58B440055D423 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF4A752BC7E70B00BCE635 /* SignUP */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -287,6 +299,7 @@
 			isa = PBXGroup;
 			children = (
 				7BCF4A502BC6DDE200BCE635 /* GetStartViewController.swift */,
+				7BCF4A702BC7D9A900BCE635 /* UserInfoRegViewController.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -295,6 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				7BCF4A532BC6E0ED00BCE635 /* GetStartView.swift */,
+				7BCF4A6E2BC7D96400BCE635 /* UserInfoRegView.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -324,6 +338,22 @@
 			path = Color;
 			sourceTree = "<group>";
 		};
+		7BCF4A722BC7DE2A00BCE635 /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				7BCF4A732BC7DE4B00BCE635 /* whitePointTextField.swift */,
+			);
+			path = TextField;
+			sourceTree = "<group>";
+		};
+		7BCF4A752BC7E70B00BCE635 /* SignUP */ = {
+			isa = PBXGroup;
+			children = (
+				7BCF4A762BC7E72100BCE635 /* UserInfoRegisterViewModel.swift */,
+			);
+			path = SignUP;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -350,6 +380,7 @@
 				7B11DC972BC58D640055D423 /* SnapKit */,
 				7B11DC9A2BC58DA40055D423 /* IQKeyboardManagerSwift */,
 				7BCF4A412BC688F100BCE635 /* KeychainAccess */,
+				7BCF4A6C2BC7C6E400BCE635 /* TextFieldEffects */,
 			);
 			productName = CategoryZ;
 			productReference = 7B11DC642BC58AD40055D423 /* CategoryZ.app */;
@@ -387,6 +418,7 @@
 				7B11DC962BC58D640055D423 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				7B11DC992BC58DA40055D423 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				7BCF4A402BC688F100BCE635 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				7BCF4A6B2BC7C6E400BCE635 /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
 			);
 			productRefGroup = 7B11DC652BC58AD40055D423 /* Products */;
 			projectDirPath = "";
@@ -421,11 +453,13 @@
 				7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */,
 				7BCF4A4C2BC6D05C00BCE635 /* RxBaseView.swift in Sources */,
 				7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */,
+				7BCF4A6F2BC7D96400BCE635 /* UserInfoRegView.swift in Sources */,
 				7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */,
 				7BCF4A382BC5AD7D00BCE635 /* BaseViewController.swift in Sources */,
 				7BCF4A462BC6CEB900BCE635 /* RxHomeBaseViewController.swift in Sources */,
 				7BCF4A542BC6E0ED00BCE635 /* GetStartView.swift in Sources */,
 				7BCF4A592BC6E20600BCE635 /* BaseButton.swift in Sources */,
+				7BCF4A712BC7D9A900BCE635 /* UserInfoRegViewController.swift in Sources */,
 				7B11DC812BC58B740055D423 /* TestViewController.swift in Sources */,
 				7BCF4A3F2BC687D600BCE635 /* TokenStorage.swift in Sources */,
 				7BCF4A5F2BC6E39700BCE635 /* JHColor.swift in Sources */,
@@ -443,10 +477,12 @@
 				7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */,
 				7BCF4A3C2BC6873600BCE635 /* AccessTokkenAdapter.swift in Sources */,
 				7BCF4A482BC6CEF800BCE635 /* BaseView.swift in Sources */,
+				7BCF4A772BC7E72100BCE635 /* UserInfoRegisterViewModel.swift in Sources */,
 				7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */,
 				7B11DCA52BC5902A0055D423 /* NetworkRouter.swift in Sources */,
 				7BCF4A632BC6E87600BCE635 /* ExUIWindow.swift in Sources */,
 				7BCF4A4E2BC6D27400BCE635 /* ExUiView.swift in Sources */,
+				7BCF4A742BC7DE4B00BCE635 /* whitePointTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -727,6 +763,14 @@
 				kind = branch;
 			};
 		};
+		7BCF4A6B2BC7C6E400BCE635 /* XCRemoteSwiftPackageReference "TextFieldEffects" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/raulriera/TextFieldEffects.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -774,6 +818,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7BCF4A402BC688F100BCE635 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
+		};
+		7BCF4A6C2BC7C6E400BCE635 /* TextFieldEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BCF4A6B2BC7C6E400BCE635 /* XCRemoteSwiftPackageReference "TextFieldEffects" */;
+			productName = TextFieldEffects;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

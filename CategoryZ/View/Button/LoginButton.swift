@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LoginInButton: BaseButton {
+final class PointButton: BaseButton {
     
     init(title : String) {
         super.init(frame: .zero)
@@ -15,10 +15,12 @@ final class LoginInButton: BaseButton {
         setTitleColor(JHColor.white, for: .normal)
         backgroundColor = JHColor.point
         layer.cornerRadius = 10
+        isMultipleTouchEnabled = false
+        isExclusiveTouch = true
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
 }

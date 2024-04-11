@@ -22,6 +22,8 @@ protocol TargetType: URLRequestConvertible {
     
     var queryItems: [URLQueryItem]? { get }
     
+    var version: String { get }
+    
     var body: Data? { get }
     
     func errorCase(_ errorCode: Int, _ description: String) -> NetworkError
@@ -32,7 +34,10 @@ extension TargetType {
     
     func asURLRequest() throws -> URLRequest {
         guard let baseUrl else { throw URLError(.badURL) }
-        let urlString = baseUrl.appendingPathComponent(path, conformingTo: .url)
+        
+        let lastPath = version + path
+        
+        let urlString = baseUrl.appendingPathComponent(lastPath, conformingTo: .url)
         
         var urlComponents = URLComponents(url: urlString, resolvingAgainstBaseURL: false)!
         
