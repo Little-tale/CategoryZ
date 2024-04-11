@@ -48,3 +48,28 @@ extension Reactive where Base: UIViewController {
         return ControlEvent(events: source)
     }
 }
+
+
+extension UIViewController {
+    
+    func showAlert(title: String, message : String? = nil, actionTitle: String? = nil , complite: @escaping ((UIAlertAction) -> Void)) {
+        
+        let alertCon = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        if let actionTitle {
+            let action = UIAlertAction(title: actionTitle, style: .default) { action  in
+                complite(action)
+            }
+            let cancel = UIAlertAction(title: "취소", style: .cancel)
+            alertCon.addAction(action)
+            alertCon.addAction(cancel)
+        } else {
+            let check = UIAlertAction(title: "확인", style: .default) { action in
+                complite(action)
+            }
+            alertCon.addAction(check)
+        }
+        
+        present(alertCon,animated: true)
+    }
+}

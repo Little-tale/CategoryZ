@@ -56,6 +56,7 @@
 		7BCF4A712BC7D9A900BCE635 /* UserInfoRegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A702BC7D9A900BCE635 /* UserInfoRegViewController.swift */; };
 		7BCF4A742BC7DE4B00BCE635 /* whitePointTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A732BC7DE4B00BCE635 /* whitePointTextField.swift */; };
 		7BCF4A772BC7E72100BCE635 /* UserInfoRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A762BC7E72100BCE635 /* UserInfoRegisterViewModel.swift */; };
+		7BCF4A7A2BC7EBC200BCE635 /* TextValid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A792BC7EBC200BCE635 /* TextValid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +101,7 @@
 		7BCF4A702BC7D9A900BCE635 /* UserInfoRegViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRegViewController.swift; sourceTree = "<group>"; };
 		7BCF4A732BC7DE4B00BCE635 /* whitePointTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = whitePointTextField.swift; sourceTree = "<group>"; };
 		7BCF4A762BC7E72100BCE635 /* UserInfoRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRegisterViewModel.swift; sourceTree = "<group>"; };
+		7BCF4A792BC7EBC200BCE635 /* TextValid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +195,7 @@
 		7B11DC7E2BC58B4C0055D423 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF4A782BC7EBAE00BCE635 /* TextValid */,
 				7B11DC822BC58C510055D423 /* Network */,
 			);
 			path = Manager;
@@ -354,6 +357,14 @@
 			path = SignUP;
 			sourceTree = "<group>";
 		};
+		7BCF4A782BC7EBAE00BCE635 /* TextValid */ = {
+			isa = PBXGroup;
+			children = (
+				7BCF4A792BC7EBC200BCE635 /* TextValid.swift */,
+			);
+			path = TextValid;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -461,6 +472,7 @@
 				7BCF4A592BC6E20600BCE635 /* BaseButton.swift in Sources */,
 				7BCF4A712BC7D9A900BCE635 /* UserInfoRegViewController.swift in Sources */,
 				7B11DC812BC58B740055D423 /* TestViewController.swift in Sources */,
+				7BCF4A7A2BC7EBC200BCE635 /* TextValid.swift in Sources */,
 				7BCF4A3F2BC687D600BCE635 /* TokenStorage.swift in Sources */,
 				7BCF4A5F2BC6E39700BCE635 /* JHColor.swift in Sources */,
 				7BCF4A312BC5A8DB00BCE635 /* ReusableIdentifier.swift in Sources */,

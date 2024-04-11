@@ -66,7 +66,7 @@ final class AccessTokkenAdapter: RequestInterceptor {
                         
                         TokenStorage.shared.accessToken = success.accessToken
                         
-                        requestsToRetry.forEach { $0(.retryWithDelay(100)) }
+                        requestsToRetry.forEach { $0(.retryWithDelay(10)) }
                         
                     case .failure(_):
                         requestsToRetry.forEach { $0(.doNotRetry) }

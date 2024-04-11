@@ -10,9 +10,11 @@ import TextFieldEffects
 
 final class WhitePointTextField: HoshiTextField {
     
+    var deFaultPlaceholderText = ""
     
     init(_ placeholder: String? = nil) {
         super.init(frame: .zero)
+        deFaultPlaceholderText = placeholder ?? ""
         design(placeholder)
     }
     
@@ -27,6 +29,10 @@ final class WhitePointTextField: HoshiTextField {
         borderInactiveColor = .black
         placeholder = placeholderText
         placeholderFontScale = 1.1
+    }
+    
+    func setDefaultPlaceHolder() {
+        placeholder = deFaultPlaceholderText
     }
     
 }
