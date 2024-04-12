@@ -13,12 +13,20 @@ enum textValidation: String {
     case match
     case noMatch
 }
+enum EmailTextValid: String {
+    case isEmpty
+    case minCount
+    case noMatch
+    case match
+    case validCurrect
+    case duplite
+}
 
 
 final class TextValid {
     
     // MARK: 이메일 텍스트 검사
-    func EmailTextValid(_ text: String) -> textValidation {
+    func EmailTextValid(_ text: String) -> EmailTextValid {
         
         if text.isEmpty {
             return .isEmpty
@@ -28,7 +36,12 @@ final class TextValid {
         }
         
         let emailPattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-        return matchesPattern(text, pattern: emailPattern)
+        
+        if matchesPattern(text, pattern: emailPattern) == .match {
+            return .match
+        } else {
+            return .noMatch
+        }
     }
     
     func passwordVaild(_ text: String) -> textValidation {

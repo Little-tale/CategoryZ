@@ -14,158 +14,173 @@ final class UserInfoRegisterViewModel: RxViewModelType {
     var disposeBag: RxSwift.DisposeBag = .init()
     
     let textValid = TextValid()
-    
-    var emailFlag = false
-    
+
     struct Input {
-        let inputName : BehaviorRelay<String>
-        let inputEmail : BehaviorRelay<String>
-        let inputPassword : BehaviorRelay<String>
-        let inputPhoneNum : BehaviorRelay<String?>
+        let inputName : ControlProperty<String?>
+        let inputEmail : ControlProperty<String?>
+        let inputPassword : ControlProperty<String?>
+        let inputPhoneNum : ControlProperty<String?>
         let inputButtonTab: ControlEvent<Void>
         let inputEmailButtonTap: ControlEvent<Void>
     }
     
     struct Output {
-        let nameValid : Driver<textValidation>
-        let emailValid : Driver<textValidation>
-        let passwordValid : Driver<textValidation>
-        let phoneValid : Driver<textValidation>
-        let buttonValid : Driver<Bool>
-        
-        let signUpSuccess: Driver<JoinModel>
-        let signUPFail: Driver<NetworkError>
-        let emailDuplicateValid: Driver<textValidation>
-        let emailButtonEnabled: Driver<Bool?>
+        // 이름 검사 결과들
+        let nameValid: Driver<textValidation>
+        // 이메일 검사 결과들
+        let emailValid: Driver<EmailTextValid>
+        // 비밀번호 검사 결과들
+        let passwordValid: Driver<textValidation>
+        // 전화번호 검사 결과들
+        let phoneValid: Driver<textValidation>
+        // 회원가입 활성화 여부
+        let buttonEnabled: Driver<Bool>
+        // 이메일 버튼 활성화 여부
+        let emailButtonEnabled : Driver<Bool>
+        // 네트워크 에러 (에러코드를 통행 이메일 중복인지 아닌지와 회원가입 실패 여부)
+        let networkError: PublishRelay<NetworkError>
+        // 네트워크를 통한 이메일 중복 검사 성공
+        let networkForEmailSuccess: PublishRelay<String>
+        // 네트워크를 통해 회원가입 성공
+        let networkForSignUpSuccess: PublishRelay<String>
     }
     
     func transform(_ input: Input) -> Output {
+        // 이메일에 대한 성공
+        let networkForEmailSuccess = PublishRelay<String>()
+        // 가입에 대한 성공
+        let networkForSignUpSuccess = PublishRelay<String>()
+        // 이메일 버튼 활성화 여부
+        let emailButtonEnabled = PublishRelay<Bool> ()
+        // 네트워크 에러 처리
+        let networkError = PublishRelay<NetworkError> ()
+        // 이메일 검사 종합 결과 UI 반영
+        let emailValidTest = BehaviorRelay<EmailTextValid> (value: .isEmpty)
         
-        let networkSuccessRelay = PublishRelay<JoinModel>()
-        let networkFailureRelay = PublishRelay<NetworkError>()
-        let emailButtonEnabled = PublishRelay<Bool?> ()
-       
         
-        let combined = Observable.combineLatest(
-            input.inputEmail,
-            input.inputName,
-            input.inputPassword,
-            input.inputPhoneNum
-        )
-            .map { combine in
-                return (email: combine.0, name: combine.1, password: combine.2, phoneNum: combine.3)
-            }
         
-        let emailDriver = input.inputEmail
-            .withUnretained(self)
-            .map {
-                owner, text in
-                let vaild = owner.textValid.EmailTextValid(text)
-                if vaild == .match {
-                    emailButtonEnabled.accept(true)
-                }else {
-                    emailButtonEnabled.accept(false)
-                }
-                return vaild
-            }
-            .asDriver(onErrorJustReturn: .noMatch)
+        // 이메일 텍스트 input
+       let emailText = input.inputEmail.orEmpty
+            .distinctUntilChanged()
+            .share()
         
-            //.asDriver(onErrorJustReturn: false)
-        let nickNameDriver = input.inputName
+        // 이메일 검사 (네트워크 제외) 결과
+        emailText
             .withUnretained(self)
             .map { owner, text in
-                return owner.textValid.nickNameVaild(text)
+                let valid = owner.textValid.EmailTextValid(text)
+                return valid
             }
-            .asDriver(onErrorJustReturn: .noMatch)
-        
-        let passwordDriver = input.inputPassword
-            .withUnretained(self)
-            .map { owner, text in
-                return owner.textValid.passwordVaild(text)
+            .bind { valid in
+                emailValidTest.accept(valid)
             }
-            .asDriver(onErrorJustReturn: .noMatch)
+            .disposed(by: disposeBag)
+            //.asDriver(onErrorJustReturn: .isEmpty)
         
-        let phoneDriver = input.inputPhoneNum
-            .withUnretained(self)
-            .filter({ $0.1 != nil })
-            .map { owner, text in
-                return owner.textValid.phoneNumberValid(text!)
+        // 이메일 중복 버튼 클릭시 결과
+        input.inputEmailButtonTap
+            .withLatestFrom(emailText)
+            .map { EmailValidationQuery(email: $0) }
+            .flatMapLatest {
+                NetworkManager.fetchNetwork(model: EmailVaildModel.self, router: .emailVaild(query: $0))
             }
-            .asDriver(onErrorJustReturn: .minCount)
-        
-        let emailValid = input.inputEmailButtonTap
-            .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
-            .withLatestFrom(input.inputName)
-            .map { string in
-                return EmailValidationQuery(email: string)
-            }
-            .flatMapLatest { query in
-                return NetworkManager.fetchNetwork(model: EmailVaildModel.self, router: .emailVaild(query: query))
-            }
-            .compactMap { result in
-                switch result {
-                case .success(_):
-                    return textValidation.match
-                case .failure(let fail):
-                    print(fail.message)
-                    return textValidation.noMatch
-                }
-            }
-            .asDriver(onErrorDriveWith: .never())
-            
-        
-        
-  
-        let buttonValid = Driver.combineLatest(
-            emailDriver,
-            nickNameDriver,
-            passwordDriver,
-            phoneDriver,
-            emailValid
-        ) { email, nickName, passWord, phone, emailValid in
-            return email == textValidation.match &&
-            nickName == textValidation.match &&
-            passWord == textValidation.match &&
-            (phone == textValidation.match || phone == textValidation.isEmpty) && emailValid == textValidation.match
-        }
-        
-        input.inputButtonTab
-            .throttle(.milliseconds(400), scheduler: MainScheduler.instance )
-            .flatMapLatest { _ in
-                return combined
-                    .take(1)
-                    .map { JoinQuery(email: $0.email, password: $0.password, nick: $0.name, phoneNum: $0.phoneNum) }
-                    .flatMapLatest { query in
-                        NetworkManager.fetchNetwork(model: JoinModel.self, router: .join(query: query))
+            .bind(with: self) { owenr, result in
+                    switch result {
+                    case .success(let query):
+                        emailValidTest.accept(.validCurrect)
+                        networkForEmailSuccess.accept(query.message)
+                    case .failure(let error):
+                        networkError.accept(error)
+                        emailValidTest.accept(.duplite)
                     }
             }
+            .disposed(by: disposeBag)
+            
+        // 닉네임 검사 결과 Driver
+        let nameValid = input.inputName.orEmpty
+            .withUnretained(self)
+            .map { owner, text in
+                owner.textValid.nickNameVaild(text)
+            }
+            .asDriver(onErrorJustReturn: .isEmpty)
+        
+        // 비밀번호 검사 결과 Driver
+        let passwordValid = input.inputPassword.orEmpty
+            .withUnretained(self)
+            .map { owner, text in
+                owner.textValid.passwordVaild(text)
+            }
+            .asDriver(onErrorJustReturn: .isEmpty)
+        
+        // 전화번호 검사 결과 Driver
+        let phoneValid = input.inputPhoneNum.orEmpty
+            .withUnretained(self)
+            .map { owner, text in
+                owner.textValid.phoneNumberValid(text)
+            }
+            .asDriver(onErrorJustReturn: .isEmpty)
+        
+        // 이메일을 제외한 드라이버 콤바인 결과 Bool
+        let combineObservable = Driver.combineLatest(nameValid, passwordValid, phoneValid) { name, password, phone in
+            return name == textValidation.match && password == textValidation.match && phone == textValidation.match
+        }.asObservable()
+        
+        // 회원가입 버튼 활성화 여부
+        let signUpButtonEnabled = Observable
+            .combineLatest(emailValidTest, combineObservable)
+            .map { email, other in
+                if email == .validCurrect && other == true {
+                    return true
+                }else {
+                    return false
+                }
+            }
+            .asDriver(onErrorJustReturn: false)
+        
+        // 전체 텍스트 묶어주기
+        let combineText = Observable.combineLatest(
+            input.inputName.orEmpty,
+            input.inputPassword.orEmpty,
+            input.inputEmail.orEmpty,
+            input.inputPhoneNum.orEmpty
+        )
+            .map { combine in
+                return (name: combine.0,
+                        password: combine.1,
+                        email: combine.2,
+                        phoneNum: combine.3
+                )
+            }
+       // 가입 버튼 클릭시
+        input.inputButtonTab
+            .withLatestFrom(combineText)
+            .throttle(.milliseconds(400), scheduler: MainScheduler.instance)
+            .map { JoinQuery(email: $0.email, password: $0.password, nick: $0.name, phoneNum: $0.phoneNum) }
+            .flatMapLatest { NetworkManager.fetchNetwork(model: JoinModel.self, router: .join(query: $0)) }
+            .asObservable()
             .bind { result in
                 switch result {
                 case .success(let success):
-                    networkSuccessRelay.accept(success)
-                case .failure(let failuer):
-                    networkFailureRelay.accept(failuer)
+                    networkForSignUpSuccess.accept(success.nick)
+                case .failure(let fail):
+                    networkError.accept(fail)
                 }
             }
             .disposed(by: disposeBag)
             
-
-        
+    
         return Output(
-            nameValid: nickNameDriver,
-            emailValid: emailDriver,
-            passwordValid: passwordDriver,
-            phoneValid: phoneDriver,
-            buttonValid: buttonValid,
-            signUpSuccess: networkSuccessRelay.asDriver(onErrorDriveWith: .never()),
-            signUPFail: networkFailureRelay.asDriver(onErrorDriveWith: .never()),
-            emailDuplicateValid: emailValid,
-            emailButtonEnabled: emailButtonEnabled.asDriver(onErrorJustReturn: false)
+            nameValid: nameValid,
+            emailValid: emailValidTest.asDriver(onErrorJustReturn: .isEmpty),
+            passwordValid: passwordValid,
+            phoneValid: phoneValid,
+            buttonEnabled: signUpButtonEnabled,
+            emailButtonEnabled: emailButtonEnabled.asDriver(onErrorJustReturn: false),
+            networkError: networkError,
+            networkForEmailSuccess: networkForEmailSuccess,
+            networkForSignUpSuccess: networkForSignUpSuccess
         )
     }
-    
-    private func checkEmail(_ string: String) {
-        
-    }
-
 }
+
+
