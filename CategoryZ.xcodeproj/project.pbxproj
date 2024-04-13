@@ -62,6 +62,7 @@
 		7BCF4A812BC92C7800BCE635 /* CommonError .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A802BC92C7800BCE635 /* CommonError .swift */; };
 		7BCF4A832BC9415C00BCE635 /* PostsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A822BC9415C00BCE635 /* PostsRouter.swift */; };
 		7BCF4A872BC947DE00BCE635 /* MulipartTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A862BC947DE00BCE635 /* MulipartTargetType.swift */; };
+		7BCF4A892BCA715E00BCE635 /* PostQueryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A882BCA715E00BCE635 /* PostQueryType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +113,7 @@
 		7BCF4A802BC92C7800BCE635 /* CommonError .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommonError .swift"; sourceTree = "<group>"; };
 		7BCF4A822BC9415C00BCE635 /* PostsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsRouter.swift; sourceTree = "<group>"; };
 		7BCF4A862BC947DE00BCE635 /* MulipartTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulipartTargetType.swift; sourceTree = "<group>"; };
+		7BCF4A882BCA715E00BCE635 /* PostQueryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostQueryType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +260,7 @@
 				7B11DCAA2BC591070055D423 /* TargetType.swift */,
 				7BCF4A802BC92C7800BCE635 /* CommonError .swift */,
 				7BCF4A862BC947DE00BCE635 /* MulipartTargetType.swift */,
+				7BCF4A882BCA715E00BCE635 /* PostQueryType.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -521,6 +524,7 @@
 				7B11DCA52BC5902A0055D423 /* authenticationRouter.swift in Sources */,
 				7BCF4A7D2BC922F700BCE635 /* PathRouter.swift in Sources */,
 				7BCF4A632BC6E87600BCE635 /* ExUIWindow.swift in Sources */,
+				7BCF4A892BCA715E00BCE635 /* PostQueryType.swift in Sources */,
 				7BCF4A4E2BC6D27400BCE635 /* ExUiView.swift in Sources */,
 				7BCF4A742BC7DE4B00BCE635 /* whitePointTextField.swift in Sources */,
 			);

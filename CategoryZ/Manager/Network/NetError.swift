@@ -28,6 +28,9 @@ enum NetworkError: Error {
     /// 이미지 업로드 에러
     case imageUploadError(statusCode: Int, description: String)
     
+    /// 포스트 작성 에러
+    case postWriteError(statusCode: Int, description: String)
+    
     /// URLRequest 생성중 에러
     case failMakeURLRequest
     
@@ -109,6 +112,20 @@ extension NetworkError {
                 return "접근 권한이 없습니다."
             case 419:
                 return "엑세스 토큰 만료"
+            default :
+                return "알수 없는 에러 \(description)"
+            }
+            
+        case .postWriteError(let statusCode, let description) :
+            switch statusCode {
+            case 401 :
+                return "인증할수 없는 엑세스 토큰"
+            case 403 :
+                return "접근 권한이 없습니다."
+            case 410 :
+                return "생성된 게시글이 없거나 서버 장애"
+            case 419 :
+                return "엑세스 토큰이 만료되었습니다."
             default :
                 return "알수 없는 에러 \(description)"
             }

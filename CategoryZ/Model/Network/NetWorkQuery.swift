@@ -31,3 +31,17 @@ struct EmailValidationQuery: Encodable {
 }
 
 
+
+/// 포스트 쿼리
+struct MainPostQuery: Encodable {
+    // 타이틀
+    var title: String
+    // 게시글 섭 타이틀
+    var content: String
+    
+    var product_id = "CategoryZ_Test_Server"
+    
+    var files: [String]?
+    
+}
+

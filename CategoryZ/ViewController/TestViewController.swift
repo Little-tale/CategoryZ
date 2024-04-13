@@ -76,9 +76,7 @@ final class TestViewController: UIViewController {
 
     }
     
-    struct imageDataModel: Decodable {
-        let files: [String]
-    }
+   
     
     @objc
     func test(_ noti : Notification){
