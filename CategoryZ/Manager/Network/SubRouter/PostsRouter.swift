@@ -10,9 +10,10 @@ import Alamofire
 
 enum PostsRouter {
     case imageUpload
-    case postWrite(query: MainPostQuery)
+    case postWrite(query: PostsQeuryType)
     case postRead(next: String? = nil, limit: String, productId: String)
-//    case selectPostRead
+    case postModify(query: PostsQeuryType, postID: String)
+    case selectPostRead(postID: String)
 //    case postModify
 //    case postDelete
 //    case userCasePostRead
@@ -28,8 +29,12 @@ extension PostsRouter: TargetType {
         switch self {
         case .imageUpload, .postWrite:
             return .post
-        case .postRead:
+            
+        case .postRead, .selectPostRead:
             return .get
+            
+        case .postModify:
+            return .put
         }
     }
     
@@ -37,17 +42,17 @@ extension PostsRouter: TargetType {
         switch self {
         case .imageUpload:
             return PathRouter.posts.path + "/files"
-        case .postWrite:
+        case .postWrite, .postRead:
             return PathRouter.posts.path
-        case .postRead:
-            return PathRouter.posts.path
+        case .postModify(_, let postId), .selectPostRead(let postId):
+            return PathRouter.posts.path + "/\(postId)"
         }
         
     }
     
     var parametters: Alamofire.Parameters? {
         switch self {
-        case .imageUpload, .postWrite, .postRead:
+        case .imageUpload, .postWrite, .postRead, .postModify, .selectPostRead:
             return nil
         }
     }
@@ -59,20 +64,20 @@ extension PostsRouter: TargetType {
                 NetHTTPHeader.sesacKey.rawValue: APIKey.sesacKey.rawValue,
                 NetHTTPHeader.contentType.rawValue : NetHTTPHeader.multipart.rawValue
             ]
-        case .postWrite:
+        case .postWrite, .postModify:
             return [
                 NetHTTPHeader.sesacKey.rawValue: APIKey.sesacKey.rawValue,
                 NetHTTPHeader.contentType.rawValue: NetHTTPHeader.json.rawValue
             ]
             
-        case .postRead:
+        case .postRead, .selectPostRead:
             return [NetHTTPHeader.sesacKey.rawValue: APIKey.sesacKey.rawValue]
         }
     }
     
     var queryItems: [URLQueryItem]? {
         switch self {
-        case .imageUpload, .postWrite:
+        case .imageUpload, .postWrite, .postModify, .selectPostRead:
             return nil
         case .postRead(let next, let limit, let product):
             return [
@@ -85,16 +90,16 @@ extension PostsRouter: TargetType {
     
     var version: String {
         switch self {
-        case .imageUpload, .postWrite, .postRead:
+        case .imageUpload, .postWrite, .postRead, .postModify, .selectPostRead:
             return "v1/"
         }
     }
     
     var body: Data? {
         switch self {
-        case .imageUpload, .postRead:
+        case .imageUpload, .postRead, .selectPostRead:
             return nil
-        case .postWrite(let query):
+        case .postWrite(let query), .postModify(let query, _):
             return jsEncoding(query)
         }
     }
@@ -107,6 +112,10 @@ extension PostsRouter: TargetType {
             return .postWriteError(statusCode: errorCode, description: description)
         case .postRead:
             return .postReadError(statusCode: errorCode, description: description)
+        case .postModify:
+            return .postModifyError(statusCode: errorCode, description: description)
+        case .selectPostRead(postID: let postID):
+            return .postModifyError(statusCode: errorCode, description: description)
         }
     }
     

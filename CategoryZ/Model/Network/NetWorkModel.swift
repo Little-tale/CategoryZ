@@ -48,7 +48,7 @@ struct imageDataModel: Decodable {
 
 ///MARK:  포스트 데이터 모델
 struct SNSMainModel: Decodable {
-    let data: [SnsModel]
+    let data: [SNSDataModel]
     let nextCursor: String
 
     enum CodingKeys: String, CodingKey {
@@ -82,8 +82,9 @@ struct PostModel: Decodable {
     }
 }
 
+// 포스트 읽기 기본 모델
 struct PostReadMainModel: Decodable {
-    let data: [SnsModel]
+    let data: [SNSDataModel]
     let nextCursor: String
     
     enum CodingKeys: String, CodingKey {
@@ -91,12 +92,14 @@ struct PostReadMainModel: Decodable {
         case nextCursor = "next_cursor"
     }
 }
-
-struct SnsModel: Decodable {
+// SNS 모델
+struct SNSDataModel: Decodable {
     let postId: String
     let productId: String
     let title: String
     let content: String
+    let content2: String
+    let content3: String
     let createdAt: String
     let creator: Creator
     let files: [String]
@@ -108,6 +111,8 @@ struct SnsModel: Decodable {
         case postId = "post_id"
         case productId = "product_id"
         case title
+        case content2
+        case content3
         case content
         case createdAt = "createdAt"
         case creator
@@ -123,6 +128,8 @@ struct SnsModel: Decodable {
         self.productId = try container.decodeIfPresent(String.self, forKey: .productId) ?? ""
         self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
         self.content = try container.decodeIfPresent(String.self, forKey: .content) ?? ""
+        self.content2 = try container.decodeIfPresent(String.self, forKey: .content2) ?? ""
+        self.content3 = try container.decodeIfPresent(String.self, forKey: .content3) ?? ""
         self.createdAt = try container.decode(String.self, forKey: .createdAt)
         self.creator = try container.decode(Creator.self, forKey: .creator)
         self.files = try container.decode([String].self, forKey: .files)
@@ -132,6 +139,8 @@ struct SnsModel: Decodable {
     }
 }
 
+
+// 만든이
 struct Creator: Decodable {
     let userID, nick: String // 유저이름 , 유저 아이디
     let profileImage: String? // 프로필 이미지들

@@ -94,21 +94,42 @@ final class TestViewController: UIViewController {
 //            .disposed(by: disposeBag)
         
         
-        let test = NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.postRead(next: nil, limit: "10", productId: "CategoryZ_Test_Server")))
+//        let test = NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.postRead(next: nil, limit: "10", productId: "CategoryZ_Test_Server")))
+//        
+//        test
+//            .subscribe(with: self) { owner, result in
+//                switch result {
+//                case .success(let success):
+//                    dump(success)
+//                case .failure(let fail):
+//                    print(fail)
+//                    print(fail.message)
+//                    print(fail.localizedDescription)
+//                    print(fail.errorCode)
+//                }
+//            }
+//            .disposed(by: disposeBag)
+//         "661a45e8438b876b25f735a7"
         
-        test
-            .subscribe(with: self) { owner, result in
-                switch result {
-                case .success(let success):
-                    dump(success)
-                case .failure(let fail):
-                    print(fail)
-                    print(fail.message)
-                    print(fail.localizedDescription)
-                    print(fail.errorCode)
-                }
-            }
-            .disposed(by: disposeBag)
+//        let testModel =  MainPostQuery(title: "과연...", content: "바뀔까요..?", content2: "과아아연?", content3: "에엥에에에렝", product_id: "CategoryZ_Test_Server")
+//        
+//        let test = NetworkManager.fetchNetwork(model: SNSDataModel.self, router: .poster(.postModify(query: testModel, postID: "661a45e8438b876b25f735a7")))
+//        
+//        test
+//            .subscribe(with: self) { owner, result in
+//                switch result {
+//                case .success(let ss):
+//                    print(ss)
+//                case .failure(let fail ):
+//                    print(fail)
+//                    print(fail.message)
+//                    print(fail.localizedDescription)
+//                    print(fail.errorCode)
+//                }
+//            }
+//            .disposed(by: disposeBag    )
+        
+        
     }
     
     @objc

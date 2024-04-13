@@ -34,6 +34,11 @@ enum NetworkError: Error {
     /// 포스트 조회 에러
     case postReadError(statusCode: Int, description: String)
     
+    /// 포스트 수정 에러
+    case postModifyError(statusCode: Int, description: String)
+    
+    /// 특적 포스트 에러
+    case selectPostError(statusCode: Int, description: String)
     
     /// URLRequest 생성중 에러
     case failMakeURLRequest
@@ -147,6 +152,36 @@ extension NetworkError {
                 return "알수 없는 에러 \(description)"
             }
             
+        case .postModifyError(let statusCode, let description):
+            switch statusCode {
+            case 401:
+                return "인증할 수 없는 엑세스 토큰입니다."
+            case 403:
+                return "접근 권한이 없습니다."
+            case 410:
+                return "수정할 게시글을 찾을수 없습니다."
+            case 419:
+                return "엑세스 토큰이 만료되었습니다."
+            case 445:
+                return "게시글 수정 권한이 없습니다."
+            default :
+                return "알수 없는 에러 \(description)"
+            }
+            
+        case .selectPostError(let statusCode, let description):
+            switch statusCode {
+            case 400:
+                return "잘못된 요청입니다."
+            case 401:
+                return "인증할 수 없는 엑세스 토큰입니다."
+            case 403:
+                return "접근 권한이 없습니다."
+            case 419:
+                return "엑세스 토큰이 만료되었습니다."
+            default :
+                return "알수 없는 에러 \(description)"
+            }
+            
         case .failMakeURLRequest:
             return "URL Request Error"
             
@@ -195,7 +230,9 @@ extension NetworkError {
             
         case .postWriteError(let statusCode, _):
             return statusCode
-    
+            
+        case .postModifyError(let statusCode, _):
+            return statusCode
         default :
             return 9999
         }
