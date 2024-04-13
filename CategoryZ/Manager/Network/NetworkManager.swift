@@ -23,6 +23,8 @@ struct NetworkManager {
     // 서버로부터 데이터 받을시
     typealias FetchType<T:Decodable> = Single<Result<T, NetworkError>>
     
+    typealias NoneModelFetchType = Single<Result<Void,NetworkError>>
+    
     // 서버로부터 데이터 보낼시
     typealias SendType<T:Encodable> = Single<Result<Void, NetworkError>>
     
@@ -61,6 +63,8 @@ extension NetworkManager {
         }
     }
     
+    
+    
     /// 알라모 파이어의 요청 로직입니다.
     private static func fetchNetwork<T:Decodable>(_ urlRequest: URLRequest, _ data: T.Type, handler: @escaping (Result<T, AFError>) -> Void ) {
         AF.request(urlRequest, interceptor: AccessTokkenAdapter())
@@ -79,6 +83,20 @@ extension NetworkManager {
 //            .responseString { response in
 //                print(response)
 //            }
+    }
+    
+    /// 모델이 필요없는경우에는 이것을 사용해야 합니다.
+    private static func fetchNetwork(_ urlRequest: URLRequest, handler: @escaping (Result<Void, AFError>) -> Void) {
+        AF.request(urlRequest, interceptor: AccessTokkenAdapter())
+            .validate(statusCode: 200..<300)
+            .response { response in
+                switch response.result {
+                case .success:
+                    handler(.success(()))
+                case .failure(let error):
+                    handler(.failure(error))
+                }
+            }
     }
     
     // NetworkManager에서 이미지 처리
@@ -122,8 +140,10 @@ extension NetworkManager {
             
             return Disposables.create()
         }
-        
+
     }
+    
+    
     
 }
 
@@ -154,4 +174,38 @@ extension NetworkManager {
             }
         }
     }
+}
+
+// NoneModelRequest
+extension NetworkManager {
+    
+    static func noneModelRequest(router: NetworkRouter) -> NoneModelFetchType {
+        return NoneModelFetchType.create { single in
+            do {
+                let urlRequest = try router.asURLRequest()
+                print(urlRequest)
+                fetchNetwork(urlRequest) { result in
+                    switch result {
+                    case .success(let success):
+                        single(.success(.success(success)))
+                    case .failure(let failure):
+                        print(failure.responseCode)
+                        if let stateCode = failure.responseCode {
+                            if let commonCode = NetworkRouter.commonTest(status: stateCode) {
+                                single(.success(.failure(commonCode)))
+                            }
+                            
+                            single(.success(.failure(router.errorCase(stateCode, failure.localizedDescription))))
+                        }
+                        single(.success(.failure(.unknownError)))
+                    }
+                }
+                
+            } catch {
+                single(.success(.failure(.failMakeURLRequest)))
+            }
+            return Disposables.create()
+        }
+    }
+    
 }
