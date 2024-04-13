@@ -82,7 +82,7 @@ final class UserInfoRegisterViewModel: RxViewModelType {
             .withLatestFrom(emailText)
             .map { EmailValidationQuery(email: $0) }
             .flatMapLatest {
-                NetworkManager.fetchNetwork(model: EmailVaildModel.self, router: .emailVaild(query: $0))
+                NetworkManager.fetchNetwork(model: EmailVaildModel.self, router: .authentication(.emailVaild(query: $0)))
             }
             .bind(with: self) { owenr, result in
                     switch result {
@@ -156,7 +156,7 @@ final class UserInfoRegisterViewModel: RxViewModelType {
             .withLatestFrom(combineText)
             .throttle(.milliseconds(400), scheduler: MainScheduler.instance)
             .map { JoinQuery(email: $0.email, password: $0.password, nick: $0.name, phoneNum: $0.phoneNum) }
-            .flatMapLatest { NetworkManager.fetchNetwork(model: JoinModel.self, router: .join(query: $0)) }
+            .flatMapLatest { NetworkManager.fetchNetwork(model: JoinModel.self, router: .authentication(.join(query: $0))) }
             .asObservable()
             .bind { result in
                 switch result {

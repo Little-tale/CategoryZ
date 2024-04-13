@@ -26,8 +26,12 @@ protocol TargetType: URLRequestConvertible {
     
     var body: Data? { get }
     
+    var multipart: MultipartFormData { get }
+    
     func errorCase(_ errorCode: Int, _ description: String) -> NetworkError
+
 }
+
 
 
 extension TargetType {
@@ -62,5 +66,9 @@ extension TargetType {
         }
     }
 
+    
+    var multipart: MultipartFormData {
+        return MultipartFormData()
+    }
     
 }

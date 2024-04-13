@@ -22,7 +22,11 @@ enum NetworkError: Error {
     /// 리프레시 토큰 에러
     case refreshTokkenError(statusCode: Int, description: String)
     
+    /// 유저 정보 삭제 에러
     case usurWithDrawError(statusCode: Int, description: String)
+    
+    /// 이미지 업로드 에러
+    case imageUploadError(statusCode: Int, description: String)
     
     /// URLRequest 생성중 에러
     case failMakeURLRequest
@@ -95,6 +99,20 @@ extension NetworkError {
                 return "알수 없는 에러 \(description)"
             }
             
+        case .imageUploadError(let statusCode, let description) :
+            switch statusCode {
+            case 400 :
+                return "잘못된 요청 혹은 필수값 없음"
+            case 401 :
+                return "인증할수 없는 엑세스 토큰"
+            case 403:
+                return "접근 권한이 없습니다."
+            case 419:
+                return "엑세스 토큰 만료"
+            default :
+                return "알수 없는 에러 \(description)"
+            }
+            
         case .failMakeURLRequest:
             return "URL Request Error"
             
@@ -122,12 +140,19 @@ extension NetworkError {
         switch self {
         case .loginError(let statusCode, _):
             return statusCode
+            
         case .joinError(let statusCode, _):
             return statusCode
+            
+        case .imageUploadError(let statusCode,_):
+            return statusCode
+            
         case .emailValidError(let statusCode, _):
             return statusCode
+            
         case .refreshTokkenError(let statusCode, _):
             return statusCode
+            
         case .commonError(let status):
             return status
             

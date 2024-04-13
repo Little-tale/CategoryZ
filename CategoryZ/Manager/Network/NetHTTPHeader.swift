@@ -24,4 +24,6 @@ enum NetHTTPHeader: String {
     
     case json = "application/json"
     
+    case multipart = "multipart/form-data"
+    
 }

@@ -43,9 +43,10 @@ extension NetworkManager {
                     case .failure(let failure):
                         print(failure.responseCode)
                         if let stateCode = failure.responseCode {
-                            if let commonCode = router.commonTest(status: stateCode) {
+                            if let commonCode = NetworkRouter.commonTest(status: stateCode) {
                                 single(.success(.failure(commonCode)))
                             }
+                            
                             single(.success(.failure(router.errorCase(stateCode, failure.localizedDescription))))
                         }
                         single(.success(.failure(.unknownError)))
@@ -72,6 +73,50 @@ extension NetworkManager {
             }
     }
     
+    // NetworkManager에서 이미지 처리
+    static func uploadImages<T:Decodable>(model: T.Type, router: PostsRouter, images: [Data]) -> FetchType<T>  {
+    
+        return FetchType.create { single in
+            
+            let version = router.version
+            let path = version + router.path
+            
+            guard case .imageUpload = router,
+                  let url = router.baseUrl?.appendingPathComponent(path, conformingTo: .url) else {
+                single(.success(.failure(.failMakeURLRequest)))
+                return Disposables.create()
+            }
+            
+            AF.upload(multipartFormData: { multiPartFromData in
+                for (index, imageData ) in images.enumerated() {
+                    multiPartFromData.append(
+                        imageData,
+                        withName: "files",
+                        fileName: "CategoryZ_\(index).jpg",
+                        mimeType: "image/jpg"
+                    )
+                }
+            }, to: url, method: .post, headers: HTTPHeaders(router.headers), interceptor:  AccessTokkenAdapter()).responseDecodable(of: model) { response in
+                switch response.result {
+                case .success(let success):
+                    return single(.success(.success(success)))
+                case .failure(let fails):
+                    if let stateCode = fails.responseCode {
+                        if let commonCode = NetworkRouter.commonTest(status: stateCode) {
+                            single(.success(.failure(commonCode)))
+                        }
+                        
+                        single(.success(.failure(router.errorCase(stateCode, fails.localizedDescription))))
+                    }
+                    single(.success(.failure(.unknownError)))
+                }
+            }
+            
+            return Disposables.create()
+        }
+        
+    }
+    
 }
 
 // Request Refresh
@@ -84,7 +129,7 @@ extension NetworkManager {
             complite(.failure(.cantReadTokken))
             return
         }
-        let urlRequest = try? NetworkRouter.refreshTokken(access: accessToken, Refresh: refreshToken).asURLRequest()
+        let urlRequest = try? authenticationRouter.refreshTokken(access: accessToken, Refresh: refreshToken).asURLRequest()
         
         guard let urlRequest else {
             print("테스트")

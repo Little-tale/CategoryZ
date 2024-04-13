@@ -15,6 +15,11 @@ final class AccessTokkenAdapter: RequestInterceptor {
     
     private var requestsToRetry: [(RetryResult) -> Void] = []
     
+    private var retryCount = 3 {
+        didSet {
+            print("\(retryCount) 남음")
+        }
+    }
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, any Error>) -> Void) {
         var urlRequest = urlRequest
@@ -43,12 +48,12 @@ final class AccessTokkenAdapter: RequestInterceptor {
     }
     
     func retry(_ request: Request, for session: Session, dueTo error: any Error, completion: @escaping (RetryResult) -> Void) {
-        
+
         guard let statusCode = request.response?.statusCode else {
             completion(.doNotRetryWithError(error))
             return
         }
-        
+        print("retry : statusCode: \(statusCode)")
         switch statusCode {
         case 419:
             requestsToRetry.append(completion)
@@ -66,22 +71,27 @@ final class AccessTokkenAdapter: RequestInterceptor {
                         
                         TokenStorage.shared.accessToken = success.accessToken
                         
-                        requestsToRetry.forEach { $0(.retryWithDelay(10)) }
+                        requestsToRetry.forEach { $0(.retryWithDelay(0.1)) }
                         
                     case .failure(_):
-                        requestsToRetry.forEach { $0(.doNotRetry) }
+                        requestsToRetry.forEach { $0(.retryWithDelay(1)) }
+                        if retryCount <= 0 {
+                            requestsToRetry.forEach { $0(.doNotRetry) }
+                            requestsToRetry.removeAll()
+                        }
+                        retryCount -= 1
+                        
                     }
                     requestsToRetry.removeAll()
                 }
             }
             
-        case 418:
-            NotificationCenter.default.post(name: .cantRefresh, object: nil)
+        case 418, 401:
+            NotificationCenter.default.post(name: .cantRefresh, object: statusCode)
             print("리프레시 토큰 다이") // 목록에 많이 쌓인거?
             requestsToRetry.forEach { $0(.doNotRetry) }
             requestsToRetry.removeAll()
-            completion(.doNotRetryWithError(error))
-            
+            //completion(.doNotRetryWithError(error))
         default:
             completion(.doNotRetry)
         }
