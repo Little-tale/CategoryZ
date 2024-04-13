@@ -130,6 +130,20 @@ final class TestViewController: UIViewController {
 //            .disposed(by: disposeBag    )
         
         
+        NetworkManager.fetchNetwork(model: SNSDataModel.self, router: .poster(.selectPostRead(postID: "661a45e8438b876b25f735a7")))
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let ss):
+                    print(ss)
+                case .failure(let fail ):
+                    print(fail)
+                    print(fail.message)
+                    print(fail.localizedDescription)
+                    print(fail.errorCode)
+                }
+            }
+            .disposed(by: disposeBag )
+        
     }
     
     @objc
