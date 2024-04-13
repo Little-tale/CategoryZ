@@ -32,13 +32,15 @@ extension NetworkManager {
     
     // MARK: 요청시 해당 함수를 사용. 각각의 모델과 라우터를 잘 지정
     static func fetchNetwork<T:Decodable>(model: T.Type, router: NetworkRouter) -> FetchType<T> {
-
+        
         return FetchType.create { single in
             do {
                 let urlRequest = try router.asURLRequest()
+                print(urlRequest)
                 fetchNetwork(urlRequest, model) { result in
                     switch result {
                     case .success(let success):
+                        
                         single(.success(.success(success)))
                     case .failure(let failure):
                         print(failure.responseCode)
@@ -71,6 +73,12 @@ extension NetworkManager {
                     handler(.failure(failure))
                 }
             }
+        // 테스트용
+//        AF.request(urlRequest, interceptor: AccessTokkenAdapter())
+//            .validate(statusCode: 200 ..< 300)
+//            .responseString { response in
+//                print(response)
+//            }
     }
     
     // NetworkManager에서 이미지 처리

@@ -69,21 +69,66 @@ struct PostModel: Decodable {
         case postID = "post_id"
         case title, content, createdAt, creator, files, likes, comments
     }
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.postID = try container.decodeIfPresent(String.self, forKey: .postID) ?? ""
+        self.title = try container.decodeIfPresent(String.self, forKey: .title)  ?? ""
+        self.content = try container.decodeIfPresent(String.self, forKey: .content)  ?? ""
+        self.createdAt = try container.decode(String.self, forKey: .createdAt)
+        self.creator = try container.decode(Creator.self, forKey: .creator)
+        self.files = try container.decode([String].self, forKey: .files)
+        self.likes = try container.decode([String].self, forKey: .likes)
+        self.comments = try container.decode([String].self, forKey: .comments)
+    }
+}
+
+struct PostReadMainModel: Decodable {
+    let data: [SnsModel]
+    let nextCursor: String
+    
+    enum CodingKeys: String, CodingKey {
+        case data
+        case nextCursor = "next_cursor"
+    }
 }
 
 struct SnsModel: Decodable {
-    let postID: String // 포스트 아이디
-    let title: String // 타이틀
-    let content: String // 섭타이틀
-    let createdAt: String // 생성일
+    let postId: String
+    let productId: String
+    let title: String
+    let content: String
+    let createdAt: String
     let creator: Creator
-    let files: [String]?
+    let files: [String]
     let likes: [String]
+    let hashTags: [String]
     let comments: [String]
-   
+    
     enum CodingKeys: String, CodingKey {
-        case postID = "post_id"
-        case title, content, createdAt, creator, files, likes, comments
+        case postId = "post_id"
+        case productId = "product_id"
+        case title
+        case content
+        case createdAt = "createdAt"
+        case creator
+        case files
+        case likes
+        case hashTags
+        case comments
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.postId = try container.decode(String.self, forKey: .postId)
+        self.productId = try container.decodeIfPresent(String.self, forKey: .productId) ?? ""
+        self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
+        self.content = try container.decodeIfPresent(String.self, forKey: .content) ?? ""
+        self.createdAt = try container.decode(String.self, forKey: .createdAt)
+        self.creator = try container.decode(Creator.self, forKey: .creator)
+        self.files = try container.decode([String].self, forKey: .files)
+        self.likes = try container.decode([String].self, forKey: .likes)
+        self.hashTags = try container.decode([String].self, forKey: .hashTags)
+        self.comments = try container.decode([String].self, forKey: .comments)
     }
 }
 

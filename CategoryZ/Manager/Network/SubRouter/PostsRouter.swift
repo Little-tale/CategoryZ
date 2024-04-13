@@ -11,7 +11,7 @@ import Alamofire
 enum PostsRouter {
     case imageUpload
     case postWrite(query: MainPostQuery)
-//    case postRead
+    case postRead(next: String? = nil, limit: String, productId: String)
 //    case selectPostRead
 //    case postModify
 //    case postDelete
@@ -28,6 +28,8 @@ extension PostsRouter: TargetType {
         switch self {
         case .imageUpload, .postWrite:
             return .post
+        case .postRead:
+            return .get
         }
     }
     
@@ -37,12 +39,15 @@ extension PostsRouter: TargetType {
             return PathRouter.posts.path + "/files"
         case .postWrite:
             return PathRouter.posts.path
+        case .postRead:
+            return PathRouter.posts.path
         }
+        
     }
     
     var parametters: Alamofire.Parameters? {
         switch self {
-        case .imageUpload, .postWrite:
+        case .imageUpload, .postWrite, .postRead:
             return nil
         }
     }
@@ -59,6 +64,9 @@ extension PostsRouter: TargetType {
                 NetHTTPHeader.sesacKey.rawValue: APIKey.sesacKey.rawValue,
                 NetHTTPHeader.contentType.rawValue: NetHTTPHeader.json.rawValue
             ]
+            
+        case .postRead:
+            return [NetHTTPHeader.sesacKey.rawValue: APIKey.sesacKey.rawValue]
         }
     }
     
@@ -66,19 +74,25 @@ extension PostsRouter: TargetType {
         switch self {
         case .imageUpload, .postWrite:
             return nil
+        case .postRead(let next, let limit, let product):
+            return [
+                URLQueryItem(name: "next", value: next),
+                URLQueryItem(name: "limit", value: limit),
+                URLQueryItem(name: "product_id", value: product)
+            ]
         }
     }
     
     var version: String {
         switch self {
-        case .imageUpload, .postWrite:
+        case .imageUpload, .postWrite, .postRead:
             return "v1/"
         }
     }
     
     var body: Data? {
         switch self {
-        case .imageUpload:
+        case .imageUpload, .postRead:
             return nil
         case .postWrite(let query):
             return jsEncoding(query)
@@ -91,6 +105,8 @@ extension PostsRouter: TargetType {
             return .imageUploadError(statusCode: errorCode, description: description)
         case .postWrite:
             return .postWriteError(statusCode: errorCode, description: description)
+        case .postRead:
+            return .postReadError(statusCode: errorCode, description: description)
         }
     }
     

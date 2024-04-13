@@ -42,8 +42,8 @@ final class TestViewController: UIViewController {
 //                guard case .success( let data ) = result else { return }
 //                print("!!!!",data)
 //                print("삭제됨")
-//                // TokenStorage.shared.accessToken = data.accessToken
-//                // TokenStorage.shared.refreshToken = data.refreshToken
+//                TokenStorage.shared.accessToken = data.accessToken
+//                TokenStorage.shared.refreshToken = data.refreshToken
 //            }
 //            .disposed(by: disposeBag)
 //        // print(TokenStorage.shared.accessToken)
@@ -55,6 +55,8 @@ final class TestViewController: UIViewController {
 //                
 //            }
 //            .disposed(by: disposeBag)
+        
+        
 //    // 이미지 테스트
 //        let imageData = UIImage(resource: .testImageSet).jpegData(compressionQuality: 1.0)!
 //        
@@ -74,26 +76,40 @@ final class TestViewController: UIViewController {
 //            }
 //            .disposed(by: disposeBag)
         
-        let model = MainPostQuery(title: "테스트", content: "제발 됬으면...")
+//        let model = MainPostQuery(title: "테스트", content: "제발 됬으면...")
+//        
+//        let testModel = NetworkManager.fetchNetwork(model: PostModel.self, router: .poster(.postWrite(query: model)))
+//        
+//        testModel
+//            .subscribe(with: self) { owner, results in
+//                switch results {
+//                case .success(let s):
+//                    print("model : ",s)
+//                case .failure(let f):
+//                    print(f.message)
+//                    print(f.localizedDescription)
+//                    print(f.errorCode)
+//                }
+//            }
+//            .disposed(by: disposeBag)
         
-        let testModel = NetworkManager.fetchNetwork(model: PostModel.self, router: .poster(.postWrite(query: model)))
         
-        testModel
-            .subscribe(with: self) { owner, results in
-                switch results {
-                case .success(let s):
-                    print("model : ",s)
-                case .failure(let f):
-                    print(f.message)
-                    print(f.localizedDescription)
-                    print(f.errorCode)
+        let test = NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.postRead(next: nil, limit: "10", productId: "CategoryZ_Test_Server")))
+        
+        test
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    dump(success)
+                case .failure(let fail):
+                    print(fail)
+                    print(fail.message)
+                    print(fail.localizedDescription)
+                    print(fail.errorCode)
                 }
             }
             .disposed(by: disposeBag)
-        
     }
-    
-   
     
     @objc
     func test(_ noti : Notification){
