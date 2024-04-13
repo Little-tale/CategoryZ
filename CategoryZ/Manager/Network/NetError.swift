@@ -31,7 +31,7 @@ enum NetworkError: Error {
     /// 포스트 작성 에러
     case postWriteError(statusCode: Int, description: String)
     
-    /// 포스트 조회 에러
+    /// 포스트 조회 에러 + 다른혹은 자신의 포스트들 에러
     case postReadError(statusCode: Int, description: String)
     
     /// 포스트 수정 에러
@@ -42,6 +42,7 @@ enum NetworkError: Error {
     
     /// 포스트 제거 에러
     case postDeletError(statusCode: Int, description: String)
+    
     
     /// URLRequest 생성중 에러
     case failMakeURLRequest
@@ -250,6 +251,13 @@ extension NetworkError {
             
         case .postModifyError(let statusCode, _):
             return statusCode
+            
+        case .selectPostError(let statusCode, _):
+            return statusCode
+            
+        case .postDeletError(let statusCode, _):
+            return statusCode
+            
         default :
             return 9999
         }

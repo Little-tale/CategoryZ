@@ -15,8 +15,8 @@ enum PostsRouter {
     case postModify(query: PostsQeuryType, postID: String)
     case selectPostRead(postID: String)
     case postDelete(postID: String)
-    
-//    case userCasePostRead
+    /// 다른 유저가 작성한 포스터 혹은 자신의 포스터들
+    case userCasePostRead(userId: String,next: String? = nil, limit: String, productId: String)
 }
 
 extension PostsRouter: TargetType {
@@ -29,12 +29,13 @@ extension PostsRouter: TargetType {
         switch self {
         case .imageUpload, .postWrite:
             return .post
-            
-        case .postRead, .selectPostRead:
+    
+        case .postRead, .selectPostRead, .userCasePostRead:
             return .get
             
         case .postModify:
             return .put
+            
         case .postDelete:
             return .delete
         }
@@ -50,13 +51,15 @@ extension PostsRouter: TargetType {
                 .selectPostRead(let postId),
                 .postDelete(let postId):
             return PathRouter.posts.path + "/\(postId)"
+        case .userCasePostRead(let userId,_,_,_):
+            return PathRouter.posts.path + "/users/\(userId)"
         }
         
     }
     
     var parametters: Alamofire.Parameters? {
         switch self {
-        case .imageUpload, .postWrite, .postRead, .postModify, .selectPostRead, .postDelete:
+        case .imageUpload, .postWrite, .postRead, .postModify, .selectPostRead, .postDelete, .userCasePostRead:
             return nil
         }
     }
@@ -74,7 +77,7 @@ extension PostsRouter: TargetType {
                 NetHTTPHeader.contentType.rawValue: NetHTTPHeader.json.rawValue
             ]
             
-        case .postRead, .selectPostRead, .postDelete:
+        case .postRead, .selectPostRead, .postDelete, .userCasePostRead:
             return [
                 NetHTTPHeader.sesacKey.rawValue: APIKey.sesacKey.rawValue
             ]
@@ -85,7 +88,7 @@ extension PostsRouter: TargetType {
         switch self {
         case .imageUpload, .postWrite, .postModify, .selectPostRead, .postDelete:
             return nil
-        case .postRead(let next, let limit, let product):
+        case .postRead(let next, let limit, let product) , .userCasePostRead(_, let next, let limit, let product):
             return [
                 URLQueryItem(name: "next", value: next),
                 URLQueryItem(name: "limit", value: limit),
@@ -96,14 +99,14 @@ extension PostsRouter: TargetType {
     
     var version: String {
         switch self {
-        case .imageUpload, .postWrite, .postRead, .postModify, .selectPostRead, .postDelete:
+        case .imageUpload, .postWrite, .postRead, .postModify, .selectPostRead, .postDelete, .userCasePostRead:
             return "v1/"
         }
     }
     
     var body: Data? {
         switch self {
-        case .imageUpload, .postRead, .selectPostRead, .postDelete:
+        case .imageUpload, .postRead, .selectPostRead, .postDelete, .userCasePostRead:
             return nil
         case .postWrite(let query), .postModify(let query, _):
             return jsEncoding(query)
@@ -124,6 +127,9 @@ extension PostsRouter: TargetType {
             return .selectPostError(statusCode: errorCode, description: description)
         case .postDelete:
             return .postDeletError(statusCode: errorCode, description: description)
+            
+        case .userCasePostRead:
+            return .postReadError(statusCode: errorCode, description: description)
         }
     }
     

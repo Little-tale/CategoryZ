@@ -145,15 +145,28 @@ final class TestViewController: UIViewController {
 //            .disposed(by: disposeBag )
         
 //        
-        NetworkManager.noneModelRequest(router: .poster(.postDelete(postID: "661a45e8438b876b25f735a7")))
+//        NetworkManager.noneModelRequest(router: .poster(.postDelete(postID: "661a45e8438b876b25f735a7")))
+//            .subscribe(with: self) { owner, result in
+//                switch result {
+//                case .success():
+//                    print("삭제 완료")
+//                case .failure(let fail):
+//                    print(fail)
+//                    print(fail.message)
+//                    print(fail.localizedDescription)
+//                    print(fail.errorCode)
+//                }
+//            }
+//            .disposed(by: disposeBag)
+        
+        NetworkManager.fetchNetwork(model: SNSMainModel.self, router: .poster(.userCasePostRead(userId: "661a2c74e8473868acf65a05", next: nil, limit: "10", productId: "")))
             .subscribe(with: self) { owner, result in
                 switch result {
-                case .success():
-                    print("삭제 완료")
+                case .success(let model):
+                    dump(model)
                 case .failure(let fail):
                     print(fail)
                     print(fail.message)
-                    print(fail.localizedDescription)
                     print(fail.errorCode)
                 }
             }
