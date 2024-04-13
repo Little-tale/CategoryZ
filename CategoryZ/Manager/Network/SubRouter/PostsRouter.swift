@@ -57,7 +57,7 @@ extension PostsRouter: TargetType {
         case .postWrite:
             return [
                 NetHTTPHeader.sesacKey.rawValue: APIKey.sesacKey.rawValue,
-                NetHTTPHeader.authorization.rawValue: NetHTTPHeader.json.rawValue
+                NetHTTPHeader.contentType.rawValue: NetHTTPHeader.json.rawValue
             ]
         }
     }

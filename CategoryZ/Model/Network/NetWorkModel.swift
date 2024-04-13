@@ -47,13 +47,27 @@ struct imageDataModel: Decodable {
 
 
 ///MARK:  포스트 데이터 모델
-struct PostsModel: Decodable {
+struct SNSMainModel: Decodable {
     let data: [SnsModel]
     let nextCursor: String
 
     enum CodingKeys: String, CodingKey {
         case data
         case nextCursor = "next_cursor"
+    }
+}
+
+// MARK: 포스트 모델
+struct PostModel: Decodable {
+    let postID, title, content: String
+    let createdAt: String
+    let creator: Creator
+    let files: [String]
+    let likes, comments: [String]
+
+    enum CodingKeys: String, CodingKey {
+        case postID = "post_id"
+        case title, content, createdAt, creator, files, likes, comments
     }
 }
 
@@ -67,7 +81,6 @@ struct SnsModel: Decodable {
     let likes: [String]
     let comments: [String]
    
-
     enum CodingKeys: String, CodingKey {
         case postID = "post_id"
         case title, content, createdAt, creator, files, likes, comments

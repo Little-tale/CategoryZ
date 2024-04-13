@@ -55,25 +55,42 @@ final class TestViewController: UIViewController {
 //                
 //            }
 //            .disposed(by: disposeBag)
-    
-        let imageData = UIImage(resource: .testImageSet).jpegData(compressionQuality: 1.0)!
+//    // 이미지 테스트
+//        let imageData = UIImage(resource: .testImageSet).jpegData(compressionQuality: 1.0)!
+//        
+//        let start = NetworkManager.uploadImages(model: imageDataModel.self, router: .imageUpload, images: [imageData])
+//        
+//        let driver =  start
+//            .asDriver(onErrorDriveWith: .never())
+//        
+//        driver
+//            .drive(with: self) { owner, result in
+//                switch result {
+//                case .success(let success):
+//                    print(success)
+//                case .failure(let fail):
+//                    print(fail.errorCode)
+//                }
+//            }
+//            .disposed(by: disposeBag)
         
-        let start = NetworkManager.uploadImages(model: imageDataModel.self, router: .imageUpload, images: [imageData])
+        let model = MainPostQuery(title: "테스트", content: "제발 됬으면...")
         
-        let driver =  start
-            .asDriver(onErrorDriveWith: .never())
+        let testModel = NetworkManager.fetchNetwork(model: PostModel.self, router: .poster(.postWrite(query: model)))
         
-        driver
-            .drive(with: self) { owner, result in
-                switch result {
-                case .success(let success):
-                    print(success)
-                case .failure(let fail):
-                    print(fail.errorCode)
+        testModel
+            .subscribe(with: self) { owner, results in
+                switch results {
+                case .success(let s):
+                    print("model : ",s)
+                case .failure(let f):
+                    print(f.message)
+                    print(f.localizedDescription)
+                    print(f.errorCode)
                 }
             }
             .disposed(by: disposeBag)
-
+        
     }
     
    
