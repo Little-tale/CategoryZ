@@ -277,17 +277,16 @@ final class TestViewController: UIViewController {
         
         var test = ProfileModifyIn()
         
-        test.birthDay = "20010011"
-        test.nick = "KingJH"
-        test.phoneNum = "01000110022"
-        
+        // test.profile = nil
+//
+//        
         NetworkManager.profileModify(type: ProfileModel.self, router: .profileMeModify, model: test)
             .subscribe(with: self) { onwer  , result in
                 switch result {
                 case .success(let model):
                     print(model)
                 case .failure(let fail):
-                    print(fail)
+                    print(fail.message)
                 }
             }
             .disposed(by: disposeBag)
