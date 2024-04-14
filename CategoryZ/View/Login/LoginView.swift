@@ -20,7 +20,7 @@ final class LoginView: RxBaseView {
     }
     
     let emailTextField = WhitePointTextField("가입하신 이메일를 입력해주세요")
-    let passwordTextFeild = WhitePointTextField("비밀번호를 입력해주세요")
+    let passwordTextFeild = SecurityPointTextField("비밀번호를 입력해주세요")
     let loginButton = PointButton(title: "로그인")
     
     override func configureHierarchy() {

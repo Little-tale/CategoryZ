@@ -69,7 +69,27 @@ extension UIViewController {
             }
             alertCon.addAction(check)
         }
-        
         present(alertCon,animated: true)
     }
+    
+    func showAlert(error: NetworkError, actionTitle: String? = nil , complite: @escaping ((UIAlertAction) -> Void)) {
+        
+        let alertCon = UIAlertController(title: "Error", message: error.message, preferredStyle: .alert)
+        
+        if let actionTitle {
+            let action = UIAlertAction(title: actionTitle, style: .default) { action  in
+                complite(action)
+            }
+            let cancel = UIAlertAction(title: "취소", style: .cancel)
+            alertCon.addAction(action)
+            alertCon.addAction(cancel)
+        } else {
+            let check = UIAlertAction(title: "확인", style: .default) { action in
+                complite(action)
+            }
+            alertCon.addAction(check)
+        }
+        present(alertCon,animated: true)
+    }
+    
 }

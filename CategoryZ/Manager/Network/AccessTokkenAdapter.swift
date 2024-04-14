@@ -58,11 +58,10 @@ final class AccessTokkenAdapter: RequestInterceptor {
             completion(.doNotRetryWithError(error))
             return
         }
-        print("retry : statusCode: \(statusCode)")
         switch statusCode {
         case 419:
             requestsToRetry.append(completion)
-            
+            print("retry : statusCode: \(statusCode)")
             if !refresing {
                 refresing = true
                 print("토큰 다이")
@@ -91,7 +90,7 @@ final class AccessTokkenAdapter: RequestInterceptor {
                 }
             }
             
-        case 418, 401:
+        case 418:
             NotificationCenter.default.post(name: .cantRefresh, object: statusCode)
             print("리프레시 토큰 다이") // 목록에 많이 쌓인거?
             requestsToRetry.forEach { $0(.doNotRetry) }
