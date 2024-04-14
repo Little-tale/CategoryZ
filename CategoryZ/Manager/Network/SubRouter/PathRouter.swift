@@ -16,6 +16,7 @@ enum PathRouter {
     case auth
     case follow
     case usersMe
+    case comments
     
     var path: String {
         switch self {
@@ -31,6 +32,8 @@ enum PathRouter {
             return "users/me"
         case .auth:
             return "auth"
+        case .comments:
+            return "comments"
         }
     }
 }

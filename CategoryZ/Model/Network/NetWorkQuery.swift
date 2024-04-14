@@ -64,3 +64,8 @@ struct MainPostQuery: PostsQeuryType {
     
 }
 
+
+/// 댓글 작성 쿼리
+struct ComentWriteQuery: Encodable {
+    let content: String
+}

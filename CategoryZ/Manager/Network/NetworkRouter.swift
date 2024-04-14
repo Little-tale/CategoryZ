@@ -59,3 +59,18 @@ extension NetworkRouter: CommonError {
     }
     
 }
+extension NetworkRouter {
+    static func jsEncoding(_ target: Encodable) -> Data? {
+        
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        do {
+            let result = try  encoder.encode(target)
+            print(result)
+            return result
+        } catch {
+            return nil
+        }
+        
+    }
+}
