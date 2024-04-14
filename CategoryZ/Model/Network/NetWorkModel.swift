@@ -20,6 +20,23 @@ struct JoinModel: Decodable {
     let user_id: String
     let email: String
     let nick: String
+    let phoneNum: String
+    
+    enum CodingKeys: CodingKey {
+        case user_id
+        case email
+        case nick
+        case phoneNum
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.user_id = try container.decode(String.self, forKey: .user_id)
+        self.email = try container.decode(String.self, forKey: .email)
+        self.nick = try container.decode(String.self, forKey: .nick)
+        self.phoneNum = try container.decodeIfPresent(String.self, forKey: .phoneNum) ?? ""
+    }
+    
 }
 
 /// 이메일 중복 결과 모델
@@ -179,4 +196,50 @@ struct FollowModel: Decodable {
         case opponentNick = "opponent_nick"
         case followingStatus = "following_status"
     }
+}
+
+
+// 프로필 모델
+struct ProfileModel: Decodable {
+    let userID: String
+    let email: String
+    let nick: String
+    let phoneNum: String
+    let followers, following: [String]
+    let profileImage: String
+    let posts: [String]
+
+    enum CodingKeys: String, CodingKey {
+        case userID = "user_id"
+        case email, nick, profileImage, followers, following, posts
+        case phoneNum
+    }
+    
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.userID = try container.decode(String.self, forKey: .userID)
+        self.email = try container.decode(String.self, forKey: .email)
+        self.nick = try container.decode(String.self, forKey: .nick)
+        self.profileImage = try container.decodeIfPresent(String.self, forKey: .profileImage) ?? ""
+        self.followers = try container.decode([String].self, forKey: .followers)
+        self.following = try container.decode([String].self, forKey: .following)
+        self.posts = try container.decode([String].self, forKey: .posts)
+        self.phoneNum = try container.decodeIfPresent(String.self, forKey: .phoneNum) ?? ""
+    }
+}
+
+struct ProfileModifyIn {
+    var nick: String?
+    var phoneNum: String?
+    var birthDay: String?
+    var profile: Data?
+    
+    
+    init(nick: String? = nil, phoneNum: String? = nil, birthDay: String? = nil, profile: Data? = nil) {
+        self.nick = nick
+        self.phoneNum = phoneNum
+        self.birthDay = birthDay
+        self.profile = profile
+    }
+    
 }

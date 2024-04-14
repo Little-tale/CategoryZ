@@ -140,11 +140,10 @@ extension NetworkManager {
             
             return Disposables.create()
         }
-
+        
     }
     
-    
-    
+
 }
 
 // Request Refresh
@@ -208,4 +207,58 @@ extension NetworkManager {
         }
     }
     
+}
+
+
+extension NetworkManager {
+    
+    static func profileModify<T:Decodable>(type: T.Type, router:ProfileRouter, model:ProfileModifyIn) ->  FetchType<T> {
+        
+        return FetchType.create { single in
+            
+            let version = router.version
+            let path = version + router.path
+         
+            guard case .profileMeModify = router,
+                  let url = router.baseUrl?.appendingPathComponent(path, conformingTo: .url) else {
+                single(.success(.failure(.failMakeURLRequest)))
+                return Disposables.create()
+            }
+    
+            AF.upload(multipartFormData: { multipartFromData in
+                
+                if let nick = model.nick?.data(using: .utf8) {
+                    multipartFromData.append(nick, withName: "nick")
+                }
+                if let phoneNum = model.phoneNum?.data(using: .utf8) {
+                    multipartFromData.append(phoneNum, withName: "phoneNum")
+                }
+                if let profile = model.profile {
+                    multipartFromData.append(
+                        profile,
+                        withName: "files",
+                        fileName: "CategoryZ_profile.jpg",
+                        mimeType: "image/jpg"
+                    )
+                }
+            }, to: url, method: router.method, headers: HTTPHeaders(router.headers), interceptor: AccessTokkenAdapter())
+            .responseDecodable(of: type) { response in
+                switch response.result {
+                case .success(let success):
+                    single(.success(.success(success)))
+                case .failure(let failure):
+                    print(failure.responseCode)
+                    if let stateCode = failure.responseCode {
+                        if let commonCode = NetworkRouter.commonTest(status: stateCode) {
+                            single(.success(.failure(commonCode)))
+                        }
+                        
+                        single(.success(.failure(router.errorCase(stateCode, failure.localizedDescription))))
+                    }
+                    single(.success(.failure(.unknownError)))
+                }
+            }
+            return Disposables.create()
+        }
+    }
 }

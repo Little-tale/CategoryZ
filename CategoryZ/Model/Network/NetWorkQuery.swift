@@ -22,7 +22,7 @@ struct JoinQuery: Encodable {
     let password: String
     let nick: String
     let phoneNum: String?
-    // let birthDay: String?
+    ///let birthDay: String?
 }
 
 /// 이메일 중복 확인 ( 요청바디 )
@@ -80,3 +80,4 @@ struct LikeQueryModel: Codable {
     }
     
 }
+

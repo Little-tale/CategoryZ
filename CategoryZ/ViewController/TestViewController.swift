@@ -19,11 +19,11 @@ final class TestViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(test), name: .cantRefresh, object: nil)
         
-        //        let start = NetworkManager.fetchNetwork(
-        //            model: LoginModel.self, router: .authentication(.login(query: .init(email: "1234@test.com", password: "1234")))
-        //        )
-        //            .asObservable()
-        //            .share()
+//        let start = NetworkManager.fetchNetwork(
+//            model: LoginModel.self, router: .authentication(.login(query: .init(email: "1234@test.com", password: "1234")))
+//        )
+//            .asObservable()
+//            .share()
         
         ////        let start = NetworkManager.fetchNetwork(model: JoinModel.self, router: .join(query: .init(email: "1234DE@test.com", password: "1234", nick: "1234", phoneNum: "1234", birthDay: nil)))
         ////            .asObservable()
@@ -36,25 +36,25 @@ final class TestViewController: UIViewController {
         //
         //        // 로그인 때는 스토리지에 등록해주고 진행
         //        // -> 제거 테스트 진행
-        //        start
-        //            .throttle(.microseconds(100), scheduler: MainScheduler.instance)
-        //            .bind { result in
-        //                guard case .success( let data ) = result else { return }
-        //                print("!!!!",data)
-        //                print("삭제됨")
-        //                TokenStorage.shared.accessToken = data.accessToken
-        //                TokenStorage.shared.refreshToken = data.refreshToken
-        //            }
-        //            .disposed(by: disposeBag)
-        //        // print(TokenStorage.shared.accessToken)
-        //       start
-        //            .bind { result in
-        //                guard case .failure( let fail ) = result else { return }
-        //                print(fail.message )
-        //                print(fail.errorCode)
-        //
-        //            }
-        //            .disposed(by: disposeBag)
+//        start
+//            .throttle(.microseconds(100), scheduler: MainScheduler.instance)
+//            .bind { result in
+//                guard case .success( let data ) = result else { return }
+//                print("!!!!",data)
+//                print("삭제됨")
+//                TokenStorage.shared.accessToken = data.accessToken
+//                TokenStorage.shared.refreshToken = data.refreshToken
+//            }
+//            .disposed(by: disposeBag)
+//        // print(TokenStorage.shared.accessToken)
+//        start
+//            .bind { result in
+//                guard case .failure( let fail ) = result else { return }
+//                print(fail.message )
+//                print(fail.errorCode)
+//                
+//            }
+//            .disposed(by: disposeBag)
         
         
         //    // 이미지 테스트
@@ -237,18 +237,60 @@ final class TestViewController: UIViewController {
 //            }
 //            .disposed(by: disposeBag)
         
-        NetworkManager.fetchNetwork(model: FollowModel.self, router: .follow(.follow(userId: "661a2c74e8473868acf65a05")))
-            .subscribe(with: self) { owner, result in
+//        NetworkManager.fetchNetwork(model: FollowModel.self, router: .follow(.follow(userId: "661a2c74e8473868acf65a05")))
+//            .subscribe(with: self) { owner, result in
+//                switch result {
+//                case .success(let followModel):
+//                    print(followModel)
+//                case .failure(let fail):
+//                    print(fail)
+//                }
+//            }
+//            .disposed(by: disposeBag)
+        
+//        NetworkManager.fetchNetwork(model: FollowModel.self, router: .follow(.unFollow(userId: "661a2c74e8473868acf65a05")))
+//            .subscribe(with: self) { owner , result in
+//                switch result {
+//                case .success(let model):
+//                    print(model)
+//                case .failure(let fail):
+//                    print(fail)
+//                    print(fail.message)
+//                    print(fail.errorCode)
+//                }
+//            }
+//            .disposed(by: disposeBag)
+        
+        // 프로필
+//        NetworkManager.fetchNetwork(model: ProfileModel.self, router: .profile(.ProfileMeRead))
+//            .subscribe(with: self) { owner, result  in
+//                switch result {
+//                case .success(let success):
+//                    print(success)
+//                case .failure(let fail):
+//                    print(fail)
+//                    print(fail.message)
+//                    print(fail.errorCode)
+//                }
+//            }
+//            .disposed(by: disposeBag)
+        
+        var test = ProfileModifyIn()
+        
+        test.birthDay = "20010011"
+        test.nick = "KingJH"
+        test.phoneNum = "01000110022"
+        
+        NetworkManager.profileModify(type: ProfileModel.self, router: .profileMeModify, model: test)
+            .subscribe(with: self) { onwer  , result in
                 switch result {
-                case .success(let followModel):
-                    print(followModel)
+                case .success(let model):
+                    print(model)
                 case .failure(let fail):
                     print(fail)
                 }
             }
             .disposed(by: disposeBag)
-        
-        
     }
     
     @objc

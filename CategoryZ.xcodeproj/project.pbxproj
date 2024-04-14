@@ -66,6 +66,7 @@
 		7BCF4A912BCB69E500BCE635 /* CommentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A902BCB69E500BCE635 /* CommentRouter.swift */; };
 		7BCF4A932BCB80F100BCE635 /* LikeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A922BCB80F100BCE635 /* LikeRouter.swift */; };
 		7BCF4A952BCBA27F00BCE635 /* FollowRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A942BCBA27F00BCE635 /* FollowRouter.swift */; };
+		7BCF4A972BCBB6C900BCE635 /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A962BCBB6C900BCE635 /* ProfileRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +121,7 @@
 		7BCF4A902BCB69E500BCE635 /* CommentRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRouter.swift; sourceTree = "<group>"; };
 		7BCF4A922BCB80F100BCE635 /* LikeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeRouter.swift; sourceTree = "<group>"; };
 		7BCF4A942BCBA27F00BCE635 /* FollowRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowRouter.swift; sourceTree = "<group>"; };
+		7BCF4A962BCBB6C900BCE635 /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -396,6 +398,7 @@
 				7BCF4A902BCB69E500BCE635 /* CommentRouter.swift */,
 				7BCF4A922BCB80F100BCE635 /* LikeRouter.swift */,
 				7BCF4A942BCBA27F00BCE635 /* FollowRouter.swift */,
+				7BCF4A962BCBB6C900BCE635 /* ProfileRouter.swift */,
 			);
 			path = SubRouter;
 			sourceTree = "<group>";
@@ -539,6 +542,7 @@
 				7BCF4A892BCA715E00BCE635 /* PostQueryType.swift in Sources */,
 				7BCF4A4E2BC6D27400BCE635 /* ExUiView.swift in Sources */,
 				7BCF4A742BC7DE4B00BCE635 /* whitePointTextField.swift in Sources */,
+				7BCF4A972BCBB6C900BCE635 /* ProfileRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

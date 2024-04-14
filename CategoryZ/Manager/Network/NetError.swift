@@ -22,7 +22,7 @@ enum NetworkError: Error {
     /// 리프레시 토큰 에러
     case refreshTokkenError(statusCode: Int, description: String)
     
-    /// 유저 정보 삭제 에러
+    /// 유저 정보 삭제 에러 또는 프로필 조회 에러
     case usurWithDrawError(statusCode: Int, description: String)
     
     /// 이미지 업로드 에러
@@ -52,7 +52,11 @@ enum NetworkError: Error {
     /// 좋아요 에러
     case likeError(statusCode: Int, description: String)
     
+    /// 팔로우 에러
     case followError(statusCode: Int, description: String)
+    
+    /// 프로필 수정 에러
+    case profileModifyError(statusCode: Int, description: String)
     
     /// URLRequest 생성중 에러
     case failMakeURLRequest
@@ -277,6 +281,19 @@ extension NetworkError {
             default:
                 return "알수 없는 에러 \(description)"
             }
+        case .profileModifyError(let statusCode, let description) :
+            switch statusCode {
+            case 400:
+                return "잘못된 요청입니다"
+            case 401:
+                return "인증할 수 없는 엑세스 토큰입니다."
+            case 403:
+                return "접근 권한이 없습니다."
+            case 419:
+                return "엑세스 토큰이 만료되었습니다."
+            default:
+                return "알수 없는 에러 \(description)"
+            }
             
         case .failMakeURLRequest:
             return "URL Request Error"
@@ -340,6 +357,12 @@ extension NetworkError {
             return statusCode
             
         case .commentsModifyError(let statusCode,_):
+            return statusCode
+            
+        case .likeError(let statusCode,_):
+            return statusCode
+            
+        case .followError(let statusCode,_):
             return statusCode
             
         default :

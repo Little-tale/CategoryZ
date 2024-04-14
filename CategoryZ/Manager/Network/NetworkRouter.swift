@@ -19,6 +19,7 @@ enum NetworkRouter {
     case comments(CommentRouter)
     case like(LikeRouter)
     case follow(FollowRouter)
+    case profile(ProfileRouter)
 }
 
 extension NetworkRouter: URLRequestConvertible {
@@ -40,6 +41,9 @@ extension NetworkRouter: URLRequestConvertible {
                 return try router.asURLRequest()
                 
             case .follow(let router):
+                return try router.asURLRequest()
+                
+            case .profile(let router):
                 return try router.asURLRequest()
             }
         } catch {
@@ -65,6 +69,9 @@ extension NetworkRouter: ErrorCase {
             
         case .follow(let followRouter):
             return followRouter.errorCase(errorCode, description)
+            
+        case .profile(let profileRouter):
+            return profileRouter.errorCase(errorCode, description)
         }
     }
 }
