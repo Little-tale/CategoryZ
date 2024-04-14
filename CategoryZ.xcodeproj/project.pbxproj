@@ -67,6 +67,9 @@
 		7BCF4A932BCB80F100BCE635 /* LikeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A922BCB80F100BCE635 /* LikeRouter.swift */; };
 		7BCF4A952BCBA27F00BCE635 /* FollowRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A942BCBA27F00BCE635 /* FollowRouter.swift */; };
 		7BCF4A972BCBB6C900BCE635 /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A962BCBB6C900BCE635 /* ProfileRouter.swift */; };
+		7BCF4A9B2BCBE5E100BCE635 /* Memo.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7BCF4A9A2BCBE5E100BCE635 /* Memo.txt */; };
+		7BCF4A9D2BCBE68400BCE635 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A9C2BCBE68400BCE635 /* LoginView.swift */; };
+		7BCF4AA12BCBEB3300BCE635 /* LoginVIewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4AA02BCBEB3300BCE635 /* LoginVIewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -122,6 +125,9 @@
 		7BCF4A922BCB80F100BCE635 /* LikeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeRouter.swift; sourceTree = "<group>"; };
 		7BCF4A942BCBA27F00BCE635 /* FollowRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowRouter.swift; sourceTree = "<group>"; };
 		7BCF4A962BCBB6C900BCE635 /* ProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
+		7BCF4A9A2BCBE5E100BCE635 /* Memo.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Memo.txt; sourceTree = "<group>"; };
+		7BCF4A9C2BCBE68400BCE635 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		7BCF4AA02BCBEB3300BCE635 /* LoginVIewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVIewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +154,7 @@
 		7B11DC5B2BC58AD40055D423 = {
 			isa = PBXGroup;
 			children = (
+				7BCF4A9A2BCBE5E100BCE635 /* Memo.txt */,
 				7B11DCA22BC58FB60055D423 /* APIKey.swift */,
 				7B11DCA02BC58F620055D423 /* .gitignore */,
 				7B11DC662BC58AD40055D423 /* CategoryZ */,
@@ -186,6 +193,7 @@
 		7B11DC7B2BC58B330055D423 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF4A9E2BCBEB1B00BCE635 /* Login */,
 				7BCF4A722BC7DE2A00BCE635 /* TextField */,
 				7BCF4A552BC6E1BD00BCE635 /* Button */,
 				7BCF4A522BC6DDF100BCE635 /* SignUp */,
@@ -197,6 +205,7 @@
 		7B11DC7C2BC58B3A0055D423 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF4A9F2BCBEB2800BCE635 /* Login */,
 				7BCF4A4F2BC6D7AC00BCE635 /* SignUp */,
 				7BCF4A362BC5AD3600BCE635 /* Base */,
 				7B11DC802BC58B740055D423 /* TestViewController.swift */,
@@ -403,6 +412,22 @@
 			path = SubRouter;
 			sourceTree = "<group>";
 		};
+		7BCF4A9E2BCBEB1B00BCE635 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				7BCF4A9C2BCBE68400BCE635 /* LoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		7BCF4A9F2BCBEB2800BCE635 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				7BCF4AA02BCBEB3300BCE635 /* LoginVIewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -483,6 +508,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BCF4A9B2BCBE5E100BCE635 /* Memo.txt in Resources */,
 				7B11DC712BC58AD60055D423 /* Assets.xcassets in Resources */,
 				7B11DCA12BC58F620055D423 /* .gitignore in Resources */,
 				7B11DC742BC58AD60055D423 /* Base in Resources */,
@@ -511,6 +537,7 @@
 				7BCF4A462BC6CEB900BCE635 /* RxHomeBaseViewController.swift in Sources */,
 				7BCF4A542BC6E0ED00BCE635 /* GetStartView.swift in Sources */,
 				7BCF4A872BC947DE00BCE635 /* MulipartTargetType.swift in Sources */,
+				7BCF4AA12BCBEB3300BCE635 /* LoginVIewController.swift in Sources */,
 				7BCF4A592BC6E20600BCE635 /* BaseButton.swift in Sources */,
 				7BCF4A712BC7D9A900BCE635 /* UserInfoRegViewController.swift in Sources */,
 				7B11DC812BC58B740055D423 /* TestViewController.swift in Sources */,
@@ -526,6 +553,7 @@
 				7BCF4A3A2BC5AF4A00BCE635 /* RxBaseViewController.swift in Sources */,
 				7BCF4A812BC92C7800BCE635 /* CommonError .swift in Sources */,
 				7BCF4A442BC6B3A300BCE635 /* Notification.swift in Sources */,
+				7BCF4A9D2BCBE68400BCE635 /* LoginView.swift in Sources */,
 				7BCF4A2F2BC5A65E00BCE635 /* ViewModelType.swift in Sources */,
 				7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */,
 				7BCF4A342BC5AA4700BCE635 /* ExUIViewController.swift in Sources */,
