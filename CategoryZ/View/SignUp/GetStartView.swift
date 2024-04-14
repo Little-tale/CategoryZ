@@ -51,7 +51,7 @@ final class GetStartView: RxBaseView {
     override func configureLayout() {
         startLabel.snp.makeConstraints { make in
             make.center.equalTo(safeAreaLayoutGuide)
-            let constraint = make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
         }
         
         imageView.snp.makeConstraints { make in

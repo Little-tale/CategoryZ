@@ -23,7 +23,7 @@ final class GetStartViewController: RxHomeBaseViewController<GetStartView> {
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 print("다음뷰")
-                
+                owner.navigationController?.pushViewController(LoginViewController(), animated: true)
             }
             .disposed(by: disPoseBag)
         

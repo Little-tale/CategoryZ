@@ -43,6 +43,10 @@ extension JHFont {
         static var bo20: UIFont = .systemFont(ofSize: 20, weight: .bold)
         
         static var bo24: UIFont = .systemFont(ofSize: 24, weight: .bold)
+        
+        static var bo26:UIFont = .systemFont(ofSize: 26, weight: .bold)
+        
+        static var bo30:UIFont = .systemFont(ofSize: 30, weight: .bold)
     }
     
     
