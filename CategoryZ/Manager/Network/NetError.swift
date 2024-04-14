@@ -49,6 +49,11 @@ enum NetworkError: Error {
     /// 코멘트 수정 에러
     case commentsModifyError(statusCode: Int, description: String)
     
+    /// 좋아요 에러
+    case likeError(statusCode: Int, description: String)
+    
+    case followError(statusCode: Int, description: String)
+    
     /// URLRequest 생성중 에러
     case failMakeURLRequest
     
@@ -236,6 +241,40 @@ extension NetworkError {
             case 445:
                 return "댓글 수정/삭제 권한이 없습니다."
             default :
+                return "알수 없는 에러 \(description)"
+            }
+            
+        case .likeError(let statusCode, let description) :
+            switch statusCode {
+            case 400:
+                return "잘못된 요청입니다"
+            case 401:
+                return "인증할 수 없는 엑세스 토큰입니다."
+            case 403:
+                return "접근 권한이 없습니다."
+            case 410:
+                return "게시글을 찾을수가 없습니다."
+            case 419:
+                return "엑세스 토큰이 만료되었습니다."
+            default :
+                return "알수 없는 에러 \(description)"
+            }
+            
+        case .followError(let statusCode, let description) :
+            switch statusCode {
+            case 400:
+                return "잘못된 요청입니다"
+            case 401:
+                return "인증할 수 없는 엑세스 토큰입니다."
+            case 403:
+                return "접근 권한이 없습니다."
+            case 409:
+                return "이미 팔로윙 된 계정입니다."
+            case 410:
+                return "알 수 없는 계정입니다."
+            case 419:
+                return "엑세스 토큰이 만료되었습니다."
+            default:
                 return "알수 없는 에러 \(description)"
             }
             

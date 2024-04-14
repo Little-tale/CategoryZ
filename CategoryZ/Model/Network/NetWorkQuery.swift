@@ -69,3 +69,14 @@ struct MainPostQuery: PostsQeuryType {
 struct CommentWriteQuery: Encodable {
     let content: String
 }
+
+/// 좋아요 쿼리 (CODABLE)
+struct LikeQueryModel: Codable {
+    let like_status: Bool
+    
+    
+    init(like_status: Bool? = false) {
+        self.like_status = like_status ?? false
+    }
+    
+}

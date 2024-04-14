@@ -64,6 +64,8 @@
 		7BCF4A872BC947DE00BCE635 /* MulipartTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A862BC947DE00BCE635 /* MulipartTargetType.swift */; };
 		7BCF4A892BCA715E00BCE635 /* PostQueryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A882BCA715E00BCE635 /* PostQueryType.swift */; };
 		7BCF4A912BCB69E500BCE635 /* CommentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A902BCB69E500BCE635 /* CommentRouter.swift */; };
+		7BCF4A932BCB80F100BCE635 /* LikeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A922BCB80F100BCE635 /* LikeRouter.swift */; };
+		7BCF4A952BCBA27F00BCE635 /* FollowRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A942BCBA27F00BCE635 /* FollowRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -116,6 +118,8 @@
 		7BCF4A862BC947DE00BCE635 /* MulipartTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulipartTargetType.swift; sourceTree = "<group>"; };
 		7BCF4A882BCA715E00BCE635 /* PostQueryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostQueryType.swift; sourceTree = "<group>"; };
 		7BCF4A902BCB69E500BCE635 /* CommentRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRouter.swift; sourceTree = "<group>"; };
+		7BCF4A922BCB80F100BCE635 /* LikeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeRouter.swift; sourceTree = "<group>"; };
+		7BCF4A942BCBA27F00BCE635 /* FollowRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -390,6 +394,8 @@
 				7B11DCA42BC5902A0055D423 /* authenticationRouter.swift */,
 				7BCF4A822BC9415C00BCE635 /* PostsRouter.swift */,
 				7BCF4A902BCB69E500BCE635 /* CommentRouter.swift */,
+				7BCF4A922BCB80F100BCE635 /* LikeRouter.swift */,
+				7BCF4A942BCBA27F00BCE635 /* FollowRouter.swift */,
 			);
 			path = SubRouter;
 			sourceTree = "<group>";
@@ -492,6 +498,7 @@
 				7BCF4A572BC6E1C600BCE635 /* LoginButton.swift in Sources */,
 				7B11DC682BC58AD40055D423 /* AppDelegate.swift in Sources */,
 				7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */,
+				7BCF4A932BCB80F100BCE635 /* LikeRouter.swift in Sources */,
 				7BCF4A4C2BC6D05C00BCE635 /* RxBaseView.swift in Sources */,
 				7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */,
 				7BCF4A6F2BC7D96400BCE635 /* UserInfoRegView.swift in Sources */,
@@ -527,6 +534,7 @@
 				7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */,
 				7B11DCA52BC5902A0055D423 /* authenticationRouter.swift in Sources */,
 				7BCF4A7D2BC922F700BCE635 /* PathRouter.swift in Sources */,
+				7BCF4A952BCBA27F00BCE635 /* FollowRouter.swift in Sources */,
 				7BCF4A632BC6E87600BCE635 /* ExUIWindow.swift in Sources */,
 				7BCF4A892BCA715E00BCE635 /* PostQueryType.swift in Sources */,
 				7BCF4A4E2BC6D27400BCE635 /* ExUiView.swift in Sources */,

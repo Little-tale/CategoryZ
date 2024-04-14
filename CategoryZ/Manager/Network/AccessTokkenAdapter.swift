@@ -20,6 +20,11 @@ final class AccessTokkenAdapter: RequestInterceptor {
             print("\(retryCount) 남음")
         }
     }
+    private var retryCount2 = 1 {
+        didSet{
+            print("\(retryCount2) 남음")
+        }
+    }
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, any Error>) -> Void) {
         var urlRequest = urlRequest
@@ -93,7 +98,12 @@ final class AccessTokkenAdapter: RequestInterceptor {
             requestsToRetry.removeAll()
             //completion(.doNotRetryWithError(error))
         default:
+            print(request)
+            print("예외",statusCode)
+//            requestsToRetry.forEach { $0(.doNotRetry) }
+//            requestsToRetry.removeAll()
             completion(.doNotRetry)
+            //completion(.doNotRetryWithError(error.))
         }
     }
 }
