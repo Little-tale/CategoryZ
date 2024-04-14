@@ -24,7 +24,7 @@ final class TestViewController: UIViewController {
 //        )
 //            .asObservable()
 //            .share()
-//        
+        
 ////        let start = NetworkManager.fetchNetwork(model: JoinModel.self, router: .join(query: .init(email: "1234DE@test.com", password: "1234", nick: "1234", phoneNum: "1234", birthDay: nil)))
 ////            .asObservable()
 ////            .share()
@@ -159,19 +159,55 @@ final class TestViewController: UIViewController {
 //            }
 //            .disposed(by: disposeBag)
         
-        NetworkManager.fetchNetwork(model: SNSMainModel.self, router: .poster(.userCasePostRead(userId: "661a2c74e8473868acf65a05", next: nil, limit: "10", productId: "")))
-            .subscribe(with: self) { owner, result in
-                switch result {
-                case .success(let model):
-                    dump(model)
-                case .failure(let fail):
-                    print(fail)
-                    print(fail.message)
-                    print(fail.errorCode)
-                }
-            }
-            .disposed(by: disposeBag)
+//        NetworkManager.fetchNetwork(model: SNSMainModel.self, router: .poster(.userCasePostRead(userId: "661a2c74e8473868acf65a05", next: nil, limit: "10", productId: "")))
+//            .subscribe(with: self) { owner, result in
+//                switch result {
+//                case .success(let model):
+//                    dump(model)
+//                case .failure(let fail):
+//                    print(fail)
+//                    print(fail.message)
+//                    print(fail.errorCode)
+//                }
+//            }
+//            .disposed(by: disposeBag)
         
+        let comment = CommentWriteQuery(content: "댓글 수정합니다")
+        
+//        NetworkManager.fetchNetwork(model: ComentsModel.self, router: .comments(.commentsWrite(query: comment, postId: "661a9b61e8473868acf65bff")))
+//            .subscribe(with: self) { owner, result in
+//                switch result {
+//                case .success(let success):
+//                    print(success)
+//                case .failure(let fail):
+//                    print(fail)
+//                }
+//            }
+//            .disposed(by: disposeBag)
+        
+//        NetworkManager.fetchNetwork(model: ComentsModel.self, router: .comments(.commentModify(query: comment, postId: "661a9b61e8473868acf65bff", commentsId: "661b3b2d438b876b25f7382e")))
+//            .subscribe(with: self) { owner, result  in
+//                switch result {
+//                case .success(let success):
+//                    print(success)
+//                case .failure(let fail):
+//                    print(fail)
+//                }
+//            }
+//            .disposed(by: disposeBag)
+        
+        
+//        NetworkManager.noneModelRequest(router: .comments(.commentDelete(postId: "661a9b61e8473868acf65bff", commentsId: "661b3b2d438b876b25f7382e")))
+//            .subscribe(with: self) { owner, results in
+//                switch results {
+//                case .success():
+//                    print("댓글이 제거 되었습니다. ")
+//                case .failure(let fail):
+//                    print(fail)
+//                    print(fail.message)
+//                    print(fail.errorCode)
+//                }
+//            }
     }
     
     @objc

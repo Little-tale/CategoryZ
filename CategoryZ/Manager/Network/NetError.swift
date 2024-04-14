@@ -46,6 +46,9 @@ enum NetworkError: Error {
     /// 코멘트 작성 에러
     case commentsWriteError(statusCode: Int, description: String)
     
+    /// 코멘트 수정 에러
+    case commentsModifyError(statusCode: Int, description: String)
+    
     /// URLRequest 생성중 에러
     case failMakeURLRequest
     
@@ -218,6 +221,24 @@ extension NetworkError {
                 return "알수 없는 에러 \(description)"
             }
             
+        case .commentsModifyError(let statusCode, let description):
+            switch statusCode {
+            case 400:
+                return "필수 누락입니다!"
+            case 401:
+                return "인증할 수 없는 엑세스 토큰입니다."
+            case 403:
+                return "접근 권한이 없습니다."
+            case 410:
+                return "(수정/삭제) 할 댓글을 찾을수 없습니다."
+            case 419:
+                return "엑세스 토큰이 만료되었습니다."
+            case 445:
+                return "댓글 수정/삭제 권한이 없습니다."
+            default :
+                return "알수 없는 에러 \(description)"
+            }
+            
         case .failMakeURLRequest:
             return "URL Request Error"
             
@@ -277,6 +298,9 @@ extension NetworkError {
             return statusCode
             
         case .commentsWriteError(let statusCode,_):
+            return statusCode
+            
+        case .commentsModifyError(let statusCode,_):
             return statusCode
             
         default :

@@ -139,6 +139,20 @@ struct SNSDataModel: Decodable {
     }
 }
 
+/// 댓글 모델
+struct ComentsModel: Decodable {
+    let commentID: String
+    let content: String
+    let createdAt: String
+    let creator: Creator
+    
+    enum CodingKeys:String, CodingKey {
+        case commentID = "comment_id"
+        case content
+        case createdAt
+        case creator
+    }
+}
 
 // 만든이
 struct Creator: Decodable {
@@ -150,3 +164,6 @@ struct Creator: Decodable {
         case nick, profileImage
     }
 }
+
+
+

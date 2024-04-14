@@ -16,6 +16,7 @@ protocol ErrorCase {
 enum NetworkRouter {
     case authentication(authenticationRouter)
     case poster(PostsRouter)
+    case comments(CommentRouter)
 }
 
 extension NetworkRouter: URLRequestConvertible {
@@ -29,6 +30,9 @@ extension NetworkRouter: URLRequestConvertible {
                 
             case .poster(let router):
                 return try router.asURLRequest()
+                
+            case .comments(let router):
+                return try router.asURLRequest()
             }
         } catch {
             throw URLError(.badURL)
@@ -41,8 +45,12 @@ extension NetworkRouter: ErrorCase {
         switch self {
         case .authentication(let authenticationRouter):
             return authenticationRouter.errorCase(errorCode, description)
+            
         case .poster(let postsRouter):
             return postsRouter.errorCase(errorCode, description)
+            
+        case .comments(let commentRouter):
+            return commentRouter.errorCase(errorCode, description)
         }
     }
 }
