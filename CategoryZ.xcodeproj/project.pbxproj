@@ -36,6 +36,7 @@
 		7BA0E0E22BCD7458002F0516 /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0E12BCD7458002F0516 /* CircleImageView.swift */; };
 		7BA0E0E42BCD74B2002F0516 /* EXUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0E32BCD74B2002F0516 /* EXUIImage.swift */; };
 		7BA0E0E62BCD7513002F0516 /* OnlyImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0E52BCD7513002F0516 /* OnlyImageCollectionViewCell.swift */; };
+		7BA0E0E82BCD7593002F0516 /* PlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0E72BCD7593002F0516 /* PlaceholderTextView.swift */; };
 		7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */; };
 		7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A292BC598D700BCE635 /* NetError.swift */; };
 		7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */; };
@@ -109,6 +110,7 @@
 		7BA0E0E12BCD7458002F0516 /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageView.swift; sourceTree = "<group>"; };
 		7BA0E0E32BCD74B2002F0516 /* EXUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXUIImage.swift; sourceTree = "<group>"; };
 		7BA0E0E52BCD7513002F0516 /* OnlyImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlyImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		7BA0E0E72BCD7593002F0516 /* PlaceholderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderTextView.swift; sourceTree = "<group>"; };
 		7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetHTTPHeader.swift; sourceTree = "<group>"; };
 		7BCF4A292BC598D700BCE635 /* NetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetError.swift; sourceTree = "<group>"; };
 		7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				7BA0E0E12BCD7458002F0516 /* CircleImageView.swift */,
+				7BA0E0E72BCD7593002F0516 /* PlaceholderTextView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -673,6 +676,7 @@
 				7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */,
 				7BA0E0E62BCD7513002F0516 /* OnlyImageCollectionViewCell.swift in Sources */,
 				7BCF4A3C2BC6873600BCE635 /* AccessTokkenAdapter.swift in Sources */,
+				7BA0E0E82BCD7593002F0516 /* PlaceholderTextView.swift in Sources */,
 				7BCF4AA42BCBF68E00BCE635 /* LoginViewModel.swift in Sources */,
 				7BCF4A482BC6CEF800BCE635 /* BaseView.swift in Sources */,
 				7BCF4A772BC7E72100BCE635 /* UserInfoRegisterViewModel.swift in Sources */,
