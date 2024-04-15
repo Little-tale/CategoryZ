@@ -39,6 +39,7 @@
 		7BA0E0E82BCD7593002F0516 /* PlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0E72BCD7593002F0516 /* PlaceholderTextView.swift */; };
 		7BA0E0EA2BCD75F9002F0516 /* BlackPointButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0E92BCD75F9002F0516 /* BlackPointButton.swift */; };
 		7BA0E0EC2BCD7664002F0516 /* CustomFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0EB2BCD7664002F0516 /* CustomFlowLayout.swift */; };
+		7BA0E0EF2BCD76D0002F0516 /* PostRegViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0EE2BCD76D0002F0516 /* PostRegViewModel.swift */; };
 		7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */; };
 		7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A292BC598D700BCE635 /* NetError.swift */; };
 		7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */; };
@@ -115,6 +116,7 @@
 		7BA0E0E72BCD7593002F0516 /* PlaceholderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderTextView.swift; sourceTree = "<group>"; };
 		7BA0E0E92BCD75F9002F0516 /* BlackPointButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackPointButton.swift; sourceTree = "<group>"; };
 		7BA0E0EB2BCD7664002F0516 /* CustomFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFlowLayout.swift; sourceTree = "<group>"; };
+		7BA0E0EE2BCD76D0002F0516 /* PostRegViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRegViewModel.swift; sourceTree = "<group>"; };
 		7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetHTTPHeader.swift; sourceTree = "<group>"; };
 		7BCF4A292BC598D700BCE635 /* NetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetError.swift; sourceTree = "<group>"; };
 		7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 		7B11DC7D2BC58B440055D423 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7BA0E0ED2BCD76C5002F0516 /* PostReg */,
 				7BCF4AA22BCBF68300BCE635 /* Login */,
 				7BCF4A752BC7E70B00BCE635 /* SignUP */,
 			);
@@ -363,6 +366,14 @@
 				7BA0E0E72BCD7593002F0516 /* PlaceholderTextView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7BA0E0ED2BCD76C5002F0516 /* PostReg */ = {
+			isa = PBXGroup;
+			children = (
+				7BA0E0EE2BCD76D0002F0516 /* PostRegViewModel.swift */,
+			);
+			path = PostReg;
 			sourceTree = "<group>";
 		};
 		7BCF4A2D2BC5A65100BCE635 /* View */ = {
@@ -655,6 +666,7 @@
 				7BCF4A592BC6E20600BCE635 /* BaseButton.swift in Sources */,
 				7BCF4A712BC7D9A900BCE635 /* UserInfoRegViewController.swift in Sources */,
 				7BA0E0EA2BCD75F9002F0516 /* BlackPointButton.swift in Sources */,
+				7BA0E0EF2BCD76D0002F0516 /* PostRegViewModel.swift in Sources */,
 				7B11DC812BC58B740055D423 /* TestViewController.swift in Sources */,
 				7BA0E0DD2BCD73DB002F0516 /* BaseCollectionViewCell.swift in Sources */,
 				7BA0E0D52BCD730C002F0516 /* ProductID.swift in Sources */,
