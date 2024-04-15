@@ -38,6 +38,7 @@
 		7BA0E0E62BCD7513002F0516 /* OnlyImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0E52BCD7513002F0516 /* OnlyImageCollectionViewCell.swift */; };
 		7BA0E0E82BCD7593002F0516 /* PlaceholderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0E72BCD7593002F0516 /* PlaceholderTextView.swift */; };
 		7BA0E0EA2BCD75F9002F0516 /* BlackPointButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0E92BCD75F9002F0516 /* BlackPointButton.swift */; };
+		7BA0E0EC2BCD7664002F0516 /* CustomFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0EB2BCD7664002F0516 /* CustomFlowLayout.swift */; };
 		7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */; };
 		7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A292BC598D700BCE635 /* NetError.swift */; };
 		7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */; };
@@ -113,6 +114,7 @@
 		7BA0E0E52BCD7513002F0516 /* OnlyImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlyImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		7BA0E0E72BCD7593002F0516 /* PlaceholderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderTextView.swift; sourceTree = "<group>"; };
 		7BA0E0E92BCD75F9002F0516 /* BlackPointButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackPointButton.swift; sourceTree = "<group>"; };
+		7BA0E0EB2BCD7664002F0516 /* CustomFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFlowLayout.swift; sourceTree = "<group>"; };
 		7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetHTTPHeader.swift; sourceTree = "<group>"; };
 		7BCF4A292BC598D700BCE635 /* NetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetError.swift; sourceTree = "<group>"; };
 		7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -533,6 +535,7 @@
 		7BCF4AAA2BCC175F00BCE635 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
+				7BA0E0EB2BCD7664002F0516 /* CustomFlowLayout.swift */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				7BCF4A892BCA715E00BCE635 /* PostQueryType.swift in Sources */,
 				7BCF4A4E2BC6D27400BCE635 /* ExUiView.swift in Sources */,
 				7BCF4A742BC7DE4B00BCE635 /* whitePointTextField.swift in Sources */,
+				7BA0E0EC2BCD7664002F0516 /* CustomFlowLayout.swift in Sources */,
 				7BCF4A972BCBB6C900BCE635 /* ProfileRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

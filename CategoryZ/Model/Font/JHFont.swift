@@ -21,6 +21,7 @@ extension JHFont {
         static var mi12: UIFont = .systemFont(ofSize: 12, weight: .medium)
         static var bo12: UIFont = .systemFont(ofSize: 12, weight: .bold)
         
+        static var li14: UIFont = .systemFont(ofSize: 14, weight: .light)
         static var re14: UIFont = .systemFont(ofSize: 14, weight: .regular)
         static var bo14: UIFont = .systemFont(ofSize: 14, weight: .bold)
         
@@ -39,6 +40,8 @@ extension JHFont {
         static var li20: UIFont = .systemFont(ofSize: 20, weight: .light)
         
         static var me20: UIFont = .systemFont(ofSize: 20, weight: .medium)
+        
+        static var re20: UIFont = .systemFont(ofSize: 20, weight: .regular)
         
         static var bo20: UIFont = .systemFont(ofSize: 20, weight: .bold)
         
