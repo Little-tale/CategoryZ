@@ -209,19 +209,19 @@ final class TestViewController: UIViewController {
         //                }
         //            }
         // MARK: 이거 아직 안됨 이유를 모르겠음
-//        NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: LikeQueryModel.init(like_status: true), postId: "6619e7d3438b876b25f733ba")))
-//            .subscribe(with: self) { owner, result in
-//                switch result {
-//                case .success(let s):
-//                    print(s)
-//                case .failure(let e):
-//                    
-//                    print(e)
-//                    print(e.message)
-//                    print(NetworkError.commonError(status: e.errorCode))
-//                }
-//            }
-//            .disposed(by: disposeBag)
+        NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: LikeQueryModel.init(like_status: true), postId: "661bdb46438b876b25f73db0")))
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let s):
+                    print(s)
+                case .failure(let e):
+                    
+                    print(e)
+                    print(e.message)
+                    print(NetworkError.commonError(status: e.errorCode))
+                }
+            }
+            .disposed(by: disposeBag)
 //        
 //        NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .like(.findLikedPost(next: nil, limit: "20")))
 //            .subscribe(with: self) { owner, result in
@@ -275,21 +275,22 @@ final class TestViewController: UIViewController {
 //            }
 //            .disposed(by: disposeBag)
         
-        var test = ProfileModifyIn()
-        
-        // test.profile = nil
-//
+//        var test = ProfileModifyIn()
 //        
-        NetworkManager.profileModify(type: ProfileModel.self, router: .profileMeModify, model: test)
-            .subscribe(with: self) { onwer  , result in
-                switch result {
-                case .success(let model):
-                    print(model)
-                case .failure(let fail):
-                    print(fail.message)
-                }
-            }
-            .disposed(by: disposeBag)
+//        // test.profile = nil
+////
+////        
+//        NetworkManager.profileModify(type: ProfileModel.self, router: .profileMeModify, model: test)
+//            .subscribe(with: self) { onwer  , result in
+//                switch result {
+//                case .success(let model):
+//                    print(model)
+//                case .failure(let fail):
+//                    print(fail.message)
+//                    
+//                }
+//            }
+//            .disposed(by: disposeBag)
     }
     
     @objc

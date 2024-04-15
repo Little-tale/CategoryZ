@@ -15,7 +15,7 @@ enum LikeRouter {
 
 extension LikeRouter : TargetType {
     var baseUrl: URL? {
-        return URL(string: APIKey.baseURL.rawValue)
+        return URL(string: APIKey.testURL.rawValue)
     }
     
     var method: Alamofire.HTTPMethod {

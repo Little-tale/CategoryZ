@@ -111,7 +111,8 @@ struct PostReadMainModel: Decodable {
     }
 }
 // SNS 모델
-struct SNSDataModel: Decodable {
+struct SNSDataModel: Decodable, Hashable {
+ 
     let postId: String
     let productId: String
     let title: String
@@ -155,6 +156,7 @@ struct SNSDataModel: Decodable {
         self.hashTags = try container.decode([String].self, forKey: .hashTags)
         self.comments = try container.decode([String].self, forKey: .comments)
     }
+
 }
 
 /// 댓글 모델
@@ -173,7 +175,7 @@ struct ComentsModel: Decodable {
 }
 
 // 만든이
-struct Creator: Decodable {
+struct Creator: Decodable , Hashable{
     let userID, nick: String // 유저이름 , 유저 아이디
     let profileImage: String? // 프로필 이미지들
 

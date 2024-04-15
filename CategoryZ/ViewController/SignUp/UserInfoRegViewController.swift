@@ -22,6 +22,7 @@ final class UserInfoRegViewController: RxHomeBaseViewController<UserInfoRegView>
     // 오늘 키워드 : 핫 옵저버블 콜드 옵저버블
     override func subscribe() {
         
+    
         let input = UserInfoRegisterViewModel
             .Input(
                 inputName: homeView.nameTextField.rx.text,

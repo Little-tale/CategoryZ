@@ -26,6 +26,7 @@
 		7B11DCA52BC5902A0055D423 /* authenticationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCA42BC5902A0055D423 /* authenticationRouter.swift */; };
 		7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCA62BC590510055D423 /* NetWorkQuery.swift */; };
 		7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCAA2BC591070055D423 /* TargetType.swift */; };
+		7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */; };
 		7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */; };
 		7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A292BC598D700BCE635 /* NetError.swift */; };
 		7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */; };
@@ -72,6 +73,7 @@
 		7BCF4AA12BCBEB3300BCE635 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4AA02BCBEB3300BCE635 /* LoginViewController.swift */; };
 		7BCF4AA42BCBF68E00BCE635 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4AA32BCBF68E00BCE635 /* LoginViewModel.swift */; };
 		7BCF4AA62BCBFA6D00BCE635 /* UserIDStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4AA52BCBFA6D00BCE635 /* UserIDStorage.swift */; };
+		7BCF4AA92BCC162600BCE635 /* PhotoSNSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4AA82BCC162600BCE635 /* PhotoSNSView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +90,7 @@
 		7B11DCA42BC5902A0055D423 /* authenticationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = authenticationRouter.swift; sourceTree = "<group>"; };
 		7B11DCA62BC590510055D423 /* NetWorkQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkQuery.swift; sourceTree = "<group>"; };
 		7B11DCAA2BC591070055D423 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
+		7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCameraImageService.swift; sourceTree = "<group>"; };
 		7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetHTTPHeader.swift; sourceTree = "<group>"; };
 		7BCF4A292BC598D700BCE635 /* NetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetError.swift; sourceTree = "<group>"; };
 		7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -132,6 +135,7 @@
 		7BCF4AA02BCBEB3300BCE635 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7BCF4AA32BCBF68E00BCE635 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		7BCF4AA52BCBFA6D00BCE635 /* UserIDStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIDStorage.swift; sourceTree = "<group>"; };
+		7BCF4AA82BCC162600BCE635 /* PhotoSNSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSNSView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +201,7 @@
 		7B11DC7B2BC58B330055D423 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF4AA72BCC160500BCE635 /* PhotoSNSView */,
 				7BCF4A9E2BCBEB1B00BCE635 /* Login */,
 				7BCF4A722BC7DE2A00BCE635 /* TextField */,
 				7BCF4A552BC6E1BD00BCE635 /* Button */,
@@ -229,6 +234,7 @@
 		7B11DC7E2BC58B4C0055D423 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				7BA0E0CE2BCD7240002F0516 /* CameraAndImage */,
 				7BCF4A782BC7EBAE00BCE635 /* TextValid */,
 				7B11DC822BC58C510055D423 /* Network */,
 			);
@@ -238,6 +244,7 @@
 		7B11DC7F2BC58B550055D423 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7BCF4AAA2BCC175F00BCE635 /* Layout */,
 				7BCF4A5D2BC6E38E00BCE635 /* Color */,
 				7BCF4A5A2BC6E34C00BCE635 /* Font */,
 				7B11DC832BC58CAA0055D423 /* Network */,
@@ -285,6 +292,14 @@
 				7BCF4A882BCA715E00BCE635 /* PostQueryType.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		7BA0E0CE2BCD7240002F0516 /* CameraAndImage */ = {
+			isa = PBXGroup;
+			children = (
+				7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */,
+			);
+			path = CameraAndImage;
 			sourceTree = "<group>";
 		};
 		7BCF4A2D2BC5A65100BCE635 /* View */ = {
@@ -442,6 +457,21 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		7BCF4AA72BCC160500BCE635 /* PhotoSNSView */ = {
+			isa = PBXGroup;
+			children = (
+				7BCF4AA82BCC162600BCE635 /* PhotoSNSView.swift */,
+			);
+			path = PhotoSNSView;
+			sourceTree = "<group>";
+		};
+		7BCF4AAA2BCC175F00BCE635 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -562,6 +592,7 @@
 				7BCF4A312BC5A8DB00BCE635 /* ReusableIdentifier.swift in Sources */,
 				7BCF4A5C2BC6E35500BCE635 /* JHFont.swift in Sources */,
 				7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */,
+				7BCF4AA92BCC162600BCE635 /* PhotoSNSView.swift in Sources */,
 				7B11DC6A2BC58AD40055D423 /* SceneDelegate.swift in Sources */,
 				7BCF4A612BC6E5BD00BCE635 /* SignUpButton.swift in Sources */,
 				7BCF4A3A2BC5AF4A00BCE635 /* RxBaseViewController.swift in Sources */,
@@ -572,6 +603,7 @@
 				7BCF4A2F2BC5A65E00BCE635 /* ViewModelType.swift in Sources */,
 				7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */,
 				7BCF4A342BC5AA4700BCE635 /* ExUIViewController.swift in Sources */,
+				7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */,
 				7BCF4A512BC6DDE200BCE635 /* GetStartViewController.swift in Sources */,
 				7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */,
 				7BCF4A3C2BC6873600BCE635 /* AccessTokkenAdapter.swift in Sources */,
