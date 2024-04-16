@@ -22,7 +22,7 @@ final class FirstView: RxBaseView {
         imageView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.equalToSuperview().dividedBy(2)
-            make.height.equalTo(250)
+            make.height.equalTo(200)
         }
     }
 }
