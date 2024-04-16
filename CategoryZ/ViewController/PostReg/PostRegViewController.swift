@@ -63,27 +63,14 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
         /// 허용된 텍스트
         output.contentText.drive(homeView.contentTextView.rx.text)
             .disposed(by: disPoseBag)
-        
-        
-        // 이미지 데이터 방출 -> 만약 아무것도 없다면 로직 구성 시작
-//        output.outputIamgeDataDriver
-//            .drive(
-//                homeView.imageCollectionView.rx.items(
-//                    cellIdentifier: OnlyImageCollectionViewCell.identi,
-//                    cellType: OnlyImageCollectionViewCell.self
-//                )
-//            ) { row, item, cell in
-//                print(item)
-//                cell.imageSetting(item)
-//            }
-//            .disposed(by: disPoseBag)
+
         
         // 적어도 하나를 띄우기 위해 nil을 이용
         let addORImageDataDriver = output.outputIamgeDataDriver
             .map { imageData -> [Data?] in
                 return imageData.isEmpty ? [nil] : imageData
             }
-        
+        // 이미지 데이터가 없을경우 추가셀 아니면 이미지셀
         addORImageDataDriver
             .drive(homeView.imageCollectionView.rx.items) { collectionView, row, item in
                 if let item {
@@ -103,7 +90,34 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             }
             .disposed(by: disPoseBag)
         
-               
+        /// 데이터가 있는가 없는것으로, 이미지추가 여부 정합니다.
+        output.outputIamgeDataDriver
+            .drive(with: self) { owner, data in
+                owner.homeView.imageAddButton.isHidden = data.isEmpty
+            }
+            .disposed(by: disPoseBag)
+        
+        
+        // 이미지가 없거나 있을때 선택시
+        let imaegCollectionViewMerge = Observable.zip(homeView.imageCollectionView.rx.itemSelected, homeView.imageCollectionView.rx.modelSelected(Data?.self))
+            
+        imaegCollectionViewMerge
+            .throttle(.milliseconds(300),
+                      scheduler: MainScheduler.instance
+            )
+            .withUnretained(self)
+            .map { owner, collection in
+                return (owner: owner, index: collection.0, data: collection.1)
+            }
+            .bind { result in
+                if let data = result.data {
+                    // 이미지 삭제 할건지 알리기
+                } else {
+                    result.owner.imageService.showImageModeSelectAlert()
+                }
+            }
+            .disposed(by: disPoseBag)
+        
         // 이미지 최대 숫자
         output.maxCout.drive(imageService.rx.maxCount)
             .disposed(by: disPoseBag)

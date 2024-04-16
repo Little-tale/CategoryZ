@@ -81,8 +81,12 @@ final class RxCameraImageService: NSObject {
                 return
             }
         }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        
         alertCon.addAction(cameraAction)
         alertCon.addAction(galalyAction)
+        alertCon.addAction(cancelAction)
         presntationViewController?.present(alertCon,animated: true)
     }
     
