@@ -59,7 +59,7 @@ struct UserWithDraw: Decodable {
 
 
 /// 이미지 데이터 모델
-struct imageDataModel: Decodable {
+struct ImageDataModel: Decodable {
     let files: [String]
 }
 

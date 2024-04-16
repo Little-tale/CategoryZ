@@ -75,10 +75,11 @@ final class AccessTokkenAdapter: RequestInterceptor {
                         
                         TokenStorage.shared.accessToken = success.accessToken
                         
-                        requestsToRetry.forEach { $0(.retryWithDelay(0.1)) }
+                        requestsToRetry.forEach { $0(.retryWithDelay(0.3)) }
                         
-                    case .failure(_):
-                        requestsToRetry.forEach { $0(.retryWithDelay(1)) }
+                    case .failure(let error):
+                        print(error)
+                        requestsToRetry.forEach { $0(.retryWithDelay(0.5)) }
                         if retryCount <= 0 {
                             requestsToRetry.forEach { $0(.doNotRetry) }
                             requestsToRetry.removeAll()
@@ -90,19 +91,19 @@ final class AccessTokkenAdapter: RequestInterceptor {
                 }
             }
             
-        case 418:
+        case 418, 401:
             NotificationCenter.default.post(name: .cantRefresh, object: statusCode)
             print("리프레시 토큰 다이") // 목록에 많이 쌓인거?
-            requestsToRetry.forEach { $0(.doNotRetry) }
+    
             requestsToRetry.removeAll()
-            //completion(.doNotRetryWithError(error))
+            completion(.doNotRetry)
+            
         default:
             print(request)
             print("예외",statusCode)
-//            requestsToRetry.forEach { $0(.doNotRetry) }
-//            requestsToRetry.removeAll()
+
             completion(.doNotRetry)
-            //completion(.doNotRetryWithError(error.))
+        
         }
     }
 }

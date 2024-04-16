@@ -17,11 +17,7 @@ final class PostRegViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
     
-    var imageDatas: [Data] = [] {
-        didSet {
-            print("이미지 데이타들", imageDatas )
-        }
-    }
+    var imageDatas: [Data] = []
     
     let textValid = TextValid()
     var currentText = ""
@@ -43,6 +39,7 @@ final class PostRegViewModel: RxViewModelType {
         let contentText: Driver<String>
         let userInfo: Driver<Creator>
         let networkError: Driver<NetworkError>
+        let successPost: Driver<Void>
     }
     
     func transform(_ input: Input) -> Output {
@@ -58,6 +55,12 @@ final class PostRegViewModel: RxViewModelType {
         let productId = BehaviorRelay<ProductID?> (value: nil)
         // 네트워크 에러 방출
         let networkError = PublishRelay<NetworkError> ()
+        
+        // 이미지 업로드 성공 트리거
+        let imageUploadScueess = PublishRelay<(imageModel:ImageDataModel, content:String, productId: String)> ()
+        
+        // 포스트 성공 트리거
+        let successPost = PublishRelay<Void> ()
         
         input.startTrigger.bind { _ in
             NetworkManager.fetchNetwork(model: Creator.self, router: .profile(.profileMeRead))
@@ -131,28 +134,46 @@ final class PostRegViewModel: RxViewModelType {
             .disposed(by: disposeBag)
         
         
-        
-       let buttonTapShared = input.saveButtonTap
+      // 버튼을 누르면 이미지 먼저 업로드후
+       input.saveButtonTap
             .withLatestFrom(tapValidConbine)
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .map({ cont in
-                return (contents: cont.0, datas: cont.1, productId: cont.2)
+            .filter({ $0.2 != nil })
+            .map({ content in
+                return (contents: content.0, datas: content.1, productId: content.2!)
             })
-            .share()
+            .flatMap { content in
+                NetworkManager.uploadImages(model: ImageDataModel.self, router: .imageUpload, images: content.datas).map { result in
+                    return (result, content.contents, content.productId)
+                }
+            }
+            .bind { result in
+                switch result.0 {
+                case .success(let imageModel):
+                    imageUploadScueess.accept((imageModel: imageModel, content: result.1, productId: result.2.identi))
+                case .failure(let error):
+                    networkError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+            
         
-        // 1. image저장
-//        buttonTapShared
-//            .flatMap { cont in
-//                NetworkManager.uploadImages(model: imageDataModel.self, router: .imageUpload, images: cont.datas)
-//            }
-//            .bind { result in
-//                switch result {
-//                case .success(_):
-//                    //
-//                case .failure(_):
-//                    //
-//                }
-//            }
+        // 이미지 업로드를 마치면 다시 포스트 업로드 실행
+      imageUploadScueess
+            .flatMap { model in
+                let query = MainPostQuery(title: "", content: model.content, content2: "", content3: "", product_id: model.productId, files: model.imageModel.files)
+                
+                return NetworkManager.fetchNetwork(model: PostModel.self, router: .poster(.postWrite(query: query)))
+            }
+            .bind { result in
+                switch result {
+                case .success(_):
+                    successPost.accept(())
+                case .failure(let error):
+                    networkError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
         
         return Output(
             outputIamgeDataDriver: outputImageDatas.asDriver(),
@@ -160,7 +181,8 @@ final class PostRegViewModel: RxViewModelType {
             saveButtonEnabled: tapValid,
             contentText: outputText.asDriver(),
             userInfo: outputUserInfo.asDriver(onErrorDriveWith: .never()),
-            networkError: networkError.asDriver(onErrorDriveWith: .never())
+            networkError: networkError.asDriver(onErrorDriveWith: .never()),
+            successPost: successPost.asDriver(onErrorDriveWith: .never())
         )
     }
     

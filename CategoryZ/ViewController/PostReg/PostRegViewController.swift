@@ -13,13 +13,16 @@ enum cameraOrImage {
     case camera
     case image
 }
+/*
+ 회고: 이미지 업로드 중 이미지 크기를 5mb로 전환 해야함
+ */
 
 final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     
     let category = PublishRelay<[ProductID]> ()
     
     private
-    lazy var imageService = RxCameraImageService(presntationViewController: self)
+    lazy var imageService = RxCameraImageService(presntationViewController: self, zipRate: 5)
     
     let viewModel = PostRegViewModel()
     
@@ -100,7 +103,14 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                     print("맞아요!")
                     owner.showAlert(error: error)
                 }
-                
+            }
+            .disposed(by: disPoseBag)
+        
+        output.successPost
+            .drive(with: self) { owner, _ in
+                owner.showAlert(title: "업로드", message: "업로드 성공") { _ in
+                    // 이때 이제 전뷰로 가주어야 함 전뷰가 없는 관계로 일단 이렇게 진행
+                }
             }
             .disposed(by: disPoseBag)
         

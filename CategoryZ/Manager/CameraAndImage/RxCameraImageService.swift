@@ -43,13 +43,16 @@ final class RxCameraImageService: NSObject {
     // 전체 카운트
     var maxCount: Int?
     
+    private var zipRate: Double?
+    
     /// 결과 옵저버블 JPG
     let imageResult = PublishSubject<Result<[Data], RxImageSearviceError>> ()
 
     
     /// 피커를 띄울 부컨과 픽 모드를 선택합니다.
-    init(presntationViewController: UIViewController) {
+    init(presntationViewController: UIViewController, zipRate: Double?) {
         self.presntationViewController = presntationViewController
+        self.zipRate = zipRate
     }
     
     func showImageModeSelectAlert(){
@@ -174,11 +177,19 @@ extension RxCameraImageService: PHPickerViewControllerDelegate {
                         self.imageResult.onNext(.failure(.cantGetImage))
                         return
                     }
-                    if let imageData = image.jpegData(compressionQuality: 1.0) {
-                        images.append(imageData)
+                    if let zipRate {
+                        guard let data = imageZipLimit(image: image, zipRate: zipRate) else {
+                            self.imageResult.onNext(.failure(.cantGetImage))
+                            return
+                        }
+                        images.append(data)
                     } else {
-                        imageResult.onNext(.failure(.cantGetImage))
-                        return
+                        if let imageData = image.jpegData(compressionQuality: 1.0) {
+                            images.append(imageData)
+                        } else {
+                            imageResult.onNext(.failure(.cantGetImage))
+                            return
+                        }
                     }
                 }
             }
@@ -205,10 +216,20 @@ extension RxCameraImageService: UIImagePickerControllerDelegate, UINavigationCon
             imageResult.onNext(.failure(.cantGetImage))
             return
         }
-        if let imageData = image.jpegData(compressionQuality: 1) {
-            imageResult.onNext(.success([imageData]))
+        if let zipRate {
+            guard let data = imageZipLimit(image: image, zipRate: zipRate) else {
+                print("zip Error")
+                imageResult.onNext(.failure(.cantGetImage))
+                return
+            }
+            imageResult.onNext(.success([data]))
+            
         } else {
-            imageResult.onNext(.failure(.cantGetImage))
+            if let imageData = image.jpegData(compressionQuality: 1) {
+                imageResult.onNext(.success([imageData]))
+            } else {
+                imageResult.onNext(.failure(.cantGetImage))
+            }
         }
     }
     
@@ -218,3 +239,73 @@ extension RxCameraImageService: UIImagePickerControllerDelegate, UINavigationCon
     }
 }
 
+extension RxCameraImageService {
+    
+    // MARK: 회고록 이미지 사이즈 줄이기
+    // 1차 : [5093211 bytes, 3425951 bytes, 4395344 bytes, 2275097 bytes]
+    // 하나가 5.093211 MB 가 나와버림....
+    // .... 세상에 5mb 가.... 5,242,880 바이트 라고한다..... ㅠㅠㅠㅠㅠㅠㅠㅠ
+    private func imageZipLimit(image: UIImage, zipRate: Double) -> Data? {
+        let limitBytes = zipRate * 1024 * 1024
+        print("클라이언트가 원하는 크기",limitBytes)
+        var currentQuality: CGFloat = 0.95
+        var imageData = image.jpegData(compressionQuality: currentQuality)
+        
+        while let data = imageData,
+              Double(imageData!.count) > limitBytes && currentQuality > 0{
+            print("현재 이미지 크기 :\(data.count)")
+            currentQuality -= 0.05
+            imageData = image.jpegData(compressionQuality: currentQuality)
+            print("현재 압축중인 이미지 크기 :\(imageData!.count)")
+        }
+        
+        if let data = imageData,
+           Double(data.count) <= limitBytes {
+            print("압축 \(data.count) bytes, 압축률: \(currentQuality)")
+            return data
+        } else {
+            print("초과")
+            return nil
+        }
+    }
+}
+
+/*
+ // MARK: 회고록 이미지 사이즈 줄이기
+ // 1차 : [5093211 bytes, 3425951 bytes, 4395344 bytes, 2275097 bytes]
+ // 하나가 5.093211 MB 가 나와버림....
+ 
+ private func imageZipLimit(image: UIImage, zipRate: Double) -> Data? {
+     let limitBytes = (zipRate - 0.01) * 1024 * 1024
+     var currentQuality: CGFloat = 0.95
+     var imageData = image.jpegData(compressionQuality: currentQuality)
+     
+     while imageData != nil && Double(imageData!.count) > limitBytes && currentQuality > 0{
+         currentQuality -= 0.05
+         imageData = image.jpegData(compressionQuality: currentQuality)
+     }
+     
+     if let data = imageData,
+        Double(data.count) <= limitBytes {
+         print("압축 \(data.count)")
+         return data
+     } else {
+         print("초과")
+         return nil
+     }
+ }
+ 
+ 
+ while let data = imageData,
+       Double(imageData!.count) > limitBytes && currentQuality > 0{
+     print("현재 이미지 크기 :\(data.count)")
+     currentQuality -= 0.05
+     imageData = image.jpegData(compressionQuality: currentQuality)
+     print("현재 압축중인 이미지 크기 :\(imageData!.count)")
+ }
+ 
+ 현재 이미지 크기 :5421946
+ 현재 압축중인 이미지 크기 :5093211
+ 압축 5093211 bytes, 압축률: 0.8999999999999999
+ 
+ */
