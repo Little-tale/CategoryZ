@@ -104,8 +104,23 @@ final class PostRegView: RxBaseView {
         categoryCollectionView.register(CategoryReusableCell.self, forCellWithReuseIdentifier: CategoryReusableCell.identi)
         imageCollectionView.register(OnlyImageCollectionViewCell.self, forCellWithReuseIdentifier: OnlyImageCollectionViewCell.identi)
     }
-    func settingProfileImage(_ urlString: String) {
+    
+    func setProfile(_ data: Creator) {
+        
+        nameLabel.text = data.nick
+        
+        guard let urlString = data.profileImage else {
+            profileImage.image = .appLogo
+            return
+        }
         let url = URL(string: urlString)
+        profileImage.kf
+            .setImage(with: url,
+                      options: [
+                        .requestModifier(KingFisherNet())
+                      ]
+            )
         
     }
+
 }

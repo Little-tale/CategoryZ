@@ -19,7 +19,10 @@ extension UIViewController {
         let vc = isNavi ? UINavigationController(rootViewController: viewController) : viewController
         sceneDelegate?.window?.rootViewController = vc
         sceneDelegate?.window?.makeKey()
-    }    
+//        if isPresent {
+//            present(vc, animated: false)
+//        }
+    }
     
     func goLoginView() {
         
@@ -85,24 +88,28 @@ extension UIViewController {
         present(alertCon,animated: true)
     }
     
-    func showAlert(error: NetworkError, actionTitle: String? = nil , complite: @escaping ((UIAlertAction) -> Void)) {
+    func showAlert(error: NetworkError, actionTitle: String? = nil , complite: ((UIAlertAction) -> Void)? = nil) {
         
         let alertCon = UIAlertController(title: "Error", message: error.message, preferredStyle: .alert)
         
         if let actionTitle {
             let action = UIAlertAction(title: actionTitle, style: .default) { action  in
-                complite(action)
+                complite?(action)
             }
             let cancel = UIAlertAction(title: "취소", style: .cancel)
             alertCon.addAction(action)
             alertCon.addAction(cancel)
         } else {
             let check = UIAlertAction(title: "확인", style: .default) { action in
-                complite(action)
+                complite?(action)
             }
             alertCon.addAction(check)
         }
-        present(alertCon,animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            [weak self] in
+            self?.present(alertCon,animated: true)
+        }
+
     }
     
 }

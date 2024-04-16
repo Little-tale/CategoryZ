@@ -141,18 +141,18 @@ final class PostRegViewModel: RxViewModelType {
             .share()
         
         // 1. image저장
-        buttonTapShared
-            .flatMap { cont in
-                NetworkManager.uploadImages(model: imageDataModel.self, router: .imageUpload, images: cont.datas)
-            }
-            .bind { result in
-                switch result {
-                case .success(_):
-                    <#code#>
-                case .failure(_):
-                    <#code#>
-                }
-            }
+//        buttonTapShared
+//            .flatMap { cont in
+//                NetworkManager.uploadImages(model: imageDataModel.self, router: .imageUpload, images: cont.datas)
+//            }
+//            .bind { result in
+//                switch result {
+//                case .success(_):
+//                    //
+//                case .failure(_):
+//                    //
+//                }
+//            }
         
         return Output(
             outputIamgeDataDriver: outputImageDatas.asDriver(),
