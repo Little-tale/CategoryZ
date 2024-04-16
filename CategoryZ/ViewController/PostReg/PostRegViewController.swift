@@ -50,7 +50,6 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
         let behiberImageData = BehaviorRelay<[Data]> (value: [])
         
         
-        
         let input = PostRegViewModel.Input(
             selectedProduct: publishSelectProductId,
             insertImageData: behiberImageData,
@@ -66,18 +65,44 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             .disposed(by: disPoseBag)
         
         
-        // 이미지 데이터 방출
-        output.outputIamgeDataDriver
-            .drive(
-                homeView.imageCollectionView.rx.items(
-                    cellIdentifier: OnlyImageCollectionViewCell.identi,
-                    cellType: OnlyImageCollectionViewCell.self
-                )
-            ) { row, item, cell in
-                print(item)
-                cell.imageSetting(item)
+        // 이미지 데이터 방출 -> 만약 아무것도 없다면 로직 구성 시작
+//        output.outputIamgeDataDriver
+//            .drive(
+//                homeView.imageCollectionView.rx.items(
+//                    cellIdentifier: OnlyImageCollectionViewCell.identi,
+//                    cellType: OnlyImageCollectionViewCell.self
+//                )
+//            ) { row, item, cell in
+//                print(item)
+//                cell.imageSetting(item)
+//            }
+//            .disposed(by: disPoseBag)
+        
+        // 적어도 하나를 띄우기 위해 nil을 이용
+        let addORImageDataDriver = output.outputIamgeDataDriver
+            .map { imageData -> [Data?] in
+                return imageData.isEmpty ? [nil] : imageData
+            }
+        
+        addORImageDataDriver
+            .drive(homeView.imageCollectionView.rx.items) { collectionView, row, item in
+                if let item {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnlyImageCollectionViewCell.identi, for: IndexPath(row: row, section: 0)) as? OnlyImageCollectionViewCell else {
+                        print("OnlyImageCollectionViewCell Error")
+                        return UICollectionViewCell.init()
+                    }
+                    cell.imageSetting(item)
+                    return cell
+                } else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddCollectionViewCell.identi, for: IndexPath(row: row, section: 0)) as? AddCollectionViewCell else {
+                        print("AddCollectionViewCell Error")
+                        return UICollectionViewCell.init()
+                    }
+                    return cell
+                }
             }
             .disposed(by: disPoseBag)
+        
                
         // 이미지 최대 숫자
         output.maxCout.drive(imageService.rx.maxCount)
@@ -140,6 +165,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                 owner.homeView.categoryCollectionView.reloadData()
             })
             .disposed(by: disPoseBag)
+        
         
          
         // MARK: === 이미지 서비스 구독 입니다. ===

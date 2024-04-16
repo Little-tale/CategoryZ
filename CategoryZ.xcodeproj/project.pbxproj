@@ -29,6 +29,7 @@
 		7B838DDA2BCEC960000F2E27 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DD92BCEC960000F2E27 /* FirstView.swift */; };
 		7B838DDC2BCEC9B9000F2E27 /* LunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DDB2BCEC9B9000F2E27 /* LunchScreenViewController.swift */; };
 		7B838DDE2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DDD2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift */; };
+		7B838DE02BCEF2DD000F2E27 /* AddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DDF2BCEF2DD000F2E27 /* AddCollectionViewCell.swift */; };
 		7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */; };
 		7BA0E0D32BCD72C3002F0516 /* PostRegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */; };
 		7BA0E0D52BCD730C002F0516 /* ProductID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D42BCD730C002F0516 /* ProductID.swift */; };
@@ -110,6 +111,7 @@
 		7B838DD92BCEC960000F2E27 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		7B838DDB2BCEC9B9000F2E27 /* LunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunchScreenViewController.swift; sourceTree = "<group>"; };
 		7B838DDD2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewValidViewModel.swift; sourceTree = "<group>"; };
+		7B838DDF2BCEF2DD000F2E27 /* AddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCollectionViewCell.swift; sourceTree = "<group>"; };
 		7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCameraImageService.swift; sourceTree = "<group>"; };
 		7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRegViewController.swift; sourceTree = "<group>"; };
 		7BA0E0D42BCD730C002F0516 /* ProductID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductID.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 			children = (
 				7BA0E0DA2BCD73B0002F0516 /* CategoryReusableCell.swift */,
 				7BA0E0E52BCD7513002F0516 /* OnlyImageCollectionViewCell.swift */,
+				7B838DDF2BCEF2DD000F2E27 /* AddCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -720,6 +723,7 @@
 				7BA0E0E62BCD7513002F0516 /* OnlyImageCollectionViewCell.swift in Sources */,
 				7BCF4A3C2BC6873600BCE635 /* AccessTokkenAdapter.swift in Sources */,
 				7BA0E0E82BCD7593002F0516 /* PlaceholderTextView.swift in Sources */,
+				7B838DE02BCEF2DD000F2E27 /* AddCollectionViewCell.swift in Sources */,
 				7BCF4AA42BCBF68E00BCE635 /* LoginViewModel.swift in Sources */,
 				7BCF4A482BC6CEF800BCE635 /* BaseView.swift in Sources */,
 				7BCF4A772BC7E72100BCE635 /* UserInfoRegisterViewModel.swift in Sources */,
