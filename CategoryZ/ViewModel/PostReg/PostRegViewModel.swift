@@ -28,8 +28,9 @@ final class PostRegViewModel: RxViewModelType {
         let insertImageData: BehaviorRelay<[Data]> // 이미지 데이터
         let saveButtonTap: ControlEvent<Void> // 저장 버튼탭
         let contentText: ControlProperty<String?>
-        
         let startTrigger: ControlEvent<Bool>
+        
+        let removeSelectModel: PublishRelay<IndexPath>
     }
     
     struct Output{
@@ -172,6 +173,17 @@ final class PostRegViewModel: RxViewModelType {
                 case .failure(let error):
                     networkError.accept(error)
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        // 이미지 삭제 로직
+        input.removeSelectModel
+            .withUnretained(self)
+            .bind { owner, index in
+                owner.imageDatas.remove(at: index.row)
+                outputImageDatas.accept(owner.imageDatas)
+                print("삭제후 갯수",owner.imageDatas.count)
+                outputImageMaxCount.accept( 5 - owner.imageDatas.count)
             }
             .disposed(by: disposeBag)
         

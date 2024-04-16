@@ -48,14 +48,15 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
         let publishSelectProductId = BehaviorRelay<ProductID?> (value: nil)
         // 이미지 데이터들
         let behiberImageData = BehaviorRelay<[Data]> (value: [])
-        
+        let removeSelectModel = PublishRelay<IndexPath> ()
         
         let input = PostRegViewModel.Input(
             selectedProduct: publishSelectProductId,
             insertImageData: behiberImageData,
             saveButtonTap: rightBarButton.rx.tap,
             contentText: homeView.contentTextView.rx.text,
-            startTrigger: rx.viewDidAppear
+            startTrigger: rx.viewDidAppear,
+            removeSelectModel: removeSelectModel
         )
         
         let output = viewModel.transform(input)
@@ -100,7 +101,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
         
         // 이미지가 없거나 있을때 선택시
         let imaegCollectionViewMerge = Observable.zip(homeView.imageCollectionView.rx.itemSelected, homeView.imageCollectionView.rx.modelSelected(Data?.self))
-            
+        
         imaegCollectionViewMerge
             .throttle(.milliseconds(300),
                       scheduler: MainScheduler.instance
@@ -110,8 +111,11 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                 return (owner: owner, index: collection.0, data: collection.1)
             }
             .bind { result in
-                if let data = result.data {
+                if result.data != nil {
                     // 이미지 삭제 할건지 알리기
+                    result.owner.showAlert(title: "삭제", message: "정말 지우실건가요?", actionTitle: "삭제") { _ in
+                        removeSelectModel.accept(result.index) // index 전달
+                    }
                 } else {
                     result.owner.imageService.showImageModeSelectAlert()
                 }
