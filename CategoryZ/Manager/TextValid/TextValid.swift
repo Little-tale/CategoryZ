@@ -7,6 +7,8 @@
 
 import Foundation
 
+import Foundation
+
 enum textValidation: String {
     case isEmpty
     case minCount
@@ -82,6 +84,11 @@ final class TextValid {
         return matchesPattern(text, pattern: pattern)
     }
     
+    func contentTextValid(_ string: String) -> Bool {
+        let pattern = "^(?!(.*\n){4,})[\\s\\S]{1,49}$"
+        return matchesPatternBool(string, pattern: pattern)
+    }
+    
     private func matchesPattern(_ string: String, pattern: String) -> textValidation {
         do {
             let regex = try NSRegularExpression(pattern: pattern)
@@ -95,4 +102,21 @@ final class TextValid {
             return .noMatch
         }
     }
+    
+    private func matchesPatternBool(_ string: String, pattern: String) -> Bool {
+        do {
+            let regex = try NSRegularExpression(pattern: pattern)
+            let range = NSRange(location: 0, length: string.utf16.count)
+            if regex.firstMatch(in: string, options: [], range: range) != nil {
+                return true
+            }
+            return false
+        } catch {
+            print("Invalid regex pattern: \(error.localizedDescription)")
+            return false
+        }
+    }
+    
+   
+    
 }

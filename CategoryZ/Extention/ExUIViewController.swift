@@ -20,6 +20,19 @@ extension UIViewController {
         sceneDelegate?.window?.rootViewController = vc
         sceneDelegate?.window?.makeKey()
     }    
+    
+    func goLoginView() {
+        
+        let vc = LoginViewController()
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+            return
+        }
+        let sceneDelegate = windowScene.delegate as? SceneDelegate
+    
+        sceneDelegate?.window?.rootViewController = vc
+        sceneDelegate?.window?.makeKeyAndVisible()
+
+    }
 }
 
 extension Reactive where Base: UIViewController {
@@ -92,4 +105,26 @@ extension UIViewController {
         present(alertCon,animated: true)
     }
     
+}
+
+// MARK: 권한 설정 페이지 이동
+extension UIViewController {
+    
+    func SettingAlert(){
+        showAlert(title: "권한 없음", message: "카메라 권한이 있어야만 합니다.", actionTitle: "이동하기") {
+            [weak self] action in
+            guard let self else {return}
+            goSetting()
+        }
+    }
+    
+    func goSetting(){
+        if let settingUrl = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(settingUrl)
+        } else {
+            showAlert(title: "실패", message: "이동하기 실패") { _ in
+            }
+        }
+    }
+   
 }

@@ -35,17 +35,35 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     }
     
     override func subscribe() {
+        let rightBarButton = UIBarButtonItem(systemItem: .save).then { $0.tintColor = .point
+        }
+        navigationItem.rightBarButtonItem = rightBarButton
+        // 프로덕트 아이디
         let product = ProductID.allCases
+        
+        // 프로덕트 아이디 선택 시
         let publishSelectProductId = BehaviorRelay<ProductID?> (value: nil)
+        // 이미지 데이터들
         let behiberImageData = BehaviorRelay<[Data]> (value: [])
+        
+        
         
         let input = PostRegViewModel.Input(
             selectedProduct: publishSelectProductId,
-            insertImageData: behiberImageData
+            insertImageData: behiberImageData,
+            saveButtonTap: rightBarButton.rx.tap,
+            contentText: homeView.contentTextView.rx.text,
+            startTrigger: rx.viewDidAppear
         )
         
         let output = viewModel.transform(input)
         
+        /// 허용된 텍스트
+        output.contentText.drive(homeView.contentTextView.rx.text)
+            .disposed(by: disPoseBag)
+        
+        
+        // 이미지 데이터 방출
         output.outputIamgeDataDriver
             .drive(
                 homeView.imageCollectionView.rx.items(
@@ -62,6 +80,30 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
         output.maxCout.drive(imageService.rx.maxCount)
             .disposed(by: disPoseBag)
         
+        // 저장 버튼 활성화 여부
+        output.saveButtonEnabled
+            .drive(rightBarButton.rx.isEnabled)
+            .disposed(by: disPoseBag)
+        
+        output.userInfo
+            .drive(with: self) { owner, creator in
+                // owner.homeView.profileImage
+                owner.homeView.setProfile(creator)
+                
+            }
+            .disposed(by: disPoseBag)
+        
+        output.networkError
+            .drive(with: self) { owner, error in
+                print("errorCode",error.errorCode)
+                if error.errorCode != 419 {
+                    print("맞아요!")
+                    owner.showAlert(error: error)
+                }
+                
+            }
+            .disposed(by: disPoseBag)
+        
         // 카테고리 뿌리기
         category.bind(to: homeView.categoryCollectionView.rx.items(cellIdentifier: CategoryReusableCell.identi, cellType: CategoryReusableCell.self)) {[weak self] row , item, cell in
             guard let self else { return }
@@ -76,6 +118,8 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
         }
         .disposed(by: disPoseBag)
         
+        category.accept(product)
+        
         // 선택된 모델 가져오기
         homeView.categoryCollectionView.rx.modelSelected(ProductID.self)
             .distinctUntilChanged()
@@ -87,10 +131,8 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             })
             .disposed(by: disPoseBag)
         
-        category.accept(product)
-        
-        // MARK: 이미지 서비스 구독 입니다.
-        
+         
+        // MARK: === 이미지 서비스 구독 입니다. ===
         // imageAddButtonTab
         homeView.imageAddButton.rx.tap
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
@@ -116,37 +158,19 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                 }
             }
             .disposed(by: disPoseBag)
-    }
-}
-
-
-extension PostRegViewController {
-    
-    func showAlertActions() {
         
-    }
-}
-
-
-// MARK: 권한 설정 페이지 이동
-extension UIViewController {
-    
-    func SettingAlert(){
-        showAlert(title: "권한 없음", message: "카메라 권한이 있어야만 합니다.", actionTitle: "이동하기") {
-            [weak self] action in
-            guard let self else {return}
-            goSetting()
-        }
-    }
-    
-    func goSetting(){
-        if let settingUrl = URL(string: UIApplication.openSettingsURLString) {
-            UIApplication.shared.open(settingUrl)
-        } else {
-            showAlert(title: "실패", message: "이동하기 실패") { _ in
-            }
+        NotificationCenter.default.rx.notification(.cantRefresh, object: nil)
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(with: self) { owner, noti in
+                owner.showAlert(title: "로그인 만료") { _ in
+                    owner.goLoginView()
+                }
         }
         
+            .disposed(by: disPoseBag)
+
     }
-   
+
+    
 }
+
