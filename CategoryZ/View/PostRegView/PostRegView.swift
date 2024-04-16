@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Kingfisher
 
 // 1. 현재 사용자 정보를 찾아옴
 // 2. 포스트 API 를 통해 게시글 올려야함
@@ -103,5 +104,8 @@ final class PostRegView: RxBaseView {
         categoryCollectionView.register(CategoryReusableCell.self, forCellWithReuseIdentifier: CategoryReusableCell.identi)
         imageCollectionView.register(OnlyImageCollectionViewCell.self, forCellWithReuseIdentifier: OnlyImageCollectionViewCell.identi)
     }
-
+    func settingProfileImage(_ urlString: String) {
+        let url = URL(string: urlString)
+        
+    }
 }
