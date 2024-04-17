@@ -34,6 +34,10 @@
 		7B838DF42BCFADE3000F2E27 /* PhotoSNSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DF32BCFADE3000F2E27 /* PhotoSNSView.swift */; };
 		7B838DF72BCFAE06000F2E27 /* ReusableKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B838DF62BCFAE06000F2E27 /* ReusableKit */; };
 		7B838DF92BCFAE06000F2E27 /* RxReusableKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B838DF82BCFAE06000F2E27 /* RxReusableKit */; };
+		7B838DFC2BCFAE69000F2E27 /* PhotoSNSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DFB2BCFAE69000F2E27 /* PhotoSNSViewController.swift */; };
+		7B838DFF2BCFAE8C000F2E27 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 7B838DFE2BCFAE8C000F2E27 /* Differentiator */; };
+		7B838E012BCFAE8C000F2E27 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 7B838E002BCFAE8C000F2E27 /* RxDataSources */; };
+		7B838E042BCFAEDF000F2E27 /* SNSHeaderWithCollectionVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E032BCFAEDF000F2E27 /* SNSHeaderWithCollectionVIew.swift */; };
 		7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */; };
 		7BA0E0D32BCD72C3002F0516 /* PostRegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */; };
 		7BA0E0D52BCD730C002F0516 /* ProductID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D42BCD730C002F0516 /* ProductID.swift */; };
@@ -117,6 +121,8 @@
 		7B838DDF2BCEF2DD000F2E27 /* AddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCollectionViewCell.swift; sourceTree = "<group>"; };
 		7B838DF02BCFACC2000F2E27 /* CategoryZTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryZTabbarController.swift; sourceTree = "<group>"; };
 		7B838DF32BCFADE3000F2E27 /* PhotoSNSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSNSView.swift; sourceTree = "<group>"; };
+		7B838DFB2BCFAE69000F2E27 /* PhotoSNSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSNSViewController.swift; sourceTree = "<group>"; };
+		7B838E032BCFAEDF000F2E27 /* SNSHeaderWithCollectionVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSHeaderWithCollectionVIew.swift; sourceTree = "<group>"; };
 		7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCameraImageService.swift; sourceTree = "<group>"; };
 		7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRegViewController.swift; sourceTree = "<group>"; };
 		7BA0E0D42BCD730C002F0516 /* ProductID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductID.swift; sourceTree = "<group>"; };
@@ -184,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B838DF72BCFAE06000F2E27 /* ReusableKit in Frameworks */,
+				7B838DFF2BCFAE8C000F2E27 /* Differentiator in Frameworks */,
 				7B11DC8D2BC58D250055D423 /* RxRelay in Frameworks */,
 				7B11DC9B2BC58DA40055D423 /* IQKeyboardManagerSwift in Frameworks */,
 				7BCF4A422BC688F100BCE635 /* KeychainAccess in Frameworks */,
@@ -193,6 +200,7 @@
 				7B11DC8F2BC58D250055D423 /* RxSwift in Frameworks */,
 				7B11DC882BC58CF20055D423 /* Alamofire in Frameworks */,
 				7B11DC922BC58D2F0055D423 /* Kingfisher in Frameworks */,
+				7B838E012BCFAE8C000F2E27 /* RxDataSources in Frameworks */,
 				7B838DF92BCFAE06000F2E27 /* RxReusableKit in Frameworks */,
 				7BCF4A6D2BC7C6E400BCE635 /* TextFieldEffects in Frameworks */,
 			);
@@ -246,7 +254,6 @@
 				7B838DF22BCFADD7000F2E27 /* PhotoSNS */,
 				7B838DD82BCEC953000F2E27 /* LunchScreen */,
 				7BA0E0E02BCD744C002F0516 /* Views */,
-				7BA0E0D92BCD73A1002F0516 /* Cell */,
 				7BA0E0D62BCD7360002F0516 /* PostRegView */,
 				7BCF4A9E2BCBEB1B00BCE635 /* Login */,
 				7BCF4A722BC7DE2A00BCE635 /* TextField */,
@@ -260,6 +267,7 @@
 		7B11DC7C2BC58B3A0055D423 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				7B838DFA2BCFAE5E000F2E27 /* PhotoSNS */,
 				7B838DEF2BCFACAC000F2E27 /* Tabbar */,
 				7BA0E0D12BCD72AC002F0516 /* PostReg */,
 				7BCF4A9F2BCBEB2800BCE635 /* Login */,
@@ -371,6 +379,22 @@
 			path = PhotoSNS;
 			sourceTree = "<group>";
 		};
+		7B838DFA2BCFAE5E000F2E27 /* PhotoSNS */ = {
+			isa = PBXGroup;
+			children = (
+				7B838DFB2BCFAE69000F2E27 /* PhotoSNSViewController.swift */,
+			);
+			path = PhotoSNS;
+			sourceTree = "<group>";
+		};
+		7B838E022BCFAEC4000F2E27 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				7B838E032BCFAEDF000F2E27 /* SNSHeaderWithCollectionVIew.swift */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
 		7BA0E0CE2BCD7240002F0516 /* CameraAndImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -408,7 +432,9 @@
 		7BA0E0E02BCD744C002F0516 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7B838E022BCFAEC4000F2E27 /* CollectionView */,
 				7BA0E0E12BCD7458002F0516 /* CircleImageView.swift */,
+				7BA0E0D92BCD73A1002F0516 /* Cell */,
 				7BA0E0E72BCD7593002F0516 /* PlaceholderTextView.swift */,
 			);
 			path = Views;
@@ -618,6 +644,8 @@
 				7BCF4A6C2BC7C6E400BCE635 /* TextFieldEffects */,
 				7B838DF62BCFAE06000F2E27 /* ReusableKit */,
 				7B838DF82BCFAE06000F2E27 /* RxReusableKit */,
+				7B838DFE2BCFAE8C000F2E27 /* Differentiator */,
+				7B838E002BCFAE8C000F2E27 /* RxDataSources */,
 			);
 			productName = CategoryZ;
 			productReference = 7B11DC642BC58AD40055D423 /* CategoryZ.app */;
@@ -657,6 +685,7 @@
 				7BCF4A402BC688F100BCE635 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				7BCF4A6B2BC7C6E400BCE635 /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
 				7B838DF52BCFAE06000F2E27 /* XCRemoteSwiftPackageReference "ReusableKit" */,
+				7B838DFD2BCFAE8C000F2E27 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 7B11DC652BC58AD40055D423 /* Products */;
 			projectDirPath = "";
@@ -702,6 +731,7 @@
 				7BA0E0F12BCE0791002F0516 /* KingFisherNet.swift in Sources */,
 				7BCF4A382BC5AD7D00BCE635 /* BaseViewController.swift in Sources */,
 				7BCF4A462BC6CEB900BCE635 /* RxHomeBaseViewController.swift in Sources */,
+				7B838E042BCFAEDF000F2E27 /* SNSHeaderWithCollectionVIew.swift in Sources */,
 				7BCF4A542BC6E0ED00BCE635 /* GetStartView.swift in Sources */,
 				7BCF4A872BC947DE00BCE635 /* MulipartTargetType.swift in Sources */,
 				7BCF4AA12BCBEB3300BCE635 /* LoginViewController.swift in Sources */,
@@ -758,6 +788,7 @@
 				7BCF4A742BC7DE4B00BCE635 /* whitePointTextField.swift in Sources */,
 				7BA0E0EC2BCD7664002F0516 /* CustomFlowLayout.swift in Sources */,
 				7BCF4A972BCBB6C900BCE635 /* ProfileRouter.swift in Sources */,
+				7B838DFC2BCFAE69000F2E27 /* PhotoSNSViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1038,6 +1069,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		7B838DFD2BCFAE8C000F2E27 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
 		7BCF4A402BC688F100BCE635 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
@@ -1106,6 +1145,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B838DF52BCFAE06000F2E27 /* XCRemoteSwiftPackageReference "ReusableKit" */;
 			productName = RxReusableKit;
+		};
+		7B838DFE2BCFAE8C000F2E27 /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B838DFD2BCFAE8C000F2E27 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		7B838E002BCFAE8C000F2E27 /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B838DFD2BCFAE8C000F2E27 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
 		};
 		7BCF4A412BC688F100BCE635 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;

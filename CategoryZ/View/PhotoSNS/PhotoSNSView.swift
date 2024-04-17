@@ -13,7 +13,6 @@ final class PhotoSNSView: RxBaseView {
     
     let tableView = UITableView(frame: .zero)
    
-    
     override func configureHierarchy() {
         addSubview(tableView)
     }
