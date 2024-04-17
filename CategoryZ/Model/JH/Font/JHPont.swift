@@ -1,8 +1,8 @@
 //
-//  JHFont.swift
+//  JHPont.swift
 //  CategoryZ
 //
-//  Created by Jae hyung Kim on 4/11/24.
+//  Created by Jae hyung Kim on 4/17/24.
 //
 
 import UIKit

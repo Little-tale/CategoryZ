@@ -17,8 +17,9 @@ final class TestViewController: UIViewController {
     let disposeBag = DisposeBag()
     
     let testButton = SeletionButton(
-        selected: UIImage(systemName: "heart.fill"),
-        noSelected: UIImage(systemName: "heart"), seletedColor: .red).then {
+        selected:  nil,
+        noSelected: UIImage(systemName:"heart"))
+        .then {
         $0.tintColor = .white
     }
 

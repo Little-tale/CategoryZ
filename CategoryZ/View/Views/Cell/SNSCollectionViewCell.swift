@@ -20,17 +20,32 @@ import SnapKit
  // 자신의 아이디일 경우 수정할건지 말건지 나오는 알렛으로 대처 하자
  */
 /*
- 일단 버튼 만들러 ㄱㄱ
+ 일단 버튼 만들러 ㄱㄱ check V
  */
 final class SNSCollectionViewCell: BaseCollectionViewCell {
     
     let disposeBag = DisposeBag()
-    
+
     // 이미지 스크롤 뷰
     
     // 크리에이터 이름 라벨
-    
+    let userNameLabel = UILabel()
     // 프로필 이미지뷰
+    let profileImageView = CircleImageView()
+    // 좋아요 버튼 옆에는 몇명이 했는지..!
+    let likeButton = SeletionButton(
+        selected: JHImage.likeImageSelected,
+        noSelected: JHImage.likeImageDiselected,
+        seletedColor: JHColor.likeColor
+    )
+    // 댓글 버튼
+    let commentButton = SeletionButton(
+        selected: JHImage.messageSelected,
+        noSelected: JHImage.messageDiselected
+    )
+    // 컨텐트 라벨
     
-    //
+    // 날짜 라벨인데 (몇일전인지 계산하기)
+    
+    
 }

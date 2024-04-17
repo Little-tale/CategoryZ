@@ -6,8 +6,8 @@
 //
 
 import UIKit
-
+import RxSwift
 
 class RxBaseView: BaseView, RxBaseViewType {
-    
+    let disposedBag = DisposeBag()
 }
