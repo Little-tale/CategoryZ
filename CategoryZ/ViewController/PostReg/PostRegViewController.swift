@@ -13,9 +13,7 @@ enum cameraOrImage {
     case camera
     case image
 }
-/*
- 회고: 이미지 업로드 중 이미지 크기를 5mb로 전환 해야함
- */
+
 
 final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     
@@ -131,14 +129,15 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             .drive(rightBarButton.rx.isEnabled)
             .disposed(by: disPoseBag)
         
+        // 유저정보를 잘 받아왔을시
         output.userInfo
             .drive(with: self) { owner, creator in
                 // owner.homeView.profileImage
                 owner.homeView.setProfile(creator)
-                
             }
             .disposed(by: disPoseBag)
         
+        // 네트워크 에러 발생시
         output.networkError
             .drive(with: self) { owner, error in
                 print("errorCode",error.errorCode)
@@ -149,6 +148,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             }
             .disposed(by: disPoseBag)
         
+        // 업로드 성공시
         output.successPost
             .drive(with: self) { owner, _ in
                 owner.showAlert(title: "업로드", message: "업로드 성공") { _ in
@@ -220,7 +220,6 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                     owner.goLoginView()
                 }
         }
-        
             .disposed(by: disPoseBag)
 
     }

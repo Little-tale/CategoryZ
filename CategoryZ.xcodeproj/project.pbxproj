@@ -30,6 +30,10 @@
 		7B838DDC2BCEC9B9000F2E27 /* LunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DDB2BCEC9B9000F2E27 /* LunchScreenViewController.swift */; };
 		7B838DDE2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DDD2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift */; };
 		7B838DE02BCEF2DD000F2E27 /* AddCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DDF2BCEF2DD000F2E27 /* AddCollectionViewCell.swift */; };
+		7B838DF12BCFACC2000F2E27 /* CategoryZTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DF02BCFACC2000F2E27 /* CategoryZTabbarController.swift */; };
+		7B838DF42BCFADE3000F2E27 /* PhotoSNSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DF32BCFADE3000F2E27 /* PhotoSNSView.swift */; };
+		7B838DF72BCFAE06000F2E27 /* ReusableKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B838DF62BCFAE06000F2E27 /* ReusableKit */; };
+		7B838DF92BCFAE06000F2E27 /* RxReusableKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B838DF82BCFAE06000F2E27 /* RxReusableKit */; };
 		7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */; };
 		7BA0E0D32BCD72C3002F0516 /* PostRegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */; };
 		7BA0E0D52BCD730C002F0516 /* ProductID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D42BCD730C002F0516 /* ProductID.swift */; };
@@ -91,7 +95,6 @@
 		7BCF4AA12BCBEB3300BCE635 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4AA02BCBEB3300BCE635 /* LoginViewController.swift */; };
 		7BCF4AA42BCBF68E00BCE635 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4AA32BCBF68E00BCE635 /* LoginViewModel.swift */; };
 		7BCF4AA62BCBFA6D00BCE635 /* UserIDStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4AA52BCBFA6D00BCE635 /* UserIDStorage.swift */; };
-		7BCF4AA92BCC162600BCE635 /* PhotoSNSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4AA82BCC162600BCE635 /* PhotoSNSView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +115,8 @@
 		7B838DDB2BCEC9B9000F2E27 /* LunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunchScreenViewController.swift; sourceTree = "<group>"; };
 		7B838DDD2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewValidViewModel.swift; sourceTree = "<group>"; };
 		7B838DDF2BCEF2DD000F2E27 /* AddCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCollectionViewCell.swift; sourceTree = "<group>"; };
+		7B838DF02BCFACC2000F2E27 /* CategoryZTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryZTabbarController.swift; sourceTree = "<group>"; };
+		7B838DF32BCFADE3000F2E27 /* PhotoSNSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSNSView.swift; sourceTree = "<group>"; };
 		7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCameraImageService.swift; sourceTree = "<group>"; };
 		7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRegViewController.swift; sourceTree = "<group>"; };
 		7BA0E0D42BCD730C002F0516 /* ProductID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductID.swift; sourceTree = "<group>"; };
@@ -171,7 +176,6 @@
 		7BCF4AA02BCBEB3300BCE635 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7BCF4AA32BCBF68E00BCE635 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		7BCF4AA52BCBFA6D00BCE635 /* UserIDStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIDStorage.swift; sourceTree = "<group>"; };
-		7BCF4AA82BCC162600BCE635 /* PhotoSNSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSNSView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B838DF72BCFAE06000F2E27 /* ReusableKit in Frameworks */,
 				7B11DC8D2BC58D250055D423 /* RxRelay in Frameworks */,
 				7B11DC9B2BC58DA40055D423 /* IQKeyboardManagerSwift in Frameworks */,
 				7BCF4A422BC688F100BCE635 /* KeychainAccess in Frameworks */,
@@ -188,6 +193,7 @@
 				7B11DC8F2BC58D250055D423 /* RxSwift in Frameworks */,
 				7B11DC882BC58CF20055D423 /* Alamofire in Frameworks */,
 				7B11DC922BC58D2F0055D423 /* Kingfisher in Frameworks */,
+				7B838DF92BCFAE06000F2E27 /* RxReusableKit in Frameworks */,
 				7BCF4A6D2BC7C6E400BCE635 /* TextFieldEffects in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,11 +243,11 @@
 		7B11DC7B2BC58B330055D423 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7B838DF22BCFADD7000F2E27 /* PhotoSNS */,
 				7B838DD82BCEC953000F2E27 /* LunchScreen */,
 				7BA0E0E02BCD744C002F0516 /* Views */,
 				7BA0E0D92BCD73A1002F0516 /* Cell */,
 				7BA0E0D62BCD7360002F0516 /* PostRegView */,
-				7BCF4AA72BCC160500BCE635 /* PhotoSNSView */,
 				7BCF4A9E2BCBEB1B00BCE635 /* Login */,
 				7BCF4A722BC7DE2A00BCE635 /* TextField */,
 				7BCF4A552BC6E1BD00BCE635 /* Button */,
@@ -254,6 +260,7 @@
 		7B11DC7C2BC58B3A0055D423 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				7B838DEF2BCFACAC000F2E27 /* Tabbar */,
 				7BA0E0D12BCD72AC002F0516 /* PostReg */,
 				7BCF4A9F2BCBEB2800BCE635 /* Login */,
 				7BCF4A4F2BC6D7AC00BCE635 /* SignUp */,
@@ -346,6 +353,22 @@
 				7B838DD92BCEC960000F2E27 /* FirstView.swift */,
 			);
 			path = LunchScreen;
+			sourceTree = "<group>";
+		};
+		7B838DEF2BCFACAC000F2E27 /* Tabbar */ = {
+			isa = PBXGroup;
+			children = (
+				7B838DF02BCFACC2000F2E27 /* CategoryZTabbarController.swift */,
+			);
+			path = Tabbar;
+			sourceTree = "<group>";
+		};
+		7B838DF22BCFADD7000F2E27 /* PhotoSNS */ = {
+			isa = PBXGroup;
+			children = (
+				7B838DF32BCFADE3000F2E27 /* PhotoSNSView.swift */,
+			);
+			path = PhotoSNS;
 			sourceTree = "<group>";
 		};
 		7BA0E0CE2BCD7240002F0516 /* CameraAndImage */ = {
@@ -558,14 +581,6 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		7BCF4AA72BCC160500BCE635 /* PhotoSNSView */ = {
-			isa = PBXGroup;
-			children = (
-				7BCF4AA82BCC162600BCE635 /* PhotoSNSView.swift */,
-			);
-			path = PhotoSNSView;
-			sourceTree = "<group>";
-		};
 		7BCF4AAA2BCC175F00BCE635 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
@@ -601,6 +616,8 @@
 				7B11DC9A2BC58DA40055D423 /* IQKeyboardManagerSwift */,
 				7BCF4A412BC688F100BCE635 /* KeychainAccess */,
 				7BCF4A6C2BC7C6E400BCE635 /* TextFieldEffects */,
+				7B838DF62BCFAE06000F2E27 /* ReusableKit */,
+				7B838DF82BCFAE06000F2E27 /* RxReusableKit */,
 			);
 			productName = CategoryZ;
 			productReference = 7B11DC642BC58AD40055D423 /* CategoryZ.app */;
@@ -639,6 +656,7 @@
 				7B11DC992BC58DA40055D423 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				7BCF4A402BC688F100BCE635 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				7BCF4A6B2BC7C6E400BCE635 /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
+				7B838DF52BCFAE06000F2E27 /* XCRemoteSwiftPackageReference "ReusableKit" */,
 			);
 			productRefGroup = 7B11DC652BC58AD40055D423 /* Products */;
 			projectDirPath = "";
@@ -705,8 +723,8 @@
 				7BCF4A312BC5A8DB00BCE635 /* ReusableIdentifier.swift in Sources */,
 				7BCF4A5C2BC6E35500BCE635 /* JHFont.swift in Sources */,
 				7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */,
-				7BCF4AA92BCC162600BCE635 /* PhotoSNSView.swift in Sources */,
 				7B11DC6A2BC58AD40055D423 /* SceneDelegate.swift in Sources */,
+				7B838DF42BCFADE3000F2E27 /* PhotoSNSView.swift in Sources */,
 				7BCF4A612BC6E5BD00BCE635 /* SignUpButton.swift in Sources */,
 				7BCF4A3A2BC5AF4A00BCE635 /* RxBaseViewController.swift in Sources */,
 				7BCF4A812BC92C7800BCE635 /* CommonError .swift in Sources */,
@@ -718,6 +736,7 @@
 				7BCF4A342BC5AA4700BCE635 /* ExUIViewController.swift in Sources */,
 				7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */,
 				7BCF4A512BC6DDE200BCE635 /* GetStartViewController.swift in Sources */,
+				7B838DF12BCFACC2000F2E27 /* CategoryZTabbarController.swift in Sources */,
 				7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */,
 				7B838DDE2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift in Sources */,
 				7BA0E0E62BCD7513002F0516 /* OnlyImageCollectionViewCell.swift in Sources */,
@@ -1011,6 +1030,14 @@
 				minimumVersion = 7.0.2;
 			};
 		};
+		7B838DF52BCFAE06000F2E27 /* XCRemoteSwiftPackageReference "ReusableKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/ReusableKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		7BCF4A402BC688F100BCE635 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
@@ -1069,6 +1096,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B11DC992BC58DA40055D423 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		7B838DF62BCFAE06000F2E27 /* ReusableKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B838DF52BCFAE06000F2E27 /* XCRemoteSwiftPackageReference "ReusableKit" */;
+			productName = ReusableKit;
+		};
+		7B838DF82BCFAE06000F2E27 /* RxReusableKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B838DF52BCFAE06000F2E27 /* XCRemoteSwiftPackageReference "ReusableKit" */;
+			productName = RxReusableKit;
 		};
 		7BCF4A412BC688F100BCE635 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -260,7 +260,7 @@ extension RxCameraImageService {
             print("현재 이미지 크기 :\(data.count)")
             currentQuality -= 0.05
             imageData = image.jpegData(compressionQuality: currentQuality)
-            print("현재 압축중인 이미지 크기 :\(imageData!.count)")
+            print("현재 압축중인 이미지 크기 :\(imageData?.count ?? 0)")
         }
         
         if let data = imageData,
@@ -274,42 +274,3 @@ extension RxCameraImageService {
     }
 }
 
-/*
- // MARK: 회고록 이미지 사이즈 줄이기
- // 1차 : [5093211 bytes, 3425951 bytes, 4395344 bytes, 2275097 bytes]
- // 하나가 5.093211 MB 가 나와버림....
- 
- private func imageZipLimit(image: UIImage, zipRate: Double) -> Data? {
-     let limitBytes = (zipRate - 0.01) * 1024 * 1024
-     var currentQuality: CGFloat = 0.95
-     var imageData = image.jpegData(compressionQuality: currentQuality)
-     
-     while imageData != nil && Double(imageData!.count) > limitBytes && currentQuality > 0{
-         currentQuality -= 0.05
-         imageData = image.jpegData(compressionQuality: currentQuality)
-     }
-     
-     if let data = imageData,
-        Double(data.count) <= limitBytes {
-         print("압축 \(data.count)")
-         return data
-     } else {
-         print("초과")
-         return nil
-     }
- }
- 
- 
- while let data = imageData,
-       Double(imageData!.count) > limitBytes && currentQuality > 0{
-     print("현재 이미지 크기 :\(data.count)")
-     currentQuality -= 0.05
-     imageData = image.jpegData(compressionQuality: currentQuality)
-     print("현재 압축중인 이미지 크기 :\(imageData!.count)")
- }
- 
- 현재 이미지 크기 :5421946
- 현재 압축중인 이미지 크기 :5093211
- 압축 5093211 bytes, 압축률: 0.8999999999999999
- 
- */
