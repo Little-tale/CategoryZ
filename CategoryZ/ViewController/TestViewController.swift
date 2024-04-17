@@ -8,15 +8,24 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SnapKit
+import Then
 
 
 final class TestViewController: UIViewController {
     
     let disposeBag = DisposeBag()
+    
+    let testButton = SeletionButton(
+        selected: UIImage(systemName: "heart.fill"),
+        noSelected: UIImage(systemName: "heart"), seletedColor: .red).then {
+        $0.tintColor = .white
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .white
+        testLayout()
         NotificationCenter.default.addObserver(self, selector: #selector(test), name: .cantRefresh, object: nil)
         
 //        let start = NetworkManager.fetchNetwork(
@@ -208,20 +217,20 @@ final class TestViewController: UIViewController {
         //                    print(fail.errorCode)
         //                }
         //            }
-        // MARK: 이거 아직 안됨 이유를 모르겠음
-        NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: LikeQueryModel.init(like_status: true), postId: "661bdb46438b876b25f73db0")))
-            .subscribe(with: self) { owner, result in
-                switch result {
-                case .success(let s):
-                    print(s)
-                case .failure(let e):
-                    
-                    print(e)
-                    print(e.message)
-                    print(NetworkError.commonError(status: e.errorCode))
-                }
-            }
-            .disposed(by: disposeBag)
+//        // MARK: 이거 아직 안됨 이유를 모르겠음
+//        NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: LikeQueryModel.init(like_status: true), postId: "661bdb46438b876b25f73db0")))
+//            .subscribe(with: self) { owner, result in
+//                switch result {
+//                case .success(let s):
+//                    print(s)
+//                case .failure(let e):
+//                    
+//                    print(e)
+//                    print(e.message)
+//                    print(NetworkError.commonError(status: e.errorCode))
+//                }
+//            }
+//            .disposed(by: disposeBag)
 //        
 //        NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .like(.findLikedPost(next: nil, limit: "20")))
 //            .subscribe(with: self) { owner, result in
@@ -291,6 +300,12 @@ final class TestViewController: UIViewController {
 //                }
 //            }
 //            .disposed(by: disposeBag)
+        
+        testButton.rx.tap
+            .withUnretained(self)
+            .bind {owner ,_ in
+                owner.testButton.isSelected = !owner.testButton.isSelected
+            }
     }
     
     @objc
@@ -301,4 +316,12 @@ final class TestViewController: UIViewController {
         }
     }
     
+    
+    func testLayout(){
+        view.addSubview(testButton)
+        testButton.snp.makeConstraints { make in
+            make.size.equalTo(50)
+            make.center.equalToSuperview()
+        }
+    }
 }
