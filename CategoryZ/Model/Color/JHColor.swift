@@ -17,4 +17,5 @@ extension JHColor {
     static let point: UIColor = .point
     static let currect: UIColor = .pointGreen
     static let gray: UIColor = .backGray
+    static let darkGray: UIColor = .backDarkGray
 }

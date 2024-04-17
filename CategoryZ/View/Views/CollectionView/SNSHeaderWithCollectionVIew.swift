@@ -15,8 +15,9 @@ final class SNSHeaderWithCollectionView: BaseView {
     
     override init(frame: CGRect) {
         let layout = UICollectionViewFlowLayout()
+        let itemSize = frame.height - 10
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 80, height: 80)
+        layout.itemSize = CGSize(width: itemSize, height: itemSize)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
