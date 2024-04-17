@@ -16,12 +16,7 @@ final class TestViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
-    let testButton = SeletionButton(
-        selected:  nil,
-        noSelected: UIImage(systemName:"heart"))
-        .then {
-        $0.tintColor = .white
-    }
+    let scrollImageView = ScrollImageView(frame: .zero)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -302,11 +297,11 @@ final class TestViewController: UIViewController {
 //            }
 //            .disposed(by: disposeBag)
         
-        testButton.rx.tap
-            .withUnretained(self)
-            .bind {owner ,_ in
-                owner.testButton.isSelected = !owner.testButton.isSelected
-            }
+//        testButton.rx.tap
+//            .withUnretained(self)
+//            .bind {owner ,_ in
+//                owner.testButton.isSelected = !owner.testButton.isSelected
+//            }
     }
     
     @objc
@@ -319,10 +314,27 @@ final class TestViewController: UIViewController {
     
     
     func testLayout(){
-        view.addSubview(testButton)
-        testButton.snp.makeConstraints { make in
-            make.size.equalTo(50)
-            make.center.equalToSuperview()
+//        view.addSubview(testButton)
+//        testButton.snp.makeConstraints { make in
+//            make.size.equalTo(50)
+//            make.center.equalToSuperview()
+//        }
+        
+        view.addSubview(scrollImageView)
+        scrollImageView.snp.makeConstraints { make in
+            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(300)
+            make.center.equalTo(view.safeAreaLayoutGuide)
         }
+        
+        let imageData:[UIImage] = [
+            UIImage(resource: .appLogo),
+            UIImage(resource: .appLogo),
+            UIImage(resource: .appLogo),
+            UIImage(resource: .fashion),
+            UIImage(resource: .appLogo)
+        ]
+        
+        scrollImageView.setModel(imageData)
     }
 }

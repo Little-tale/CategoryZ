@@ -16,7 +16,13 @@ final class ScrollImageView: RxBaseView {
     private var photoImageView: [UIImageView] = [] {
         didSet {
             settingData()
+            print(photoImageView.count)
         }
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let totalWidth = scrollView.frame.width * CGFloat(photoImageView.count)
+        scrollView.contentSize = CGSize(width: totalWidth, height: scrollView.frame.height)
     }
 
     
@@ -32,6 +38,9 @@ final class ScrollImageView: RxBaseView {
     let pageController = UIPageControl()
     /*
      회고... scrollView.rx.딜리게이트가 많음
+     2. Thread 1: Swift runtime failure: Double value cannot be converted to Int because it is either infinite or NaN
+     예상되는 부분은 Rx가 더 빨라서 그럴 가능성이 있음
+     
      */
     override func register() {
         
@@ -39,6 +48,9 @@ final class ScrollImageView: RxBaseView {
         scrollView.rx.didScroll
             .withUnretained(self)
             .map { owner, _ in
+                if owner.frame.width == 0 {
+                    return 0
+                }
                 print("현재 X축: \(owner.scrollView.contentOffset.x)")
                 return Int(round( // 가로축 좌표 / 뷰 윗스
                     owner.scrollView.contentOffset.x / owner.frame.width
@@ -60,37 +72,39 @@ final class ScrollImageView: RxBaseView {
 
     
     override func configureHierarchy() {
+        addSubview(scrollView)
+        addSubview(pageController)
+    }
+    override func configureLayout() {
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         pageController.snp.makeConstraints { make in
-            make.bottom.equalTo(scrollView).inset(30)
-            make.horizontalEdges.equalTo(scrollView)
-            make.height.equalTo(30)
+            make.bottom.equalTo(safeAreaLayoutGuide).inset(10)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.height.equalTo(20)
         }
     }
     
     private func settingData(){
         /// 이미지 를 한번에 스크롤뷰에 넣기
-        photoImageView.forEach { [weak self] view in
-            guard let self else { return }
-            scrollView.addSubview(view)
-        }
+        
+        photoImageView.forEach { $0.removeFromSuperview() }
+        
+        photoImageView.forEach(scrollView.addSubview)
         
         /// 뷰의 갯수에 따라 유동적 레이아웃 잡기
         for (index, view) in photoImageView.enumerated() {
             view.snp.makeConstraints { make in
-                // 스크롤뷰 사이즈와 동일
-                make.size.equalTo(scrollView)
-                // 기본적으로 수직은 고정
                 make.verticalEdges.equalTo(scrollView)
+                make.size.equalTo(scrollView)
                 if index == 0 {
-                    make.leading.equalTo(scrollView.snp.trailing)
-                } else if index == photoImageView.count - 1 {
+                    make.leading.equalTo(scrollView)
+                }else {
+                    make.leading.equalTo(photoImageView[index - 1].snp.trailing)
+                }
+                if index == photoImageView.count - 1 {
                     make.trailing.equalTo(scrollView)
-                } else {
-                    make.leading
-                        .equalTo(photoImageView[index - 1].snp.trailing)
                 }
             }
         }
@@ -107,10 +121,13 @@ final class ScrollImageView: RxBaseView {
         }
         photoImageView = imageView
     }
+    
+
+  
 }
 
 extension ScrollImageView {
-    
+
     private func changeImageView(current: Int) {
         // 현재 페이지의 수를 받아
         // 현재 페이지의 스크롤뷰의 넓이 만큼 즉 해당하는 X 좌표
@@ -121,3 +138,21 @@ extension ScrollImageView {
         scrollView.setContentOffset(movePoint, animated: true)
     }
 }
+
+/*
+ 문제의 코드 스크롤이 안되는 이유
+ for (index, view) in photoImageView.enumerated() {
+     view.snp.makeConstraints { make in
+         make.verticalEdges.equalTo(scrollView)
+         make.size.equalTo(scrollView)
+         if index == 0 {
+             make.leading.equalTo(scrollView)
+         }else {
+             make.leading.equalTo(photoImageView[index - 1].snp.trailing)
+         }
+         if index == photoImageView.count - 1 {
+             make.trailing.equalTo(scrollView)
+         }
+     }
+ }
+ */
