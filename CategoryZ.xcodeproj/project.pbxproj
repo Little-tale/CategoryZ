@@ -38,7 +38,7 @@
 		7B838DFF2BCFAE8C000F2E27 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 7B838DFE2BCFAE8C000F2E27 /* Differentiator */; };
 		7B838E012BCFAE8C000F2E27 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 7B838E002BCFAE8C000F2E27 /* RxDataSources */; };
 		7B838E042BCFAEDF000F2E27 /* SNSHeaderWithCollectionVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E032BCFAEDF000F2E27 /* SNSHeaderWithCollectionVIew.swift */; };
-		7B838E062BCFB98F000F2E27 /* SNSCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E052BCFB98F000F2E27 /* SNSCollectionViewCell.swift */; };
+		7B838E062BCFB98F000F2E27 /* SNSTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E052BCFB98F000F2E27 /* SNSTableViewCell.swift */; };
 		7B838E082BCFBE9E000F2E27 /* SeletionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E072BCFBE9E000F2E27 /* SeletionButton.swift */; };
 		7B838E0B2BCFCBC5000F2E27 /* JHPont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E0A2BCFCBC5000F2E27 /* JHPont.swift */; };
 		7B838E0E2BCFCBEA000F2E27 /* JHImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E0D2BCFCBEA000F2E27 /* JHImage.swift */; };
@@ -58,6 +58,9 @@
 		7BA0E0EC2BCD7664002F0516 /* CustomFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0EB2BCD7664002F0516 /* CustomFlowLayout.swift */; };
 		7BA0E0EF2BCD76D0002F0516 /* PostRegViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0EE2BCD76D0002F0516 /* PostRegViewModel.swift */; };
 		7BA0E0F12BCE0791002F0516 /* KingFisherNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0F02BCE0791002F0516 /* KingFisherNet.swift */; };
+		7BC51B462BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B452BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift */; };
+		7BC51B492BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B482BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift */; };
+		7BC51B4B2BD019D600E5BF6C /* CursurModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */; };
 		7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */; };
 		7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A292BC598D700BCE635 /* NetError.swift */; };
 		7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */; };
@@ -127,7 +130,7 @@
 		7B838DF32BCFADE3000F2E27 /* PhotoSNSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSNSView.swift; sourceTree = "<group>"; };
 		7B838DFB2BCFAE69000F2E27 /* PhotoSNSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSNSViewController.swift; sourceTree = "<group>"; };
 		7B838E032BCFAEDF000F2E27 /* SNSHeaderWithCollectionVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSHeaderWithCollectionVIew.swift; sourceTree = "<group>"; };
-		7B838E052BCFB98F000F2E27 /* SNSCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSCollectionViewCell.swift; sourceTree = "<group>"; };
+		7B838E052BCFB98F000F2E27 /* SNSTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSTableViewCell.swift; sourceTree = "<group>"; };
 		7B838E072BCFBE9E000F2E27 /* SeletionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeletionButton.swift; sourceTree = "<group>"; };
 		7B838E0A2BCFCBC5000F2E27 /* JHPont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHPont.swift; sourceTree = "<group>"; };
 		7B838E0D2BCFCBEA000F2E27 /* JHImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHImage.swift; sourceTree = "<group>"; };
@@ -147,6 +150,9 @@
 		7BA0E0EB2BCD7664002F0516 /* CustomFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFlowLayout.swift; sourceTree = "<group>"; };
 		7BA0E0EE2BCD76D0002F0516 /* PostRegViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRegViewModel.swift; sourceTree = "<group>"; };
 		7BA0E0F02BCE0791002F0516 /* KingFisherNet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingFisherNet.swift; sourceTree = "<group>"; };
+		7BC51B452BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBaseTableViewCell.swift; sourceTree = "<group>"; };
+		7BC51B482BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSPhotoMainViewModel.swift; sourceTree = "<group>"; };
+		7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursurModel.swift; sourceTree = "<group>"; };
 		7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetHTTPHeader.swift; sourceTree = "<group>"; };
 		7BCF4A292BC598D700BCE635 /* NetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetError.swift; sourceTree = "<group>"; };
 		7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -290,6 +296,7 @@
 		7B11DC7D2BC58B440055D423 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7BC51B472BCFF62800E5BF6C /* SNSPhotoMain */,
 				7BA0E0ED2BCD76C5002F0516 /* PostReg */,
 				7BCF4AA22BCBF68300BCE635 /* Login */,
 				7BCF4A752BC7E70B00BCE635 /* SignUP */,
@@ -338,6 +345,7 @@
 			children = (
 				7B11DC842BC58CB90055D423 /* NetWorkModel.swift */,
 				7B11DCA62BC590510055D423 /* NetWorkQuery.swift */,
+				7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -458,7 +466,7 @@
 				7BA0E0DA2BCD73B0002F0516 /* CategoryReusableCell.swift */,
 				7BA0E0E52BCD7513002F0516 /* OnlyImageCollectionViewCell.swift */,
 				7B838DDF2BCEF2DD000F2E27 /* AddCollectionViewCell.swift */,
-				7B838E052BCFB98F000F2E27 /* SNSCollectionViewCell.swift */,
+				7B838E052BCFB98F000F2E27 /* SNSTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -481,6 +489,14 @@
 				7BA0E0EE2BCD76D0002F0516 /* PostRegViewModel.swift */,
 			);
 			path = PostReg;
+			sourceTree = "<group>";
+		};
+		7BC51B472BCFF62800E5BF6C /* SNSPhotoMain */ = {
+			isa = PBXGroup;
+			children = (
+				7BC51B482BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift */,
+			);
+			path = SNSPhotoMain;
 			sourceTree = "<group>";
 		};
 		7BCF4A2D2BC5A65100BCE635 /* View */ = {
@@ -513,6 +529,7 @@
 				7BCF4A582BC6E20600BCE635 /* BaseButton.swift */,
 				7BA0E0DC2BCD73DB002F0516 /* BaseCollectionViewCell.swift */,
 				7BA0E0DE2BCD73EC002F0516 /* BaseTableViewCell.swift */,
+				7BC51B452BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -770,7 +787,8 @@
 				7B838E042BCFAEDF000F2E27 /* SNSHeaderWithCollectionVIew.swift in Sources */,
 				7BCF4A542BC6E0ED00BCE635 /* GetStartView.swift in Sources */,
 				7BCF4A872BC947DE00BCE635 /* MulipartTargetType.swift in Sources */,
-				7B838E062BCFB98F000F2E27 /* SNSCollectionViewCell.swift in Sources */,
+				7BC51B462BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift in Sources */,
+				7B838E062BCFB98F000F2E27 /* SNSTableViewCell.swift in Sources */,
 				7BCF4AA12BCBEB3300BCE635 /* LoginViewController.swift in Sources */,
 				7B838E0E2BCFCBEA000F2E27 /* JHImage.swift in Sources */,
 				7BCF4A592BC6E20600BCE635 /* BaseButton.swift in Sources */,
@@ -787,6 +805,7 @@
 				7B838DDA2BCEC960000F2E27 /* FirstView.swift in Sources */,
 				7B838DDC2BCEC9B9000F2E27 /* LunchScreenViewController.swift in Sources */,
 				7BA0E0DF2BCD73EC002F0516 /* BaseTableViewCell.swift in Sources */,
+				7BC51B492BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift in Sources */,
 				7BCF4A5F2BC6E39700BCE635 /* JHColor.swift in Sources */,
 				7BA0E0E22BCD7458002F0516 /* CircleImageView.swift in Sources */,
 				7BCF4A312BC5A8DB00BCE635 /* ReusableIdentifier.swift in Sources */,
@@ -799,6 +818,7 @@
 				7BCF4AA62BCBFA6D00BCE635 /* UserIDStorage.swift in Sources */,
 				7BCF4A442BC6B3A300BCE635 /* Notification.swift in Sources */,
 				7BCF4A9D2BCBE68400BCE635 /* LoginView.swift in Sources */,
+				7BC51B4B2BD019D600E5BF6C /* CursurModel.swift in Sources */,
 				7BCF4A2F2BC5A65E00BCE635 /* ViewModelType.swift in Sources */,
 				7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */,
 				7BCF4A342BC5AA4700BCE635 /* ExUIViewController.swift in Sources */,

@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import Then
 import SnapKit
-
+import Kingfisher
 /*
  // 포스트를 받아 오면
  // 키체인에 저장된 UserId 와 비교해
@@ -21,13 +21,13 @@ import SnapKit
  */
 /*
  일단 버튼 만들러 ㄱㄱ check V
+ 이미지 스크롤뷰 완료
+ 뷰컨으로 가서 통신먼저 테스트
  */
-final class SNSCollectionViewCell: BaseCollectionViewCell {
-    
-    let disposeBag = DisposeBag()
+final class SNSTableViewCell: RxBaseTableViewCell {
 
-    // 이미지 스크롤 뷰
-    
+    // 이미지 스크롤 뷰 -> 안에 Rx 게심
+    let imageScrollView = ScrollImageView(frame: .zero)
     // 크리에이터 이름 라벨
     let userNameLabel = UILabel()
     // 프로필 이미지뷰
@@ -44,8 +44,17 @@ final class SNSCollectionViewCell: BaseCollectionViewCell {
         noSelected: JHImage.messageDiselected
     )
     // 컨텐트 라벨
+    let contentLable = UILabel().then {
+        $0.font = JHFont.UIKit.re12
+    }
     
     // 날짜 라벨인데 (몇일전인지 계산하기)
+    let dateLabel = UILabel().then {
+        $0.font = JHFont.UIKit.re10
+    }
     
+    func setModel(_ model: SNSDataModel) {
+        
+    }
     
 }
