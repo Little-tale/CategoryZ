@@ -20,4 +20,5 @@ extension JHImage {
     
     static let messageDiselected: UIImage? = UIImage(systemName: "message")
     
+    static let defaultImage: UIImage? = UIImage(systemName: "person.crop.circle")
 }

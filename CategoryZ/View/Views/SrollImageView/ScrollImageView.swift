@@ -20,6 +20,7 @@ final class ScrollImageView: RxBaseView {
     private
     let horizonHeight: CGFloat
     
+    
     private 
     var photoImageView: [UIImageView] = [] {
         didSet {
@@ -135,12 +136,14 @@ final class ScrollImageView: RxBaseView {
             
             let view = UIImageView()
             view.contentMode = .scaleToFill
-            
+            view.backgroundColor = JHColor.darkGray
             view.kf.setImage(with: URL(string: image), options: [
                 .processor(imageProcesor),
+                .transition(.fade(1)),
+                .cacheOriginalImage,
                 .requestModifier(
                     KingFisherNet()
-                ),
+                )
             ])
             imageView.append(view)
             

@@ -33,7 +33,8 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     let userNameLabel = UILabel()
     // 프로필 이미지뷰
     let profileImageView = CircleImageView().then {
-        $0.image = UIImage(systemName: "star")
+        $0.image = JHImage.defaultImage
+        $0.tintColor = JHColor.black
     }
     
     // 좋아요 버튼 옆에는 몇명이 했는지..!
@@ -149,11 +150,11 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     override func configureLayout() {
         profileImageView.snp.makeConstraints { make in
             make.leading.top.equalTo(contentView.safeAreaLayoutGuide).offset(4)
-            make.size.equalTo(24)
+            make.size.equalTo(35)
         }
         userNameLabel.snp.makeConstraints { make in
             make.centerY.equalTo(profileImageView)
-            make.leading.equalTo(profileImageView.snp.trailing).offset(4)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(6)
         }
         imageScrollView.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide)
@@ -163,7 +164,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         likeButton.snp.makeConstraints { make in
             make.top.equalTo(imageScrollView.snp.bottom).offset(4)
             make.leading.equalTo(imageScrollView).offset(8)
-            make.size.equalTo(32)
+            make.size.equalTo(24)
         }
         likeCountLabel.snp.makeConstraints { make in
             make.centerY.equalTo(likeButton)
@@ -172,7 +173,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         commentButton.snp.makeConstraints { make in
             make.centerY.equalTo(likeButton)
             make.size.equalTo(likeButton)
-            make.leading.equalTo(likeCountLabel.snp.trailing).offset(4)
+            make.leading.equalTo(likeCountLabel.snp.trailing).offset(8)
         }
         
         commentCountLabel.snp.makeConstraints { make in
