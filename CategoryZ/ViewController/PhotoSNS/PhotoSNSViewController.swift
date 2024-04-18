@@ -64,6 +64,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         // 데이터 방출시 테이블 뷰
         output.tableViewItems
             .drive(homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) { row, model, cell in
+         
                 cell.setModel(model, output.userIDDriver.value)
             }
             .disposed(by: disPoseBag)

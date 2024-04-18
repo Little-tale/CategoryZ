@@ -14,7 +14,6 @@ class CircleImageView: UIImageView {
         self.layer.cornerRadius = self.frame.width / 2
         self.contentMode = .scaleAspectFit
         self.clipsToBounds = true
-        
     }
 }
 

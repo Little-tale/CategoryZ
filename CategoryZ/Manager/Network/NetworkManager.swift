@@ -107,11 +107,17 @@ extension NetworkManager {
             let version = router.version
             let path = version + router.path
             
-            guard case .imageUpload = router,
-                  let url = router.baseUrl?.appendingPathComponent(path, conformingTo: .url) else {
+            guard let baseUrl = URL(string: APIKey.testURL.rawValue) else {
                 single(.success(.failure(.failMakeURLRequest)))
                 return Disposables.create()
             }
+            
+            guard case .imageUpload = router else {
+                single(.success(.failure(.failMakeURLRequest)))
+                return Disposables.create()
+            }
+            
+            let url = baseUrl.appendingPathComponent(path, conformingTo: .url)
             
             AF.upload(multipartFormData: { multiPartFromData in
                 for (index, imageData ) in images.enumerated() {
@@ -218,13 +224,20 @@ extension NetworkManager {
             
             let version = router.version
             let path = version + router.path
-         
-            guard case .profileMeModify = router,
-                  let url = router.baseUrl?.appendingPathComponent(path, conformingTo: .url) else {
+            
+            guard let baseUrl = URL(string: APIKey.testURL.rawValue) else {
                 single(.success(.failure(.failMakeURLRequest)))
                 return Disposables.create()
             }
-    
+            
+         
+            guard case .profileMeModify = router else {
+                single(.success(.failure(.failMakeURLRequest)))
+                return Disposables.create()
+            }
+            
+            let url = baseUrl.appendingPathComponent(path, conformingTo: .url)
+            
             AF.upload(multipartFormData: { multipartFromData in
                 
                 if let nick = model.nick?.data(using: .utf8) {

@@ -125,7 +125,7 @@ struct SNSDataModel: Decodable, Hashable {
     let likes: [String]
     let hashTags: [String]
     let comments: [String]
-    let meID: String
+   
     
     enum CodingKeys: String, CodingKey {
         case postId = "post_id"
@@ -156,7 +156,6 @@ struct SNSDataModel: Decodable, Hashable {
         self.likes = try container.decode([String].self, forKey: .likes)
         self.hashTags = try container.decode([String].self, forKey: .hashTags)
         self.comments = try container.decode([String].self, forKey: .comments)
-        self.meID = UserIDStorage.shared.userID ?? ""
     }
 
 }

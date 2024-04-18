@@ -126,8 +126,13 @@ final class ScrollImageView: RxBaseView {
     func setModel(_ urlString: [String]) {
         var imageView: [UIImageView] = []
         urlString.forEach { image in
+            
             let view = UIImageView()
-            view.kf.setImage(with: URL(string: image), options: [.])
+            view.kf.setImage(with: URL(string: image), options: [
+                .requestModifier(
+                    KingFisherNet()
+                )
+            ])
             imageView.append(view)
         }
         photoImageView = imageView

@@ -15,9 +15,7 @@ enum ProfileRouter {
 }
 
 extension ProfileRouter: TargetType {
-    var baseUrl: URL? {
-        return URL(string: APIKey.baseURL.rawValue)
-    }
+ 
     
     var method: Alamofire.HTTPMethod {
         switch self {

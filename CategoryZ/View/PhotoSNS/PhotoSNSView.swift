@@ -29,7 +29,8 @@ final class PhotoSNSView: RxBaseView {
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
         }
-        
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 240
     }
     /*
      회고 레이어 안보이는 이유

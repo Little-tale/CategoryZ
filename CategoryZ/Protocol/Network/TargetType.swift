@@ -10,8 +10,6 @@ import Foundation
 
 protocol TargetType: URLRequestConvertible {
     
-    var baseUrl: URL? { get }
-    
     var method: HTTPMethod { get }
     
     var path: String { get }
@@ -37,6 +35,7 @@ protocol TargetType: URLRequestConvertible {
 extension TargetType {
     
     func asURLRequest() throws -> URLRequest {
+        let baseUrl = URL(string: APIKey.baseURL.rawValue)
         guard let baseUrl else { throw URLError(.badURL) }
         
         let lastPath = version + path

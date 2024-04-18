@@ -31,18 +31,27 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     // 크리에이터 이름 라벨
     let userNameLabel = UILabel()
     // 프로필 이미지뷰
-    let profileImageView = CircleImageView()
+    let profileImageView = CircleImageView().then {
+        $0.image = UIImage(systemName: "star")
+    }
     // 좋아요 버튼 옆에는 몇명이 했는지..!
     let likeButton = SeletionButton(
         selected: JHImage.likeImageSelected,
-        noSelected: JHImage.likeImageDiselected,
-        seletedColor: JHColor.likeColor
+        noSelected: JHImage.likeImageDiselected
     )
+        .then { $0.tintColor = JHColor.black }
+    
+    let likeCountLabel = UILabel()
+    
     // 댓글 버튼
     let commentButton = SeletionButton(
         selected: JHImage.messageSelected,
         noSelected: JHImage.messageDiselected
     )
+    
+    let commentCountLabel = UILabel()
+    
+        .then { $0.tintColor = JHColor.black }
     // 컨텐트 라벨
     let contentLable = UILabel().then {
         $0.font = JHFont.UIKit.re12
@@ -58,14 +67,58 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     
     
     func setModel(_ model: SNSDataModel, _ userId: String) {
-        let model = PublishRelay<SNSDataModel> ()
-        
+        let model = BehaviorRelay<SNSDataModel> (value: model)
+        let userId = BehaviorRelay<String> (value: userId)
+    
         let input = SNSTableViewModel
             .Input(
-                snsModel: model
+                snsModel: model,
+                inputUserId: userId
             )
         
         let output = viewModel.transform(input)
+        
+        // 좋아요 버튼 상태
+        output.isUserLike
+            .drive(with: self) { owner, bool in
+                owner.likeButton.isSelected = bool
+                owner.likeButton.tintColor = bool ? JHColor.likeColor : JHColor.black
+            }
+            .disposed(by: disposeBag)
+        
+        // 좋아요 갯수
+        output.likeCount
+            .drive(likeCountLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        // 댓글 갯수
+        output.comentsCount
+            .drive(commentCountLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        // 프로필 이미지 반영
+        output.userProfileImage
+            .filter({ $0 != nil })
+            .drive(with: self) { owner, imageURL in
+                let url = URL(string: imageURL!)
+                owner.profileImageView.kf.setImage(with: url, options: [.requestModifier(KingFisherRequset())])
+            }
+            .disposed(by: disposeBag)
+        
+        // 프로필 이름 반영
+        output.profileName
+            .drive(userNameLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        // 이미지들 반영
+        output.imageURLStrings
+            .drive(with: self) { owner, imageURLs in
+                print(imageURLs)
+                owner.imageScrollView.setModel(imageURLs)
+            }
+            .disposed(by: disposeBag)
+        
+        
     }
     
     
@@ -74,37 +127,50 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         contentView.addSubview(userNameLabel)
         contentView.addSubview(imageScrollView)
         contentView.addSubview(likeButton)
+        contentView.addSubview(likeCountLabel)
         contentView.addSubview(commentButton)
+        contentView.addSubview(commentCountLabel)
         contentView.addSubview(contentLable)
         contentView.addSubview(dateLabel)
     }
     // ->
     override func configureLayout() {
         profileImageView.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview().offset(4)
-            make.size.equalTo(20)
+            make.leading.top.equalTo(contentView.safeAreaLayoutGuide).offset(4)
+            make.size.equalTo(24)
         }
         userNameLabel.snp.makeConstraints { make in
             make.centerY.equalTo(profileImageView)
-            make.leading.equalTo(profileImageView.snp.trailing)
+            make.leading.equalTo(profileImageView.snp.trailing).offset(4)
         }
         imageScrollView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview()
+            make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide)
             make.top.equalTo(profileImageView.snp.bottom).offset(4)
-            make.height.equalTo(140)
+            make.height.equalTo(350)
         }
         likeButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(5)
-            make.size.equalTo(14)
             make.top.equalTo(imageScrollView.snp.bottom).offset(4)
+            make.leading.equalTo(imageScrollView).offset(8)
+            make.size.equalTo(32)
+        }
+        likeCountLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(likeButton)
+            make.leading.equalTo(likeButton.snp.trailing).offset(4)
         }
         commentButton.snp.makeConstraints { make in
-            make.centerY.size.equalTo(likeButton)
-            make.leading.equalTo(likeButton.snp.trailing).offset(3)
+            make.centerY.equalTo(likeButton)
+            make.size.equalTo(likeButton)
+            make.leading.equalTo(likeCountLabel.snp.trailing).offset(4)
         }
+        commentCountLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(likeButton)
+            make.leading.equalTo(commentButton.snp.trailing).offset(4)
+        }
+        
         contentLable.snp.makeConstraints { make in
             make.top.equalTo(likeButton.snp.bottom).offset(4)
             make.horizontalEdges.equalToSuperview()
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(8)
         }
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(contentLable.snp.bottom)

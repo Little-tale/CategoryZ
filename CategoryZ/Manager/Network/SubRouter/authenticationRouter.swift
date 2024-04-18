@@ -19,10 +19,6 @@ enum authenticationRouter {
 
 extension authenticationRouter: TargetType {
     
-    var baseUrl: URL? {
-        return URL( string: APIKey.baseURL.rawValue )
-    }
-    
     var method: HTTPMethod {
         switch self {
         case .login, .join, .emailVaild:

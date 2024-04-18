@@ -13,25 +13,18 @@ final class SeletionButton: BaseButton {
     
     private let selectedImage: UIImage?
     private let noSelectedImage: UIImage?
-    private let selectedColor: UIColor?
-    
-    private lazy var configu = UIButton.Configuration.tinted()
     
     override var isSelected: Bool {
         didSet {
             let image = isSelected ? selectedImage : noSelectedImage
-            configu.image = image
-            if let selectedColor {
-                configu.baseForegroundColor = isSelected ? selectedColor : .white
-            }
-            configuration = configu
+            setImage(image, for: .normal)
+            
         }
     }
     
-    init(selected: UIImage?, noSelected: UIImage?, seletedColor: UIColor? = nil) {
+    init(selected: UIImage?, noSelected: UIImage?) {
         selectedImage = selected
         noSelectedImage = noSelected
-        selectedColor = seletedColor
         super.init(frame: .zero)
     }
     
@@ -39,7 +32,14 @@ final class SeletionButton: BaseButton {
         fatalError("init(coder:) has not been implemented")
     }
     override func setting() {
-        configu.image = selectedImage
-        configuration = configu
+        clipsToBounds = true
+        setImage(noSelectedImage, for: .normal)
+        contentMode = .scaleAspectFit
+        
+        if let imageView {
+            imageView.snp.makeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+        }
     }
 }

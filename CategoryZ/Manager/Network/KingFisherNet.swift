@@ -11,13 +11,28 @@ import Foundation
 
 class KingFisherNet: ImageDownloadRequestModifier {
     
+    private 
+    let baseURL = APIKey.baseURL.rawValue
+    
+    private
+    let version = "/v1/"
+    
     func modified(for request: URLRequest) -> URLRequest? {
+    
+        let reUrl = baseURL + version + request.description
+        
         guard let accessTokken = TokenStorage.shared.accessToken else {
             return nil
         }
-        var request = request
-        request.addValue(accessTokken, forHTTPHeaderField: NetHTTPHeader.authorization.rawValue)
-        request.addValue(APIKey.sesacKey.rawValue, forHTTPHeaderField: NetHTTPHeader.sesacKey.rawValue)
-        return request
+        
+        guard let url = URL(string: reUrl)else {
+            return nil
+        }
+        
+        var urlReqest = URLRequest(url: url)
+
+        urlReqest.addValue(accessTokken, forHTTPHeaderField: NetHTTPHeader.authorization.rawValue)
+        urlReqest.addValue(APIKey.sesacKey.rawValue, forHTTPHeaderField: NetHTTPHeader.sesacKey.rawValue)
+        return urlReqest
     }
 }
