@@ -8,12 +8,38 @@
 import Foundation
 import RxSwift
 import RxCocoa
+/*
+ .flatMap { likeModel, postId in
+     NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: likeModel, postId: postId)))
+ }
+ .bind { result in
+     switch result {
+     case .success(let likeModel):
+         <#code#>
+     case .failure(let fail):
+         network
+     }
+ }
+ .disposed(by: disposeBag)
+ */
+
+protocol LikeStateProtocol: AnyObject {
+    func changeLikeState(_ model: LikeQueryModel,_ postId: String)
+}
 
 final class SNSPhotoMainViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
    
+    // 포스트 데이타들
+    private
+    let postsDatas = BehaviorRelay<[SNSDataModel]> (value: [])
     
+    // 네트워크 에러 발생시
+    private
+    let networkError = PublishRelay<NetworkError> ()
+    
+
     struct Input {
         // 첫 시작 트리거
         let viewDidAppearTrigger : ControlEvent<Bool>
@@ -32,12 +58,8 @@ final class SNSPhotoMainViewModel: RxViewModelType {
     func transform(_ input: Input) -> Output {
         let limit = "10"
         
-        // 포스트 데이타들
-        let postsDatas = BehaviorRelay<[SNSDataModel]> (value: [])
         // 다음 커서
         let nextCursor = BehaviorRelay<String?> (value: nil)
-        // 네트워크 에러 발생시
-        let networkError = PublishRelay<NetworkError> ()
         
         let userId = BehaviorRelay<String> (value: UserIDStorage.shared.userID ?? "" )
         
@@ -53,9 +75,9 @@ final class SNSPhotoMainViewModel: RxViewModelType {
                 case .success(let success):
                     print(success)
                     nextCursor.accept(success.nextCursor)
-                    postsDatas.accept(success.data)
+                    owner.postsDatas.accept(success.data)
                 case .failure(let failer):
-                    networkError.accept(failer)
+                    owner.networkError.accept(failer)
                 }
             }
             .disposed(by: disposeBag)
@@ -68,4 +90,42 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         )
     }
 
+}
+
+extension SNSPhotoMainViewModel: LikeStateProtocol {
+    
+    func changeLikeState(_ model: LikeQueryModel, _ postId: String) {
+        print(model)
+        guard let userId = UserIDStorage.shared.userID else { return }
+        print(model.like_status)
+        print(model.currentRow)
+        NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: model, postId: postId)))
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let likeModel):
+                    var updatePost = owner.postsDatas.value
+                    var model = likeModel
+                    var willChange = owner.postsDatas.value[model.currentRow]
+
+                    if model.like_status {
+                        if !willChange.likes.contains(userId) {
+                            
+                            willChange.likes.append(userId)
+                        }
+                    } else {
+                        if let index = willChange.likes.firstIndex(of: userId) {
+                           
+                            willChange.likes.remove(at: index)
+                        }
+                    }
+                    
+                    updatePost[model.currentRow] = willChange
+                    owner.postsDatas.accept(updatePost)
+                case .failure(let error):
+                    owner.networkError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+    
 }

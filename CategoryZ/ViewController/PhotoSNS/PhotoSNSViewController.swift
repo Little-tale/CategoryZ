@@ -61,12 +61,15 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 }
             }
             .disposed(by: disPoseBag)
+    
         
         // 데이터 방출시 테이블 뷰
         output.tableViewItems
-            .drive(homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) { row, model, cell in
-    
-                cell.setModel(model, output.userIDDriver.value)
+            .drive(homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {[weak self] row, model, cell in
+                guard let self else { return }
+                var reciveModel = model
+                reciveModel.currentRow = row
+                cell.setModel(reciveModel, output.userIDDriver.value, delegate: viewModel)
                 cell.selectionStyle = .none
                 
             }
@@ -102,9 +105,19 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         // 스크롤 정보를 다 뷰모델로 주어야 하는가
         // 아니면 여기서 스크롤 분석후 더 요청할거다 라는 신호만 주어야 하는가
         // 흠.....
-        
-        
     }
     
-    
 }
+
+extension SNSPhotoViewController: NetworkErrorCatchProtocol {
+    
+    func errorCatch(_ error: NetworkError) {
+        showAlert(error: error) { [unowned self] _ in
+            if error.errorCode == 419 {
+                goLoginView()
+            }
+        }
+    }
+
+}
+

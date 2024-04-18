@@ -12,11 +12,13 @@ import RxCocoa
 final class SNSTableViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
-
     
+    weak var likeStateProtocol: LikeStateProtocol?
+
     struct Input {
         let snsModel: BehaviorRelay<SNSDataModel>
         let inputUserId: BehaviorRelay<String>
+        let likedButtonTab: ControlEvent<Void>
     }
     
     struct Output {
@@ -31,26 +33,38 @@ final class SNSTableViewModel: RxViewModelType {
     }
     
     func transform(_ input: Input) -> Output {
+        var currentRow: Int = 0
+        
         let imageUrl = BehaviorRelay<[String]> (value: [])
         let contents = BehaviorRelay<String> (value: "")
         let profileImage = PublishRelay<String?> ()
         let profileName = BehaviorRelay(value: "")
         let likeCount = BehaviorRelay(value: "0")
         let comentsCount = BehaviorRelay(value: "0")
-       
         let diffDate = BehaviorRelay(value: "")
-        ///
-        let isUserLike = input.snsModel
+        
+        /// 현재 유저 라이크 모델
+        let isUserLikeModel = BehaviorRelay<LikeQueryModel> (value: .init(like_status: false))
+
+        
+        input.snsModel
             .map { $0.likes }
-            .map { userIds in
+            .bind { userIds in
                 if userIds.contains(UserIDStorage.shared.userID ?? "") {
-                    return true
+                    let model = LikeQueryModel(like_status: true)
+                    isUserLikeModel.accept(model)
                 } else {
-                    return false
+                    let model = LikeQueryModel(like_status: false)
+                    isUserLikeModel.accept(model)
                 }
             }
+            .disposed(by: disposeBag)
+            
+        let isUserLike = isUserLikeModel
+            .map { $0.like_status }
             .asDriver(onErrorJustReturn: false)
             
+        let currnetPostId = BehaviorRelay(value: "")
         
         input.snsModel
             .withUnretained(self)
@@ -65,7 +79,9 @@ final class SNSTableViewModel: RxViewModelType {
                 profileImage.accept(creator.profileImage) // 이미지
                 
                 likeCount.accept(String(model.likes.count))
-                
+        
+                currnetPostId.accept(model.postId)
+                currentRow = model.currentRow
                 //댓글 개수
                 comentsCount.accept(String(model.comments.count))
                 
@@ -73,6 +89,28 @@ final class SNSTableViewModel: RxViewModelType {
                 diffDate.accept(DateManager.shared.differenceDateString(model.createdAt))
             }
             .disposed(by: disposeBag)
+        
+        // 유저 아이디 + 좋아요 상태
+        let combineOfUserLike = Observable.combineLatest(
+            isUserLikeModel,
+            currnetPostId
+        )
+        
+        
+        input.likedButtonTab
+            .withLatestFrom(combineOfUserLike)
+            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+            .map { combine in
+                var likeTogle = combine.0
+                likeTogle.like_status.toggle()
+                likeTogle.currentRow = currentRow
+                return (likeModel: likeTogle, postId: combine.1)
+            }
+            .bind(with: self, onNext: { owner, model in
+                owner.likeStateProtocol?.changeLikeState(model.likeModel, model.postId)
+            })
+            .disposed(by: disposeBag)
+            
         
         return Output(
             imageURLStrings: imageUrl.asDriver(),
@@ -88,3 +126,18 @@ final class SNSTableViewModel: RxViewModelType {
         )
     }
 }
+
+
+/*
+ .flatMap { likeModel, postId in
+     NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: likeModel, postId: postId)))
+ }
+ .bind { result in
+     switch result {
+     case .success(let likeModel):
+         isUserLikeModel.accept(likeModel)
+     case .failure(let fail):
+         netWorkError.accept(fail)
+     }
+ }
+ */

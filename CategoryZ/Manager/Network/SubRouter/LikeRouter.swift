@@ -42,10 +42,17 @@ extension LikeRouter : TargetType {
     
     var headers: [String : String] {
         switch self {
-        case .like, .findLikedPost:
+        case .findLikedPost:
             return [
                 NetHTTPHeader.sesacKey.rawValue :
                     APIKey.sesacKey.rawValue
+            ]
+            
+        case .like:
+            return [
+                NetHTTPHeader.sesacKey.rawValue :
+                    APIKey.sesacKey.rawValue,
+                NetHTTPHeader.contentType.rawValue : NetHTTPHeader.json.rawValue
             ]
         }
     }

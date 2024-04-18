@@ -25,7 +25,7 @@ import Kingfisher
  뷰컨으로 가서 통신먼저 테스트
  */
 final class SNSTableViewCell: RxBaseTableViewCell {
-
+    
     // 이미지 스크롤 뷰 -> 안에 Rx 게심
     lazy var imageScrollView = ScrollImageView(horizonWidth: contentView.frame.width, horizonHeight: contentView.frame.height)
     
@@ -67,17 +67,22 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     let dateLabel = UILabel().then {
         $0.font = JHFont.UIKit.re10
     }
-    
+
+    // 뷰모델
     let viewModel = SNSTableViewModel()
     
-    func setModel(_ model: SNSDataModel, _ userId: String) {
+    func setModel(_ model: SNSDataModel, _ userId: String, delegate: LikeStateProtocol) {
+        
         let model = BehaviorRelay<SNSDataModel> (value: model)
         let userId = BehaviorRelay<String> (value: userId)
-    
+        
+        viewModel.likeStateProtocol = delegate
+        
         let input = SNSTableViewModel
             .Input(
                 snsModel: model,
-                inputUserId: userId
+                inputUserId: userId,
+                likedButtonTab: likeButton.rx.tap
             )
         
         let output = viewModel.transform(input)
@@ -146,7 +151,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         contentView.addSubview(contentLable)
         contentView.addSubview(dateLabel)
     }
-    // ->
+    
     override func configureLayout() {
         profileImageView.snp.makeConstraints { make in
             make.leading.top.equalTo(contentView.safeAreaLayoutGuide).offset(4)

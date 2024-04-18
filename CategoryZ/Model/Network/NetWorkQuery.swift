@@ -74,12 +74,16 @@ struct CommentWriteQuery: Encodable {
 
 /// 좋아요 쿼리 (CODABLE)
 struct LikeQueryModel: Codable {
-    let like_status: Bool
-    
+    var like_status: Bool
+    var currentRow = 0
     
     init(like_status: Bool? = false) {
         self.like_status = like_status ?? false
     }
     
+    init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.like_status = try container.decode(Bool.self, forKey: .like_status)
+    }
 }
 

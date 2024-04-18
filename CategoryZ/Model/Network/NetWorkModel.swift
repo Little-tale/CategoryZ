@@ -122,10 +122,10 @@ struct SNSDataModel: Decodable, Hashable {
     let createdAt: String
     let creator: Creator
     let files: [String]
-    let likes: [String]
+    var likes: [String]
     let hashTags: [String]
-    let comments: [String]
-   
+    var comments: [String]
+    var currentRow = 0
     
     enum CodingKeys: String, CodingKey {
         case postId = "post_id"

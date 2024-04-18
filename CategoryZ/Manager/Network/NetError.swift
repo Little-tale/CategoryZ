@@ -68,7 +68,9 @@ enum NetworkError: Error {
 
 }
 
-
+protocol NetworkErrorCatchProtocol: NSObject {
+    func errorCatch(_ error: NetworkError)
+}
 
 extension NetworkError {
     
