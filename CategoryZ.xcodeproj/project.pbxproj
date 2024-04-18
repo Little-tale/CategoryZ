@@ -61,6 +61,8 @@
 		7BC51B462BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B452BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift */; };
 		7BC51B492BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B482BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift */; };
 		7BC51B4B2BD019D600E5BF6C /* CursurModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */; };
+		7BC51B4D2BD0986E00E5BF6C /* SNSTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B4C2BD0986E00E5BF6C /* SNSTableViewModel.swift */; };
+		7BC51B4F2BD0A22400E5BF6C /* KingFisherRequset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B4E2BD0A22400E5BF6C /* KingFisherRequset.swift */; };
 		7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */; };
 		7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A292BC598D700BCE635 /* NetError.swift */; };
 		7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */; };
@@ -153,6 +155,8 @@
 		7BC51B452BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBaseTableViewCell.swift; sourceTree = "<group>"; };
 		7BC51B482BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSPhotoMainViewModel.swift; sourceTree = "<group>"; };
 		7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursurModel.swift; sourceTree = "<group>"; };
+		7BC51B4C2BD0986E00E5BF6C /* SNSTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSTableViewModel.swift; sourceTree = "<group>"; };
+		7BC51B4E2BD0A22400E5BF6C /* KingFisherRequset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingFisherRequset.swift; sourceTree = "<group>"; };
 		7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetHTTPHeader.swift; sourceTree = "<group>"; };
 		7BCF4A292BC598D700BCE635 /* NetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetError.swift; sourceTree = "<group>"; };
 		7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -346,6 +350,7 @@
 				7B11DC842BC58CB90055D423 /* NetWorkModel.swift */,
 				7B11DCA62BC590510055D423 /* NetWorkQuery.swift */,
 				7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */,
+				7BC51B4E2BD0A22400E5BF6C /* KingFisherRequset.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -495,6 +500,7 @@
 			isa = PBXGroup;
 			children = (
 				7BC51B482BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift */,
+				7BC51B4C2BD0986E00E5BF6C /* SNSTableViewModel.swift */,
 			);
 			path = SNSPhotoMain;
 			sourceTree = "<group>";
@@ -774,6 +780,7 @@
 				7B11DC682BC58AD40055D423 /* AppDelegate.swift in Sources */,
 				7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */,
 				7BA0E0D32BCD72C3002F0516 /* PostRegViewController.swift in Sources */,
+				7BC51B4D2BD0986E00E5BF6C /* SNSTableViewModel.swift in Sources */,
 				7BCF4A932BCB80F100BCE635 /* LikeRouter.swift in Sources */,
 				7BCF4A4C2BC6D05C00BCE635 /* RxBaseView.swift in Sources */,
 				7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */,
@@ -841,6 +848,7 @@
 				7B11DCA52BC5902A0055D423 /* authenticationRouter.swift in Sources */,
 				7BCF4A7D2BC922F700BCE635 /* PathRouter.swift in Sources */,
 				7BCF4A952BCBA27F00BCE635 /* FollowRouter.swift in Sources */,
+				7BC51B4F2BD0A22400E5BF6C /* KingFisherRequset.swift in Sources */,
 				7BCF4A632BC6E87600BCE635 /* ExUIWindow.swift in Sources */,
 				7BA0E0DB2BCD73B0002F0516 /* CategoryReusableCell.swift in Sources */,
 				7BCF4A892BCA715E00BCE635 /* PostQueryType.swift in Sources */,

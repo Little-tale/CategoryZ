@@ -10,6 +10,7 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 final class ScrollImageView: RxBaseView {
     
@@ -122,7 +123,15 @@ final class ScrollImageView: RxBaseView {
         photoImageView = imageView
     }
     
-
+    func setModel(_ urlString: [String]) {
+        var imageView: [UIImageView] = []
+        urlString.forEach { image in
+            let view = UIImageView()
+            view.kf.setImage(with: URL(string: image), options: [.])
+            imageView.append(view)
+        }
+        photoImageView = imageView
+    }
   
 }
 

@@ -46,6 +46,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     // 컨텐트 라벨
     let contentLable = UILabel().then {
         $0.font = JHFont.UIKit.re12
+        $0.numberOfLines = 3
     }
     
     // 날짜 라벨인데 (몇일전인지 계산하기)
@@ -53,8 +54,61 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         $0.font = JHFont.UIKit.re10
     }
     
-    func setModel(_ model: SNSDataModel) {
+    let viewModel = SNSTableViewModel()
+    
+    
+    func setModel(_ model: SNSDataModel, _ userId: String) {
+        let model = PublishRelay<SNSDataModel> ()
         
+        let input = SNSTableViewModel
+            .Input(
+                snsModel: model
+            )
+        
+        let output = viewModel.transform(input)
     }
     
+    
+    override func configureHierarchy() {
+        contentView.addSubview(profileImageView)
+        contentView.addSubview(userNameLabel)
+        contentView.addSubview(imageScrollView)
+        contentView.addSubview(likeButton)
+        contentView.addSubview(commentButton)
+        contentView.addSubview(contentLable)
+        contentView.addSubview(dateLabel)
+    }
+    // ->
+    override func configureLayout() {
+        profileImageView.snp.makeConstraints { make in
+            make.leading.top.equalToSuperview().offset(4)
+            make.size.equalTo(20)
+        }
+        userNameLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(profileImageView)
+            make.leading.equalTo(profileImageView.snp.trailing)
+        }
+        imageScrollView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.top.equalTo(profileImageView.snp.bottom).offset(4)
+            make.height.equalTo(140)
+        }
+        likeButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(5)
+            make.size.equalTo(14)
+            make.top.equalTo(imageScrollView.snp.bottom).offset(4)
+        }
+        commentButton.snp.makeConstraints { make in
+            make.centerY.size.equalTo(likeButton)
+            make.leading.equalTo(likeButton.snp.trailing).offset(3)
+        }
+        contentLable.snp.makeConstraints { make in
+            make.top.equalTo(likeButton.snp.bottom).offset(4)
+            make.horizontalEdges.equalToSuperview()
+        }
+        dateLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentLable.snp.bottom)
+            make.leading.equalTo(contentLable)
+        }
+    }
 }

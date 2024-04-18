@@ -26,6 +26,7 @@ final class SNSPhotoMainViewModel: RxViewModelType {
     struct Output {
         let networkError: Driver<NetworkError>
         let tableViewItems: Driver<[SNSDataModel]>
+        let userIDDriver: BehaviorRelay<String>
     }
     
     func transform(_ input: Input) -> Output {
@@ -37,6 +38,8 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         let nextCursor = BehaviorRelay<String?> (value: nil)
         // 네트워크 에러 발생시
         let networkError = PublishRelay<NetworkError> ()
+        
+        let userId = BehaviorRelay<String> (value: UserIDStorage.shared.userID ?? "" )
         
         // 네트워크 요청시 반환 받는 모델 PostReadMainModel 통신은 됨
         input.viewDidAppearTrigger
@@ -58,10 +61,10 @@ final class SNSPhotoMainViewModel: RxViewModelType {
             .disposed(by: disposeBag)
         
         
-        
         return .init(
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
-            tableViewItems: postsDatas.asDriver()
+            tableViewItems: postsDatas.asDriver(),
+            userIDDriver: userId
         )
     }
 
