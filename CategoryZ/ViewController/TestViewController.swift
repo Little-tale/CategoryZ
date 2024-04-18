@@ -16,7 +16,7 @@ final class TestViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
-    let scrollImageView = ScrollImageView(frame: .zero)
+    //let scrollImageView = ScrollImageView(frame: .zero)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -320,21 +320,21 @@ final class TestViewController: UIViewController {
 //            make.center.equalToSuperview()
 //        }
         
-        view.addSubview(scrollImageView)
-        scrollImageView.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(300)
-            make.center.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-        let imageData:[UIImage] = [
-            UIImage(resource: .appLogo),
-            UIImage(resource: .appLogo),
-            UIImage(resource: .appLogo),
-            UIImage(resource: .fashion),
-            UIImage(resource: .appLogo)
-        ]
-        
-        scrollImageView.setModel(imageData)
+//        view.addSubview(scrollImageView)
+//        scrollImageView.snp.makeConstraints { make in
+//            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+//            make.height.equalTo(300)
+//            make.center.equalTo(view.safeAreaLayoutGuide)
+//        }
+//        
+//        let imageData:[UIImage] = [
+//            UIImage(resource: .appLogo),
+//            UIImage(resource: .appLogo),
+//            UIImage(resource: .appLogo),
+//            UIImage(resource: .fashion),
+//            UIImage(resource: .appLogo)
+//        ]
+//        
+//        scrollImageView.setModel(imageData)
     }
 }

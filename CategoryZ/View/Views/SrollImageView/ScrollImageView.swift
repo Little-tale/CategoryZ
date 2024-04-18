@@ -14,19 +14,22 @@ import Kingfisher
 
 final class ScrollImageView: RxBaseView {
     
-    private var photoImageView: [UIImageView] = [] {
+    private 
+    let horizonWidth: CGFloat
+    
+    private
+    let horizonHeight: CGFloat
+    
+    private 
+    var photoImageView: [UIImageView] = [] {
         didSet {
             settingData()
             print(photoImageView.count)
         }
     }
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        let totalWidth = scrollView.frame.width * CGFloat(photoImageView.count)
-        scrollView.contentSize = CGSize(width: totalWidth, height: scrollView.frame.height)
-    }
-
-  
+    
+    private
+    lazy var imageProcesor = ResizingImageProcessor(referenceSize: CGSize(width: 500, height: horizonHeight), mode: .aspectFill)
     
     let scrollView = UIScrollView().then {
         // 수평 스크롤 인디케이터 끔
@@ -38,12 +41,13 @@ final class ScrollImageView: RxBaseView {
     }
     // 페이지 컨트롤러
     let pageController = UIPageControl()
-    /*
-     회고... scrollView.rx.딜리게이트가 많음
-     2. Thread 1: Swift runtime failure: Double value cannot be converted to Int because it is either infinite or NaN
-     예상되는 부분은 Rx가 더 빨라서 그럴 가능성이 있음
-     
-     */
+    
+    init(horizonWidth: CGFloat, horizonHeight: CGFloat) {
+        self.horizonWidth = horizonWidth
+        self.horizonHeight = horizonHeight
+        super.init(frame: .zero)
+    }
+   
     override func register() {
         
         // Rx 적으로변경해보자
@@ -54,7 +58,7 @@ final class ScrollImageView: RxBaseView {
                     return 0
                 }
                 return Int(round( // 가로축 좌표 / 뷰 윗스
-                    owner.scrollView.contentOffset.x / owner.frame.width
+                    owner.scrollView.contentOffset.x / owner.horizonWidth
                 ))
             }
             .bind(to: pageController.rx.currentPage)
@@ -128,27 +132,23 @@ final class ScrollImageView: RxBaseView {
     func setModel(_ urlString: [String]) {
         var imageView: [UIImageView] = []
         urlString.forEach { image in
-            let resizingProcessor = ResizingImageProcessor(
-                referenceSize: CGSize(
-                    width: frame.width, height: frame.height
-                )
-            )
             
             let view = UIImageView()
-            view.contentMode = .scaleAspectFill
+            view.contentMode = .scaleToFill
             
             view.kf.setImage(with: URL(string: image), options: [
-                .processor(resizingProcessor),
-                .transition(.fade(1)),
-                .cacheOriginalImage,
+                .processor(imageProcesor),
                 .requestModifier(
                     KingFisherNet()
-                )
+                ),
             ])
             imageView.append(view)
             
         }
         photoImageView = imageView
+        
+        let totalWidth = horizonWidth * CGFloat(photoImageView.count)
+        scrollView.contentSize = CGSize(width: totalWidth, height: scrollView.frame.height)
     }
   
 }
@@ -158,11 +158,12 @@ extension ScrollImageView {
     private func changeImageView(current: Int) {
         // 현재 페이지의 수를 받아
         // 현재 페이지의 스크롤뷰의 넓이 만큼 즉 해당하는 X 좌표
-        let moveTo = CGFloat(current) * scrollView.frame.width
+        let moveTo = CGFloat(current) * horizonWidth
         //  해당하는 좌표를 CGPoint로 변환
         let movePoint = CGPoint(x: moveTo, y: 0)
         
         scrollView.setContentOffset(movePoint, animated: true)
+        
     }
 }
 
@@ -182,4 +183,11 @@ extension ScrollImageView {
          }
      }
  }
+ */
+
+/*
+ 회고... scrollView.rx.딜리게이트가 많음
+ 2. Thread 1: Swift runtime failure: Double value cannot be converted to Int because it is either infinite or NaN
+ 예상되는 부분은 Rx가 더 빨라서 그럴 가능성이 있음
+ 
  */

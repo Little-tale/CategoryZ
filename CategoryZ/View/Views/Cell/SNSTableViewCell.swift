@@ -27,7 +27,8 @@ import Kingfisher
 final class SNSTableViewCell: RxBaseTableViewCell {
 
     // 이미지 스크롤 뷰 -> 안에 Rx 게심
-    let imageScrollView = ScrollImageView(frame: .zero)
+    lazy var imageScrollView = ScrollImageView(horizonWidth: contentView.frame.width, horizonHeight: contentView.frame.height)
+    
     // 크리에이터 이름 라벨
     let userNameLabel = UILabel()
     // 프로필 이미지뷰
