@@ -34,6 +34,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     let profileImageView = CircleImageView().then {
         $0.image = UIImage(systemName: "star")
     }
+    
     // 좋아요 버튼 옆에는 몇명이 했는지..!
     let likeButton = SeletionButton(
         selected: JHImage.likeImageSelected,
@@ -41,17 +42,19 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     )
         .then { $0.tintColor = JHColor.black }
     
-    let likeCountLabel = UILabel()
+    let likeCountLabel = UILabel().then {
+        $0.font = JHFont.UIKit.bo14
+    }
     
     // 댓글 버튼
     let commentButton = SeletionButton(
         selected: JHImage.messageSelected,
         noSelected: JHImage.messageDiselected
-    )
+    ).then { $0.tintColor = JHColor.black }
     
-    let commentCountLabel = UILabel()
-    
-        .then { $0.tintColor = JHColor.black }
+    let commentCountLabel = UILabel().then({
+        $0.font = JHFont.UIKit.bo14
+    })
     // 컨텐트 라벨
     let contentLable = UILabel().then {
         $0.font = JHFont.UIKit.re12
@@ -64,7 +67,6 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     }
     
     let viewModel = SNSTableViewModel()
-    
     
     func setModel(_ model: SNSDataModel, _ userId: String) {
         let model = BehaviorRelay<SNSDataModel> (value: model)
@@ -118,6 +120,15 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             }
             .disposed(by: disposeBag)
         
+        // 컨텐트 반영
+        output.content
+            .drive(contentLable.rx.text)
+            .disposed(by: disposeBag)
+        
+        // 지난 시간 반영
+        output.diffDate
+            .drive(dateLabel.rx.text)
+            .disposed(by: disposeBag)
         
     }
     
@@ -162,6 +173,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             make.size.equalTo(likeButton)
             make.leading.equalTo(likeCountLabel.snp.trailing).offset(4)
         }
+        
         commentCountLabel.snp.makeConstraints { make in
             make.centerY.equalTo(likeButton)
             make.leading.equalTo(commentButton.snp.trailing).offset(4)
@@ -169,12 +181,13 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         
         contentLable.snp.makeConstraints { make in
             make.top.equalTo(likeButton.snp.bottom).offset(4)
-            make.horizontalEdges.equalToSuperview()
-            make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(8)
+            make.leading.equalTo(likeButton)
         }
+        
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(contentLable.snp.bottom)
             make.leading.equalTo(contentLable)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(8)
         }
     }
 }

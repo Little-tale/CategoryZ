@@ -27,7 +27,6 @@ final class SNSTableViewModel: RxViewModelType {
         let profileName: Driver<String>
         let likeCount: Driver<String>
         let comentsCount: Driver<String>
-        let firstcomment: Driver<String?>
         let diffDate: Driver<String>
     }
     
@@ -38,7 +37,7 @@ final class SNSTableViewModel: RxViewModelType {
         let profileName = BehaviorRelay(value: "")
         let likeCount = BehaviorRelay(value: "0")
         let comentsCount = BehaviorRelay(value: "0")
-        let fistComment = PublishRelay<String?> ()
+       
         let diffDate = BehaviorRelay(value: "")
         ///
         let isUserLike = input.snsModel
@@ -67,9 +66,8 @@ final class SNSTableViewModel: RxViewModelType {
                 
                 likeCount.accept(String(model.likes.count))
                 
-                // 첫번째 댓글만 보여주고 댓글 버튼누르면 댓글들 보이게
-                fistComment.accept(model.comments.first) // 첫댓글
-                comentsCount.accept(String(model.comments.count)) //댓글 개수
+                //댓글 개수
+                comentsCount.accept(String(model.comments.count))
                 
                  // 날짜 나오는데 현재 날짜와 비교해 몇일전인지 몇시간 전인지 해보자
                 diffDate.accept(DateManager.shared.differenceDateString(model.createdAt))
@@ -86,7 +84,6 @@ final class SNSTableViewModel: RxViewModelType {
             profileName: profileName.asDriver(),
             likeCount: likeCount.asDriver(),
             comentsCount: comentsCount.asDriver(),
-            firstcomment: fistComment.asDriver(onErrorJustReturn: nil),
             diffDate: diffDate.asDriver()
         )
     }

@@ -26,6 +26,7 @@ final class ScrollImageView: RxBaseView {
         scrollView.contentSize = CGSize(width: totalWidth, height: scrollView.frame.height)
     }
 
+  
     
     let scrollView = UIScrollView().then {
         // 수평 스크롤 인디케이터 끔
@@ -52,7 +53,6 @@ final class ScrollImageView: RxBaseView {
                 if owner.frame.width == 0 {
                     return 0
                 }
-                print("현재 X축: \(owner.scrollView.contentOffset.x)")
                 return Int(round( // 가로축 좌표 / 뷰 윗스
                     owner.scrollView.contentOffset.x / owner.frame.width
                 ))
@@ -102,7 +102,9 @@ final class ScrollImageView: RxBaseView {
                 if index == 0 {
                     make.leading.equalTo(scrollView)
                 }else {
-                    make.leading.equalTo(photoImageView[index - 1].snp.trailing)
+                    make.leading.equalTo(
+                        photoImageView[index - 1].snp.trailing
+                    )
                 }
                 if index == photoImageView.count - 1 {
                     make.trailing.equalTo(scrollView)
@@ -126,14 +128,25 @@ final class ScrollImageView: RxBaseView {
     func setModel(_ urlString: [String]) {
         var imageView: [UIImageView] = []
         urlString.forEach { image in
+            let resizingProcessor = ResizingImageProcessor(
+                referenceSize: CGSize(
+                    width: frame.width, height: frame.height
+                )
+            )
             
             let view = UIImageView()
+            view.contentMode = .scaleAspectFill
+            
             view.kf.setImage(with: URL(string: image), options: [
+                .processor(resizingProcessor),
+                .transition(.fade(1)),
+                .cacheOriginalImage,
                 .requestModifier(
                     KingFisherNet()
                 )
             ])
             imageView.append(view)
+            
         }
         photoImageView = imageView
     }

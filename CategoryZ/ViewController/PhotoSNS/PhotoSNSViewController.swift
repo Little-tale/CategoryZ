@@ -48,6 +48,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             needLoadPageTrigger: needLoadPage,
             selectedProductID: selectedProductID
         )
+        
         let output = viewModel.transform(input)
         
         // MARK: 에러 발생시
@@ -64,8 +65,10 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         // 데이터 방출시 테이블 뷰
         output.tableViewItems
             .drive(homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) { row, model, cell in
-         
+    
                 cell.setModel(model, output.userIDDriver.value)
+                cell.selectionStyle = .none
+                
             }
             .disposed(by: disPoseBag)
         
@@ -84,8 +87,6 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             .bind(to: homeView.headerView.collectionView.rx.items(
                 dataSource: hearderDataSource))
             .disposed(by: disPoseBag)
-        
-    
         
         homeView.headerView.collectionView.rx.modelSelected(ProductID.self)
             .distinctUntilChanged()
