@@ -73,7 +73,6 @@ final class ScrollImageView: RxBaseView {
                 owner.changeImageView(current: page)
             }
             .disposed(by: disposedBag)
-        
     }
 
     
@@ -170,27 +169,4 @@ extension ScrollImageView {
     }
 }
 
-/*
- 문제의 코드 스크롤이 안되는 이유
- for (index, view) in photoImageView.enumerated() {
-     view.snp.makeConstraints { make in
-         make.verticalEdges.equalTo(scrollView)
-         make.size.equalTo(scrollView)
-         if index == 0 {
-             make.leading.equalTo(scrollView)
-         }else {
-             make.leading.equalTo(photoImageView[index - 1].snp.trailing)
-         }
-         if index == photoImageView.count - 1 {
-             make.trailing.equalTo(scrollView)
-         }
-     }
- }
- */
 
-/*
- 회고... scrollView.rx.딜리게이트가 많음
- 2. Thread 1: Swift runtime failure: Double value cannot be converted to Int because it is either infinite or NaN
- 예상되는 부분은 Rx가 더 빨라서 그럴 가능성이 있음
- 
- */

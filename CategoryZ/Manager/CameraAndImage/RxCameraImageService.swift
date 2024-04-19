@@ -245,10 +245,7 @@ extension RxCameraImageService: UIImagePickerControllerDelegate, UINavigationCon
 
 extension RxCameraImageService {
     
-    // MARK: 회고록 이미지 사이즈 줄이기
-    // 1차 : [5093211 bytes, 3425951 bytes, 4395344 bytes, 2275097 bytes]
-    // 하나가 5.093211 MB 가 나와버림....
-    // .... 세상에 5mb 가.... 5,242,880 바이트 라고한다..... ㅠㅠㅠㅠㅠㅠㅠㅠ
+    
     private func imageZipLimit(image: UIImage, zipRate: Double) -> Data? {
         let limitBytes = zipRate * 1024 * 1024
         print("클라이언트가 원하는 크기",limitBytes)

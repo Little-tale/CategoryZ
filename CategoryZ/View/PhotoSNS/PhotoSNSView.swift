@@ -32,10 +32,7 @@ final class PhotoSNSView: RxBaseView {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 240
     }
-    /*
-     회고 레이어 안보이는 이유
-     -> 테이블뷰 헤더뷰 높이에 대한 고려 안함 이슈
-     */
+   
     override func layoutSubviews() {
         super.layoutSubviews()
         

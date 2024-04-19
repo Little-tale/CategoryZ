@@ -97,35 +97,32 @@ extension SNSPhotoMainViewModel: LikeStateProtocol {
     func changeLikeState(_ model: LikeQueryModel, _ postId: String) {
         print(model)
         guard let userId = UserIDStorage.shared.userID else { return }
-        print(model.like_status)
-        print(model.currentRow)
+        
         NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: model, postId: postId)))
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let likeModel):
-                    var updatePost = owner.postsDatas.value
-                    var model = likeModel
-                    var willChange = owner.postsDatas.value[model.currentRow]
-
-                    if model.like_status {
-                        if !willChange.likes.contains(userId) {
-                            
-                            willChange.likes.append(userId)
+                    var updatedPosts = owner.postsDatas.value
+                    var postToUpdate = updatedPosts[model.currentRow]
+                    
+                    if likeModel.like_status {
+                        if !postToUpdate.likes.contains(userId) {
+                            postToUpdate.likes.append(userId)
                         }
                     } else {
-                        if let index = willChange.likes.firstIndex(of: userId) {
-                           
-                            willChange.likes.remove(at: index)
+                        if let index = postToUpdate.likes.firstIndex(of: userId) {
+                            postToUpdate.likes.remove(at: index)
                         }
                     }
                     
-                    updatePost[model.currentRow] = willChange
-                    owner.postsDatas.accept(updatePost)
+                    updatedPosts[model.currentRow] = postToUpdate
+                    owner.postsDatas.accept(updatedPosts) // 새로운 배열로 업데이트
                 case .failure(let error):
                     owner.networkError.accept(error)
                 }
             }
             .disposed(by: disposeBag)
     }
+    
     
 }

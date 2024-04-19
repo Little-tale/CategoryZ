@@ -197,4 +197,10 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(8)
         }
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        viewModel.disposeBag = .init()
+    }
+    
 }
