@@ -39,7 +39,7 @@ final class FirstViewValidViewModel: RxViewModelType {
                 refreshModel.accept((accessToken,refreshToken))
             }
             .disposed(by: disposeBag)
-            
+        
         
         refreshModel
             .flatMap({ access, refresh in
