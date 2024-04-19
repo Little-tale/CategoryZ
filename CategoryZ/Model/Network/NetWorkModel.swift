@@ -157,6 +157,17 @@ struct SNSDataModel: Decodable, Hashable {
         self.hashTags = try container.decode([String].self, forKey: .hashTags)
         self.comments = try container.decode([String].self, forKey: .comments)
     }
+    
+    mutating func changeLikeModel(_ userID: String, likeBool: Bool) {
+        if likeBool {
+            likes.append(userID)
+        } else {
+            if let index = likes.firstIndex(of: userID) {
+                likes.remove(at: index)
+            }
+        }
+        
+    }
 
 }
 

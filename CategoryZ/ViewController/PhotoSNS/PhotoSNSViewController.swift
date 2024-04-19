@@ -65,13 +65,13 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         
         // 데이터 방출시 테이블 뷰
         output.tableViewItems
+            .distinctUntilChanged()
             .drive(homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {[weak self] row, model, cell in
                 guard let self else { return }
                 var reciveModel = model
                 reciveModel.currentRow = row
                 cell.setModel(reciveModel, output.userIDDriver.value, delegate: viewModel)
                 cell.selectionStyle = .none
-                
             }
             .disposed(by: disPoseBag)
         

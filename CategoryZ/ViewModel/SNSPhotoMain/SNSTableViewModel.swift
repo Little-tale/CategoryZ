@@ -34,6 +34,8 @@ final class SNSTableViewModel: RxViewModelType {
     
     func transform(_ input: Input) -> Output {
         var currentRow: Int = 0
+        /// 좋아요 숫자 재반영을 위한
+        var currnetLike: Bool = false
         
         let imageUrl = BehaviorRelay<[String]> (value: [])
         let contents = BehaviorRelay<String> (value: "")
@@ -45,7 +47,8 @@ final class SNSTableViewModel: RxViewModelType {
         
         /// 현재 유저 라이크 모델
         let isUserLikeModel = BehaviorRelay<LikeQueryModel> (value: .init(like_status: false))
-
+       
+        
         
         input.snsModel
             .map { $0.likes }
@@ -53,9 +56,11 @@ final class SNSTableViewModel: RxViewModelType {
                 if userIds.contains(UserIDStorage.shared.userID ?? "") {
                     let model = LikeQueryModel(like_status: true)
                     isUserLikeModel.accept(model)
+                    currnetLike = model.like_status
                 } else {
                     let model = LikeQueryModel(like_status: false)
                     isUserLikeModel.accept(model)
+                    currnetLike = model.like_status
                 }
             }
             .disposed(by: disposeBag)
@@ -96,10 +101,10 @@ final class SNSTableViewModel: RxViewModelType {
             currnetPostId
         )
         
-        
+        // 좋아요 버튼 클릭시 (좋아요 토글 과 통신 해야함을 전달)
         input.likedButtonTab
             .withLatestFrom(combineOfUserLike)
-            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
             .map { combine in
                 var likeTogle = combine.0
                 likeTogle.like_status.toggle()
@@ -107,11 +112,28 @@ final class SNSTableViewModel: RxViewModelType {
                 return (likeModel: likeTogle, postId: combine.1)
             }
             .bind(with: self, onNext: { owner, model in
+                
                 owner.likeStateProtocol?.changeLikeState(model.likeModel, model.postId)
+                
             })
             .disposed(by: disposeBag)
-            
         
+        input.likedButtonTab
+            .withLatestFrom(likeCount)
+            .filter({ Int($0) != nil })
+            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+            .bind { Count in
+                var current = Int(Count)!
+                if currnetLike {
+                    current -= 1
+                } else {
+                    current += 1
+                }
+                likeCount.accept(String(current))
+                currnetLike = !currnetLike
+            }
+            .disposed(by: disposeBag)
+            
         return Output(
             imageURLStrings: imageUrl.asDriver(),
             content: contents.asDriver(),
@@ -141,3 +163,17 @@ final class SNSTableViewModel: RxViewModelType {
      }
  }
  */
+
+//        zipOfLikeCount
+//            .filter { Int($0.1) != nil }
+//            .bind { bool, string in
+//                var ziplikeCount = Int(string)!
+//                if bool {
+//                    ziplikeCount += 1
+//                    likeCount.accept(String(ziplikeCount))
+//                } else {
+//                    ziplikeCount -= 1
+//                    likeCount.accept(String(ziplikeCount))
+//                }
+//            }
+//            .disposed(by: disposeBag)

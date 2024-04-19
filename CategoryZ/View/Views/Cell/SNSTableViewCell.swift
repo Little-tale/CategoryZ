@@ -42,7 +42,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         selected: JHImage.likeImageSelected,
         noSelected: JHImage.likeImageDiselected
     )
-        .then { $0.tintColor = JHColor.black }
+        .then { $0.tintColor = JHColor.likeColor }
     
     let likeCountLabel = UILabel().then {
         $0.font = JHFont.UIKit.bo14
@@ -84,6 +84,11 @@ final class SNSTableViewCell: RxBaseTableViewCell {
                 inputUserId: userId,
                 likedButtonTab: likeButton.rx.tap
             )
+        likeButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.likeButton.isSelected.toggle()
+            }
+            .disposed(by: disposeBag)
         
         let output = viewModel.transform(input)
         
@@ -91,7 +96,6 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         output.isUserLike
             .drive(with: self) { owner, bool in
                 owner.likeButton.isSelected = bool
-                owner.likeButton.tintColor = bool ? JHColor.likeColor : JHColor.black
             }
             .disposed(by: disposeBag)
         
