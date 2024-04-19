@@ -111,7 +111,7 @@ struct PostReadMainModel: Decodable {
     }
 }
 // SNS 모델
-struct SNSDataModel: Decodable, Hashable {
+struct SNSDataModel: Decodable, Hashable, Equatable {
  
     let postId: String
     let productId: String
@@ -168,7 +168,6 @@ struct SNSDataModel: Decodable, Hashable {
         }
         
     }
-
 }
 
 /// 댓글 모델

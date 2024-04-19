@@ -141,7 +141,9 @@ final class ScrollImageView: RxBaseView {
                 case .success(let s):
                     print(s)
                 case .failure(let e):
-                    print(e.errorDescription)
+                    // 에러 발생시 다 알려야 하는가? 애매한 부분
+                    // print(e.errorDescription)
+                    break
                 }
             }
             imageViews.append(view)

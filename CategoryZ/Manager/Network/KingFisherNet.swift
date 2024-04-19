@@ -30,9 +30,13 @@ class KingFisherNet: ImageDownloadRequestModifier {
         }
         
         var urlReqest = URLRequest(url: url)
+        
         print(urlReqest)
+        
         urlReqest.addValue(accessTokken, forHTTPHeaderField: NetHTTPHeader.authorization.rawValue)
+        
         urlReqest.addValue(APIKey.sesacKey.rawValue, forHTTPHeaderField: NetHTTPHeader.sesacKey.rawValue)
+        
         return urlReqest
     }
 }

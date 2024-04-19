@@ -66,6 +66,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         // 데이터 방출시 테이블 뷰
         output.tableViewItems
             .distinctUntilChanged()
+            .map({ $0.realPostData })
             .drive(homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {[weak self] row, model, cell in
                 guard let self else { return }
                 var reciveModel = model
@@ -100,6 +101,19 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             }
             .disposed(by: disPoseBag)
         
+        
+        
+        homeView.tableView.rx.contentOffset
+            .withUnretained(self)
+            .bind {owner, point in
+                print("테이블뷰 총 높이: ",owner.homeView.tableView.contentSize.height) // 이걸 기반으로 높이 에서 일정부분에 다다르면 요청하면 될것 같음
+                print("테이블뷰 포인터 Y: ", point.y) // 이것으로 어느 시점에 다다르면 요청 트리거를 동작시키면 문제가 없을것 같다.
+                let fullHeight = owner.homeView.tableView.contentSize.height
+                if fullHeight - point.y <= 130 {
+                    needLoadPage.accept(())
+                }
+            }
+            .disposed(by: disPoseBag)
 
     }
     
