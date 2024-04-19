@@ -23,7 +23,10 @@ import Kingfisher
 final class SNSTableViewCell: RxBaseTableViewCell {
     
     // 이미지 스크롤 뷰 -> 안에 Rx 게심
-    lazy var imageScrollView = ScrollImageView(horizonWidth: contentView.frame.width, horizonHeight: contentView.frame.height)
+    let imageScrollView = ScrollImageView().then {
+        $0.layer.cornerRadius = 15
+        $0.clipsToBounds = true
+    }
     
     // 크리에이터 이름 라벨
     let userNameLabel = UILabel()
@@ -154,7 +157,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     
     override func configureLayout() {
         profileImageView.snp.makeConstraints { make in
-            make.leading.top.equalTo(contentView.safeAreaLayoutGuide).offset(4)
+            make.leading.top.equalTo(contentView.safeAreaLayoutGuide).offset(12)
             make.size.equalTo(35)
         }
         userNameLabel.snp.makeConstraints { make in
@@ -162,9 +165,10 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             make.leading.equalTo(profileImageView.snp.trailing).offset(6)
         }
         imageScrollView.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide)
-            make.top.equalTo(profileImageView.snp.bottom).offset(4)
-            make.height.equalTo(350)
+           
+            make.top.equalTo(profileImageView.snp.bottom).offset(10)
+            make.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide).inset(15)
+            make.height.equalTo(320)
         }
         likeButton.snp.makeConstraints { make in
             make.top.equalTo(imageScrollView.snp.bottom).offset(4)

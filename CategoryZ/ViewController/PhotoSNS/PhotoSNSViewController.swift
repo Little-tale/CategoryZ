@@ -29,7 +29,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         ])
     ])
     
-    let viewModel = SNSPhotoMainViewModel()
+    private let viewModel = SNSPhotoMainViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -100,11 +100,14 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             }
             .disposed(by: disPoseBag)
         
-        // MARK: 테이블뷰의 스크롤을 감지하여 뷰모델에 전달하여야 할것 같다.
-        // 근데 기준이 애매하다.
-        // 스크롤 정보를 다 뷰모델로 주어야 하는가
-        // 아니면 여기서 스크롤 분석후 더 요청할거다 라는 신호만 주어야 하는가
-        // 흠.....
+
+    }
+    
+    override func navigationSetting() {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 25))
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = JHImage.appLogoImage
+        navigationItem.titleView = imageView
     }
     
 }

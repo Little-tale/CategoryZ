@@ -14,17 +14,12 @@ import Kingfisher
 
 final class ScrollImageView: RxBaseView {
     
-    private 
-    let horizonWidth: CGFloat
-    
-    private
-    let horizonHeight: CGFloat
-    
+ 
     private
     let behaivorImageView = PublishRelay<[UIImageView]>()
     
     private
-    lazy var imageProcesor = ResizingImageProcessor(referenceSize: CGSize(width: 500, height: horizonHeight), mode: .aspectFill)
+    lazy var imageProcesor = ResizingImageProcessor(referenceSize: CGSize(width: 500, height: 400), mode: .aspectFill)
     
     let scrollView = UIScrollView().then {
         // 수평 스크롤 인디케이터 끔
@@ -37,9 +32,7 @@ final class ScrollImageView: RxBaseView {
     // 페이지 컨트롤러
     let pageController = UIPageControl()
     
-    init(horizonWidth: CGFloat, horizonHeight: CGFloat) {
-        self.horizonWidth = horizonWidth
-        self.horizonHeight = horizonHeight
+    init() {
         super.init(frame: .zero)
         subscribe()
     }
@@ -150,7 +143,7 @@ final class ScrollImageView: RxBaseView {
         
         behaivorImageView.accept(imageViews)
         
-        let totalWidth = horizonWidth * CGFloat(imageViews.count)
+        let totalWidth = scrollView.frame.width * CGFloat(imageViews.count)
         scrollView.contentSize = CGSize(width: totalWidth, height: scrollView.frame.height)
         
     }
@@ -162,7 +155,7 @@ extension ScrollImageView {
     private func changeImageView(current: Int) {
         // 현재 페이지의 수를 받아
         // 현재 페이지의 스크롤뷰의 넓이 만큼 즉 해당하는 X 좌표
-        let moveTo = CGFloat(current) * horizonWidth
+        let moveTo = CGFloat(current) * scrollView.frame.width
         //  해당하는 좌표를 CGPoint로 변환
         let movePoint = CGPoint(x: moveTo, y: 0)
         
