@@ -19,11 +19,7 @@ import Kingfisher
  // 사용자 페이지 시트를 띄우도록 하자.
  // 자신의 아이디일 경우 수정할건지 말건지 나오는 알렛으로 대처 하자
  */
-/*
- 일단 버튼 만들러 ㄱㄱ check V
- 이미지 스크롤뷰 완료
- 뷰컨으로 가서 통신먼저 테스트
- */
+
 final class SNSTableViewCell: RxBaseTableViewCell {
     
     // 이미지 스크롤 뷰 -> 안에 Rx 게심

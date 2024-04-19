@@ -48,8 +48,6 @@ final class SNSTableViewModel: RxViewModelType {
         /// 현재 유저 라이크 모델
         let isUserLikeModel = BehaviorRelay<LikeQueryModel> (value: .init(like_status: false))
        
-        
-        
         input.snsModel
             .map { $0.likes }
             .bind { userIds in
@@ -150,30 +148,3 @@ final class SNSTableViewModel: RxViewModelType {
 }
 
 
-/*
- .flatMap { likeModel, postId in
-     NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: likeModel, postId: postId)))
- }
- .bind { result in
-     switch result {
-     case .success(let likeModel):
-         isUserLikeModel.accept(likeModel)
-     case .failure(let fail):
-         netWorkError.accept(fail)
-     }
- }
- */
-
-//        zipOfLikeCount
-//            .filter { Int($0.1) != nil }
-//            .bind { bool, string in
-//                var ziplikeCount = Int(string)!
-//                if bool {
-//                    ziplikeCount += 1
-//                    likeCount.accept(String(ziplikeCount))
-//                } else {
-//                    ziplikeCount -= 1
-//                    likeCount.accept(String(ziplikeCount))
-//                }
-//            }
-//            .disposed(by: disposeBag)

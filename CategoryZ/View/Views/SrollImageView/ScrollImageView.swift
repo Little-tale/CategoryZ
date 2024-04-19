@@ -20,14 +20,8 @@ final class ScrollImageView: RxBaseView {
     private
     let horizonHeight: CGFloat
     
-    
-    private 
-    var photoImageView: [UIImageView] = [] {
-        didSet {
-            settingData()
-            print(photoImageView.count)
-        }
-    }
+    private
+    let behaivorImageView = PublishRelay<[UIImageView]>()
     
     private
     lazy var imageProcesor = ResizingImageProcessor(referenceSize: CGSize(width: 500, height: horizonHeight), mode: .aspectFill)
@@ -47,6 +41,7 @@ final class ScrollImageView: RxBaseView {
         self.horizonWidth = horizonWidth
         self.horizonHeight = horizonHeight
         super.init(frame: .zero)
+        subscribe()
     }
    
     override func register() {
@@ -57,10 +52,11 @@ final class ScrollImageView: RxBaseView {
             .map { owner, _ in
                 if owner.frame.width == 0 {
                     return 0
+                }else {
+                    return Int(round( // 가로축 좌표 / 뷰 윗스
+                        owner.scrollView.contentOffset.x / owner.scrollView.frame.width
+                    ))
                 }
-                return Int(round( // 가로축 좌표 / 뷰 윗스
-                    owner.scrollView.contentOffset.x / owner.horizonWidth
-                ))
             }
             .bind(to: pageController.rx.currentPage)
             .disposed(by: disposedBag)
@@ -91,46 +87,50 @@ final class ScrollImageView: RxBaseView {
         }
     }
     
-    private func settingData(){
-        /// 이미지 를 한번에 스크롤뷰에 넣기
-        
-        photoImageView.forEach { $0.removeFromSuperview() }
-        
-        photoImageView.forEach(scrollView.addSubview)
-        
-        /// 뷰의 갯수에 따라 유동적 레이아웃 잡기
-        for (index, view) in photoImageView.enumerated() {
-            view.snp.makeConstraints { make in
-                make.verticalEdges.equalTo(scrollView)
-                make.size.equalTo(scrollView)
-                if index == 0 {
-                    make.leading.equalTo(scrollView)
-                }else {
-                    make.leading.equalTo(
-                        photoImageView[index - 1].snp.trailing
-                    )
+    private
+    func subscribe() {
+        behaivorImageView
+            .bind(with: self) { owner , imageViews in
+                
+                
+                
+                imageViews.forEach { owner.scrollView.addSubview($0)}
+                
+                for (index, view) in imageViews.enumerated() {
+                    view.snp.makeConstraints { make in
+                        make.verticalEdges.equalTo(owner.scrollView)
+                        make.size.equalTo(owner.scrollView)
+                        if index == 0 {
+                            // 0번째 일때 스크롤뷰 앞
+                            make.leading.equalTo(owner.scrollView)
+                        }else {
+                            // 그게아니면 다 전뷰의 뒤를 앞
+                            make.leading.equalTo(
+                                imageViews[index - 1].snp.trailing
+                            )
+                        }
+                        if index == imageViews.count - 1 {
+                            make.trailing.equalTo(owner.scrollView)
+                        }
+                    }
                 }
-                if index == photoImageView.count - 1 {
-                    make.trailing.equalTo(scrollView)
-                }
+                owner.pageController.numberOfPages = imageViews.count
             }
-        }
-        // 페이지 컨트롤러 페이지 갯수는 포토 이미지 갯수와 동일함.
-        pageController.numberOfPages = photoImageView.count
+            .disposed(by: disposedBag)
     }
     
     func setModel(_ images: [UIImage]) {
-        var imageView: [UIImageView] = []
+        var imageViews: [UIImageView] = []
         images.forEach { image in
             let view = UIImageView()
             view.image = image
-            imageView.append(view)
+            imageViews.append(view)
         }
-        photoImageView = imageView
+        behaivorImageView.accept(imageViews)
     }
     
     func setModel(_ urlString: [String]) {
-        var imageView: [UIImageView] = []
+        var imageViews: [UIImageView] = []
         urlString.forEach { image in
             
             let view = UIImageView()
@@ -144,13 +144,15 @@ final class ScrollImageView: RxBaseView {
                     KingFisherNet()
                 )
             ])
-            imageView.append(view)
+            imageViews.append(view)
             
         }
-        photoImageView = imageView
         
-        let totalWidth = horizonWidth * CGFloat(photoImageView.count)
+        behaivorImageView.accept(imageViews)
+        
+        let totalWidth = horizonWidth * CGFloat(imageViews.count)
         scrollView.contentSize = CGSize(width: totalWidth, height: scrollView.frame.height)
+        
     }
   
 }
