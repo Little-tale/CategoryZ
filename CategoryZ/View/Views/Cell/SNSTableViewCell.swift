@@ -143,7 +143,10 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         output.diffDate
             .drive(dateLabel.rx.text)
             .disposed(by: disposeBag)
-        
+    }
+    
+    override func designView() {
+        imageScrollView.pageController.currentPage = 0
     }
     
     

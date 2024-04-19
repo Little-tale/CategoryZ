@@ -106,8 +106,8 @@ extension NetworkManager {
             
             let version = router.version
             let path = version + router.path
-    
-            guard let baseUrl = URL(string: APIKey.testURL.rawValue) else {
+            
+            guard let baseUrl = URL(string: APIKey.baseURL.rawValue) else {
                 single(.success(.failure(.failMakeURLRequest)))
                 return Disposables.create()
             }
@@ -124,7 +124,7 @@ extension NetworkManager {
                     multiPartFromData.append(
                         imageData,
                         withName: "files",
-                        fileName: "catego\(index).jpeg",
+                        fileName: "CategoryZ_\(index).jpeg",
                         mimeType: "image/jpeg"
                     )
                 }
@@ -225,7 +225,7 @@ extension NetworkManager {
             let version = router.version
             let path = version + router.path
             
-            guard let baseUrl = URL(string: APIKey.testURL.rawValue) else {
+            guard let baseUrl = URL(string: APIKey.baseURL.rawValue) else {
                 single(.success(.failure(.failMakeURLRequest)))
                 return Disposables.create()
             }

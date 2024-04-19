@@ -145,6 +145,8 @@ final class SNSTableViewModel: RxViewModelType {
             diffDate: diffDate.asDriver()
         )
     }
+    
+    
 }
 
 

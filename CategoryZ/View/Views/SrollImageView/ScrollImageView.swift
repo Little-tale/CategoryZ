@@ -135,10 +135,16 @@ final class ScrollImageView: RxBaseView {
                 .cacheOriginalImage,
                 .requestModifier(
                     KingFisherNet()
-                )
-            ])
+                ),
+            ]) { result in
+                switch result {
+                case .success(let s):
+                    print(s)
+                case .failure(let e):
+                    print(e.errorDescription)
+                }
+            }
             imageViews.append(view)
-            
         }
         
         behaivorImageView.accept(imageViews)
