@@ -13,13 +13,17 @@ final class LunchScreenViewController: RxHomeBaseViewController<FirstView> {
     
     let viewModel = FirstViewValidViewModel()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     
     override func subscribe() {
-        let output = viewModel.transform(.init())
+        
+        let input = FirstViewValidViewModel.Input(viewdidAppearTrigger: rx.viewDidAppear)
+        
+        let output = viewModel.transform(input)
             
         output.changeViewController
             .drive(with: self) { owner, bool in
@@ -37,5 +41,7 @@ final class LunchScreenViewController: RxHomeBaseViewController<FirstView> {
             }
             .disposed(by: disPoseBag)
     }
+    
+    
     
 }

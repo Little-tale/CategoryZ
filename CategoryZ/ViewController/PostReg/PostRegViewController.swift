@@ -26,6 +26,8 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     
     var selected: ProductID?
     
+    let imageView = UIImageView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationSetting()
@@ -184,7 +186,11 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             })
             .disposed(by: disPoseBag)
         
-        
+        view.addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(400)
+        }
          
         // MARK: === 이미지 서비스 구독 입니다. ===
         // imageAddButtonTab
@@ -201,6 +207,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                 switch result {
                 case .success(let images):
                     print(images)
+                    imageView.image = UIImage(data: images.first!)
                     behiberImageData.accept(images)
                 case .failure(let error):
                     if case .noAuth = error {

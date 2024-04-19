@@ -106,7 +106,7 @@ extension NetworkManager {
             
             let version = router.version
             let path = version + router.path
-            
+    
             guard let baseUrl = URL(string: APIKey.testURL.rawValue) else {
                 single(.success(.failure(.failMakeURLRequest)))
                 return Disposables.create()

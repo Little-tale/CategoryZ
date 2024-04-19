@@ -15,7 +15,7 @@ final class FirstViewValidViewModel: RxViewModelType {
     var disposeBag: RxSwift.DisposeBag = .init()
     
     struct Input {
-        
+        let viewdidAppearTrigger: ControlEvent<Bool>
     }
     
     struct Output {
@@ -25,31 +25,45 @@ final class FirstViewValidViewModel: RxViewModelType {
     func transform(_ input: Input) -> Output {
         let publish = PublishRelay<Bool> ()
         // let networkError = PublishRelay<NetworkError> ()
+        let refreshModel = PublishRelay<(access:String, refresh: String)> ()
         
-        if let accessToken = TokenStorage.shared.accessToken,
-           let refreshToken = TokenStorage.shared.refreshToken {
+        input.viewdidAppearTrigger
+            .take(1)
+            .bind { _ in
+                guard let accessToken = TokenStorage.shared.accessToken,
+                      let refreshToken = TokenStorage.shared.refreshToken else {
+                    
+                    publish.accept(false)
+                    return
+                }
+                refreshModel.accept((accessToken,refreshToken))
+            }
+            .disposed(by: disposeBag)
             
-            NetworkManager
-                .fetchNetwork(model: RefreshModel.self,
-                              router: .authentication(
-                                .refreshTokken(access: accessToken,
-                                               Refresh: refreshToken)
-                              )
-                )
-                .subscribe(with: self, onSuccess: { owner, result in
-                    switch result {
-                    case .success(let tokenResult):
-                        TokenStorage.shared.accessToken = tokenResult.accessToken
-                        publish.accept(true) // 재 리프레시 성공시
-                    case .failure:
-                        publish.accept(false)
-                    }
-                })
-                .disposed(by: disposeBag)
-        } else {
-            publish.accept(false)
-        }
+        
+        refreshModel
+            .flatMap({ access, refresh in
+                NetworkManager
+                    .fetchNetwork(model: RefreshModel.self,
+                                  router: .authentication(
+                                    .refreshTokken(access: access,
+                                                   Refresh: refresh)
+                                  )
+                    )
+            })
+            .bind(onNext: { result in
+                switch result{
+                case .success(let newAccess):
+                    TokenStorage.shared.accessToken = newAccess.accessToken
+                    publish.accept(true)
+                case .failure:
+                    publish.accept(false)
+                }
+            })
+            .disposed(by: disposeBag)
+        
         
         return Output(changeViewController: publish.asDriver(onErrorDriveWith: .never()))
     }
 }
+
