@@ -85,8 +85,6 @@ final class ScrollImageView: RxBaseView {
         behaivorImageView
             .bind(with: self) { owner , imageViews in
                 
-                
-                
                 imageViews.forEach { owner.scrollView.addSubview($0)}
                 
                 for (index, view) in imageViews.enumerated() {

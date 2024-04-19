@@ -124,8 +124,8 @@ extension NetworkManager {
                     multiPartFromData.append(
                         imageData,
                         withName: "files",
-                        fileName: "CategoryZ_\(index).jpg",
-                        mimeType: "image/jpg"
+                        fileName: "catego\(index).jpeg",
+                        mimeType: "image/jpeg"
                     )
                 }
             }, to: url, method: .post, headers: HTTPHeaders(router.headers), interceptor:  AccessTokkenAdapter()).responseDecodable(of: model) { response in

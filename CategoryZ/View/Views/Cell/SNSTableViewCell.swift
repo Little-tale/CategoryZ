@@ -30,6 +30,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     
     // 크리에이터 이름 라벨
     let userNameLabel = UILabel()
+    
     // 프로필 이미지뷰
     let profileImageView = CircleImageView().then {
         $0.image = JHImage.defaultImage
@@ -75,14 +76,17 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         let model = BehaviorRelay<SNSDataModel> (value: model)
         let userId = BehaviorRelay<String> (value: userId)
         
+        // 좋아요 상태 딜리게이트
         viewModel.likeStateProtocol = delegate
         
+        //
         let input = SNSTableViewModel
             .Input(
                 snsModel: model,
                 inputUserId: userId,
                 likedButtonTab: likeButton.rx.tap
             )
+        // 좋아요 버튼 탭시 토글 (UI 선 반영)
         likeButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.likeButton.isSelected.toggle()

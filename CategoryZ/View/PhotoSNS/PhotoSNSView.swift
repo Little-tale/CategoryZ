@@ -14,7 +14,9 @@ final class PhotoSNSView: RxBaseView {
     lazy var headerView = SNSHeaderWithCollectionView(frame: CGRect(x: 0, y: 0, width: frame.width, height: 80)
     )
     
-    let tableView = UITableView(frame: .zero)
+    let tableView = UITableView(frame: .zero).then {
+        $0.separatorStyle = .none
+    }
    
     private let layerLine = CALayer().then {
         $0.borderColor = JHColor.darkGray.cgColor
@@ -50,3 +52,4 @@ final class PhotoSNSView: RxBaseView {
         
     }
 }
+
