@@ -10,28 +10,19 @@ import RxSwift
 import RxCocoa
 
 
-protocol LikeStateProtocol: AnyObject {
-    func changeLikeState(_ model: LikeQueryModel,_ postId: String)
-}
 
-struct SNSDataArray: Equatable{
-    var realPostData: [SNSDataModel] = []
-    
-    mutating func change(_ row: Int,_ model: SNSDataModel ){
-        realPostData[row] = model
-    }
-}
+
 
 final class SNSPhotoMainViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
    
-//    private
-//    var realPostData: [SNSDataModel] = []
+    private
+    var realPostData: [SNSDataModel] = []
     
     // 포스트 데이타들
     private // Value 접근시 무조건 ..... ㅠㅠㅠ
-    var postsDatas = BehaviorRelay<SNSDataArray> (value: SNSDataArray())
+    var postsDatas = BehaviorRelay<[SNSDataModel]> (value: [])
         
     
     // 네트워크 에러 발생시
@@ -46,13 +37,19 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         let needLoadPageTrigger : PublishRelay<Void>
         // 카테고리 선택시
         let selectedProductID: BehaviorRelay<ProductID>
+    
+        // 특정 시점에서그때 진짜 UI에 반영
+    
     }
     
     struct Output {
         let networkError: Driver<NetworkError>
-        let tableViewItems: Driver<SNSDataArray>
+        let tableViewItems: Driver<[SNSDataModel]>
         let userIDDriver: BehaviorRelay<String>
     }
+    
+   
+
     
     func transform(_ input: Input) -> Output {
         let limit = "10"
@@ -76,12 +73,8 @@ final class SNSPhotoMainViewModel: RxViewModelType {
             switch result {
             case .success(let model):
                 nextCursor.accept(model.nextCursor)
-                
-                // owner.postsDatas.accept()
-                var before = owner.postsDatas.value
-                before.realPostData.append(contentsOf: model.data)
-                owner.postsDatas.accept(before)
-                
+                owner.realPostData.append(contentsOf: model.data)
+                owner.postsDatas.accept(owner.realPostData)
             case .failure(let error):
                 owner.networkError.accept(error)
             }
@@ -98,55 +91,55 @@ final class SNSPhotoMainViewModel: RxViewModelType {
 
 }
 
-extension SNSPhotoMainViewModel: LikeStateProtocol {
-    
-    func changeLikeState(_ model: LikeQueryModel, _ postId: String) {
-        print(model)
-        guard let userId = UserIDStorage.shared.userID else { return }
-        
-        NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: model, postId: postId)))
-            .subscribe(with: self) { owner, result in
-                switch result {
-                case .success(let likeModel):
-                    var updatedPosts = owner.postsDatas.value
-                    var postToUpdate = updatedPosts.realPostData[model.currentRow]
-                    
-                    if likeModel.like_status {
-                        if !postToUpdate.likes.contains(userId) {
-                            postToUpdate.changeLikeModel(userId, likeBool: true)
-                        }
-                    } else {
-                        postToUpdate.changeLikeModel(userId, likeBool: false)
-                    }
-                    updatedPosts.change(model.currentRow, postToUpdate)
-//                    updatedPosts[model.currentRow] = postToUpdate
-//                    owner.realPostData[model.currentRow] = postToUpdate
-                    owner.postsDatas.accept(updatedPosts)
-                    //*/ // 새로운 배열로 업데이트
-
-                case .failure(let error):
-                    owner.networkError.accept(error)
-                }
-            }
-            .disposed(by: disposeBag)
-    }
-    
-    
-}
-
-
-
-//            .bind(with: self) { owner, result in
+//extension SNSPhotoMainViewModel: LikeStateProtocol {
+//    
+//    func changeLikeState(_ model: LikeQueryModel, _ postId: String) {
+//        print(model)
+//        guard let userId = UserIDStorage.shared.userID else { return }
+//        
+//        NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: model, postId: postId)))
+//            .subscribe(with: self) { owner, result in
 //                switch result {
-//                case .success(let success):
-//                    print(success)
-//                    nextCursor.accept(success.nextCursor)
-//                    owner.realPostData.append(contentsOf: success.data)
-//                    owner.postsDatas.accept(owner.realPostData)
+//                case .success(let likeModel):
+//                    let updatedPosts = owner.postsDatas.value
+//                    var postToUpdate = updatedPosts[model.currentRow]
+//                    
+//                    if likeModel.like_status {
+//                        if !postToUpdate.likes.contains(userId) {
+//                            postToUpdate.changeLikeModel(userId, likeBool: true)
+//                        }
+//                    } else {
+//                        postToUpdate.changeLikeModel(userId, likeBool: false)
+//                    }
+//                    
+////                    updatedPosts[model.currentRow] = postToUpdate
+//                    owner.realPostData[model.currentRow] = postToUpdate
+//                    // owner.postsDatas.accept(owner.realPostData)
+//                    //*/ // 새로운 배열로 업데이트
 //
-//                case .failure(let failer):
-//                    owner.networkError.accept(failer)
+//                case .failure(let error):
+//                    owner.networkError.accept(error)
 //                }
 //            }
 //            .disposed(by: disposeBag)
-           
+//    }
+//    
+//    
+//}
+//
+//
+//
+////            .bind(with: self) { owner, result in
+////                switch result {
+////                case .success(let success):
+////                    print(success)
+////                    nextCursor.accept(success.nextCursor)
+////                    owner.realPostData.append(contentsOf: success.data)
+////                    owner.postsDatas.accept(owner.realPostData)
+////
+////                case .failure(let failer):
+////                    owner.networkError.accept(failer)
+////                }
+////            }
+////            .disposed(by: disposeBag)
+//           

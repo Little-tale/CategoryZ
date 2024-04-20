@@ -61,18 +61,30 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 }
             }
             .disposed(by: disPoseBag)
-    
+        
         
         // 데이터 방출시 테이블 뷰
         output.tableViewItems
-            .distinctUntilChanged()
-            .map({ $0.realPostData })
             .drive(homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {[weak self] row, model, cell in
                 guard let self else { return }
                 var reciveModel = model
                 reciveModel.currentRow = row
-                cell.setModel(reciveModel, output.userIDDriver.value, delegate: viewModel)
+                cell.setModel(reciveModel)
                 cell.selectionStyle = .none
+            }
+            .disposed(by: disPoseBag)
+        
+        homeView.tableView.rx.willDisplayCell
+            .bind(with: self) { owner, event in
+                print("이벤트::이벤트::이벤트::ㅍ이벤트::이벤트::",event.indexPath)
+                print("이벤트::이벤트::이벤트::ㅍ이벤트::이벤트::",event.cell)
+            }
+            .disposed(by: disPoseBag)
+        
+        homeView.tableView.rx.didEndDisplayingCell
+            .bind(with: self) { owner, didEvent in
+                print("끝이벤트::이벤트::이벤트::ㅍ이벤트::이벤트::",didEvent.indexPath)
+                print("끝이벤트::이벤트::이벤트::ㅍ이벤트::이벤트::",didEvent.cell)
             }
             .disposed(by: disPoseBag)
         

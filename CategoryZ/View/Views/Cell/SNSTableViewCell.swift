@@ -71,27 +71,16 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     // 뷰모델
     let viewModel = SNSTableViewModel()
     
-    func setModel(_ model: SNSDataModel, _ userId: String, delegate: LikeStateProtocol) {
+    func setModel(_ model: SNSDataModel) {
         
         let model = BehaviorRelay<SNSDataModel> (value: model)
-        let userId = BehaviorRelay<String> (value: userId)
-        
-        // 좋아요 상태 딜리게이트
-        viewModel.likeStateProtocol = delegate
         
         //
         let input = SNSTableViewModel
             .Input(
-                snsModel: model,
-                inputUserId: userId,
-                likedButtonTab: likeButton.rx.tap
+                snsModel: model
             )
-        // 좋아요 버튼 탭시 토글 (UI 선 반영)
-        likeButton.rx.tap
-            .bind(with: self) { owner, _ in
-                owner.likeButton.isSelected.toggle()
-            }
-            .disposed(by: disposeBag)
+        
         
         let output = viewModel.transform(input)
         
@@ -102,9 +91,10 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             }
             .disposed(by: disposeBag)
         
-        // 좋아요 갯수
+
         output.likeCount
-            .drive(likeCountLabel.rx.text)
+            .map { String($0) }
+            .bind(to:likeCountLabel.rx.text)
             .disposed(by: disposeBag)
         
         // 댓글 갯수
@@ -142,6 +132,24 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         // 지난 시간 반영
         output.diffDate
             .drive(dateLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        
+        // 좋아요 버튼 토글시 UI만 선 반영
+        likeButton.rx.tap
+            .bind(with: self) { owner, _ in
+                let currentBool = owner.likeButton.isSelected
+                var currentCount = output.likeCount.value
+                
+                if currentBool {
+                    currentCount -= 1
+                    output.likeCount.accept(currentCount)
+                } else {
+                    currentCount += 1
+                    output.likeCount.accept(currentCount)
+                }
+                owner.likeButton.isSelected.toggle()
+            }
             .disposed(by: disposeBag)
     }
     
