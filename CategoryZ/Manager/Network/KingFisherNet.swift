@@ -31,7 +31,7 @@ class KingFisherNet: ImageDownloadRequestModifier {
         
         var urlReqest = URLRequest(url: url)
         
-        print(urlReqest)
+        // print(urlReqest)
         
         urlReqest.addValue(accessTokken, forHTTPHeaderField: NetHTTPHeader.authorization.rawValue)
         

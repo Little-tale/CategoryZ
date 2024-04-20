@@ -72,7 +72,7 @@ final class SNSTableViewModel: RxViewModelType {
         input.snsModel
             .withUnretained(self)
             .bind { owner, model in
-                dump(model)
+                // dump(model)
                 imageUrl.accept(model.files) // 이미지 링크
                 contents.accept(model.content) // 컨텐트
                 // 내 아이디 이거랑 비교해서 해결

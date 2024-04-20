@@ -146,7 +146,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     }
     
     override func designView() {
-        imageScrollView.pageController.currentPage = 0
+        //imageScrollView.pageController.currentPage = 0
     }
     
     

@@ -140,7 +140,7 @@ extension PostsRouter {
         encoder.keyEncodingStrategy = .convertToSnakeCase
         do {
             let result = try  encoder.encode(target)
-            print(result)
+            // print(result)
             return result
         } catch {
             return nil

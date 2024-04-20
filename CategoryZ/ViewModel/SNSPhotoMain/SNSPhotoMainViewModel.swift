@@ -14,38 +14,25 @@ protocol LikeStateProtocol: AnyObject {
     func changeLikeState(_ model: LikeQueryModel,_ postId: String)
 }
 
-class SNSDataArray: Equatable{
-    
-    static func == (lhs: SNSDataArray, rhs: SNSDataArray) -> Bool {
-        if lhs.realPostData.count == rhs.realPostData.count {
-            return true
-        }
-        return false
-    }
-    
-    var realPostData: [SNSDataModel] = []
-    
-    func change(_ row: Int,_ model: SNSDataModel ){
-        realPostData[row] = model
-    }
-}
-
 final class SNSPhotoMainViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
    
     private
-    let realPostData: SNSDataArray = SNSDataArray()
+    var realPostData: [SNSDataModel] = []
+    
     
     // 포스트 데이타들
     private // Value 접근시 무조건 ..... ㅠㅠㅠ
-    let postsDatas = PublishRelay<SNSDataArray> ()
+    let postsDatas = PublishRelay<[SNSDataModel]> ()
         
     
     // 네트워크 에러 발생시
     private
     let networkError = PublishRelay<NetworkError> ()
     
+    private
+    let userId = UserIDStorage.shared.userID
 
     struct Input {
         // 첫 시작 트리거
@@ -58,8 +45,10 @@ final class SNSPhotoMainViewModel: RxViewModelType {
     
     struct Output {
         let networkError: Driver<NetworkError>
-        let tableViewItems: Driver<SNSDataArray>
+        let tableViewItems: Driver<[SNSDataModel]>
         let userIDDriver: BehaviorRelay<String>
+        let pullDataCount: BehaviorRelay<Int>
+        let ifCanReqeust: BehaviorRelay<Bool>
     }
     
     func transform(_ input: Input) -> Output {
@@ -69,39 +58,55 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         let nextCursor = BehaviorRelay<String?> (value: nil)
         
         let userId = BehaviorRelay<String> (value: UserIDStorage.shared.userID ?? "" )
-        
-        let singleObservable = NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.postRead(next: nextCursor.value, limit: limit, productId: input.selectedProductID.value.identi)))
     
+        let pullDataCountBR = BehaviorRelay(value: 0)
+        let ifCanReqeust = BehaviorRelay(value: false)
         
-        Observable.merge(
+    
+        let request = Observable.merge(
             input.viewDidAppearTrigger
                 .filter({ $0 == true })
                 .map({ _ in () }),
             input.needLoadPageTrigger.asObservable()
         )
-        .flatMapLatest { return singleObservable }
-        .bind(with: self) { owner, result in
-            switch result {
+        .flatMapLatest { _ in
+            NetworkManager
+                .fetchNetwork(
+                model: PostReadMainModel.self,
+                router: .poster(
+                    .postRead(next: nextCursor.value,
+                              limit: limit, productId: input.selectedProductID.value.identi
+                             )
+                )
+            )
+        }
+        .share()
+        
+        request.bind(with: self) { owner, result in
+            switch result{
             case .success(let model):
                 nextCursor.accept(model.nextCursor)
+                print("model.nextCursor : \(model.nextCursor)")
+                owner.realPostData.append(contentsOf: model.data)
                 
-//                // owner.postsDatas.accept()
-//                var before = owner.realPostData
-               
-                owner.realPostData.realPostData.append(contentsOf: model.data)
                 owner.postsDatas.accept(owner.realPostData)
+
+                ifCanReqeust.accept(model.nextCursor != "0")
                 
-            case .failure(let error):
-                owner.networkError.accept(error)
+                pullDataCountBR.accept(owner.realPostData.count)
+            case .failure(let fail):
+                owner.networkError.accept(fail)
             }
         }
         .disposed(by: disposeBag)
-
+        
         
         return .init(
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
             tableViewItems: postsDatas.asDriver(onErrorDriveWith: .never()),
-            userIDDriver: userId
+            userIDDriver: userId,
+            pullDataCount: pullDataCountBR,
+            ifCanReqeust: ifCanReqeust
         )
     }
 
@@ -111,16 +116,17 @@ extension SNSPhotoMainViewModel: LikeStateProtocol {
     
     func changeLikeState(_ model: LikeQueryModel, _ postId: String) {
         print(model)
-        guard let userId = UserIDStorage.shared.userID else { return }
+        guard let userId else { return }
         
         NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: model, postId: postId)))
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let likeModel):
                     let updatedPosts = owner.realPostData
+                
+                    let postToUpdate =  updatedPosts[model.currentRow]
                    
-                    owner.printMemoryAddress(of: updatedPosts, addMesage: "beforePosts : ")
-                    let postToUpdate = updatedPosts.realPostData[model.currentRow]
+                    // [SNSDataModel]
                     
                     if likeModel.like_status {
                         if !postToUpdate.likes.contains(userId) {
@@ -129,17 +135,15 @@ extension SNSPhotoMainViewModel: LikeStateProtocol {
                     } else {
                         postToUpdate.changeLikeModel(userId, likeBool: false)
                     }
-                    updatedPosts.change(model.currentRow, postToUpdate)
-//                    updatedPosts[model.currentRow] = postToUpdate
-//                    owner.realPostData[model.currentRow] = postToUpdate
-                    owner.realPostData.realPostData[model.currentRow] = postToUpdate
+
+                    owner.realPostData[model.currentRow] = postToUpdate
                     
                     owner.postsDatas.accept(owner.realPostData)
-//                    print(model)
-                    print(updatedPosts)
-                    owner.printMemoryAddress(of: updatedPosts, addMesage: "updatedPosts  :")
-                    //*/ // 새로운 배열로 업데이트
 
+                    // print(updatedPosts)
+                    
+                    owner.printMemoryAddress(of: postToUpdate, addMesage: "updatedPosts  :")
+                   
                 case .failure(let error):
                     owner.networkError.accept(error)
                 }
@@ -150,23 +154,4 @@ extension SNSPhotoMainViewModel: LikeStateProtocol {
         let address = Unmanaged.passUnretained(object).toOpaque()
         print("주소 \(addMesage): \(address)")
     }
-
-    
 }
-
-
-
-//            .bind(with: self) { owner, result in
-//                switch result {
-//                case .success(let success):
-//                    print(success)
-//                    nextCursor.accept(success.nextCursor)
-//                    owner.realPostData.append(contentsOf: success.data)
-//                    owner.postsDatas.accept(owner.realPostData)
-//
-//                case .failure(let failer):
-//                    owner.networkError.accept(failer)
-//                }
-//            }
-//            .disposed(by: disposeBag)
-           

@@ -66,11 +66,11 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         // 데이터 방출시 테이블 뷰
         output.tableViewItems
             .distinctUntilChanged()
-            .map({ $0.realPostData })
             .drive(homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {[weak self] row, model, cell in
                 guard let self else { return }
                 
                 printMemoryAddress(of: model, addMesage: "modelㄱ  :")
+               
                 let reciveModel = model
                 reciveModel.currentRow = row
                 cell.setModel(reciveModel, output.userIDDriver.value, delegate: viewModel)
@@ -106,18 +106,42 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         
         
         
-        homeView.tableView.rx.contentOffset
-            .withUnretained(self)
-            .bind {owner, point in
-                // print("테이블뷰 총 높이: ",owner.homeView.tableView.contentSize.height) // 이걸 기반으로 높이 에서 일정부분에 다다르면 요청하면 될것 같음
-                //print("테이블뷰 포인터 Y: ", point.y) // 이것으로 어느 시점에 다다르면 요청 트리거를 동작시키면 문제가 없을것 같다.
-                let fullHeight = owner.homeView.tableView.contentSize.height
-                if fullHeight - point.y <= 130 {
-                    needLoadPage.accept(())
-                }
+//        homeView.tableView.rx.contentOffset
+//            .withUnretained(self)
+//            .bind {owner, point in
+//                // print("테이블뷰 총 높이: ",owner.homeView.tableView.contentSize.height) // 이걸 기반으로 높이 에서 일정부분에 다다르면 요청하면 될것 같음
+//                //print("테이블뷰 포인터 Y: ", point.y) // 이것으로 어느 시점에 다다르면 요청 트리거를 동작시키면 문제가 없을것 같다.
+//                let fullHeight = owner.homeView.tableView.contentSize.height
+//                if fullHeight - point.y <= 130 {
+//                    needLoadPage.accept(())
+//                }
+//            }
+//            .disposed(by: disPoseBag)
+        
+//        homeView.tableView.rx.didEndDisplayingCell
+//            .bind(with: self) { owner, cellEvent in
+//                print(cellEvent.indexPath.row)
+//            }
+//            .disposed(by: disPoseBag)
+        
+        // 조건 묶기
+        let combineRequstForMore = Observable.combineLatest(
+            output.pullDataCount,
+            homeView.tableView.rx.willDisplayCell,
+            output.ifCanReqeust
+        )
+            .map { fullDataCount, cellEvent, ifCan in
+                return (fullDataCount: fullDataCount,cellEvent: cellEvent, ifCan: ifCan)
+            }
+        
+        // 또 요청하기
+        combineRequstForMore
+            .filter { $0.cellEvent.indexPath.row >= $0.fullDataCount - 3 && $0.ifCan }
+            .bind(with: self) { owner, _ in
+                print("요청합니다.")
+                needLoadPage.accept(())
             }
             .disposed(by: disPoseBag)
-
     }
     
     override func navigationSetting() {

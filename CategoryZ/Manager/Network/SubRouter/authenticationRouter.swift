@@ -78,7 +78,7 @@ extension authenticationRouter: TargetType {
                     refresh
             ]
         case .userWithDraw: // 60PFsVaFr9iSRk
-            print("시점: ", TokenStorage.shared.accessToken ?? "토큰 없쪄")
+            //print("시점: ", TokenStorage.shared.accessToken ?? "토큰 없쪄")
             return [
                 NetHTTPHeader.sesacKey.rawValue :
                     APIKey.sesacKey.rawValue
@@ -137,7 +137,7 @@ extension authenticationRouter {
         encoder.keyEncodingStrategy = .convertToSnakeCase
         do {
             let result = try  encoder.encode(target)
-            print(result)
+            // print(result)
             return result
         } catch {
             return nil

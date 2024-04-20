@@ -139,7 +139,8 @@ final class ScrollImageView: RxBaseView {
             ]) { result in
                 switch result {
                 case .success(let s):
-                    print(s)
+                    // print(s)
+                    break
                 case .failure(let e):
                     // 에러 발생시 다 알려야 하는가? 애매한 부분
                     // print(e.errorDescription)
