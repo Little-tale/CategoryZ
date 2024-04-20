@@ -13,6 +13,9 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white // 수정예정
+        configureHierarchy()
+        configureLayout()
+        designView()
     }
     
     init() {
@@ -24,5 +27,15 @@ class BaseViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    func configureHierarchy(){
+        
+    }
+    func configureLayout(){
+        
+    }
+    func designView(){
+        
+    }
 }
 
