@@ -14,10 +14,18 @@ protocol LikeStateProtocol: AnyObject {
     func changeLikeState(_ model: LikeQueryModel,_ postId: String)
 }
 
-struct SNSDataArray: Equatable{
+class SNSDataArray: Equatable{
+    
+    static func == (lhs: SNSDataArray, rhs: SNSDataArray) -> Bool {
+        if lhs.realPostData.count == rhs.realPostData.count {
+            return true
+        }
+        return false
+    }
+    
     var realPostData: [SNSDataModel] = []
     
-    mutating func change(_ row: Int,_ model: SNSDataModel ){
+    func change(_ row: Int,_ model: SNSDataModel ){
         realPostData[row] = model
     }
 }
@@ -26,12 +34,12 @@ final class SNSPhotoMainViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
    
-//    private
-//    var realPostData: [SNSDataModel] = []
+    private
+    let realPostData: SNSDataArray = SNSDataArray()
     
     // 포스트 데이타들
     private // Value 접근시 무조건 ..... ㅠㅠㅠ
-    var postsDatas = BehaviorRelay<SNSDataArray> (value: SNSDataArray())
+    let postsDatas = PublishRelay<SNSDataArray> ()
         
     
     // 네트워크 에러 발생시
@@ -77,10 +85,11 @@ final class SNSPhotoMainViewModel: RxViewModelType {
             case .success(let model):
                 nextCursor.accept(model.nextCursor)
                 
-                // owner.postsDatas.accept()
-                var before = owner.postsDatas.value
-                before.realPostData.append(contentsOf: model.data)
-                owner.postsDatas.accept(before)
+//                // owner.postsDatas.accept()
+//                var before = owner.realPostData
+               
+                owner.realPostData.realPostData.append(contentsOf: model.data)
+                owner.postsDatas.accept(owner.realPostData)
                 
             case .failure(let error):
                 owner.networkError.accept(error)
@@ -91,7 +100,7 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         
         return .init(
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
-            tableViewItems: postsDatas.asDriver(),
+            tableViewItems: postsDatas.asDriver(onErrorDriveWith: .never()),
             userIDDriver: userId
         )
     }
@@ -108,8 +117,10 @@ extension SNSPhotoMainViewModel: LikeStateProtocol {
             .subscribe(with: self) { owner, result in
                 switch result {
                 case .success(let likeModel):
-                    var updatedPosts = owner.postsDatas.value
-                    var postToUpdate = updatedPosts.realPostData[model.currentRow]
+                    let updatedPosts = owner.realPostData
+                   
+                    owner.printMemoryAddress(of: updatedPosts, addMesage: "beforePosts : ")
+                    let postToUpdate = updatedPosts.realPostData[model.currentRow]
                     
                     if likeModel.like_status {
                         if !postToUpdate.likes.contains(userId) {
@@ -121,7 +132,12 @@ extension SNSPhotoMainViewModel: LikeStateProtocol {
                     updatedPosts.change(model.currentRow, postToUpdate)
 //                    updatedPosts[model.currentRow] = postToUpdate
 //                    owner.realPostData[model.currentRow] = postToUpdate
-                    owner.postsDatas.accept(updatedPosts)
+                    owner.realPostData.realPostData[model.currentRow] = postToUpdate
+                    
+                    owner.postsDatas.accept(owner.realPostData)
+//                    print(model)
+                    print(updatedPosts)
+                    owner.printMemoryAddress(of: updatedPosts, addMesage: "updatedPosts  :")
                     //*/ // 새로운 배열로 업데이트
 
                 case .failure(let error):
@@ -130,7 +146,11 @@ extension SNSPhotoMainViewModel: LikeStateProtocol {
             }
             .disposed(by: disposeBag)
     }
-    
+    func printMemoryAddress<T: AnyObject>(of object: T, addMesage: String) {
+        let address = Unmanaged.passUnretained(object).toOpaque()
+        print("주소 \(addMesage): \(address)")
+    }
+
     
 }
 
