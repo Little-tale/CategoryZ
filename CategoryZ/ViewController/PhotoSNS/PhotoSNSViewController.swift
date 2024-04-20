@@ -65,8 +65,8 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         
         // 데이터 방출시 테이블 뷰
         output.tableViewItems
-            .drive(homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {[weak self] row, model, cell in
-                guard let self else { return }
+            .distinctUntilChanged()
+            .drive(homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {row, model, cell in
                 var reciveModel = model
                 reciveModel.currentRow = row
                 cell.setModel(reciveModel)
@@ -74,17 +74,22 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             }
             .disposed(by: disPoseBag)
         
-        homeView.tableView.rx.willDisplayCell
-            .bind(with: self) { owner, event in
-                print("이벤트::이벤트::이벤트::ㅍ이벤트::이벤트::",event.indexPath)
-                print("이벤트::이벤트::이벤트::ㅍ이벤트::이벤트::",event.cell)
-            }
-            .disposed(by: disPoseBag)
+//        homeView.tableView.rx.willDisplayCell
+//            .bind(with: self) { owner, event in
+//                print("이벤트::이벤트::이벤트::ㅍ이벤트::이벤트::",event.indexPath)
+//                print("이벤트::이벤트::이벤트::ㅍ이벤트::이벤트::",event.cell)
+//            }
+//            .disposed(by: disPoseBag)
         
         homeView.tableView.rx.didEndDisplayingCell
             .bind(with: self) { owner, didEvent in
-                print("끝이벤트::이벤트::이벤트::ㅍ이벤트::이벤트::",didEvent.indexPath)
-                print("끝이벤트::이벤트::이벤트::ㅍ이벤트::이벤트::",didEvent.cell)
+    
+                guard let cell = didEvent.cell as? SNSTableViewCell else {
+                    print("끝 이벤트 셀 문제")
+                    return
+                }
+            
+                owner.viewModel.cellEvent(at: didEvent.indexPath, isLike: cell.likeButton.isSelected)
             }
             .disposed(by: disPoseBag)
         

@@ -12,9 +12,12 @@ import RxCocoa
 final class SNSTableViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
+    
+    weak var errorDelegate: NetworkErrorCatchProtocol?
 
     struct Input {
         let snsModel: BehaviorRelay<SNSDataModel>
+        let likeButtonTap: ControlEvent<Void>
     }
     
     struct Output {
@@ -26,12 +29,14 @@ final class SNSTableViewModel: RxViewModelType {
         let likeCount: BehaviorRelay<Int>
         let comentsCount: Driver<String>
         let diffDate: Driver<String>
+        
+        let changingModel: PublishSubject<LikeQueryModel>
     }
     
     func transform(_ input: Input) -> Output {
         // var currentRow: Int = 0
         /// 좋아요 숫자 재반영을 위한
-        // var currnetLike: Bool = false
+        
         
         let imageUrl = BehaviorRelay<[String]> (value: [])
         let contents = BehaviorRelay<String> (value: "")
@@ -42,7 +47,9 @@ final class SNSTableViewModel: RxViewModelType {
         let diffDate = BehaviorRelay(value: "")
         let currentIfLike = BehaviorRelay(value: false)
             
-        let currnetPostId = BehaviorRelay(value: "")
+        let changingModel = PublishSubject<LikeQueryModel> ()
+        var currnetPostId = ""
+        var currnetLike: Bool = false
         
         input.snsModel
             .withUnretained(self)
@@ -58,7 +65,7 @@ final class SNSTableViewModel: RxViewModelType {
                 
                 likeCount.accept(model.likes.count)
         
-                currnetPostId.accept(model.postId)
+                currnetPostId = model.postId
                 // currentRow = model.currentRow
                 //댓글 개수
                 comentsCount.accept(String(model.comments.count))
@@ -70,8 +77,10 @@ final class SNSTableViewModel: RxViewModelType {
                 if let userID = UserIDStorage.shared.userID {
                     if model.likes.contains(userID) {
                         currentIfLike.accept(true)
+                        currnetLike = true
                     } else {
                         currentIfLike.accept(false)
+                        currnetLike = false
                     }
                 }
             }
@@ -83,10 +92,49 @@ final class SNSTableViewModel: RxViewModelType {
 //            currnetPostId
 //        )
         
-//        // 좋아요 버튼 클릭시 (좋아요 토글 과 통신 해야함을 전달)
-//        input.likedButtonTab
-//            .withLatestFrom(combineOfUserLike)
-//            .debounce(.milliseconds(300), scheduler: MainScheduler.instance)
+        // 좋아요 버튼 클릭시 (좋아요 토글 과 통신 해야함을 전달)
+        input.likeButtonTap
+            .map({ _ in
+                var current = !currnetLike
+                currnetLike = current
+                return LikeQueryModel(like_status: current)
+            })
+            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+            .map { like in
+                return (likeModel: like, postId: currnetPostId)
+            }
+            .flatMapLatest { model, postId in
+                NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: model, postId: postId)))
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    changingModel.onNext(success)
+                case .failure(let fail):
+                    owner.errorDelegate?.errorCatch(fail)
+                }
+            }
+            .disposed(by: disposeBag)
+                
+        return Output(
+            imageURLStrings: imageUrl.asDriver(),
+            content: contents.asDriver(),
+            isUserLike: currentIfLike.asDriver(),
+            userProfileImage: profileImage.asDriver(
+                onErrorJustReturn: nil
+            ),
+            profileName: profileName.asDriver(),
+            likeCount: likeCount,
+            comentsCount: comentsCount.asDriver(),
+            diffDate: diffDate.asDriver(),
+            changingModel: changingModel
+        )
+    }
+    
+    
+}
+
+
 //            .map { combine in
 //                var likeTogle = combine.0
 //                likeTogle.like_status.toggle()
@@ -94,9 +142,9 @@ final class SNSTableViewModel: RxViewModelType {
 //                return (likeModel: likeTogle, postId: combine.1)
 //            }
 //            .bind(with: self, onNext: { owner, model in
-//                
+//
 //                owner.likeStateProtocol?.changeLikeState(model.likeModel, model.postId)
-//                
+//
 //            })
 //            .disposed(by: disposeBag)
         
@@ -115,22 +163,3 @@ final class SNSTableViewModel: RxViewModelType {
 //                currnetLike = !currnetLike
 //            }
 //            .disposed(by: disposeBag)
-            
-        return Output(
-            imageURLStrings: imageUrl.asDriver(),
-            content: contents.asDriver(),
-            isUserLike: currentIfLike.asDriver(),
-            userProfileImage: profileImage.asDriver(
-                onErrorJustReturn: nil
-            ),
-            profileName: profileName.asDriver(),
-            likeCount: likeCount,
-            comentsCount: comentsCount.asDriver(),
-            diffDate: diffDate.asDriver()
-        )
-    }
-    
-    
-}
-
-

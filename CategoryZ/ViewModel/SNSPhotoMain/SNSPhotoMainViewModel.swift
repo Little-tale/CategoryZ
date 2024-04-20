@@ -9,13 +9,12 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-
-
-
-
 final class SNSPhotoMainViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
+    
+    private
+    let userId = UserIDStorage.shared.userID
    
     private
     var realPostData: [SNSDataModel] = []
@@ -47,10 +46,7 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         let tableViewItems: Driver<[SNSDataModel]>
         let userIDDriver: BehaviorRelay<String>
     }
-    
-   
 
-    
     func transform(_ input: Input) -> Output {
         let limit = "10"
         
@@ -87,6 +83,31 @@ final class SNSPhotoMainViewModel: RxViewModelType {
             tableViewItems: postsDatas.asDriver(),
             userIDDriver: userId
         )
+    }
+    
+    func cellEvent(at: IndexPath, isLike: Bool){
+        if let userId {
+            var like = realPostData[at.row].likes.contains(userId)
+            // 유저 이름이 있을때가 좋아요한 상태
+            // 유저 이름이 포함되어 있지 않다면 쏘쏘
+            // 들어온 데이타가 true or false 일때
+            var postData = realPostData[at.row]
+            let userHasLiked = postData.likes.contains(userId)
+            
+            if isLike && !userHasLiked {
+                // 사용자가 좋아요를 누르려고 -> 현재 좋아요 상태가 아니라면 좋아요 추가
+                postData.likes.append(userId)
+                realPostData[at.row] = postData
+                // 데이터 모델 업데이트 후 이벤트 방출
+                postsDatas.accept(realPostData)
+            } else if !isLike && userHasLiked {
+                // 사용자가 좋아요를 취소하려고 -> 현재 좋아요 상태라면 좋아요 제거
+                postData.likes.removeAll { $0 == userId }
+                realPostData[at.row] = postData
+                // 데이터 모델 업데이트 후 이벤트 방출
+                postsDatas.accept(realPostData)
+            }
+        }
     }
 
 }

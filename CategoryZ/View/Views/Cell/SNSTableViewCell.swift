@@ -78,12 +78,13 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         //
         let input = SNSTableViewModel
             .Input(
-                snsModel: model
+                snsModel: model,
+                likeButtonTap: likeButton.rx.tap
             )
-        
         
         let output = viewModel.transform(input)
         
+
         // 좋아요 버튼 상태
         output.isUserLike
             .drive(with: self) { owner, bool in
@@ -134,6 +135,14 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             .drive(dateLabel.rx.text)
             .disposed(by: disposeBag)
         
+        // 변화한 현재 (서버상) 좋아요 상태
+//        output.changingModel
+//            .withUnretained(self)
+//            .bind {owner, model in
+//                
+//            }
+//            .disposed(by: disposeBag)
+        
         
         // 좋아요 버튼 토글시 UI만 선 반영
         likeButton.rx.tap
@@ -152,6 +161,8 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             }
             .disposed(by: disposeBag)
     }
+    
+    
     
     override func designView() {
         imageScrollView.pageController.currentPage = 0
