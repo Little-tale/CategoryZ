@@ -61,8 +61,10 @@ final class SNSPhotoMainViewModel: RxViewModelType {
     
         let pullDataCountBR = BehaviorRelay(value: 0)
         let ifCanReqeust = BehaviorRelay(value: false)
+        let selectedProductId = BehaviorRelay(value: "")
         
-    
+        
+        
         let request = Observable.merge(
             input.viewDidAppearTrigger
                 .filter({ $0 == true })
@@ -100,6 +102,34 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         }
         .disposed(by: disposeBag)
         
+        // 카테고리를 클릭하였을때
+        // 넥스트를 nil 로 만들고 요청해야 함.
+
+        input.selectedProductID
+            .distinctUntilChanged()
+            .flatMapLatest { productId in
+                selectedProductId.accept(productId.identi)
+                nextCursor.accept(nil)
+                return NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.postRead(next: nil, limit: limit, productId: productId.identi)))
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let model):
+                    nextCursor.accept(model.nextCursor)
+                    print("model.nextCursor : \(model.nextCursor)")
+                    
+                    owner.realPostData = model.data
+                    
+                    owner.postsDatas.accept(owner.realPostData)
+
+                    ifCanReqeust.accept(model.nextCursor != "0")
+                    
+                    pullDataCountBR.accept(owner.realPostData.count)
+                case .failure(let fail):
+                    owner.networkError.accept(fail)
+                }
+            }
+            .disposed(by: disposeBag)
         
         return .init(
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
