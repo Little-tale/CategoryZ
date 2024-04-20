@@ -9,19 +9,37 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+
+protocol LikeStateProtocol: AnyObject {
+    func changeLikeState(_ model: LikeQueryModel,_ postId: String)
+}
+
+class SNSDataArray: Equatable{
+    
+    static func == (lhs: SNSDataArray, rhs: SNSDataArray) -> Bool {
+        if lhs.realPostData.count == rhs.realPostData.count {
+            return true
+        }
+        return false
+    }
+    
+    var realPostData: [SNSDataModel] = []
+    
+    func change(_ row: Int,_ model: SNSDataModel ){
+        realPostData[row] = model
+    }
+}
+
 final class SNSPhotoMainViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
-    
-    private
-    let userId = UserIDStorage.shared.userID
    
     private
-    var realPostData: [SNSDataModel] = []
+    let realPostData: SNSDataArray = SNSDataArray()
     
     // 포스트 데이타들
     private // Value 접근시 무조건 ..... ㅠㅠㅠ
-    var postsDatas = BehaviorRelay<[SNSDataModel]> (value: [])
+    let postsDatas = PublishRelay<SNSDataArray> ()
         
     
     // 네트워크 에러 발생시
@@ -36,17 +54,14 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         let needLoadPageTrigger : PublishRelay<Void>
         // 카테고리 선택시
         let selectedProductID: BehaviorRelay<ProductID>
-    
-        // 특정 시점에서그때 진짜 UI에 반영
-    
     }
     
     struct Output {
         let networkError: Driver<NetworkError>
-        let tableViewItems: Driver<[SNSDataModel]>
+        let tableViewItems: Driver<SNSDataArray>
         let userIDDriver: BehaviorRelay<String>
     }
-
+    
     func transform(_ input: Input) -> Output {
         let limit = "10"
         
@@ -69,8 +84,13 @@ final class SNSPhotoMainViewModel: RxViewModelType {
             switch result {
             case .success(let model):
                 nextCursor.accept(model.nextCursor)
-                owner.realPostData.append(contentsOf: model.data)
+                
+//                // owner.postsDatas.accept()
+//                var before = owner.realPostData
+               
+                owner.realPostData.realPostData.append(contentsOf: model.data)
                 owner.postsDatas.accept(owner.realPostData)
+                
             case .failure(let error):
                 owner.networkError.accept(error)
             }
@@ -80,87 +100,73 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         
         return .init(
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
-            tableViewItems: postsDatas.asDriver(),
+            tableViewItems: postsDatas.asDriver(onErrorDriveWith: .never()),
             userIDDriver: userId
         )
-    }
-    
-    func cellEvent(at: IndexPath, isLike: Bool){
-        if let userId {
-            var like = realPostData[at.row].likes.contains(userId)
-            // 유저 이름이 있을때가 좋아요한 상태
-            // 유저 이름이 포함되어 있지 않다면 쏘쏘
-            // 들어온 데이타가 true or false 일때
-            var postData = realPostData[at.row]
-            let userHasLiked = postData.likes.contains(userId)
-            
-            if isLike && !userHasLiked {
-                // 사용자가 좋아요를 누르려고 -> 현재 좋아요 상태가 아니라면 좋아요 추가
-                postData.likes.append(userId)
-                realPostData[at.row] = postData
-                // 데이터 모델 업데이트 후 이벤트 방출
-                postsDatas.accept(realPostData)
-            } else if !isLike && userHasLiked {
-                // 사용자가 좋아요를 취소하려고 -> 현재 좋아요 상태라면 좋아요 제거
-                postData.likes.removeAll { $0 == userId }
-                realPostData[at.row] = postData
-                // 데이터 모델 업데이트 후 이벤트 방출
-                postsDatas.accept(realPostData)
-            }
-        }
     }
 
 }
 
-//extension SNSPhotoMainViewModel: LikeStateProtocol {
-//    
-//    func changeLikeState(_ model: LikeQueryModel, _ postId: String) {
-//        print(model)
-//        guard let userId = UserIDStorage.shared.userID else { return }
-//        
-//        NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: model, postId: postId)))
-//            .subscribe(with: self) { owner, result in
-//                switch result {
-//                case .success(let likeModel):
-//                    let updatedPosts = owner.postsDatas.value
-//                    var postToUpdate = updatedPosts[model.currentRow]
-//                    
-//                    if likeModel.like_status {
-//                        if !postToUpdate.likes.contains(userId) {
-//                            postToUpdate.changeLikeModel(userId, likeBool: true)
-//                        }
-//                    } else {
-//                        postToUpdate.changeLikeModel(userId, likeBool: false)
-//                    }
-//                    
-////                    updatedPosts[model.currentRow] = postToUpdate
+extension SNSPhotoMainViewModel: LikeStateProtocol {
+    
+    func changeLikeState(_ model: LikeQueryModel, _ postId: String) {
+        print(model)
+        guard let userId = UserIDStorage.shared.userID else { return }
+        
+        NetworkManager.fetchNetwork(model: LikeQueryModel.self, router: .like(.like(query: model, postId: postId)))
+            .subscribe(with: self) { owner, result in
+                switch result {
+                case .success(let likeModel):
+                    let updatedPosts = owner.realPostData
+                   
+                    owner.printMemoryAddress(of: updatedPosts, addMesage: "beforePosts : ")
+                    let postToUpdate = updatedPosts.realPostData[model.currentRow]
+                    
+                    if likeModel.like_status {
+                        if !postToUpdate.likes.contains(userId) {
+                            postToUpdate.changeLikeModel(userId, likeBool: true)
+                        }
+                    } else {
+                        postToUpdate.changeLikeModel(userId, likeBool: false)
+                    }
+                    updatedPosts.change(model.currentRow, postToUpdate)
+//                    updatedPosts[model.currentRow] = postToUpdate
 //                    owner.realPostData[model.currentRow] = postToUpdate
-//                    // owner.postsDatas.accept(owner.realPostData)
-//                    //*/ // 새로운 배열로 업데이트
+                    owner.realPostData.realPostData[model.currentRow] = postToUpdate
+                    
+                    owner.postsDatas.accept(owner.realPostData)
+//                    print(model)
+                    print(updatedPosts)
+                    owner.printMemoryAddress(of: updatedPosts, addMesage: "updatedPosts  :")
+                    //*/ // 새로운 배열로 업데이트
+
+                case .failure(let error):
+                    owner.networkError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+    func printMemoryAddress<T: AnyObject>(of object: T, addMesage: String) {
+        let address = Unmanaged.passUnretained(object).toOpaque()
+        print("주소 \(addMesage): \(address)")
+    }
+
+    
+}
+
+
+
+//            .bind(with: self) { owner, result in
+//                switch result {
+//                case .success(let success):
+//                    print(success)
+//                    nextCursor.accept(success.nextCursor)
+//                    owner.realPostData.append(contentsOf: success.data)
+//                    owner.postsDatas.accept(owner.realPostData)
 //
-//                case .failure(let error):
-//                    owner.networkError.accept(error)
+//                case .failure(let failer):
+//                    owner.networkError.accept(failer)
 //                }
 //            }
 //            .disposed(by: disposeBag)
-//    }
-//    
-//    
-//}
-//
-//
-//
-////            .bind(with: self) { owner, result in
-////                switch result {
-////                case .success(let success):
-////                    print(success)
-////                    nextCursor.accept(success.nextCursor)
-////                    owner.realPostData.append(contentsOf: success.data)
-////                    owner.postsDatas.accept(owner.realPostData)
-////
-////                case .failure(let failer):
-////                    owner.networkError.accept(failer)
-////                }
-////            }
-////            .disposed(by: disposeBag)
-//           
+           

@@ -111,8 +111,8 @@ struct PostReadMainModel: Decodable {
     }
 }
 // SNS 모델
-struct SNSDataModel: Decodable, Hashable, Equatable {
- 
+final class SNSDataModel: Decodable, Equatable {
+    
     let postId: String
     let productId: String
     let title: String
@@ -158,7 +158,7 @@ struct SNSDataModel: Decodable, Hashable, Equatable {
         self.comments = try container.decode([String].self, forKey: .comments)
     }
     
-    mutating func changeLikeModel(_ userID: String, likeBool: Bool) {
+    func changeLikeModel(_ userID: String, likeBool: Bool) {
         if likeBool {
             likes.append(userID)
         } else {
@@ -167,6 +167,13 @@ struct SNSDataModel: Decodable, Hashable, Equatable {
             }
         }
         
+    }
+    
+    static func == (lhs: SNSDataModel, rhs: SNSDataModel) -> Bool {
+        if lhs.postId == rhs.postId {
+            return true
+        }
+        return false
     }
 }
 

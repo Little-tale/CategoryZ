@@ -71,20 +71,30 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     // 뷰모델
     let viewModel = SNSTableViewModel()
     
-    func setModel(_ model: SNSDataModel) {
+    func setModel(_ model: SNSDataModel, _ userId: String, delegate: LikeStateProtocol) {
         
         let model = BehaviorRelay<SNSDataModel> (value: model)
+        let userId = BehaviorRelay<String> (value: userId)
+        
+        // 좋아요 상태 딜리게이트
+        viewModel.likeStateProtocol = delegate
         
         //
         let input = SNSTableViewModel
             .Input(
                 snsModel: model,
-                likeButtonTap: likeButton.rx.tap
+                inputUserId: userId,
+                likedButtonTab: likeButton.rx.tap
             )
+        // 좋아요 버튼 탭시 토글 (UI 선 반영)
+        likeButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.likeButton.isSelected.toggle()
+            }
+            .disposed(by: disposeBag)
         
         let output = viewModel.transform(input)
         
-
         // 좋아요 버튼 상태
         output.isUserLike
             .drive(with: self) { owner, bool in
@@ -92,10 +102,9 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             }
             .disposed(by: disposeBag)
         
-
+        // 좋아요 갯수
         output.likeCount
-            .map { String($0) }
-            .bind(to:likeCountLabel.rx.text)
+            .drive(likeCountLabel.rx.text)
             .disposed(by: disposeBag)
         
         // 댓글 갯수
@@ -134,35 +143,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         output.diffDate
             .drive(dateLabel.rx.text)
             .disposed(by: disposeBag)
-        
-        // 변화한 현재 (서버상) 좋아요 상태
-//        output.changingModel
-//            .withUnretained(self)
-//            .bind {owner, model in
-//                
-//            }
-//            .disposed(by: disposeBag)
-        
-        
-        // 좋아요 버튼 토글시 UI만 선 반영
-        likeButton.rx.tap
-            .bind(with: self) { owner, _ in
-                let currentBool = owner.likeButton.isSelected
-                var currentCount = output.likeCount.value
-                
-                if currentBool {
-                    currentCount -= 1
-                    output.likeCount.accept(currentCount)
-                } else {
-                    currentCount += 1
-                    output.likeCount.accept(currentCount)
-                }
-                owner.likeButton.isSelected.toggle()
-            }
-            .disposed(by: disposeBag)
     }
-    
-    
     
     override func designView() {
         imageScrollView.pageController.currentPage = 0

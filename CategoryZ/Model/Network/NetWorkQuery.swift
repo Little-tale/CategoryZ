@@ -75,6 +75,7 @@ struct CommentWriteQuery: Encodable {
 /// 좋아요 쿼리 (CODABLE)
 struct LikeQueryModel: Codable {
     var like_status: Bool
+    var currentRow = 0
     
     init(like_status: Bool? = false) {
         self.like_status = like_status ?? false
