@@ -28,9 +28,11 @@ final class LunchScreenViewController: RxHomeBaseViewController<FirstView> {
         output.changeViewController
             .drive(with: self) { owner, bool in
                 if bool {
-                    
-                    // 메인뷰로 루트뷰 변경 해야함
-                    //changeRootView(to: <#T##UIViewController#>, isNavi: <#T##Bool#>)
+                    // 현재는 이렇게 하지만 후에 탭바 컨트롤러로 교체
+                    let viewController = SNSPhotoViewController()
+                    let nvc = UINavigationController(rootViewController: viewController)
+                    nvc.modalPresentationStyle = .fullScreen
+                    owner.present(nvc, animated: false)
                 } else {
                     let viewController = GetStartViewController()
                     

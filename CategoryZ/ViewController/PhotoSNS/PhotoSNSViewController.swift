@@ -20,7 +20,6 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     
     typealias RxHeaderDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String,ProductID>>
     
-
     private let headerItems = Observable.just([
         SectionModel(model: "Section", items: [
             ProductID.dailyRoutine,
@@ -69,7 +68,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             .drive(homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {[weak self] row, model, cell in
                 guard let self else { return }
                 
-                printMemoryAddress(of: model, addMesage: "modelㄱ  :")
+                printMemoryAddress(of: model, addMesage: "model :")
                
                 let reciveModel = model
                 reciveModel.currentRow = row
@@ -125,8 +124,6 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 needLoadPage.accept(())
             }
             .disposed(by: disPoseBag)
-        
-        // 태그 클릭시 탑으로 올라가는 트리거
         
     }
     

@@ -287,6 +287,7 @@
 		7B11DC7C2BC58B3A0055D423 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				7B87F0F62BD3FAEC0006178F /* PresentationViewController */,
 				7B838DFA2BCFAE5E000F2E27 /* PhotoSNS */,
 				7B838DEF2BCFACAC000F2E27 /* Tabbar */,
 				7BA0E0D12BCD72AC002F0516 /* PostReg */,
@@ -442,6 +443,13 @@
 				7B838E102BCFD97C000F2E27 /* ScrollImageView.swift */,
 			);
 			path = SrollImageView;
+			sourceTree = "<group>";
+		};
+		7B87F0F62BD3FAEC0006178F /* PresentationViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PresentationViewController;
 			sourceTree = "<group>";
 		};
 		7BA0E0CE2BCD7240002F0516 /* CameraAndImage */ = {
