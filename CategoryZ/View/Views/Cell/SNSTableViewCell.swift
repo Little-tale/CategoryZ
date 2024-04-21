@@ -23,53 +23,57 @@ import Kingfisher
 final class SNSTableViewCell: RxBaseTableViewCell {
     
     // 이미지 스크롤 뷰 -> 안에 Rx 게심
-    let imageScrollView = ScrollImageView().then {
+    private let imageScrollView = ScrollImageView().then {
         $0.layer.cornerRadius = 15
         $0.clipsToBounds = true
     }
     
     // 크리에이터 이름 라벨
-    let userNameLabel = UILabel()
+    private let userNameLabel = UILabel()
     
     // 프로필 이미지뷰
-    let profileImageView = CircleImageView().then {
+    private let profileImageView = CircleImageView().then {
         $0.image = JHImage.defaultImage
+        $0.tintColor = JHColor.black
+    }
+    let rightMoreBuntton = UIButton().then {
+        $0.setImage(JHImage.moreImage, for: .normal)
         $0.tintColor = JHColor.black
     }
     
     // 좋아요 버튼 옆에는 몇명이 했는지..!
-    let likeButton = SeletionButton(
+    private let likeButton = SeletionButton(
         selected: JHImage.likeImageSelected,
         noSelected: JHImage.likeImageDiselected
     )
         .then { $0.tintColor = JHColor.likeColor }
     
-    let likeCountLabel = UILabel().then {
+    private let likeCountLabel = UILabel().then {
         $0.font = JHFont.UIKit.bo14
     }
     
     // 댓글 버튼
-    let commentButton = SeletionButton(
+    private let commentButton = SeletionButton(
         selected: JHImage.messageSelected,
         noSelected: JHImage.messageDiselected
     ).then { $0.tintColor = JHColor.black }
     
-    let commentCountLabel = UILabel().then({
+    private let commentCountLabel = UILabel().then({
         $0.font = JHFont.UIKit.bo14
     })
     // 컨텐트 라벨
-    let contentLable = UILabel().then {
+    private let contentLable = UILabel().then {
         $0.font = JHFont.UIKit.re12
         $0.numberOfLines = 3
     }
     
     // 날짜 라벨인데 (몇일전인지 계산하기)
-    let dateLabel = UILabel().then {
+    private let dateLabel = UILabel().then {
         $0.font = JHFont.UIKit.re10
     }
 
     // 뷰모델
-    let viewModel = SNSTableViewModel()
+    private let viewModel = SNSTableViewModel()
     
     func setModel(_ model: SNSDataModel, _ userId: String, delegate: LikeStateProtocol) {
         
@@ -143,6 +147,21 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         output.diffDate
             .drive(dateLabel.rx.text)
             .disposed(by: disposeBag)
+        
+        // more 버튼 클릭시 뷰컨에 알리기
+        rightMoreBuntton.rx
+            .tap
+            .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
+            .bind { _ in
+                print("???")
+                NotificationCenter.default.post(
+                    name: .selectedMoreButton,
+                    object: nil,
+                    userInfo: ["SNSDataModel": model.value]
+                )
+            }
+            .disposed(by: disposeBag)
+       
     }
     
     override func designView() {
@@ -153,6 +172,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     override func configureHierarchy() {
         contentView.addSubview(profileImageView)
         contentView.addSubview(userNameLabel)
+        contentView.addSubview(rightMoreBuntton)
         contentView.addSubview(imageScrollView)
         contentView.addSubview(likeButton)
         contentView.addSubview(likeCountLabel)
@@ -170,6 +190,11 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         userNameLabel.snp.makeConstraints { make in
             make.centerY.equalTo(profileImageView)
             make.leading.equalTo(profileImageView.snp.trailing).offset(6)
+        }
+        rightMoreBuntton.snp.makeConstraints { make in
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(18)
+            make.centerY.equalTo(profileImageView)
+            make.size.equalTo(20)
         }
         imageScrollView.snp.makeConstraints { make in
            

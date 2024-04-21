@@ -68,13 +68,10 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             .drive(homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {[weak self] row, model, cell in
                 guard let self else { return }
                 
-                printMemoryAddress(of: model, addMesage: "model :")
-               
                 let reciveModel = model
                 reciveModel.currentRow = row
                 cell.setModel(reciveModel, output.userIDDriver.value, delegate: viewModel)
                 cell.selectionStyle = .none
-
             }
             .disposed(by: disPoseBag)
         
@@ -125,6 +122,21 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             }
             .disposed(by: disPoseBag)
         
+        let moreButtonTap = PublishRelay<SNSDataModel> ()
+        
+        // moreButton 클릭시 모델 받기
+        NotificationCenter.default.rx.notification(.selectedMoreButton, object: nil)
+            .bind(with: self) { owner, notification in
+                guard let dataModel = notification.userInfo? ["SNSDataModel"] as? SNSDataModel else {
+                    print("모델 변환 실패")
+                    return
+                }
+                
+            }
+            .disposed(by: disPoseBag)
+        
+        
+       
     }
     
     override func navigationSetting() {

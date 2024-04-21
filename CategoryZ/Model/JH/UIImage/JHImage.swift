@@ -23,4 +23,6 @@ extension JHImage {
     static let defaultImage: UIImage? = UIImage(systemName: "person.crop.circle")
     
     static let appLogoImage: UIImage = .onboardP
+    
+    static let moreImage: UIImage? = UIImage(systemName: "ellipsis")
 }
