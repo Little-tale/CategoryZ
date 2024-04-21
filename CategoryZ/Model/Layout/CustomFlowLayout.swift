@@ -29,5 +29,15 @@ final class CustomFlowLayout {
         layout.scrollDirection = .horizontal
         return layout
     }
+    static var profilePostLayout: UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 100, height: 130)
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        layout.scrollDirection = .vertical
+        return layout
+    }
+    
 }
 

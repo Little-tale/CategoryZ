@@ -29,6 +29,7 @@
 		7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCA62BC590510055D423 /* NetWorkQuery.swift */; };
 		7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCAA2BC591070055D423 /* TargetType.swift */; };
 		7B5EF9F42BD4AFB400F022CB /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EF9F32BD4AFB400F022CB /* String+.swift */; };
+		7B5EF9F62BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */; };
 		7B838DDA2BCEC960000F2E27 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DD92BCEC960000F2E27 /* FirstView.swift */; };
 		7B838DDC2BCEC9B9000F2E27 /* LunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DDB2BCEC9B9000F2E27 /* LunchScreenViewController.swift */; };
 		7B838DDE2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DDD2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift */; };
@@ -134,6 +135,7 @@
 		7B11DCA62BC590510055D423 /* NetWorkQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkQuery.swift; sourceTree = "<group>"; };
 		7B11DCAA2BC591070055D423 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
 		7B5EF9F32BD4AFB400F022CB /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostCollectionViewCell.swift; sourceTree = "<group>"; };
 		7B838DD92BCEC960000F2E27 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		7B838DDB2BCEC9B9000F2E27 /* LunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunchScreenViewController.swift; sourceTree = "<group>"; };
 		7B838DDD2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewValidViewModel.swift; sourceTree = "<group>"; };
@@ -514,6 +516,7 @@
 				7BA0E0E52BCD7513002F0516 /* OnlyImageCollectionViewCell.swift */,
 				7B838DDF2BCEF2DD000F2E27 /* AddCollectionViewCell.swift */,
 				7B838E052BCFB98F000F2E27 /* SNSTableViewCell.swift */,
+				7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -897,6 +900,7 @@
 				7BA0E0E62BCD7513002F0516 /* OnlyImageCollectionViewCell.swift in Sources */,
 				7BCF4A3C2BC6873600BCE635 /* AccessTokkenAdapter.swift in Sources */,
 				7BA0E0E82BCD7593002F0516 /* PlaceholderTextView.swift in Sources */,
+				7B5EF9F62BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift in Sources */,
 				7B838DE02BCEF2DD000F2E27 /* AddCollectionViewCell.swift in Sources */,
 				7BCF4AA42BCBF68E00BCE635 /* LoginViewModel.swift in Sources */,
 				7BCF4A482BC6CEF800BCE635 /* BaseView.swift in Sources */,

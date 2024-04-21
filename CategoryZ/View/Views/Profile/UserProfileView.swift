@@ -14,14 +14,14 @@ final class UserProfileView: RxBaseView {
     let scrollView = UIScrollView(frame: .zero)
     
     let profileView = ProfileView()
-    let tableView = UITableView(frame: .zero).then {
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: CustomFlowLayout.profilePostLayout).then {
         $0.isScrollEnabled = true
     }
     
     override func configureHierarchy() {
         addSubview(scrollView)
         scrollView.addSubview(profileView)
-        scrollView.addSubview(tableView)
+        scrollView.addSubview(collectionView)
         profileView.backgroundColor = .pointGreen
     }
     override func configureLayout() {
@@ -35,7 +35,7 @@ final class UserProfileView: RxBaseView {
             make.height.equalTo(250)
         }
        
-        tableView.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
             make.top.equalTo(profileView.snp.bottom)
             make.horizontalEdges.equalTo(scrollView.frameLayoutGuide)
             make.height.equalTo(safeAreaLayoutGuide)

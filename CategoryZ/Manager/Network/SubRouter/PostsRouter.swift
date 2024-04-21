@@ -11,12 +11,12 @@ import Alamofire
 enum PostsRouter {
     case imageUpload
     case postWrite(query: PostsQeuryType)
-    case postRead(next: String? = nil, limit: String, productId: String)
+    case postRead(next: String? = nil, limit: String, productId: String? = nil)
     case postModify(query: PostsQeuryType, postID: String)
     case selectPostRead(postID: String)
     case postDelete(postID: String)
     /// 다른 유저가 작성한 포스터 혹은 자신의 포스터들
-    case userCasePostRead(userId: String,next: String? = nil, limit: String, productId: String)
+    case userCasePostRead(userId: String,next: String? = nil, limit: String, productId: String? = nil)
 }
 
 extension PostsRouter: TargetType {
@@ -86,10 +86,16 @@ extension PostsRouter: TargetType {
         case .imageUpload, .postWrite, .postModify, .selectPostRead, .postDelete:
             return nil
         case .postRead(let next, let limit, let product) , .userCasePostRead(_, let next, let limit, let product):
+            if let product {
+                return [
+                    URLQueryItem(name: "next", value: next),
+                    URLQueryItem(name: "limit", value: limit),
+                    URLQueryItem(name: "product_id", value: product)
+                ]
+            }
             return [
                 URLQueryItem(name: "next", value: next),
-                URLQueryItem(name: "limit", value: limit),
-                URLQueryItem(name: "product_id", value: product)
+                URLQueryItem(name: "limit", value: limit)
             ]
         }
     }

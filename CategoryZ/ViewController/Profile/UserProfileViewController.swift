@@ -65,6 +65,12 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             }
             .disposed(by: disPoseBag)
         
+//        output.postReadMainModel
+//            .map { $0.data }
+//            .distinctUntilChanged()
+//            .drive(homeView.tableView.rx.items(cellIdentifier: <#T##String#>, cellType: <#T##Cell.Type#>))
+//        
+        
         // 네트워크 에러
         output.networkError
             .drive(with: self) { owner, error in
