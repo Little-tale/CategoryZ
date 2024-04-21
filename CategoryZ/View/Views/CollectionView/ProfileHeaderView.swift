@@ -13,7 +13,14 @@ import RxCocoa
 
 final class ProfileHeaderView: UICollectionReusableView {
     
+    private
     let collectionView: UICollectionView
+    
+    private
+    let disPoseBag = DisposeBag()
+    
+    private
+    var selectedProduct = ProductID.dailyRoutine
     
     override init(frame: CGRect) {
         let layout = UICollectionViewFlowLayout()
@@ -40,8 +47,29 @@ final class ProfileHeaderView: UICollectionReusableView {
     private
     func bind(){
         
+        let behiber = BehaviorRelay(value: [
+            ProductID.dailyRoutine,
+            ProductID.fashion,
+            ProductID.pet
+        ])
+        
+        behiber
+        .bind(to: collectionView.rx.items(cellIdentifier: CategoryReusableCell.identi, cellType: CategoryReusableCell.self)) { [weak self] row, item ,cell in
+            cell.setSection(item)
+            cell.isSelected(self?.selectedProduct == item)
+        }
+        .disposed(by: disPoseBag)
+        
+        
+        collectionView.rx.modelSelected(ProductID.self)
+            .bind(with: self) { owner, producId in
+                print(producId)
+                owner.selectedProduct = producId
+                behiber.accept(behiber.value)
+            }
+            .disposed(by: disPoseBag)
+        
     }
-    
     
     private
      func configureHierarchy() {

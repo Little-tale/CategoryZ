@@ -11,11 +11,9 @@ import RxCocoa
 
 
 struct CustomSectionModel {
-    var header: ProductID
     var items: [SNSDataModel]
     
-    init(header: ProductID, items: [SNSDataModel]) {
-        self.header = header
+    init(items: [SNSDataModel]) {
         self.items = items
     }
 }
@@ -28,7 +26,7 @@ final class UserProfileViewModel: RxViewModelType {
     var userId: String? = UserIDStorage.shared.userID
     
     private
-    var realModel: CustomSectionModel = CustomSectionModel(header: .fashion, items: [])
+    var realModel: CustomSectionModel = CustomSectionModel( items: [])
     
     struct Input {
         let inputProfileType: BehaviorRelay<ProfileType>

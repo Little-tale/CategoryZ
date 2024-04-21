@@ -111,6 +111,7 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             return cell
             
         } configureSupplementaryView: { dataSource, view, kind, indexPath in
+            print("sadsa")
             guard kind == UICollectionView.elementKindSectionHeader else {
                 print("configureSupplementaryView ")
                 return .init()
@@ -121,6 +122,7 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
                 return .init()
             }
             print("configureSupplementaryView ㅖㅏ")
+    
             return header
         }
         
