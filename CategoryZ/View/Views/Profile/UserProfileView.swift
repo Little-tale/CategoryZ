@@ -14,6 +14,28 @@ final class UserProfileView: RxBaseView {
     let scrollView = UIScrollView(frame: .zero)
     
     let profileView = ProfileView()
+
+    let leftButton = UIButton().then {
+        $0.backgroundColor = JHColor.black
+        $0.tintColor = JHColor.white
+        $0.layer.cornerRadius = 6
+        $0.clipsToBounds = true
+    }
+    let rightButton = UIButton().then {
+        $0.backgroundColor = JHColor.black
+        $0.tintColor = JHColor.white
+        $0.layer.cornerRadius = 6
+        $0.clipsToBounds = true
+    }
+    
+    private
+    lazy var buttonStackView = UIStackView(arrangedSubviews: [leftButton, rightButton]).then {
+        $0.axis = .horizontal
+        $0.spacing = 8
+        $0.alignment = .center
+        $0.distribution = .fillEqually
+    }
+    
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
         $0.isScrollEnabled = true
         let layout = UICollectionViewFlowLayout()
@@ -31,9 +53,9 @@ final class UserProfileView: RxBaseView {
     
     override func configureHierarchy() {
         addSubview(scrollView)
+        scrollView.addSubview(buttonStackView)
         scrollView.addSubview(profileView)
         scrollView.addSubview(collectionView)
-        profileView.backgroundColor = .pointGreen
     }
     override func configureLayout() {
         scrollView.snp.makeConstraints { make in
@@ -43,14 +65,19 @@ final class UserProfileView: RxBaseView {
         profileView.snp.makeConstraints { make in
             make.top.equalTo(scrollView.contentLayoutGuide.snp.top)
             make.horizontalEdges.equalTo(scrollView.frameLayoutGuide)
-            make.height.equalTo(250)
+            make.height.equalTo(230)
         }
-       
-        collectionView.snp.makeConstraints { make in
+        
+        buttonStackView.snp.makeConstraints { make in
             make.top.equalTo(profileView.snp.bottom)
+            make.horizontalEdges.equalTo(scrollView.frameLayoutGuide).inset(10)
+            make.height.equalTo(34)
+        }
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(buttonStackView.snp.bottom).offset(20)
             make.horizontalEdges.equalTo(scrollView.frameLayoutGuide)
             make.height.equalTo(safeAreaLayoutGuide)
-            make.bottom.equalTo(scrollView.contentLayoutGuide.snp.bottom)  
+            make.bottom.equalToSuperview()
         }
     }
     override func designView() {
@@ -64,6 +91,5 @@ final class UserProfileView: RxBaseView {
         collectionView.register(ProfilePostCollectionViewCell.self, forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identi)
         
         collectionView.register(ProfileHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProfileHeaderView.identi)
-        
     }
 }

@@ -83,13 +83,15 @@ final class UserProfileViewModel: RxViewModelType {
                 userId != nil
             }
             .flatMapLatest { request in
-                NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.userCasePostRead(userId: request.0!, next: nextCursor, limit: limit, productId: request.1)))
+                print("요청시 \(request)")
+                return NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.userCasePostRead(userId: request.0!, next: nextCursor, limit: limit, productId: request.1)))
             }
             .bind(with: self) {owner, result in
                 switch result {
                 case .success(let model):
                     owner.realModel.items = model.data
-                    print(model.data)
+                    print("통신 결과",model.data)
+                    print("통신 결과 : \(model)")
                     postReadMainModel.accept([owner.realModel])
                 case .failure(let fail):
                     networkError.onNext(fail)

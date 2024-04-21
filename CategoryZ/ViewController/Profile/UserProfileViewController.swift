@@ -43,13 +43,13 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
         
         let beProfileType = BehaviorRelay(value: profileType)
         // 프로덕트 아이디
-        let beProductId = BehaviorRelay(value: ProductID.fashion)
+        let beProductId = BehaviorRelay(value: ProductID.dailyRoutine)
         
         let input = UserProfileViewModel.Input(
             inputProfileType: beProfileType,
             inputProducID: beProductId
         )
-    
+        
         let output = viewModel.transform(input)
         
         output.outputProfile
@@ -78,6 +78,24 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             }
             .disposed(by: disPoseBag)
         
+        // 버튼 분기점
+        beProfileType
+            .bind(with: self) { owner, type in
+                var leftTitle = ""
+                var rightTitle = ""
+                switch type {
+                case .me:
+                    leftTitle = "프로필 수정"
+                    rightTitle = "좋아요한 게시글"
+                case .other:
+                    leftTitle = "팔로잉"
+                    rightTitle = "팔로우"
+                }
+                owner.homeView.leftButton.setTitle(leftTitle, for: .normal)
+                owner.homeView.rightButton.setTitle(rightTitle, for: .normal)
+            }
+            .disposed(by: disPoseBag)
+        
         // 네트워크 에러
         output.networkError
             .drive(with: self) { owner, error in
@@ -86,7 +104,6 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             .disposed(by: disPoseBag)
         
     
-        
         let dataSource = dataSourceRx { dataSource, collectionView, indexPath, item in
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfilePostCollectionViewCell.identi, for: indexPath) as? ProfilePostCollectionViewCell else {
                 print("ProfilePostCollectionViewCell ")
@@ -103,6 +120,8 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
                 ),
             ])
             cell.postDateLabel.text = DateManager.shared.differenceDateString(item.createdAt)
+            
+    
             
             cell.layer.cornerRadius = 8
             cell.clipsToBounds = true
@@ -166,16 +185,18 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             .observe(on: MainScheduler.asyncInstance) // 회고
             .withUnretained(self)
             .bind { owner, offsetY in
-                if offsetY <= 30 {
-                    owner.homeView.scrollView.isScrollEnabled = true
-                    owner.homeView.collectionView.isScrollEnabled = true
-                } else if offsetY <= 0 {
+ 
+                if offsetY <= -15 {
                     owner.homeView.scrollView.isScrollEnabled = true
                     owner.homeView.collectionView.isScrollEnabled = false
                 }
             }
             .disposed(by: disPoseBag)
-        
+    }
+    
+    
+    override func navigationSetting() {
+        navigationItem.title = "프로필"
     }
 }
 
