@@ -121,8 +121,6 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             ])
             cell.postDateLabel.text = DateManager.shared.differenceDateString(item.createdAt)
             
-    
-            
             cell.layer.cornerRadius = 8
             cell.clipsToBounds = true
             print("ProfilePostCollectionViewCell ㅖㅏ")
@@ -164,17 +162,15 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             .flatMapLatest { _ in
                 return self.homeView.scrollView.rx.contentOffset.asDriver()
             }
+            .map { $0.y }
             .drive(with: self) { owner, point in
-                let ofY = point.y
+                let ofY = point
                 let height = owner.homeView.scrollView.contentSize.height
                 let frameHeight = owner.homeView.scrollView.frame.size.height
                
                 if ofY >= (height - frameHeight) {
                     owner.homeView.scrollView.isScrollEnabled = false
                     owner.homeView.collectionView.isScrollEnabled = true
-                } else {
-                    owner.homeView.scrollView.isScrollEnabled = true
-                    owner.homeView.collectionView.isScrollEnabled = false
                 }
             }
             .disposed(by: disPoseBag)
@@ -185,8 +181,8 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             .observe(on: MainScheduler.asyncInstance) // 회고
             .withUnretained(self)
             .bind { owner, offsetY in
- 
-                if offsetY <= -15 {
+
+                if offsetY <= 0 {
                     owner.homeView.scrollView.isScrollEnabled = true
                     owner.homeView.collectionView.isScrollEnabled = false
                 }
