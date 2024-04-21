@@ -85,14 +85,6 @@ final class MorePageViewController: RxBaseViewController {
                 owner.profileView.followingCountLabel.text = model.following.count.asFormatAbbrevation()
                 
                 owner.profileView.userNameLabel.text = model.nick
-                
-                if userId == model.userID {
-                    leftTitle = "프로필 수정"
-                    
-                } else {
-                    leftTitle = model.followers.contains(where: { $0.userID == userId }) ? "팔로잉" : "팔로우"
-                }
-                owner.leftButton.setTitle(leftTitle, for: .normal)
                
             }
             .disposed(by: disPoseBag)
@@ -104,6 +96,21 @@ final class MorePageViewController: RxBaseViewController {
                 owner.errorCatch(error)
             }
             .disposed(by: disPoseBag)
+        
+        // 팔로잉 팔로우 또는 프로필 수정 반영
+        output.currnetFollowState
+            .drive(with: self) { owner, type in
+                switch type {
+                case .follow:
+                    owner.leftButton.setTitle("팔로우", for: .normal)
+                case .folling:
+                    owner.leftButton.setTitle("팔로잉", for: .normal)
+                case .modiFyProfile:
+                    owner.leftButton.setTitle("프로필 수정", for: .normal)
+                }
+            }
+            .disposed(by: disPoseBag)
+        
         
     }
     

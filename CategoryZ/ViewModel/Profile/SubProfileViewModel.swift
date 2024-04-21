@@ -9,12 +9,16 @@ import Foundation
 import RxSwift
 import RxCocoa
 
+enum FollowORProfile {
+    case follow
+    case folling
+    case modiFyProfile
+}
 
 final class SubProfileViewModel: RxViewModelType {
      
     var disposeBag: DisposeBag = .init()
    
-    
     struct Input {
         let beCreator: BehaviorRelay<Creator>
         let currentUserId : String
@@ -25,6 +29,7 @@ final class SubProfileViewModel: RxViewModelType {
     struct Output {
         let networkError : Driver<NetworkError>
         let profileModel : Driver<ProfileModel>
+        let currnetFollowState : Driver<FollowORProfile>
     }
     
     func transform(_ input: Input) -> Output {
@@ -32,13 +37,14 @@ final class SubProfileViewModel: RxViewModelType {
         let beProfile = PublishSubject<ProfileModel> ()
         let networkError = PublishSubject<NetworkError> ()
         let profileType = BehaviorSubject<ProfileType> (value: .me)
-        let currentFollowBool = BehaviorRelay<Bool> (value: false)
+        let leftButtonState = BehaviorRelay<FollowORProfile> (value: .follow)
         
         input.beCreator
             .map { $0.userID }
             .map { userId in
                 if userId == input.currentUserId {
                     profileType.onNext(ProfileType.me)
+                    leftButtonState.accept(.modiFyProfile)
                     return ProfileType.me
                 } else {
                     profileType.onNext(ProfileType.other(otherUserId: userId))
@@ -63,11 +69,16 @@ final class SubProfileViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
-        // 현 좋아요 상태를 알아야함
+        // 현 팔로잉 상태를 알아야함
         beProfile
             .bind { profileModel in
-                let bool = profileModel.followers.filter { $0.userID == input.currentUserId }
-                currentFollowBool.accept(!bool.isEmpty)
+                if profileModel.userID == input.currentUserId {
+                    leftButtonState.accept(.modiFyProfile)
+                } else if profileModel.followers.contains(where: { $0.userID == input.currentUserId}) {
+                    leftButtonState.accept(.folling)
+                } else {
+                    leftButtonState.accept(.follow)
+                }
             }
             .disposed(by: disposeBag)
         
@@ -86,7 +97,8 @@ final class SubProfileViewModel: RxViewModelType {
             }
             .debug()
             .flatMapLatest { userId in
-                if currentFollowBool.value {
+                
+                if leftButtonState.value  == .folling{
                     return NetworkManager.fetchNetwork(model: FollowModel.self, router: .follow(.unFollow(userId: userId)))
                 } else {
                     return NetworkManager.fetchNetwork(model: FollowModel.self, router: .follow(.follow(userId: userId)))
@@ -96,7 +108,11 @@ final class SubProfileViewModel: RxViewModelType {
                 switch result {
                 case .success(let followModel):
                     print("현재 :",followModel.followingStatus)
-                    currentFollowBool.accept(followModel.followingStatus)
+                    if followModel.followingStatus {
+                        leftButtonState.accept(.folling)
+                    } else {
+                        leftButtonState.accept(.follow)
+                    }
                 case .failure(let error):
                     networkError.onNext(error)
                 }
@@ -106,7 +122,8 @@ final class SubProfileViewModel: RxViewModelType {
         
         return Output(
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
-            profileModel: beProfile.asDriver(onErrorDriveWith: .never())
+            profileModel: beProfile.asDriver(onErrorDriveWith: .never()),
+            currnetFollowState: leftButtonState.asDriver()
         )
     }
 }
