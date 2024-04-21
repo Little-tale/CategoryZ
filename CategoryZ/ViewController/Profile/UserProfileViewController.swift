@@ -78,8 +78,6 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             }
             .disposed(by: disPoseBag)
         
-
-        
         // 네트워크 에러
         output.networkError
             .drive(with: self) { owner, error in
@@ -141,6 +139,39 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
                 beProductId.accept(productId)
             }
             .disposed(by: disPoseBag)
+        
+        /// 스크롤뷰 컨트롤
+        output.postReadMainModel
+            .flatMapLatest { _ in
+                return self.homeView.scrollView.rx.contentOffset.asDriver()
+            }
+            .drive(with: self) { owner, point in
+                let ofY = point.y
+                let height = owner.homeView.scrollView.contentSize.height
+                let frameHeight = owner.homeView.scrollView.frame.size.height
+                print(height, frameHeight)
+                if ofY >= (height - frameHeight) {
+                    owner.homeView.scrollView.isScrollEnabled = false
+                    owner.homeView.collectionView.isScrollEnabled = true
+                } else {
+                    owner.homeView.scrollView.isScrollEnabled = true
+                    owner.homeView.collectionView.isScrollEnabled = false
+                }
+            }
+            .disposed(by: disPoseBag)
+        
+        homeView.collectionView.rx.contentOffset
+            .map { $0.y }
+            .distinctUntilChanged()
+            .withUnretained(self)
+            .bind { owner, offsetY in
+                if offsetY <= -10 {
+                    owner.homeView.scrollView.isScrollEnabled = true
+                    owner.homeView.collectionView.isScrollEnabled = true
+                }
+            }
+            .disposed(by: disPoseBag)
+        
     }
 }
 
