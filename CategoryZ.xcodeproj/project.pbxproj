@@ -43,8 +43,9 @@
 		7B838E0B2BCFCBC5000F2E27 /* JHPont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E0A2BCFCBC5000F2E27 /* JHPont.swift */; };
 		7B838E0E2BCFCBEA000F2E27 /* JHImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E0D2BCFCBEA000F2E27 /* JHImage.swift */; };
 		7B838E112BCFD97C000F2E27 /* ScrollImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E102BCFD97C000F2E27 /* ScrollImageView.swift */; };
-		7B87F0F82BD3FE2F0006178F /* OtherUserProfileViewControlelr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0F72BD3FE2F0006178F /* OtherUserProfileViewControlelr.swift */; };
+		7B87F0F82BD3FE2F0006178F /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */; };
 		7B87F0FC2BD3FE850006178F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0FB2BD3FE850006178F /* ProfileView.swift */; };
+		7B8CAEB42BD480D600347FAC /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */; };
 		7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */; };
 		7BA0E0D32BCD72C3002F0516 /* PostRegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */; };
 		7BA0E0D52BCD730C002F0516 /* ProductID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D42BCD730C002F0516 /* ProductID.swift */; };
@@ -140,8 +141,9 @@
 		7B838E0A2BCFCBC5000F2E27 /* JHPont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHPont.swift; sourceTree = "<group>"; };
 		7B838E0D2BCFCBEA000F2E27 /* JHImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHImage.swift; sourceTree = "<group>"; };
 		7B838E102BCFD97C000F2E27 /* ScrollImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollImageView.swift; sourceTree = "<group>"; };
-		7B87F0F72BD3FE2F0006178F /* OtherUserProfileViewControlelr.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherUserProfileViewControlelr.swift; sourceTree = "<group>"; };
+		7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		7B87F0FB2BD3FE850006178F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCameraImageService.swift; sourceTree = "<group>"; };
 		7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRegViewController.swift; sourceTree = "<group>"; };
 		7BA0E0D42BCD730C002F0516 /* ProductID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductID.swift; sourceTree = "<group>"; };
@@ -452,7 +454,7 @@
 		7B87F0F92BD3FE410006178F /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				7B87F0F72BD3FE2F0006178F /* OtherUserProfileViewControlelr.swift */,
+				7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -460,6 +462,7 @@
 		7B87F0FA2BD3FE700006178F /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */,
 				7B87F0FB2BD3FE850006178F /* ProfileView.swift */,
 			);
 			path = Profile;
@@ -817,6 +820,7 @@
 				7BCF4A932BCB80F100BCE635 /* LikeRouter.swift in Sources */,
 				7BCF4A4C2BC6D05C00BCE635 /* RxBaseView.swift in Sources */,
 				7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */,
+				7B8CAEB42BD480D600347FAC /* UserProfileViewController.swift in Sources */,
 				7BCF4A6F2BC7D96400BCE635 /* UserInfoRegView.swift in Sources */,
 				7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */,
 				7BA0E0D82BCD736C002F0516 /* PostRegView.swift in Sources */,
@@ -827,7 +831,7 @@
 				7B838E042BCFAEDF000F2E27 /* SNSHeaderWithCollectionVIew.swift in Sources */,
 				7BCF4A542BC6E0ED00BCE635 /* GetStartView.swift in Sources */,
 				7BCF4A872BC947DE00BCE635 /* MulipartTargetType.swift in Sources */,
-				7B87F0F82BD3FE2F0006178F /* OtherUserProfileViewControlelr.swift in Sources */,
+				7B87F0F82BD3FE2F0006178F /* UserProfileView.swift in Sources */,
 				7BC51B462BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift in Sources */,
 				7B838E062BCFB98F000F2E27 /* SNSTableViewCell.swift in Sources */,
 				7BCF4AA12BCBEB3300BCE635 /* LoginViewController.swift in Sources */,

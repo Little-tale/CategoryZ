@@ -39,25 +39,25 @@ final class ProfileView: BaseView {
     }
     
     
-    lazy var followStackView = UIStackView(arrangedSubviews: [followingCountLabel, followingLabel]).then {
+    private lazy var followStackView = UIStackView(arrangedSubviews: [followingCountLabel, followingLabel]).then {
         $0.axis = .vertical
         $0.spacing = 8
         $0.alignment = .center
     }
     
-    lazy var follwingStackView = UIStackView(arrangedSubviews: [followerCountLabel, followerLabel]).then {
+    private lazy var follwingStackView = UIStackView(arrangedSubviews: [followerCountLabel, followerLabel]).then {
         $0.axis = .vertical
         $0.spacing = 8
         $0.alignment = .center
     }
     
-    lazy var postsCountStackView = UIStackView(arrangedSubviews: [postsCountLabel, postsLabel]).then {
+    private lazy var postsCountStackView = UIStackView(arrangedSubviews: [postsCountLabel, postsLabel]).then {
         $0.axis = .vertical
         $0.spacing = 8
         $0.alignment = .center
     }
     
-    lazy var horizonStackView = UIStackView(arrangedSubviews: [followStackView, follwingStackView, postsCountStackView]).then {
+    private lazy var horizonStackView = UIStackView(arrangedSubviews: [followStackView, follwingStackView, postsCountStackView]).then {
         $0.axis = .horizontal
         $0.spacing = 15
         $0.distribution = .fillEqually
