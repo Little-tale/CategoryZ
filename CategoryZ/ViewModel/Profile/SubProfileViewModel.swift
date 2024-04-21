@@ -23,13 +23,13 @@ final class SubProfileViewModel: RxViewModelType {
         let beCreator: BehaviorRelay<Creator>
         let currentUserId : String
         let leftButtonTap: ControlEvent<Void>
-        let rightButtonTap: ControlEvent<Void>
     }
     
     struct Output {
         let networkError : Driver<NetworkError>
         let profileModel : Driver<ProfileModel>
         let currnetFollowState : Driver<FollowORProfile>
+        let currentFollowersCount : Driver<Int>
     }
     
     func transform(_ input: Input) -> Output {
@@ -38,6 +38,8 @@ final class SubProfileViewModel: RxViewModelType {
         let networkError = PublishSubject<NetworkError> ()
         let profileType = BehaviorSubject<ProfileType> (value: .me)
         let leftButtonState = BehaviorRelay<FollowORProfile> (value: .follow)
+        let currentFollowersCount = BehaviorRelay<Int> (value: 0)
+        
         
         input.beCreator
             .map { $0.userID }
@@ -62,6 +64,8 @@ final class SubProfileViewModel: RxViewModelType {
             .bind { result in
                 switch result {
                 case .success(let profileModel):
+                    currentFollowersCount.accept(profileModel.followers.count)
+                    
                     beProfile.onNext(profileModel)
                 case .failure(let fail):
                     networkError.onNext(fail)
@@ -97,7 +101,6 @@ final class SubProfileViewModel: RxViewModelType {
             }
             .debug()
             .flatMapLatest { userId in
-                
                 if leftButtonState.value  == .folling{
                     return NetworkManager.fetchNetwork(model: FollowModel.self, router: .follow(.unFollow(userId: userId)))
                 } else {
@@ -110,8 +113,12 @@ final class SubProfileViewModel: RxViewModelType {
                     print("현재 :",followModel.followingStatus)
                     if followModel.followingStatus {
                         leftButtonState.accept(.folling)
+                        let current = currentFollowersCount.value + 1
+                        currentFollowersCount.accept(current)
                     } else {
                         leftButtonState.accept(.follow)
+                        let current = currentFollowersCount.value - 1
+                        currentFollowersCount.accept(current)
                     }
                 case .failure(let error):
                     networkError.onNext(error)
@@ -123,7 +130,8 @@ final class SubProfileViewModel: RxViewModelType {
         return Output(
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
             profileModel: beProfile.asDriver(onErrorDriveWith: .never()),
-            currnetFollowState: leftButtonState.asDriver()
+            currnetFollowState: leftButtonState.asDriver(),
+            currentFollowersCount: currentFollowersCount.asDriver()
         )
     }
 }

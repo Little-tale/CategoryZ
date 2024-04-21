@@ -143,6 +143,19 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 owner.present(modalViewCon, animated: true)
             }
             .disposed(by: disPoseBag)
+    
+        // 프레젠트 뷰컨에서 프로필 이동 신호를 받았다면
+        NotificationCenter.default.rx.notification(.moveToProfile, object: nil)
+            .bind(with: self) { owner, notification in
+                guard let profileType = notification.userInfo? ["profileUserId"] as? ProfileType else {
+                    print("profileType 변환 실패")
+                    return
+                }
+                let vc = UserProfileViewController()
+                vc.profileType = profileType
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
     }
     
     override func navigationSetting() {

@@ -70,22 +70,21 @@ final class MorePageViewController: RxBaseViewController {
         let input = SubProfileViewModel.Input(
             beCreator: beModel,
             currentUserId: userId,
-            leftButtonTap: leftButtonTap,
-            rightButtonTap: rightButtonTap
+            leftButtonTap: leftButtonTap
         )
         
         let output = viewModel.transform(input)
         
         output.profileModel
             .drive(with: self) { owner, model in
-                var leftTitle = ""
-                var rightTitle = ""
+        
                 owner.profileView.followerCountLabel.text = model.followers.count.asFormatAbbrevation()
                 
                 owner.profileView.followingCountLabel.text = model.following.count.asFormatAbbrevation()
                 
                 owner.profileView.userNameLabel.text = model.nick
                
+                owner.profileView.postsCountLabel.text = model.posts.count.asFormatAbbrevation()
             }
             .disposed(by: disPoseBag)
         
@@ -98,6 +97,8 @@ final class MorePageViewController: RxBaseViewController {
             .disposed(by: disPoseBag)
         
         // 팔로잉 팔로우 또는 프로필 수정 반영
+        // 만약 팔로잉 팔로우 중 UI반영을 한후 서버의 데이터를 바라보는게 아닌
+        // 순수 UI 착시 효과를 주어야 할것같음
         output.currnetFollowState
             .drive(with: self) { owner, type in
                 switch type {
@@ -111,7 +112,30 @@ final class MorePageViewController: RxBaseViewController {
             }
             .disposed(by: disPoseBag)
         
+        output.currentFollowersCount
+            .drive(with: self) { owner, value in
+                owner.profileView.followerCountLabel.text = value.asFormatAbbrevation()
+            }
+            .disposed(by: disPoseBag)
+         
+        // 프로필 이동 클릭시 UX 상 전뷰컨에 알려서 거기서 이동시켜야 될것 같음
+        rightButtonTap
+            .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
+            .withLatestFrom(output.profileModel)
+            .bind(with: self) { owner, model in
+                if model.userID == userId {
+                    owner.dismiss(animated: true) {
+                        NotificationCenter.default.post(name: .moveToProfile, object: nil, userInfo: ["profileUserId": ProfileType.me])
+                    }
+                } else {
+                    owner.dismiss(animated: true) {
+                        NotificationCenter.default.post(name: .moveToProfile, object: nil, userInfo: ["profileUserId": ProfileType.other(otherUserId: model.userID)])
+                    }
+                }
+            }
+            .disposed(by: disPoseBag)
         
+       
     }
     
     override func configureHierarchy() {
