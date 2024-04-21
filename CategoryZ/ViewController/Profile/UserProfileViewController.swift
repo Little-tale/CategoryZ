@@ -65,11 +65,29 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             }
             .disposed(by: disPoseBag)
         
-//        output.postReadMainModel
-//            .map { $0.data }
-//            .distinctUntilChanged()
-//            .drive(homeView.tableView.rx.items(cellIdentifier: <#T##String#>, cellType: <#T##Cell.Type#>))
-//        
+        output.postReadMainModel
+            .distinctUntilChanged()
+            .drive(homeView.collectionView.rx.items(
+                cellIdentifier: ProfilePostCollectionViewCell.identi,
+                cellType: ProfilePostCollectionViewCell.self
+            )) {row, item, cell in
+                cell.postContentLabel.text = item.content
+                cell.postImageView.kf.setImage(
+                    with: item.files.first?.asStringURL,placeholder: JHImage.defaultImage,
+                    options: [
+                    .transition(.fade(1)),
+                    .cacheOriginalImage,
+                    .requestModifier(
+                        KingFisherNet()
+                    ),
+                ])
+                cell.postDateLabel.text = DateManager.shared.differenceDateString(item.createdAt)
+                
+                cell.layer.cornerRadius = 8
+                cell.clipsToBounds = true
+            }
+            .disposed(by: disPoseBag)
+        
         
         // 네트워크 에러
         output.networkError

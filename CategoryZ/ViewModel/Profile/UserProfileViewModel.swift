@@ -14,6 +14,12 @@ final class UserProfileViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
     
+    private
+    var userId: String? = UserIDStorage.shared.userID
+    
+    private
+    var realModel: [SNSDataModel] = []
+    
     struct Input {
         let inputProfileType: BehaviorRelay<ProfileType>
     }
@@ -21,7 +27,7 @@ final class UserProfileViewModel: RxViewModelType {
     struct Output {
         let outputProfile : Driver<ProfileModel>
         let networkError : Driver<NetworkError>
-        let postReadMainModel: Driver<PostReadMainModel>
+        let postReadMainModel: Driver<[SNSDataModel]>
     }
     
     func transform(_ input: Input) -> Output {
@@ -30,13 +36,12 @@ final class UserProfileViewModel: RxViewModelType {
         
         let networkError = PublishSubject<NetworkError> ()
         let outputProfile = PublishSubject<ProfileModel> ()
-        let postReadMainModel = PublishSubject<PostReadMainModel> ()
+        let postReadMainModel = PublishSubject<[SNSDataModel]> ()
         
-        let shareUserId = input.inputProfileType
-            .share()
+      
         
         /// 프로필 조회 API
-        shareUserId.flatMapLatest { profileType in
+        input.inputProfileType.flatMapLatest { profileType in
             switch profileType {
             case .me:
                 NetworkManager.fetchNetwork(model: ProfileModel.self, router: .profile(.profileMeRead))
@@ -54,27 +59,30 @@ final class UserProfileViewModel: RxViewModelType {
         }
         .disposed(by: disposeBag)
         
-        shareUserId
-            .flatMapLatest { profileType in
-                switch profileType {
+        input.inputProfileType
+            .withUnretained(self)
+            .map { owner, profileId in
+                switch profileId {
                 case .me:
-                    NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.postRead(next: nextCursor, limit: limit, productId: nil)))
+                    return owner.userId
                 case .other(let otherUserId):
-                    NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.postRead(next: nextCursor, limit: limit, productId: nil)))
+                    return otherUserId
                 }
             }
-            .bind { result in
+            .filter { $0 != nil }
+            .flatMapLatest { userId in
+                NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.userCasePostRead(userId: userId!, next: nextCursor, limit: limit, productId: nil)))
+            }
+            .bind(with: self) {owner, result in
                 switch result {
-                case .success(let datas):
-                    postReadMainModel.onNext(datas)
+                case .success(let model):
+                    owner.realModel = model.data
+                    postReadMainModel.onNext(owner.realModel)
                 case .failure(let fail):
                     networkError.onNext(fail)
                 }
             }
             .disposed(by: disposeBag)
-        
-        
-        
         
         return .init(
             outputProfile: outputProfile.asDriver(onErrorDriveWith: .never()),

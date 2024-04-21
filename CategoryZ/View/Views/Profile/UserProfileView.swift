@@ -42,4 +42,8 @@ final class UserProfileView: RxBaseView {
             make.bottom.equalTo(scrollView.contentLayoutGuide.snp.bottom)  
         }
     }
+    override func register() {
+
+        collectionView.register(ProfilePostCollectionViewCell.self, forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identi)
+    }
 }

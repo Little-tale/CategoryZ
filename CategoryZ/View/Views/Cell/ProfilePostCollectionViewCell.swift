@@ -11,20 +11,26 @@ import SnapKit
 
 final class ProfilePostCollectionViewCell: BaseCollectionViewCell {
     
-    let postImageView = UIImageView()
-    
+    let postImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+    }
     
     private let shadowView = UIView().then {
-        $0.backgroundColor = .clear
-        $0.layer.shadowColor = JHColor.point.cgColor
-        $0.layer.shadowOpacity = 0.2
-        $0.layer.shadowOffset = CGSize(width: 0, height: 2)
-        $0.layer.shadowRadius = 4
+        $0.backgroundColor = JHColor.black.withAlphaComponent(0.5)
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 4
     }
 
-    let postContentLabel = UILabel()
-    let postDateLabel = UILabel()
-    
+    let postContentLabel = UILabel().then {
+        $0.textColor = JHColor.white
+        $0.font = JHFont.UIKit.re14
+        $0.numberOfLines = 0
+    }
+    let postDateLabel = UILabel().then {
+        $0.textColor = JHColor.white
+        $0.font = JHFont.UIKit.li11
+        $0.numberOfLines = 1
+    }
     
     override func configureHierarchy() {
         contentView.addSubview(postImageView)
@@ -40,16 +46,19 @@ final class ProfilePostCollectionViewCell: BaseCollectionViewCell {
         }
         shadowView.snp.makeConstraints { make in
             make.bottom.horizontalEdges.equalTo(postImageView)
-            make.height.equalTo(postImageView.snp.verticalEdges).dividedBy(2)
+            make.height.equalTo(postImageView).dividedBy(2.7)
         }
+        
         postContentLabel.snp.makeConstraints { make in
-            make.horizontalEdges.top.equalTo(shadowView).inset(10)
-            make.bottom.equalTo(postContentLabel.snp.top)
+            make.bottom.equalTo(postDateLabel.snp.top).inset( 2 )
+            make.top.equalTo(shadowView).inset( 4 )
+            make.horizontalEdges.equalTo(shadowView).inset(8)
         }
         postDateLabel.snp.makeConstraints { make in
             make.trailing.equalTo(postContentLabel)
+            make.height.equalTo(24)
             make.bottom.equalToSuperview()
         }
     }
-    
 }
+
