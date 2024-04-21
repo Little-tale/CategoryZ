@@ -163,9 +163,10 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
         homeView.collectionView.rx.contentOffset
             .map { $0.y }
             .distinctUntilChanged()
+            .observe(on: MainScheduler.asyncInstance) // 회고
             .withUnretained(self)
             .bind { owner, offsetY in
-                if offsetY <= -10 {
+                if offsetY <= 0 {
                     owner.homeView.scrollView.isScrollEnabled = true
                     owner.homeView.collectionView.isScrollEnabled = true
                 }
