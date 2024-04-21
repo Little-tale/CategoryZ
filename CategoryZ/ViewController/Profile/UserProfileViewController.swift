@@ -31,7 +31,6 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
         case headerItem
         case posterItem(SNSDataModel)
     }
-
     
     typealias dataSourceRx = RxCollectionViewSectionedReloadDataSource<CustomSectionModel>
     
@@ -41,7 +40,9 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let beProfileType = BehaviorRelay(value: profileType)
+        // 프로덕트 아이디
         let beProductId = BehaviorRelay(value: ProductID.fashion)
         
         let input = UserProfileViewModel.Input(
@@ -130,7 +131,16 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             .drive(homeView.collectionView.rx.items(dataSource: dataSource))
             .disposed(by: disPoseBag)
         
-        
+        /// 노티피 케이션 연결
+        NotificationCenter.default.rx.notification(.selectedProductId)
+            .map { notification in
+                return notification.userInfo?["productID"] as? ProductID
+            }
+            .compactMap { $0 }
+            .subscribe(with: self) { owner, productId in
+                beProductId.accept(productId)
+            }
+            .disposed(by: disPoseBag)
     }
 }
 

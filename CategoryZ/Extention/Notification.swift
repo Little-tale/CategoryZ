@@ -12,4 +12,5 @@ extension Notification.Name {
     
     static let cantRefresh = Notification.Name(rawValue: "cantRefresh")
     
+    static let selectedProductId = Notification.Name(rawValue: "selectedProductId")
 }

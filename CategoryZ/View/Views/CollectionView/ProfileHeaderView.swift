@@ -53,6 +53,8 @@ final class ProfileHeaderView: UICollectionReusableView {
             ProductID.pet
         ])
         
+        let selectedProduct = PublishRelay<ProductID> ()
+        
         behiber
         .bind(to: collectionView.rx.items(cellIdentifier: CategoryReusableCell.identi, cellType: CategoryReusableCell.self)) { [weak self] row, item ,cell in
             cell.setSection(item)
@@ -63,9 +65,16 @@ final class ProfileHeaderView: UICollectionReusableView {
         
         collectionView.rx.modelSelected(ProductID.self)
             .bind(with: self) { owner, producId in
-                print(producId)
+               
                 owner.selectedProduct = producId
                 behiber.accept(behiber.value)
+                selectedProduct.accept(producId)
+            }
+            .disposed(by: disPoseBag)
+        
+        selectedProduct
+            .bind(with: self) { owner, productId in
+                NotificationCenter.default.post(name: .selectedProductId, object: nil, userInfo: ["productID": productId])
             }
             .disposed(by: disPoseBag)
         
