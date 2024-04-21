@@ -45,6 +45,8 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
         // 프로덕트 아이디
         let beProductId = BehaviorRelay(value: ProductID.dailyRoutine)
         
+
+        
         let input = UserProfileViewModel.Input(
             inputProfileType: beProfileType,
             inputProducID: beProductId

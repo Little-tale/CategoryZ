@@ -366,11 +366,11 @@ extension NetworkError {
             
         case .followError(let statusCode,_):
             return statusCode
-            
+
+        //
         default :
             return 9999 // 9999일땐 URL 문제 혹은 해당 API 는 문제없음 모델 문제
         }
-        
     }
     
 }

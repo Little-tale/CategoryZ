@@ -226,7 +226,7 @@ struct ProfileModel: Decodable {
     let email: String
     let nick: String
     let phoneNum: String
-    let followers, following: [String]
+    let followers, following: [Creator]
     let profileImage: String
     let posts: [String]
 
@@ -239,15 +239,18 @@ struct ProfileModel: Decodable {
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.userID = try container.decode(String.self, forKey: .userID)
-        self.email = try container.decode(String.self, forKey: .email)
+        self.email = try container.decodeIfPresent(String.self, forKey: .email) ?? ""
         self.nick = try container.decode(String.self, forKey: .nick)
         self.profileImage = try container.decodeIfPresent(String.self, forKey: .profileImage) ?? ""
-        self.followers = try container.decode([String].self, forKey: .followers)
-        self.following = try container.decode([String].self, forKey: .following)
+        self.followers = try container.decode([Creator].self, forKey: .followers)
+        self.following = try container.decode([Creator].self, forKey: .following)
         self.posts = try container.decode([String].self, forKey: .posts)
         self.phoneNum = try container.decodeIfPresent(String.self, forKey: .phoneNum) ?? ""
     }
 }
+
+
+
 
 struct ProfileModifyIn {
     var nick: String?

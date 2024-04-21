@@ -131,12 +131,18 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                     print("모델 변환 실패")
                     return
                 }
-                
+                moreButtonTap.accept(dataModel)
             }
             .disposed(by: disPoseBag)
-        
-        
-       
+    
+        moreButtonTap
+            .bind(with: self) { owner, model in
+                let modalViewCon = MorePageViewController()
+                modalViewCon.setModel(model.creator)
+                modalViewCon.modalPresentationStyle = .pageSheet
+                owner.present(modalViewCon, animated: true)
+            }
+            .disposed(by: disPoseBag)
     }
     
     override func navigationSetting() {

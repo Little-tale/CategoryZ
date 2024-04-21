@@ -117,6 +117,8 @@
 		7BCF4AA12BCBEB3300BCE635 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4AA02BCBEB3300BCE635 /* LoginViewController.swift */; };
 		7BCF4AA42BCBF68E00BCE635 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4AA32BCBF68E00BCE635 /* LoginViewModel.swift */; };
 		7BCF4AA62BCBFA6D00BCE635 /* UserIDStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4AA52BCBFA6D00BCE635 /* UserIDStorage.swift */; };
+		7BD1D8C12BD53BBD00B5521F /* MorePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8C02BD53BBD00B5521F /* MorePageViewController.swift */; };
+		7BD1D8C32BD5428B00B5521F /* SubProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8C22BD5428B00B5521F /* SubProfileViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -218,6 +220,8 @@
 		7BCF4AA02BCBEB3300BCE635 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		7BCF4AA32BCBF68E00BCE635 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		7BCF4AA52BCBFA6D00BCE635 /* UserIDStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIDStorage.swift; sourceTree = "<group>"; };
+		7BD1D8C02BD53BBD00B5521F /* MorePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorePageViewController.swift; sourceTree = "<group>"; };
+		7BD1D8C22BD5428B00B5521F /* SubProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubProfileViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				7B0BB2F62BD4A24200770A04 /* UserProfileViewModel.swift */,
+				7BD1D8C22BD5428B00B5521F /* SubProfileViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -432,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				7B838DFB2BCFAE69000F2E27 /* PhotoSNSViewController.swift */,
+				7BD1D8C02BD53BBD00B5521F /* MorePageViewController.swift */,
 			);
 			path = PhotoSNS;
 			sourceTree = "<group>";
@@ -901,6 +907,7 @@
 				7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */,
 				7B838DDE2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift in Sources */,
 				7B838E0B2BCFCBC5000F2E27 /* JHPont.swift in Sources */,
+				7BD1D8C12BD53BBD00B5521F /* MorePageViewController.swift in Sources */,
 				7BA0E0E62BCD7513002F0516 /* OnlyImageCollectionViewCell.swift in Sources */,
 				7BCF4A3C2BC6873600BCE635 /* AccessTokkenAdapter.swift in Sources */,
 				7BA0E0E82BCD7593002F0516 /* PlaceholderTextView.swift in Sources */,
@@ -915,6 +922,7 @@
 				7B11DCA52BC5902A0055D423 /* authenticationRouter.swift in Sources */,
 				7BCF4A7D2BC922F700BCE635 /* PathRouter.swift in Sources */,
 				7BCF4A952BCBA27F00BCE635 /* FollowRouter.swift in Sources */,
+				7BD1D8C32BD5428B00B5521F /* SubProfileViewModel.swift in Sources */,
 				7BC51B4F2BD0A22400E5BF6C /* KingFisherRequset.swift in Sources */,
 				7BCF4A632BC6E87600BCE635 /* ExUIWindow.swift in Sources */,
 				7B5EF9F42BD4AFB400F022CB /* String+.swift in Sources */,
