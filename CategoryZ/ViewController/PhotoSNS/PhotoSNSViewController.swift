@@ -136,7 +136,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     
 }
 
-extension SNSPhotoViewController: NetworkErrorCatchProtocol {
+extension UIViewController: NetworkErrorCatchProtocol {
     
     func errorCatch(_ error: NetworkError) {
         showAlert(error: error) { [unowned self] _ in

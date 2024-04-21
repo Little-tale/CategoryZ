@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B0BB2F72BD4A24200770A04 /* UserProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0BB2F62BD4A24200770A04 /* UserProfileViewModel.swift */; };
+		7B0BB2F92BD4ACC800770A04 /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0BB2F82BD4ACC800770A04 /* Int+.swift */; };
 		7B11DC682BC58AD40055D423 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DC672BC58AD40055D423 /* AppDelegate.swift */; };
 		7B11DC6A2BC58AD40055D423 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DC692BC58AD40055D423 /* SceneDelegate.swift */; };
 		7B11DC712BC58AD60055D423 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B11DC702BC58AD60055D423 /* Assets.xcassets */; };
@@ -26,6 +28,7 @@
 		7B11DCA52BC5902A0055D423 /* authenticationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCA42BC5902A0055D423 /* authenticationRouter.swift */; };
 		7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCA62BC590510055D423 /* NetWorkQuery.swift */; };
 		7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCAA2BC591070055D423 /* TargetType.swift */; };
+		7B5EF9F42BD4AFB400F022CB /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EF9F32BD4AFB400F022CB /* String+.swift */; };
 		7B838DDA2BCEC960000F2E27 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DD92BCEC960000F2E27 /* FirstView.swift */; };
 		7B838DDC2BCEC9B9000F2E27 /* LunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DDB2BCEC9B9000F2E27 /* LunchScreenViewController.swift */; };
 		7B838DDE2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DDD2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift */; };
@@ -115,6 +118,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7B0BB2F62BD4A24200770A04 /* UserProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewModel.swift; sourceTree = "<group>"; };
+		7B0BB2F82BD4ACC800770A04 /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
 		7B11DC642BC58AD40055D423 /* CategoryZ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CategoryZ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B11DC672BC58AD40055D423 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B11DC692BC58AD40055D423 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -128,6 +133,7 @@
 		7B11DCA42BC5902A0055D423 /* authenticationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = authenticationRouter.swift; sourceTree = "<group>"; };
 		7B11DCA62BC590510055D423 /* NetWorkQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkQuery.swift; sourceTree = "<group>"; };
 		7B11DCAA2BC591070055D423 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
+		7B5EF9F32BD4AFB400F022CB /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		7B838DD92BCEC960000F2E27 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		7B838DDB2BCEC9B9000F2E27 /* LunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunchScreenViewController.swift; sourceTree = "<group>"; };
 		7B838DDD2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewValidViewModel.swift; sourceTree = "<group>"; };
@@ -235,6 +241,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7B0BB2F52BD4A22B00770A04 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				7B0BB2F62BD4A24200770A04 /* UserProfileViewModel.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		7B11DC5B2BC58AD40055D423 = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +323,7 @@
 		7B11DC7D2BC58B440055D423 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7B0BB2F52BD4A22B00770A04 /* Profile */,
 				7BC51B472BCFF62800E5BF6C /* SNSPhotoMain */,
 				7BA0E0ED2BCD76C5002F0516 /* PostReg */,
 				7BCF4AA22BCBF68300BCE635 /* Login */,
@@ -559,6 +574,8 @@
 				7BCF4A4D2BC6D27400BCE635 /* ExUiView.swift */,
 				7BCF4A622BC6E87600BCE635 /* ExUIWindow.swift */,
 				7BA0E0E32BCD74B2002F0516 /* EXUIImage.swift */,
+				7B0BB2F82BD4ACC800770A04 /* Int+.swift */,
+				7B5EF9F32BD4AFB400F022CB /* String+.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -857,8 +874,10 @@
 				7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */,
 				7B11DC6A2BC58AD40055D423 /* SceneDelegate.swift in Sources */,
 				7B838DF42BCFADE3000F2E27 /* PhotoSNSView.swift in Sources */,
+				7B0BB2F92BD4ACC800770A04 /* Int+.swift in Sources */,
 				7BCF4A612BC6E5BD00BCE635 /* SignUpButton.swift in Sources */,
 				7BCF4A3A2BC5AF4A00BCE635 /* RxBaseViewController.swift in Sources */,
+				7B0BB2F72BD4A24200770A04 /* UserProfileViewModel.swift in Sources */,
 				7BCF4A812BC92C7800BCE635 /* CommonError .swift in Sources */,
 				7BCF4AA62BCBFA6D00BCE635 /* UserIDStorage.swift in Sources */,
 				7BC51B5E2BD0FFD200E5BF6C /* DateManager.swift in Sources */,
@@ -890,6 +909,7 @@
 				7BCF4A952BCBA27F00BCE635 /* FollowRouter.swift in Sources */,
 				7BC51B4F2BD0A22400E5BF6C /* KingFisherRequset.swift in Sources */,
 				7BCF4A632BC6E87600BCE635 /* ExUIWindow.swift in Sources */,
+				7B5EF9F42BD4AFB400F022CB /* String+.swift in Sources */,
 				7BA0E0DB2BCD73B0002F0516 /* CategoryReusableCell.swift in Sources */,
 				7BCF4A892BCA715E00BCE635 /* PostQueryType.swift in Sources */,
 				7BCF4A4E2BC6D27400BCE635 /* ExUiView.swift in Sources */,

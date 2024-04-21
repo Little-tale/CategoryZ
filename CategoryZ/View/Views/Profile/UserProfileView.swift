@@ -14,15 +14,15 @@ final class UserProfileView: RxBaseView {
     let scrollView = UIScrollView(frame: .zero)
     
     let profileView = ProfileView()
-    let tableView = UITableView(frame: .zero)
+    let tableView = UITableView(frame: .zero).then {
+        $0.isScrollEnabled = true
+    }
     
     override func configureHierarchy() {
         addSubview(scrollView)
         scrollView.addSubview(profileView)
         scrollView.addSubview(tableView)
-        scrollView.backgroundColor = .blue
         profileView.backgroundColor = .pointGreen
-        tableView.backgroundColor = .like
     }
     override func configureLayout() {
         scrollView.snp.makeConstraints { make in
