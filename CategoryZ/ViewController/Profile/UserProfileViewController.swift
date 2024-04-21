@@ -149,7 +149,7 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
                 let ofY = point.y
                 let height = owner.homeView.scrollView.contentSize.height
                 let frameHeight = owner.homeView.scrollView.frame.size.height
-                print(height, frameHeight)
+               
                 if ofY >= (height - frameHeight) {
                     owner.homeView.scrollView.isScrollEnabled = false
                     owner.homeView.collectionView.isScrollEnabled = true
@@ -166,9 +166,12 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             .observe(on: MainScheduler.asyncInstance) // 회고
             .withUnretained(self)
             .bind { owner, offsetY in
-                if offsetY <= 0 {
+                if offsetY <= 30 {
                     owner.homeView.scrollView.isScrollEnabled = true
                     owner.homeView.collectionView.isScrollEnabled = true
+                } else if offsetY <= 0 {
+                    owner.homeView.scrollView.isScrollEnabled = true
+                    owner.homeView.collectionView.isScrollEnabled = false
                 }
             }
             .disposed(by: disPoseBag)
