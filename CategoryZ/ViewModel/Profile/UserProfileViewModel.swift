@@ -10,6 +10,16 @@ import RxSwift
 import RxCocoa
 
 
+struct CustomSectionModel {
+    var header: ProductID
+    var items: [SNSDataModel]
+    
+    init(header: ProductID, items: [SNSDataModel]) {
+        self.header = header
+        self.items = items
+    }
+}
+
 final class UserProfileViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
@@ -18,16 +28,17 @@ final class UserProfileViewModel: RxViewModelType {
     var userId: String? = UserIDStorage.shared.userID
     
     private
-    var realModel: [SNSDataModel] = []
+    var realModel: CustomSectionModel = CustomSectionModel(header: .fashion, items: [])
     
     struct Input {
         let inputProfileType: BehaviorRelay<ProfileType>
+        let inputProducID: BehaviorRelay<ProductID>
     }
     
     struct Output {
         let outputProfile : Driver<ProfileModel>
         let networkError : Driver<NetworkError>
-        let postReadMainModel: Driver<[SNSDataModel]>
+        let postReadMainModel: Driver<[CustomSectionModel]>
     }
     
     func transform(_ input: Input) -> Output {
@@ -36,12 +47,13 @@ final class UserProfileViewModel: RxViewModelType {
         
         let networkError = PublishSubject<NetworkError> ()
         let outputProfile = PublishSubject<ProfileModel> ()
-        let postReadMainModel = PublishSubject<[SNSDataModel]> ()
+        let postReadMainModel = BehaviorRelay<[CustomSectionModel]> (value: [])
         
-      
+        let combineRequest = Observable.combineLatest(input.inputProfileType, input.inputProducID)
+            
         
         /// 프로필 조회 API
-        input.inputProfileType.flatMapLatest { profileType in
+        combineRequest.flatMapLatest { profileType, _ in
             switch profileType {
             case .me:
                 NetworkManager.fetchNetwork(model: ProfileModel.self, router: .profile(.profileMeRead))
@@ -59,25 +71,28 @@ final class UserProfileViewModel: RxViewModelType {
         }
         .disposed(by: disposeBag)
         
-        input.inputProfileType
+        combineRequest
             .withUnretained(self)
-            .map { owner, profileId in
-                switch profileId {
+            .map { owner, request in
+                switch request.0 {
                 case .me:
-                    return owner.userId
+                    return ( owner.userId,  request.1.identi)
                 case .other(let otherUserId):
-                    return otherUserId
+                    return (otherUserId, request.1.identi)
                 }
             }
-            .filter { $0 != nil }
-            .flatMapLatest { userId in
-                NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.userCasePostRead(userId: userId!, next: nextCursor, limit: limit, productId: nil)))
+            .filter { userId, productID in
+                userId != nil
+            }
+            .flatMapLatest { request in
+                NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.userCasePostRead(userId: request.0!, next: nextCursor, limit: limit, productId: request.1)))
             }
             .bind(with: self) {owner, result in
                 switch result {
                 case .success(let model):
-                    owner.realModel = model.data
-                    postReadMainModel.onNext(owner.realModel)
+                    owner.realModel.items = model.data
+                    print(model.data)
+                    postReadMainModel.accept([owner.realModel])
                 case .failure(let fail):
                     networkError.onNext(fail)
                 }
@@ -88,8 +103,7 @@ final class UserProfileViewModel: RxViewModelType {
             outputProfile: outputProfile.asDriver(onErrorDriveWith: .never()),
             networkError: networkError.asDriver(
                 onErrorDriveWith: .never()
-            ), postReadMainModel: postReadMainModel.asDriver(
-                onErrorDriveWith: .never())
+            ), postReadMainModel: postReadMainModel.asDriver()
         )
     }
     
