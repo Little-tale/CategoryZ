@@ -156,6 +156,13 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)
+        
+        NotificationCenter.default.rx.notification(.moveToSettingProfile)
+            .bind(with: self) { owner, _ in
+                let vc = ProfileSettingViewController()
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
     }
     
     override func navigationSetting() {

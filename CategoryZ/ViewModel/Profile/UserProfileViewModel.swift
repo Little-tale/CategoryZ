@@ -31,6 +31,7 @@ final class UserProfileViewModel: RxViewModelType {
     struct Input {
         let inputProfileType: BehaviorRelay<ProfileType>
         let inputProducID: BehaviorRelay<ProductID>
+        let inputProfileReloadTrigger: Observable<Void>
     }
     
     struct Output {
@@ -68,6 +69,27 @@ final class UserProfileViewModel: RxViewModelType {
             }
         }
         .disposed(by: disposeBag)
+        
+        /// 프로필 재조회
+        input.inputProfileReloadTrigger
+            .withLatestFrom(combineRequest)
+            .flatMapLatest { profileType, _ in
+                switch profileType {
+                case .me:
+                    NetworkManager.fetchNetwork(model: ProfileModel.self, router: .profile(.profileMeRead))
+                case .other(let otherUserId):
+                    NetworkManager.fetchNetwork(model: ProfileModel.self, router:.profile(.otherUserProfileRead(userId: otherUserId)) )
+                }
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let profile):
+                    outputProfile.onNext(profile)
+                case .failure(let error):
+                    networkError.onNext(error)
+                }
+            }
+            .disposed(by: disposeBag)
         
         combineRequest
             .withUnretained(self)

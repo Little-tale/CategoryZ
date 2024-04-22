@@ -13,7 +13,11 @@ final class ProfileSettingView: RxBaseView {
     /// 이름, 전화번호, 이미지
     let profileView = ProfileView()
     
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: CustomCollectionViewLayout.settingCollectionViewLayout())
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: CustomCollectionViewLayout.settingCollectionViewLayout()).then {
+        $0.layer.cornerRadius = 34
+        $0.clipsToBounds = true
+        $0.isScrollEnabled = false
+    }
     
     override func configureHierarchy() {
         addSubview(profileView)

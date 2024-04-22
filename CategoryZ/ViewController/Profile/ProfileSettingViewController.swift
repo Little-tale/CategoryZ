@@ -28,8 +28,6 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
     
     override func subscribe() {
         
-        var imageUrl = ""
-        
         let section = Observable.just([
             SettingSection.profileImage,
             SettingSection.name,
@@ -54,7 +52,6 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
                 owner.homeView.profileView.userNameLabel.text = model.nick
                 owner.homeView.profileView.phoneNumLabel.text = model.phoneNum
                 if !model.profileImage.isEmpty {
-                    imageUrl = model.profileImage
                     owner.homeView.profileView.profileImageView.downloadImage(imageUrl: model.profileImage, resizing: .init(width: 200, height: 200))
                 } else {
                     owner.homeView.profileView.profileImageView.image = JHImage.defaultImage

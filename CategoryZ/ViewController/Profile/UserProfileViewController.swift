@@ -45,9 +45,14 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
         // 프로덕트 아이디
         let beProductId = BehaviorRelay(value: ProductID.dailyRoutine)
         
+        let reloadTriggerForProfile = rx.viewDidAppear
+            .map { $0 == false }
+            .map { _ in return () }
+        
         let input = UserProfileViewModel.Input(
             inputProfileType: beProfileType,
-            inputProducID: beProductId
+            inputProducID: beProductId,
+            inputProfileReloadTrigger: reloadTriggerForProfile
         )
         
         let output = viewModel.transform(input)
@@ -95,6 +100,22 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
                 owner.homeView.rightButton.setTitle(rightTitle, for: .normal)
             }
             .disposed(by: disPoseBag)
+        
+        homeView.leftButton.rx
+            .tap
+            .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
+            .withLatestFrom(beProfileType)
+            .bind(with: self) { owner, profileType in
+                switch profileType {
+                case .me:
+                    let vc = ProfileSettingViewController()
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                case .other(otherUserId: let otherUserId):
+                    break
+                }
+            }
+            .disposed(by: disPoseBag)
+        
         
         // 네트워크 에러
         output.networkError

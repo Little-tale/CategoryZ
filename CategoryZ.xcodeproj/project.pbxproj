@@ -272,7 +272,6 @@
 		7B0BB2F52BD4A22B00770A04 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				7BD1D8E72BD6596F00B5521F /* UserProfileImageModifyViewController.swift */,
 				7B0BB2F62BD4A24200770A04 /* UserProfileViewModel.swift */,
 				7BD1D8C22BD5428B00B5521F /* SubProfileViewModel.swift */,
 				7BD1D8E52BD63BF000B5521F /* ProfileSettingViewModel.swift */,
@@ -505,6 +504,7 @@
 		7B87F0F92BD3FE410006178F /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				7BD1D8E72BD6596F00B5521F /* UserProfileImageModifyViewController.swift */,
 				7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */,
 				7BD1D8E32BD63A9D00B5521F /* ProfileSettingViewController.swift */,
 				7BD1D8EB2BD6B70300B5521F /* NameModifyViewController.swift */,

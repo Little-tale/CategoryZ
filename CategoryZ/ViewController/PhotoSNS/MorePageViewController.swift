@@ -14,8 +14,6 @@ import Then
 
 final class MorePageViewController: RxBaseViewController {
     
-   
-    
     private
     let profileView = ProfileAndFollowView()
     
@@ -135,6 +133,17 @@ final class MorePageViewController: RxBaseViewController {
             }
             .disposed(by: disPoseBag)
         
+        
+        leftButtonTap
+            .withLatestFrom(output.currnetFollowState)
+            .bind(with: self) { owner, type in
+                if case .modiFyProfile = type {
+                    owner.dismiss(animated: true) {
+                        NotificationCenter.default.post(name: .moveToSettingProfile, object: nil)
+                    }
+                }
+            }
+            .disposed(by: disPoseBag)
        
     }
     
