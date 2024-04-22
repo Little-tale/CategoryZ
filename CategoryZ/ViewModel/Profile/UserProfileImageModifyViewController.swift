@@ -100,7 +100,20 @@ final class UserProfileImageModifyViewController: RxBaseViewController {
                 owner.imageService.showImageModeSelectAlert()
             }
             .disposed(by: disPoseBag)
-        
+        // 삭제 버튼을 눌렀을때
+        deleteButton.rx.tap
+            .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.profileImageView.image = JHImage.defaultImage
+                let data = JHImage.defaultImage?.jpegData(compressionQuality: 1.0)
+                if let data {
+                    publishDataImage.accept(data)
+                } else { // 후에 변경해야 해
+                    owner.showAlert(title: "문제가 발생했어요") { _ in
+                    }
+                }
+            }
+            .disposed(by: disPoseBag)
         
         imageService.imageResult
             .bind(with: self) { owner, result in
@@ -120,7 +133,9 @@ final class UserProfileImageModifyViewController: RxBaseViewController {
                 }
             }
             .disposed(by: disPoseBag)
-    
+        
+        
+        
     }
     
     override func configureHierarchy() {

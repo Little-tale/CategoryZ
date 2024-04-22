@@ -31,7 +31,7 @@ final class ProfileSettingViewModel: RxViewModelType {
                 return NetworkManager.fetchNetwork(model: ProfileModel.self, router: .profile(.profileMeRead))
             }
             .bind { result in
-                switch result{
+                switch result {
                 case .success(let profileModel):
                     publishModel.onNext(profileModel)
                 case .failure(let fail):
