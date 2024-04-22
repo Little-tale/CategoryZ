@@ -84,10 +84,12 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
         }
         .disposed(by: disPoseBag)
         
+        
+        
         let zipCollectionViewCell = Observable.zip(homeView.collectionView.rx.itemSelected, homeView.collectionView.rx.modelSelected(SettingSection.self))
         
         
-        let zipCellModel = Observable.zip(zipCollectionViewCell, output.successModel.asObservable())
+        let zipCellModel = Observable.combineLatest(zipCollectionViewCell, output.successModel.asObservable())
         
         zipCellModel
             .map { cellInfo, model in
