@@ -70,7 +70,6 @@
 		7BC51B492BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B482BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift */; };
 		7BC51B4B2BD019D600E5BF6C /* CursurModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */; };
 		7BC51B4D2BD0986E00E5BF6C /* SNSTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B4C2BD0986E00E5BF6C /* SNSTableViewModel.swift */; };
-		7BC51B4F2BD0A22400E5BF6C /* KingFisherRequset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B4E2BD0A22400E5BF6C /* KingFisherRequset.swift */; };
 		7BC51B5E2BD0FFD200E5BF6C /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B5D2BD0FFD200E5BF6C /* DateManager.swift */; };
 		7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */; };
 		7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A292BC598D700BCE635 /* NetError.swift */; };
@@ -185,7 +184,6 @@
 		7BC51B482BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSPhotoMainViewModel.swift; sourceTree = "<group>"; };
 		7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursurModel.swift; sourceTree = "<group>"; };
 		7BC51B4C2BD0986E00E5BF6C /* SNSTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSTableViewModel.swift; sourceTree = "<group>"; };
-		7BC51B4E2BD0A22400E5BF6C /* KingFisherRequset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingFisherRequset.swift; sourceTree = "<group>"; };
 		7BC51B5D2BD0FFD200E5BF6C /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
 		7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetHTTPHeader.swift; sourceTree = "<group>"; };
 		7BCF4A292BC598D700BCE635 /* NetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetError.swift; sourceTree = "<group>"; };
@@ -408,7 +406,6 @@
 				7B11DC842BC58CB90055D423 /* NetWorkModel.swift */,
 				7B11DCA62BC590510055D423 /* NetWorkQuery.swift */,
 				7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */,
-				7BC51B4E2BD0A22400E5BF6C /* KingFisherRequset.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -959,7 +956,6 @@
 				7BCF4A7D2BC922F700BCE635 /* PathRouter.swift in Sources */,
 				7BCF4A952BCBA27F00BCE635 /* FollowRouter.swift in Sources */,
 				7BD1D8C32BD5428B00B5521F /* SubProfileViewModel.swift in Sources */,
-				7BC51B4F2BD0A22400E5BF6C /* KingFisherRequset.swift in Sources */,
 				7BD1D8F02BD6C7AC00B5521F /* UserPhoneNumberModifyViewController.swift in Sources */,
 				7BCF4A632BC6E87600BCE635 /* ExUIWindow.swift in Sources */,
 				7B5EF9F42BD4AFB400F022CB /* String+.swift in Sources */,

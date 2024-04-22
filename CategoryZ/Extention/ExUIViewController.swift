@@ -135,3 +135,16 @@ extension UIViewController {
     }
    
 }
+
+// UIScreen.main 대체 2
+extension UIViewController {
+    
+    func getScreen() -> UIScreen? {
+        guard let window = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+           
+            return view.window?.windowScene?.screen
+        }
+        
+        return window.screen
+    }
+}

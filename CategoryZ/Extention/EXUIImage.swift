@@ -54,26 +54,37 @@ extension UIImage {
  회고
  */
 extension UIImageView {
-    func downloadImage(imageUrl: String, resizing: CGSize) {
+    func downloadImage(imageUrl: String?, resizing: CGSize) {
         let processor = DownsamplingImageProcessor(size: resizing)
         var scale: CGFloat = 0
         
-        if let test = UIScreen.current?.scale {
-            scale = test
+        if let screenCurrent = UIScreen.current?.scale {
+            
+            scale = screenCurrent
         } else {
             scale = UIScreen.main.scale
         }
         
+        guard let imageUrl else {
+            NotificationCenter.default.post(name: .cantChageUrlImage, object: nil)
+            return
+        }
+        
+        kf.indicatorType = .activity
+        
         KingfisherManager.shared.retrieveImage(with: URL(string: imageUrl)!, options: [
             .processor(processor),
+            .transition(.fade(1)),
             .requestModifier(KingFisherNet()),
             .scaleFactor(scale),
+            .cacheOriginalImage
         ]) { imageResult in
             switch imageResult {
             case .success(let result):
                 self.image = result.image
             case .failure(let error):
-                print(error)
+                // print(error)
+                break
             }
         }
     }

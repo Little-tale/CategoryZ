@@ -302,6 +302,11 @@ final class TestViewController: UIViewController {
 //            .bind {owner ,_ in
 //                owner.testButton.isSelected = !owner.testButton.isSelected
 //            }
+        
+        
+        // 공식문서 방
+        guard let screen =  view.window?.windowScene?.screen else { return }
+        let screenSize = screen.bounds
     }
     
     @objc

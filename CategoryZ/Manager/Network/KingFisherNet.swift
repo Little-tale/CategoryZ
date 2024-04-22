@@ -9,7 +9,7 @@ import Kingfisher
 import Foundation
 
 
-class KingFisherNet: ImageDownloadRequestModifier {
+final class KingFisherNet: ImageDownloadRequestModifier {
     
     private 
     let baseURL = APIKey.baseURL.rawValue
@@ -18,25 +18,22 @@ class KingFisherNet: ImageDownloadRequestModifier {
     let version = "/v1/"
     
     func modified(for request: URLRequest) -> URLRequest? {
-    
-        let reUrl = baseURL + version + request.description
         
         guard let accessTokken = TokenStorage.shared.accessToken else {
             return nil
         }
+        var components = URLComponents(string: baseURL)
+        components?.path = version + (request.url?.path() ?? "")
         
-        guard let url = URL(string: reUrl)else {
+        guard let url = components?.url else {
             return nil
         }
+        var urlRequest = URLRequest(url: url)
         
-        var urlReqest = URLRequest(url: url)
+        urlRequest.addValue(accessTokken, forHTTPHeaderField: NetHTTPHeader.authorization.rawValue)
         
-        // print(urlReqest)
+        urlRequest.addValue(APIKey.sesacKey.rawValue, forHTTPHeaderField: NetHTTPHeader.sesacKey.rawValue)
         
-        urlReqest.addValue(accessTokken, forHTTPHeaderField: NetHTTPHeader.authorization.rawValue)
-        
-        urlReqest.addValue(APIKey.sesacKey.rawValue, forHTTPHeaderField: NetHTTPHeader.sesacKey.rawValue)
-        
-        return urlReqest
+        return urlRequest
     }
 }
