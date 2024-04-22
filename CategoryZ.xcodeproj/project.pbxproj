@@ -126,6 +126,7 @@
 		7BD1D8E82BD6596F00B5521F /* UserProfileImageModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8E72BD6596F00B5521F /* UserProfileImageModifyViewController.swift */; };
 		7BD1D8EA2BD65C8C00B5521F /* ProfileImageChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8E92BD65C8C00B5521F /* ProfileImageChangeViewModel.swift */; };
 		7BD1D8EC2BD6B70300B5521F /* NameModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8EB2BD6B70300B5521F /* NameModifyViewController.swift */; };
+		7BD1D8EE2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8ED2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -236,6 +237,7 @@
 		7BD1D8E72BD6596F00B5521F /* UserProfileImageModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileImageModifyViewController.swift; sourceTree = "<group>"; };
 		7BD1D8E92BD65C8C00B5521F /* ProfileImageChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageChangeViewModel.swift; sourceTree = "<group>"; };
 		7BD1D8EB2BD6B70300B5521F /* NameModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameModifyViewController.swift; sourceTree = "<group>"; };
+		7BD1D8ED2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNameModifyViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -271,6 +273,7 @@
 				7BD1D8C22BD5428B00B5521F /* SubProfileViewModel.swift */,
 				7BD1D8E52BD63BF000B5521F /* ProfileSettingViewModel.swift */,
 				7BD1D8E92BD65C8C00B5521F /* ProfileImageChangeViewModel.swift */,
+				7BD1D8ED2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -930,6 +933,7 @@
 				7B838DF12BCFACC2000F2E27 /* CategoryZTabbarController.swift in Sources */,
 				7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */,
 				7B838DDE2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift in Sources */,
+				7BD1D8EE2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift in Sources */,
 				7B838E0B2BCFCBC5000F2E27 /* JHPont.swift in Sources */,
 				7BD1D8C12BD53BBD00B5521F /* MorePageViewController.swift in Sources */,
 				7BA0E0E62BCD7513002F0516 /* OnlyImageCollectionViewCell.swift in Sources */,

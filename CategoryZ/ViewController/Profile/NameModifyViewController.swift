@@ -23,19 +23,54 @@ final class NameModifyViewController: RxBaseViewController {
     private
     let nameTextFiled = WhitePointTextField("이름 (필수)")
     
+    private
     let saveButton = UIButton().then {
         $0.setTitle("저장", for: .normal)
-        $0.backgroundColor = JHColor.likeColor
+        $0.backgroundColor = JHColor.gray
         $0.tintColor = JHColor.white
         $0.layer.cornerRadius = 12
         $0.clipsToBounds = true
     }
     
-    
+    private
+    let viewModel = ProfileNameModifyViewModel()
     
     func setModel(_ model: ProfileModel) {
         
-    
+        nameTextFiled.text = model.nick
+        
+        let input = ProfileNameModifyViewModel.Input(
+            inputName: nameTextFiled.rx.text,
+            inputSaveButtonTap: saveButton.rx.tap
+        )
+        
+        let output = viewModel.transform(input)
+        
+        output.outputTextValid
+            .drive(with: self) { owner, textValid in
+                owner.textFieldValidText(owner.nameTextFiled, textValid)
+                owner.saveButton.isEnabled = textValid == .match
+                owner.saveButton.backgroundColor = textValid == .match ? JHColor.likeColor : JHColor.gray
+                
+            }
+            .disposed(by: disPoseBag)
+        
+        output.networkError
+            .drive(with: self) { owner, error in
+                owner.errorCatch(error)
+            }
+            .disposed(by: disPoseBag)
+        
+        output.successTrigger
+            .drive(with: self) { owner, _ in
+                owner.showAlert(title: "변경되었습니다.") { _ in
+                    owner.navigationController?.popViewController(animated: true)
+                }
+            }
+            .disposed(by: disPoseBag)
+        
+        
+        
     }
     
     override func configureHierarchy() {
@@ -63,3 +98,26 @@ final class NameModifyViewController: RxBaseViewController {
     
 }
 
+
+extension NameModifyViewController {
+    
+    private
+    func textFieldValidText(_ textFiled: WhitePointTextField, _ valid: textValidation) {
+       textFiled.borderActiveColor = .point
+       switch valid {
+       case .isEmpty:
+           textFiled.placeholderColor = .systemGray
+           textFiled.setDefaultPlaceHolder()
+           break
+       case .minCount:
+           textFiled.placeholderColor = .point
+           textFiled.placeholder = "글자수가 부족해요!"
+       case .match:
+           textFiled.placeholder = ""
+           textFiled.borderActiveColor = JHColor.currect
+       case .noMatch:
+           textFiled.placeholderColor = .point
+           textFiled.placeholder = "양식에 맞지 않아요!"
+       }
+   }
+}

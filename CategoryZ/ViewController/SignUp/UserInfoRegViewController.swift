@@ -117,7 +117,7 @@ final class UserInfoRegViewController: RxHomeBaseViewController<UserInfoRegView>
         navigationItem.title = "가입하기"
     }
 
-    private func textFieldValidText(_ textFiled: WhitePointTextField, _ valid: textValidation) {
+     func textFieldValidText(_ textFiled: WhitePointTextField, _ valid: textValidation) {
         textFiled.borderActiveColor = .point
         switch valid {
         case .isEmpty:
