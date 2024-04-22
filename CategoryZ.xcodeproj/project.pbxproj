@@ -125,6 +125,7 @@
 		7BD1D8E62BD63BF000B5521F /* ProfileSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8E52BD63BF000B5521F /* ProfileSettingViewModel.swift */; };
 		7BD1D8E82BD6596F00B5521F /* UserProfileImageModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8E72BD6596F00B5521F /* UserProfileImageModifyViewController.swift */; };
 		7BD1D8EA2BD65C8C00B5521F /* ProfileImageChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8E92BD65C8C00B5521F /* ProfileImageChangeViewModel.swift */; };
+		7BD1D8EC2BD6B70300B5521F /* NameModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8EB2BD6B70300B5521F /* NameModifyViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -234,6 +235,7 @@
 		7BD1D8E52BD63BF000B5521F /* ProfileSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewModel.swift; sourceTree = "<group>"; };
 		7BD1D8E72BD6596F00B5521F /* UserProfileImageModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileImageModifyViewController.swift; sourceTree = "<group>"; };
 		7BD1D8E92BD65C8C00B5521F /* ProfileImageChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageChangeViewModel.swift; sourceTree = "<group>"; };
+		7BD1D8EB2BD6B70300B5521F /* NameModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameModifyViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -497,6 +499,7 @@
 			children = (
 				7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */,
 				7BD1D8E32BD63A9D00B5521F /* ProfileSettingViewController.swift */,
+				7BD1D8EB2BD6B70300B5521F /* NameModifyViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -898,6 +901,7 @@
 				7B838E112BCFD97C000F2E27 /* ScrollImageView.swift in Sources */,
 				7BCF4A3F2BC687D600BCE635 /* TokenStorage.swift in Sources */,
 				7B838DDA2BCEC960000F2E27 /* FirstView.swift in Sources */,
+				7BD1D8EC2BD6B70300B5521F /* NameModifyViewController.swift in Sources */,
 				7B838DDC2BCEC9B9000F2E27 /* LunchScreenViewController.swift in Sources */,
 				7BA0E0DF2BCD73EC002F0516 /* BaseTableViewCell.swift in Sources */,
 				7BC51B492BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift in Sources */,

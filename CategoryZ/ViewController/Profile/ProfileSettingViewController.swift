@@ -105,7 +105,9 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
                     vc.setModel(cellInfo.model)
                     owner.navigationController?.pushViewController(vc, animated: true)
                 case .name:
-                    print("asd")
+                    let vc = NameModifyViewController()
+                    vc.setModel(cellInfo.model)
+                    owner.navigationController?.pushViewController(vc, animated: true)
                 case .phoneNumber:
                     print("asdsa")
                 }
