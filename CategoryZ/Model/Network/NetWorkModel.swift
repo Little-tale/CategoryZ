@@ -252,7 +252,7 @@ struct ProfileModel: Decodable {
 
 
 
-struct ProfileModifyIn {
+struct ProfileModifyIn: Decodable {
     var nick: String?
     var phoneNum: String?
     var birthDay: String?

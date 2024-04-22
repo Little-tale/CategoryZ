@@ -28,6 +28,8 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
     
     override func subscribe() {
         
+        var imageUrl = ""
+        
         let section = Observable.just([
             SettingSection.profileImage,
             SettingSection.name,
@@ -51,11 +53,9 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
             .drive(with: self) { owner, model in
                 owner.homeView.profileView.userNameLabel.text = model.nick
                 owner.homeView.profileView.phoneNumLabel.text = model.phoneNum
-                if let url = model.profileImage.asStringURL {
-                    owner.homeView.profileView.profileImageView.kf.setImage(with: url, options: [
-                        .requestModifier(KingFisherNet()),
-                    ]
-                    )
+                if !model.profileImage.isEmpty {
+                    imageUrl = model.profileImage
+                    owner.homeView.profileView.profileImageView.downloadImage(imageUrl: model.profileImage, resizing: .init(width: 200, height: 200))
                 } else {
                     owner.homeView.profileView.profileImageView.image = JHImage.defaultImage
                 }
@@ -80,10 +80,38 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
                 content.text = "전화번호 수정"
             }
             cell.contentConfiguration = content
+            
         }
         .disposed(by: disPoseBag)
         
+        let zipCollectionViewCell = Observable.zip(homeView.collectionView.rx.itemSelected, homeView.collectionView.rx.modelSelected(SettingSection.self))
         
+        
+        let zipCellModel = Observable.zip(zipCollectionViewCell, output.successModel.asObservable())
+        
+        zipCellModel
+            .map { cellInfo, model in
+                return(index: cellInfo.0, section: cellInfo.1, model: model)
+            }
+            .bind(with: self) { owner, cellInfo in
+                print(cellInfo.model)
+                owner.homeView.collectionView.deselectItem(at: cellInfo.index, animated: true)
+                
+                switch cellInfo.section {
+                case .profileImage:
+                    let vc = UserProfileImageModifyViewController()
+                    vc.setModel(cellInfo.model)
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                case .name:
+                    break
+                case .phoneNumber:
+                    break
+                }
+            }
+            .disposed(by: disPoseBag)
     }
     
+    override func navigationSetting() {
+        navigationItem.title = "설정"
+    }
 }

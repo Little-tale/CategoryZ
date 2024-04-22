@@ -208,7 +208,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                 case .failure(let error):
                     if case .noAuth = error {
                         SettingAlert()
-                    }else {
+                    } else {
                         showAlert(title: "경고",message: error.message) { _ in
                         }
                     }

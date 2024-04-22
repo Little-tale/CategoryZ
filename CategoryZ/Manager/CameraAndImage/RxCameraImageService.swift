@@ -134,6 +134,7 @@ final class RxCameraImageService: NSObject {
         config.selectionLimit = max // 선택할수 있는 개수를 정합니다.
         config.filter = .images // 선택할수 있는 유형을 이미지로 제한합니다.
         
+        
         let picker = PHPickerViewController(configuration: config)
         picker.delegate = self
         DispatchQueue.main.async {
@@ -141,6 +142,7 @@ final class RxCameraImageService: NSObject {
             self?.presntationViewController?.present(picker, animated: true)
         }
     }
+    
     
     deinit {
         print("ImageService : SUCCESS DEINIT")

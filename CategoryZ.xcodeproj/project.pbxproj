@@ -123,6 +123,8 @@
 		7BD1D8E22BD6315300B5521F /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8E12BD6315300B5521F /* ProfileView.swift */; };
 		7BD1D8E42BD63A9D00B5521F /* ProfileSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8E32BD63A9D00B5521F /* ProfileSettingViewController.swift */; };
 		7BD1D8E62BD63BF000B5521F /* ProfileSettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8E52BD63BF000B5521F /* ProfileSettingViewModel.swift */; };
+		7BD1D8E82BD6596F00B5521F /* UserProfileImageModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8E72BD6596F00B5521F /* UserProfileImageModifyViewController.swift */; };
+		7BD1D8EA2BD65C8C00B5521F /* ProfileImageChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8E92BD65C8C00B5521F /* ProfileImageChangeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -230,6 +232,8 @@
 		7BD1D8E12BD6315300B5521F /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		7BD1D8E32BD63A9D00B5521F /* ProfileSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewController.swift; sourceTree = "<group>"; };
 		7BD1D8E52BD63BF000B5521F /* ProfileSettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingViewModel.swift; sourceTree = "<group>"; };
+		7BD1D8E72BD6596F00B5521F /* UserProfileImageModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileImageModifyViewController.swift; sourceTree = "<group>"; };
+		7BD1D8E92BD65C8C00B5521F /* ProfileImageChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageChangeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -260,9 +264,11 @@
 		7B0BB2F52BD4A22B00770A04 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				7BD1D8E72BD6596F00B5521F /* UserProfileImageModifyViewController.swift */,
 				7B0BB2F62BD4A24200770A04 /* UserProfileViewModel.swift */,
 				7BD1D8C22BD5428B00B5521F /* SubProfileViewModel.swift */,
 				7BD1D8E52BD63BF000B5521F /* ProfileSettingViewModel.swift */,
+				7BD1D8E92BD65C8C00B5521F /* ProfileImageChangeViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -925,6 +931,7 @@
 				7BA0E0E62BCD7513002F0516 /* OnlyImageCollectionViewCell.swift in Sources */,
 				7BCF4A3C2BC6873600BCE635 /* AccessTokkenAdapter.swift in Sources */,
 				7BA0E0E82BCD7593002F0516 /* PlaceholderTextView.swift in Sources */,
+				7BD1D8E82BD6596F00B5521F /* UserProfileImageModifyViewController.swift in Sources */,
 				7B5EF9F62BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift in Sources */,
 				7B838DE02BCEF2DD000F2E27 /* AddCollectionViewCell.swift in Sources */,
 				7BCF4AA42BCBF68E00BCE635 /* LoginViewModel.swift in Sources */,
@@ -940,6 +947,7 @@
 				7BC51B4F2BD0A22400E5BF6C /* KingFisherRequset.swift in Sources */,
 				7BCF4A632BC6E87600BCE635 /* ExUIWindow.swift in Sources */,
 				7B5EF9F42BD4AFB400F022CB /* String+.swift in Sources */,
+				7BD1D8EA2BD65C8C00B5521F /* ProfileImageChangeViewModel.swift in Sources */,
 				7BD1D8E22BD6315300B5521F /* ProfileView.swift in Sources */,
 				7BA0E0DB2BCD73B0002F0516 /* CategoryReusableCell.swift in Sources */,
 				7BCF4A892BCA715E00BCE635 /* PostQueryType.swift in Sources */,

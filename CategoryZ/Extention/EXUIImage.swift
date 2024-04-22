@@ -54,8 +54,8 @@ extension UIImage {
  회고
  */
 extension UIImageView {
-    func downloadImage(imageUrl: String) {
-        let processor = DownsamplingImageProcessor(size: CGSize(width: 500, height: 500))
+    func downloadImage(imageUrl: String, resizing: CGSize) {
+        let processor = DownsamplingImageProcessor(size: resizing)
         var scale: CGFloat = 0
         
         if let test = UIScreen.current?.scale {

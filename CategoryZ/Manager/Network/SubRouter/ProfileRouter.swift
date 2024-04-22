@@ -16,7 +16,6 @@ enum ProfileRouter {
 
 extension ProfileRouter: TargetType {
  
-    
     var method: Alamofire.HTTPMethod {
         switch self {
         case .profileMeRead, .otherUserProfileRead:
