@@ -80,7 +80,7 @@ final class TextValid {
         if text.count < 8{
             return .minCount // 각 케이스별 대응을위해...
         }
-        let pattern: String = "\\d{8,}"
+        let pattern: String = "^\\d{8,}$"
         return matchesPattern(text, pattern: pattern)
     }
     

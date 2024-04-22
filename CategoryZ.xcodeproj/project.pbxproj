@@ -127,6 +127,8 @@
 		7BD1D8EA2BD65C8C00B5521F /* ProfileImageChangeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8E92BD65C8C00B5521F /* ProfileImageChangeViewModel.swift */; };
 		7BD1D8EC2BD6B70300B5521F /* NameModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8EB2BD6B70300B5521F /* NameModifyViewController.swift */; };
 		7BD1D8EE2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8ED2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift */; };
+		7BD1D8F02BD6C7AC00B5521F /* UserPhoneNumberModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8EF2BD6C7AC00B5521F /* UserPhoneNumberModifyViewController.swift */; };
+		7BD1D8F22BD6C87F00B5521F /* UserPhoneNumberModifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8F12BD6C87F00B5521F /* UserPhoneNumberModifyViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -238,6 +240,8 @@
 		7BD1D8E92BD65C8C00B5521F /* ProfileImageChangeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageChangeViewModel.swift; sourceTree = "<group>"; };
 		7BD1D8EB2BD6B70300B5521F /* NameModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameModifyViewController.swift; sourceTree = "<group>"; };
 		7BD1D8ED2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNameModifyViewModel.swift; sourceTree = "<group>"; };
+		7BD1D8EF2BD6C7AC00B5521F /* UserPhoneNumberModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhoneNumberModifyViewController.swift; sourceTree = "<group>"; };
+		7BD1D8F12BD6C87F00B5521F /* UserPhoneNumberModifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhoneNumberModifyViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,6 +278,7 @@
 				7BD1D8E52BD63BF000B5521F /* ProfileSettingViewModel.swift */,
 				7BD1D8E92BD65C8C00B5521F /* ProfileImageChangeViewModel.swift */,
 				7BD1D8ED2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift */,
+				7BD1D8F12BD6C87F00B5521F /* UserPhoneNumberModifyViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -503,6 +508,7 @@
 				7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */,
 				7BD1D8E32BD63A9D00B5521F /* ProfileSettingViewController.swift */,
 				7BD1D8EB2BD6B70300B5521F /* NameModifyViewController.swift */,
+				7BD1D8EF2BD6C7AC00B5521F /* UserPhoneNumberModifyViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -916,6 +922,7 @@
 				7B838DF42BCFADE3000F2E27 /* PhotoSNSView.swift in Sources */,
 				7B0BB2F92BD4ACC800770A04 /* Int+.swift in Sources */,
 				7BCF4A612BC6E5BD00BCE635 /* SignUpButton.swift in Sources */,
+				7BD1D8F22BD6C87F00B5521F /* UserPhoneNumberModifyViewModel.swift in Sources */,
 				7BCF4A3A2BC5AF4A00BCE635 /* RxBaseViewController.swift in Sources */,
 				7B0BB2F72BD4A24200770A04 /* UserProfileViewModel.swift in Sources */,
 				7BCF4A812BC92C7800BCE635 /* CommonError .swift in Sources */,
@@ -953,6 +960,7 @@
 				7BCF4A952BCBA27F00BCE635 /* FollowRouter.swift in Sources */,
 				7BD1D8C32BD5428B00B5521F /* SubProfileViewModel.swift in Sources */,
 				7BC51B4F2BD0A22400E5BF6C /* KingFisherRequset.swift in Sources */,
+				7BD1D8F02BD6C7AC00B5521F /* UserPhoneNumberModifyViewController.swift in Sources */,
 				7BCF4A632BC6E87600BCE635 /* ExUIWindow.swift in Sources */,
 				7B5EF9F42BD4AFB400F022CB /* String+.swift in Sources */,
 				7BD1D8EA2BD65C8C00B5521F /* ProfileImageChangeViewModel.swift in Sources */,
