@@ -38,7 +38,7 @@ final class ProfileImageChangeViewModel: RxViewModelType {
             .flatMapLatest { combined in
                 print("Model: \(combined.1)")
                 let model = ProfileModifyIn(profile: combined.1)
-                return NetworkManager.profileModify(type: ProfileModifyIn.self, router: .profileMeModify, model:model)
+                return NetworkManager.profileModify(type: ProfileModel.self, router: .profileMeModify, model:model)
             }
             .bind(with: self) { owner, result in
                 switch result {

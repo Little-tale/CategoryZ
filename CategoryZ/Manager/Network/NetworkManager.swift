@@ -248,17 +248,16 @@ extension NetworkManager {
                     print("여기가 100퍼다 : \(profile)")
                     multipartFromData.append(
                         profile,
-                        withName: "files",
+                        withName: "profile",
                         fileName: "CategoryZ_profile.jpeg",
                         mimeType: "image/jpeg"
                     )
-                    print(multipartFromData.contentType)
-                    print(multipartFromData.contentLength)
                 }
             }, to: url, method: router.method, headers: HTTPHeaders(router.headers), interceptor: AccessTokkenAdapter())
             .responseDecodable(of: type) { response in
                 switch response.result {
                 case .success(let success):
+                    print(success)
                     single(.success(.success(success)))
                 case .failure(let failure):
                     
