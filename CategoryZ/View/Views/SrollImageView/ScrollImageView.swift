@@ -125,28 +125,10 @@ final class ScrollImageView: RxBaseView {
     func setModel(_ urlString: [String]) {
         var imageViews: [UIImageView] = []
         urlString.forEach { image in
-            
             let view = UIImageView()
             view.contentMode = .scaleToFill
             view.backgroundColor = JHColor.darkGray
-            view.kf.setImage(with: URL(string: image), options: [
-                .processor(imageProcesor),
-                .transition(.fade(1)),
-                .cacheOriginalImage,
-                .requestModifier(
-                    KingFisherNet()
-                ),
-            ]) { result in
-                switch result {
-                case .success(let s):
-                    // print(s)
-                    break
-                case .failure(let e):
-                    // 에러 발생시 다 알려야 하는가? 애매한 부분
-                    // print(e.errorDescription)
-                    break
-                }
-            }
+            view.downloadImage(imageUrl: image)
             imageViews.append(view)
         }
         
@@ -174,3 +156,21 @@ extension ScrollImageView {
 }
 
 
+//            view.kf.setImage(with: URL(string: image), options: [
+//                .processor(imageProcesor),
+//                .transition(.fade(1)),
+//                .cacheOriginalImage,
+//                .requestModifier(
+//                    KingFisherNet()
+//                ),
+//            ]) { result in
+//                switch result {
+//                case .success(let s):
+//                    // print(s)
+//                    break
+//                case .failure(let e):
+//                    // 에러 발생시 다 알려야 하는가? 애매한 부분
+//                    // print(e.errorDescription)
+//                    break
+//                }
+//            }

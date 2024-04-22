@@ -6,6 +6,7 @@
 //
 
 import UIKit.UIImage
+import Kingfisher
 
 extension UIImage {
     func blurCiMode(radius: CGFloat) -> UIImage {
@@ -46,5 +47,34 @@ extension UIImage {
             draw(in: CGRect(origin: .zero, size: scaledImageSize))
         }
         return scaledImage
+    }
+}
+
+/*
+ 회고
+ */
+extension UIImageView {
+    func downloadImage(imageUrl: String) {
+        let processor = DownsamplingImageProcessor(size: CGSize(width: 500, height: 500))
+        var scale: CGFloat = 0
+        
+        if let test = UIScreen.current?.scale {
+            scale = test
+        } else {
+            scale = UIScreen.main.scale
+        }
+        
+        KingfisherManager.shared.retrieveImage(with: URL(string: imageUrl)!, options: [
+            .processor(processor),
+            .requestModifier(KingFisherNet()),
+            .scaleFactor(scale),
+        ]) { imageResult in
+            switch imageResult {
+            case .success(let result):
+                self.image = result.image
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }

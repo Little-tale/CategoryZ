@@ -13,7 +13,7 @@ import SnapKit
 final class UserProfileView: RxBaseView {
     let scrollView = UIScrollView(frame: .zero)
     
-    let profileView = ProfileView()
+    let profileView = ProfileAndFollowView()
 
     let leftButton = UIButton().then {
         $0.backgroundColor = JHColor.black

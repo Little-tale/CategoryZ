@@ -68,6 +68,7 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         let request = Observable.merge(
             input.viewDidAppearTrigger
                 .filter({ $0 == true })
+                .take(1)
                 .map({ _ in () }),
             input.needLoadPageTrigger.asObservable()
         )

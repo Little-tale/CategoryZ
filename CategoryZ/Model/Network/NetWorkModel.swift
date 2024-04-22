@@ -166,7 +166,7 @@ final class SNSDataModel: Decodable, Equatable {
                 likes.remove(at: index)
             }
         }
-        
+
     }
     
     static func == (lhs: SNSDataModel, rhs: SNSDataModel) -> Bool {

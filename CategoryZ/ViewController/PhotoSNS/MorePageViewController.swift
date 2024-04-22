@@ -17,7 +17,7 @@ final class MorePageViewController: RxBaseViewController {
    
     
     private
-    let profileView = ProfileView()
+    let profileView = ProfileAndFollowView()
     
     private
     let leftButton = UIButton().then {
