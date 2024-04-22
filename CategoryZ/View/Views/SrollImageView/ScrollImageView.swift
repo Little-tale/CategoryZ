@@ -96,7 +96,7 @@ final class ScrollImageView: RxBaseView {
                         if index == 0 {
                             // 0번째 일때 스크롤뷰 앞
                             make.leading.equalTo(owner.scrollView)
-                        }else {
+                        } else {
                             // 그게아니면 다 전뷰의 뒤를 앞
                             make.leading.equalTo(
                                 imageViews[index - 1].snp.trailing

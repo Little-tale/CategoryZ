@@ -38,7 +38,7 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
         
         
         // 프로필은 뷰가 보일때마다 로드해야 하지 않을까?
-        let viewWillTrigger = rx.viewWillAppear
+        let viewWillTrigger = rx.viewDidAppear
             .filter { $0 == true }
             .map { _ in return () }
         
@@ -84,30 +84,30 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
         }
         .disposed(by: disPoseBag)
         
+        homeView.collectionView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                owner.homeView.collectionView.deselectItem(at: indexPath, animated: true)
+            }
+            .disposed(by: disPoseBag)
         
+        let zipCell = Observable.zip(homeView.collectionView.rx.modelSelected(SettingSection.self), output.successModel.asObservable())
+            
         
-        let zipCollectionViewCell = Observable.zip(homeView.collectionView.rx.itemSelected, homeView.collectionView.rx.modelSelected(SettingSection.self))
-        
-        
-        let zipCellModel = Observable.combineLatest(zipCollectionViewCell, output.successModel.asObservable())
-        
-        zipCellModel
+        zipCell
             .map { cellInfo, model in
-                return(index: cellInfo.0, section: cellInfo.1, model: model)
+                return (cellInfo: cellInfo, model: model)
             }
             .bind(with: self) { owner, cellInfo in
-                print(cellInfo.model)
-                owner.homeView.collectionView.deselectItem(at: cellInfo.index, animated: true)
                 
-                switch cellInfo.section {
+                switch cellInfo.cellInfo {
                 case .profileImage:
                     let vc = UserProfileImageModifyViewController()
                     vc.setModel(cellInfo.model)
                     owner.navigationController?.pushViewController(vc, animated: true)
                 case .name:
-                    break
+                    print("asd")
                 case .phoneNumber:
-                    break
+                    print("asdsa")
                 }
             }
             .disposed(by: disPoseBag)

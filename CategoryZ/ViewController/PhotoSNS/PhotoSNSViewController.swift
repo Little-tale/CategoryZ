@@ -171,6 +171,7 @@ extension UIViewController: NetworkErrorCatchProtocol {
     
     func errorCatch(_ error: NetworkError) {
         showAlert(error: error) { [unowned self] _ in
+            print(error.errorCode)
             if error.errorCode == 419 {
                 goLoginView()
             }
