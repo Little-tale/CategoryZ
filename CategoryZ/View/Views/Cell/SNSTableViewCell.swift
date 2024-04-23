@@ -120,7 +120,8 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         output.userProfileImage
             .filter({ $0 != nil })
             .drive(with: self) { owner, imageURL in
-                owner.profileImageView.downloadImage(imageUrl: imageURL, resizing: CGSize(width: 150, height: 150))
+                print("asd",owner.profileImageView.frame.size)
+                owner.profileImageView.downloadImage(imageUrl: imageURL, resizing: owner.profileImageView.frame.size)
             }
             .disposed(by: disposeBag)
         

@@ -72,16 +72,11 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
                 
                 // 프로파일 이미지
                 if !profileModel.profileImage.isEmpty {
-                    owner.homeView.profileView.profileImageView.kf.setImage(with: profileModel.profileImage.asStringURL,placeholder: JHImage.defaultImage , options: [
-                        .transition(.fade(1)),
-                        .cacheOriginalImage,
-                        .requestModifier(
-                            KingFisherNet()
-                        ),
-                    ])
+                    owner.homeView.profileView.profileImageView.downloadImage(imageUrl: profileModel.profileImage, resizing: CGSize(width: 100, height: 100))
                 }
             }
             .disposed(by: disPoseBag)
+        
         
         // 버튼 분기점
         beProfileType

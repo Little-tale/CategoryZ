@@ -39,7 +39,7 @@ final class SNSTableViewModel: RxViewModelType {
         
         let imageUrl = BehaviorRelay<[String]> (value: [])
         let contents = BehaviorRelay<String> (value: "")
-        let profileImage = PublishRelay<String?> ()
+        let profileImage = BehaviorRelay<String?> (value: nil)
         let profileName = BehaviorRelay(value: "")
         let likeCount = BehaviorRelay(value: "0")
         let comentsCount = BehaviorRelay(value: "0")
@@ -73,6 +73,7 @@ final class SNSTableViewModel: RxViewModelType {
             .withUnretained(self)
             .bind { owner, model in
                 // dump(model)
+                print("프로필: \(model.files)")
                 imageUrl.accept(model.files) // 이미지 링크
                 contents.accept(model.content) // 컨텐트
                 // 내 아이디 이거랑 비교해서 해결

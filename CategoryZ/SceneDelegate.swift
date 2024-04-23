@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -23,7 +24,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = navCon
         window?.makeKeyAndVisible()
         //  GetStartViewController // GetStartViewController
-        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
