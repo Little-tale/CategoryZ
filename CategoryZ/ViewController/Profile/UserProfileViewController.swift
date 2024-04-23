@@ -105,7 +105,7 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
                 case .me:
                     let vc = ProfileSettingViewController()
                     owner.navigationController?.pushViewController(vc, animated: true)
-                case .other(otherUserId: let otherUserId):
+                case .other:
                     break
                 }
             }
@@ -204,6 +204,11 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
                 }
             }
             .disposed(by: disPoseBag)
+        
+        // 팔로우 버튼을 눌렀을때
+        
+        
+        // 팔로워 버튼을 눌렀을때
     }
     
     
