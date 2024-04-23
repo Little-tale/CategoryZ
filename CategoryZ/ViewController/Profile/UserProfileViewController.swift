@@ -20,7 +20,7 @@ import RxDataSources
  productId: 가 문제네...
  */
 
-enum ProfileType{
+enum ProfileType: Equatable{
     case me
     case other(otherUserId: String)
 }

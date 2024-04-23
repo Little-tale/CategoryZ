@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
-
+import Kingfisher
 
 final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
     
@@ -29,6 +29,13 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
         contentView.addSubview(isFollowingButton)
     }
     
+    
+    func setModel(_ model: Creator) {
+        //if let model.
+//        userImageView.downloadImage(imageUrl: <#T##String?#>, resizing: <#T##CGSize#>)
+    }
+    
+    
     override func configureLayout() {
         userImageView.snp.makeConstraints { make in
             make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(20)
@@ -47,6 +54,5 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
             make.centerY.equalTo(userImageView)
             
         }
-        
     }
 }

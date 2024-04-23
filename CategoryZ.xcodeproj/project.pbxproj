@@ -131,6 +131,7 @@
 		7BD1D9112BD798B800B5521F /* FollowerAndFollowingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9102BD798B800B5521F /* FollowerAndFollowingView.swift */; };
 		7BD1D9132BD7998800B5521F /* FollowerAndFolowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9122BD7998800B5521F /* FollowerAndFolowingViewController.swift */; };
 		7BD1D9152BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9142BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift */; };
+		7BD1D9182BD7B42A00B5521F /* FollowerFollowingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9172BD7B42A00B5521F /* FollowerFollowingViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -246,6 +247,7 @@
 		7BD1D9102BD798B800B5521F /* FollowerAndFollowingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerAndFollowingView.swift; sourceTree = "<group>"; };
 		7BD1D9122BD7998800B5521F /* FollowerAndFolowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerAndFolowingViewController.swift; sourceTree = "<group>"; };
 		7BD1D9142BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerAndFollwingTableViewCell.swift; sourceTree = "<group>"; };
+		7BD1D9172BD7B42A00B5521F /* FollowerFollowingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerFollowingViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -362,6 +364,7 @@
 		7B11DC7D2BC58B440055D423 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7BD1D9162BD7AE7600B5521F /* FollowerFlowing */,
 				7B0BB2F52BD4A22B00770A04 /* Profile */,
 				7BC51B472BCFF62800E5BF6C /* SNSPhotoMain */,
 				7BA0E0ED2BCD76C5002F0516 /* PostReg */,
@@ -791,6 +794,14 @@
 			path = FollowAndFlowing;
 			sourceTree = "<group>";
 		};
+		7BD1D9162BD7AE7600B5521F /* FollowerFlowing */ = {
+			isa = PBXGroup;
+			children = (
+				7BD1D9172BD7B42A00B5521F /* FollowerFollowingViewModel.swift */,
+			);
+			path = FollowerFlowing;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -909,6 +920,7 @@
 				7BD1D9132BD7998800B5521F /* FollowerAndFolowingViewController.swift in Sources */,
 				7BA0E0D82BCD736C002F0516 /* PostRegView.swift in Sources */,
 				7BCF4A7F2BC9281500BCE635 /* NetworkRouter.swift in Sources */,
+				7BD1D9182BD7B42A00B5521F /* FollowerFollowingViewModel.swift in Sources */,
 				7BA0E0F12BCE0791002F0516 /* KingFisherNet.swift in Sources */,
 				7BCF4A382BC5AD7D00BCE635 /* BaseViewController.swift in Sources */,
 				7BCF4A462BC6CEB900BCE635 /* RxHomeBaseViewController.swift in Sources */,
