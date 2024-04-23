@@ -128,7 +128,9 @@
 		7BD1D8EE2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8ED2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift */; };
 		7BD1D8F02BD6C7AC00B5521F /* UserPhoneNumberModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8EF2BD6C7AC00B5521F /* UserPhoneNumberModifyViewController.swift */; };
 		7BD1D8F22BD6C87F00B5521F /* UserPhoneNumberModifyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D8F12BD6C87F00B5521F /* UserPhoneNumberModifyViewModel.swift */; };
-		7BD1D9112BD798B800B5521F /* FlowAndFlowingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9102BD798B800B5521F /* FlowAndFlowingView.swift */; };
+		7BD1D9112BD798B800B5521F /* FollowerAndFollowingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9102BD798B800B5521F /* FollowerAndFollowingView.swift */; };
+		7BD1D9132BD7998800B5521F /* FollowerAndFolowingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9122BD7998800B5521F /* FollowerAndFolowingViewController.swift */; };
+		7BD1D9152BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9142BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -241,7 +243,9 @@
 		7BD1D8ED2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNameModifyViewModel.swift; sourceTree = "<group>"; };
 		7BD1D8EF2BD6C7AC00B5521F /* UserPhoneNumberModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhoneNumberModifyViewController.swift; sourceTree = "<group>"; };
 		7BD1D8F12BD6C87F00B5521F /* UserPhoneNumberModifyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhoneNumberModifyViewModel.swift; sourceTree = "<group>"; };
-		7BD1D9102BD798B800B5521F /* FlowAndFlowingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowAndFlowingView.swift; sourceTree = "<group>"; };
+		7BD1D9102BD798B800B5521F /* FollowerAndFollowingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerAndFollowingView.swift; sourceTree = "<group>"; };
+		7BD1D9122BD7998800B5521F /* FollowerAndFolowingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerAndFolowingViewController.swift; sourceTree = "<group>"; };
+		7BD1D9142BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerAndFollwingTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -773,6 +777,7 @@
 		7BD1D90E2BD7988B00B5521F /* FollowAndFlowing */ = {
 			isa = PBXGroup;
 			children = (
+				7BD1D9122BD7998800B5521F /* FollowerAndFolowingViewController.swift */,
 			);
 			path = FollowAndFlowing;
 			sourceTree = "<group>";
@@ -780,7 +785,8 @@
 		7BD1D90F2BD7989F00B5521F /* FollowAndFlowing */ = {
 			isa = PBXGroup;
 			children = (
-				7BD1D9102BD798B800B5521F /* FlowAndFlowingView.swift */,
+				7BD1D9102BD798B800B5521F /* FollowerAndFollowingView.swift */,
+				7BD1D9142BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift */,
 			);
 			path = FollowAndFlowing;
 			sourceTree = "<group>";
@@ -900,6 +906,7 @@
 				7B5EF9F82BD4DFC000F022CB /* ProfileHeaderView.swift in Sources */,
 				7BCF4A6F2BC7D96400BCE635 /* UserInfoRegView.swift in Sources */,
 				7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */,
+				7BD1D9132BD7998800B5521F /* FollowerAndFolowingViewController.swift in Sources */,
 				7BA0E0D82BCD736C002F0516 /* PostRegView.swift in Sources */,
 				7BCF4A7F2BC9281500BCE635 /* NetworkRouter.swift in Sources */,
 				7BA0E0F12BCE0791002F0516 /* KingFisherNet.swift in Sources */,
@@ -947,6 +954,7 @@
 				7BCF4A442BC6B3A300BCE635 /* Notification.swift in Sources */,
 				7BCF4A9D2BCBE68400BCE635 /* LoginView.swift in Sources */,
 				7BC51B4B2BD019D600E5BF6C /* CursurModel.swift in Sources */,
+				7BD1D9152BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift in Sources */,
 				7BCF4A2F2BC5A65E00BCE635 /* ViewModelType.swift in Sources */,
 				7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */,
 				7B87F0FC2BD3FE850006178F /* ProfileAndFollowView.swift in Sources */,
@@ -964,7 +972,7 @@
 				7BA0E0E82BCD7593002F0516 /* PlaceholderTextView.swift in Sources */,
 				7BD1D8E82BD6596F00B5521F /* UserProfileImageModifyViewController.swift in Sources */,
 				7B5EF9F62BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift in Sources */,
-				7BD1D9112BD798B800B5521F /* FlowAndFlowingView.swift in Sources */,
+				7BD1D9112BD798B800B5521F /* FollowerAndFollowingView.swift in Sources */,
 				7B838DE02BCEF2DD000F2E27 /* AddCollectionViewCell.swift in Sources */,
 				7BCF4AA42BCBF68E00BCE635 /* LoginViewModel.swift in Sources */,
 				7BCF4A482BC6CEF800BCE635 /* BaseView.swift in Sources */,

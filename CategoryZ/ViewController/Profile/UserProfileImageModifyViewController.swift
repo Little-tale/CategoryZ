@@ -119,8 +119,10 @@ final class UserProfileImageModifyViewController: RxBaseViewController {
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let datas):
-                    owner.profileImageView.image = UIImage(data: datas[0])
-                    publishDataImage.accept(datas[0])
+                    if let image = datas.first {
+                        owner.profileImageView.image = UIImage(data: image)
+                        publishDataImage.accept(image)
+                    }
                 case .failure(let fail):
                     if case .noAuth = fail {
                         owner.SettingAlert()
