@@ -145,6 +145,15 @@ final class MorePageViewController: RxBaseViewController {
             }
             .disposed(by: disPoseBag)
        
+        // 프로필 이미지
+        output.profileModel
+            .drive(with: self) { owner, model in
+                if !model.profileImage.isEmpty {
+                    owner.profileView.profileImageView.downloadImage(imageUrl: model.profileImage, resizing: owner.profileView.profileImageView.frame.size)
+                }
+            }
+            .disposed(by: disPoseBag
+            )
     }
     
     override func configureHierarchy() {

@@ -14,7 +14,7 @@ final class UserProfileView: RxBaseView {
     let scrollView = UIScrollView(frame: .zero)
     
     let profileView = ProfileAndFollowView()
-
+    
     let leftButton = UIButton().then {
         $0.backgroundColor = JHColor.black
         $0.tintColor = JHColor.white

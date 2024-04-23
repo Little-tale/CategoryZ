@@ -134,7 +134,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 moreButtonTap.accept(dataModel)
             }
             .disposed(by: disPoseBag)
-    
+        
         moreButtonTap
             .bind(with: self) { owner, model in
                 let modalViewCon = MorePageViewController()
@@ -171,7 +171,6 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         imageView.image = JHImage.appLogoImage
         navigationItem.titleView = imageView
     }
-    
 }
 
 extension UIViewController: NetworkErrorCatchProtocol {

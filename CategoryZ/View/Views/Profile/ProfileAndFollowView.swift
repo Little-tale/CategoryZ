@@ -22,13 +22,17 @@ final class ProfileAndFollowView: BaseView {
         $0.text = "Following"
     }
     
+    let followingButton = UIButton()
     
     let followerCountLabel = UILabel().then {
         $0.text = "0"
     }
     private let followerLabel = UILabel().then {
-        $0.text = "Followers"
+        $0.text = "followers"
     }
+    
+    
+    let followerButton = UIButton()
     
     
     let postsCountLabel = UILabel().then {
@@ -67,6 +71,8 @@ final class ProfileAndFollowView: BaseView {
         addSubview(profileImageView)
         addSubview(userNameLabel)
         addSubview(horizonStackView)
+        addSubview(followerButton)
+        addSubview(followingButton)
     }
     
     override func configureLayout() {
@@ -82,6 +88,15 @@ final class ProfileAndFollowView: BaseView {
         horizonStackView.snp.makeConstraints { make in
             make.top.equalTo(userNameLabel.snp.bottom).offset(14)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(12)
+        }
+        
+        followingButton.snp.makeConstraints { make in
+            make.horizontalEdges.bottom.equalTo(followingLabel)
+            make.top.equalTo(followingCountLabel)
+        }
+        followerButton.snp.makeConstraints { make in
+            make.horizontalEdges.bottom.equalTo(followerLabel)
+            make.top.equalTo(followerCountLabel)
         }
     }
     override func designView() {
