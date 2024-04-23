@@ -40,6 +40,7 @@ final class FollowerAndFolowingViewController: RxHomeBaseViewController<Follower
     }
     
     func setModel(_ creator: [Creator], followType: FollowType) {
+        navigationSetting(followType)
         
     }
     
@@ -47,5 +48,15 @@ final class FollowerAndFolowingViewController: RxHomeBaseViewController<Follower
         
     }
     
-    
+    private
+    func navigationSetting(_ model: FollowType) {
+        var title = ""
+        switch model {
+        case .follower:
+            title = "팔로워"
+        case .following:
+            title = "팔로잉"
+        }
+        navigationItem.title = title
+    }
 }

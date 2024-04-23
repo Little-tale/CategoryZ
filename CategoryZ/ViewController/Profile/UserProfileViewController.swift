@@ -205,10 +205,32 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             }
             .disposed(by: disPoseBag)
         
-        // 팔로우 버튼을 눌렀을때
-        
-        
         // 팔로워 버튼을 눌렀을때
+        homeView.profileView.followerButton.rx
+            .tap
+            .throttle(.milliseconds(100), scheduler: MainScheduler.instance)
+            .withLatestFrom(output.outputProfile)
+            .map { $0.followers }
+            .bind(with: self) { owner, follower in
+                let vc = FollowerAndFolowingViewController()
+                vc.setModel(follower, followType: .follower(owner.profileType))
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
+        
+        // 팔로잉 버튼을 눌렀을때
+        homeView.profileView.followingButton.rx
+            .tap
+            .throttle(.milliseconds(100), scheduler: MainScheduler.instance)
+            .withLatestFrom(output.outputProfile)
+            .map { $0.following }
+            .bind(with: self) { owner, following in
+                let vc = FollowerAndFolowingViewController()
+                vc.setModel(following, followType: .follower(owner.profileType))
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
+        
     }
     
     
