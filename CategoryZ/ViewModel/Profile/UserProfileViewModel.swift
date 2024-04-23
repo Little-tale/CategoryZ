@@ -84,6 +84,7 @@ final class UserProfileViewModel: RxViewModelType {
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let profile):
+                    print("@@@@###",profile.profileImage)
                     outputProfile.onNext(profile)
                 case .failure(let error):
                     networkError.onNext(error)

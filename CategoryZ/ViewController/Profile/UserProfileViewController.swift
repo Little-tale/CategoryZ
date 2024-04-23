@@ -225,6 +225,7 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             .withLatestFrom(output.outputProfile)
             .map { $0.following }
             .bind(with: self) { owner, following in
+                
                 let vc = FollowerAndFolowingViewController()
                 vc.setModel(following, followType: .follower(owner.profileType))
                 owner.navigationController?.pushViewController(vc, animated: true)

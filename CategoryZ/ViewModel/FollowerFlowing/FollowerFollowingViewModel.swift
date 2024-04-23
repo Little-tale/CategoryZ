@@ -26,7 +26,7 @@ final class FollowerFollowingViewModel: RxViewModelType {
     
     var disposeBag: DisposeBag = .init()
     
-    var FollowUsers: [Creator] = []
+    var followUsers: [Creator] = []
     
     
     struct Input {
@@ -86,20 +86,21 @@ final class FollowerFollowingViewModel: RxViewModelType {
         
         Observable.combineLatest(publishMyProfile, input.inputPersons)
             .map { profileModel, creators in
-                let myFollowIds = profileModel.following.map { $0.userID }
+                let myFollowIds = profileModel
+                    .following.map { $0.userID }
                 
                 return creators.map { creator in
-                    creator.changeState(myFollowIds.contains(creator.userID))
-                    return creator
+                    print("@@@@",creator.profileImage)
+                    var modifiedCreator = creator
+                    modifiedCreator.isFollow = myFollowIds.contains(creator.userID)
+                    return modifiedCreator
                 }
             }
             .bind(with: self) { owner, persons in
-                owner.FollowUsers = persons
-                followTypePersons.onNext(owner.FollowUsers)
+                owner.followUsers = persons
+                followTypePersons.onNext(owner.followUsers)
             }
             .disposed(by: disposeBag)
-            
-                    
         
         return Output(
             networkError: networkError.asDriver(

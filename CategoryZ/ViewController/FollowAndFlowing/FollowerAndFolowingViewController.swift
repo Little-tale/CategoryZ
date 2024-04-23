@@ -52,7 +52,7 @@ final class FollowerAndFolowingViewController: RxHomeBaseViewController<Follower
         let behivorPersons = BehaviorRelay(value: creator)
         let behivorFollowType = BehaviorRelay(value: followType)
         let startTrigger = rx.viewDidAppear
-        
+        dump(creator)
         let input = FollowerFollowingViewModel.Input(
             inputPersons: behivorPersons,
             inputFollowTypes: behivorFollowType,
@@ -70,9 +70,10 @@ final class FollowerAndFolowingViewController: RxHomeBaseViewController<Follower
         output.outputOtherUser
             .drive(homeView.tableView.rx.items(cellIdentifier: FollowerAndFollwingTableViewCell.identi, cellType: FollowerAndFollwingTableViewCell.self))
         { row, item, cell in
-            cell.backgroundColor = .like
+            cell.setModel(item, followType: followType)
         }
         .disposed(by: disPoseBag)
+       
     }
     
     private
