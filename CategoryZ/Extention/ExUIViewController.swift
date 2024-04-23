@@ -19,13 +19,10 @@ extension UIViewController {
         let vc = isNavi ? UINavigationController(rootViewController: viewController) : viewController
         sceneDelegate?.window?.rootViewController = vc
         sceneDelegate?.window?.makeKey()
-//        if isPresent {
-//            present(vc, animated: false)
-//        }
+
     }
     
     func goLoginView() {
-        
         let vc = LoginViewController()
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
             return
@@ -34,7 +31,6 @@ extension UIViewController {
     
         sceneDelegate?.window?.rootViewController = vc
         sceneDelegate?.window?.makeKeyAndVisible()
-
     }
 }
 

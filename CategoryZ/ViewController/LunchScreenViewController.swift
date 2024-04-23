@@ -13,7 +13,6 @@ final class LunchScreenViewController: RxHomeBaseViewController<FirstView> {
     
     let viewModel = FirstViewValidViewModel()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +41,7 @@ final class LunchScreenViewController: RxHomeBaseViewController<FirstView> {
                 }
             }
             .disposed(by: disPoseBag)
+        
     }
     
     

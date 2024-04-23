@@ -91,9 +91,9 @@ final class FollowerFollowingViewModel: RxViewModelType {
                 
                 return creators.map { creator in
                     print("@@@@",creator.profileImage)
-                    var modifiedCreator = creator
-                    modifiedCreator.isFollow = myFollowIds.contains(creator.userID)
-                    return modifiedCreator
+
+                    creator.isFollow = myFollowIds.contains(creator.userID)
+                    return creator
                 }
             }
             .bind(with: self) { owner, persons in

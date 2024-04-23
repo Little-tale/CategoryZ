@@ -193,11 +193,14 @@ struct ComentsModel: Decodable {
 }
 
 // 만든이
-struct Creator: Decodable , Hashable{
+final class Creator: Decodable , Equatable{
+
     let userID, nick: String // 유저이름 , 유저 아이디
     let profileImage: String? // 프로필 이미지들
     
     var isFollow = false
+    
+    let uuid = UUID()
     
     enum CodingKeys: String, CodingKey {
         case userID = "user_id"
@@ -210,9 +213,8 @@ struct Creator: Decodable , Hashable{
         self.profileImage = try container.decodeIfPresent(String.self, forKey: .profileImage)
     }
     
-    mutating
-    func changeState(_ bool: Bool) {
-        isFollow = bool
+    static func == (lhs: Creator, rhs: Creator) -> Bool {
+        lhs.uuid == rhs.uuid
     }
 }
 
@@ -220,8 +222,8 @@ struct Creator: Decodable , Hashable{
 
 /// 팔로우 모델
 struct FollowModel: Decodable {
-    let nick: String
-    let opponentNick: String
+    let nick: String // 이름
+    let opponentNick: String // 상대 이름
     let followingStatus: Bool
     
     

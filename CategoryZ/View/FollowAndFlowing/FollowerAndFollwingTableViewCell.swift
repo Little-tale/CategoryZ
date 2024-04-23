@@ -20,6 +20,8 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
     private
     let userNameLabel = UILabel()
     
+    weak var errorCatch: NetworkErrorCatchProtocol?
+    
     private
     let isFollowingButton = UIButton().then {
         $0.backgroundColor = JHColor.darkGray
@@ -35,16 +37,43 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
         contentView.addSubview(isFollowingButton)
     }
     
+    let viewModel = FollowerAndFollwingTableViewCellViewModel()
     
     func setModel(_ model: Creator, followType: FollowType) {
         subscribe(model,followType)
-
+        
     }
     
     private
     func subscribe(_ model: Creator,_ followType: FollowType) {
-        let data = Observable.just(model)
-            .share()
+        
+        let data = BehaviorRelay(value: model)
+
+        
+        let behaivorModel = data
+        let behaivorFollowType = BehaviorRelay<FollowType> (value: followType)
+        
+        let input = FollowerAndFollwingTableViewCellViewModel.Input(
+            behaivorModel: behaivorModel,
+            behaivorFollowType: behaivorFollowType,
+            buttonTap: isFollowingButton.rx.tap
+        )
+        
+        let output = viewModel.transform(input)
+        
+        // 네트워크 에러
+        output.networkError
+            .drive(with: self) { owner , error in
+                owner.errorCatch?.errorCatch(error)
+            }
+            .disposed(by: disposeBag)
+        
+        output.changedModel
+            .drive(with: self) { owner, creator in
+                var buttonTitle = creator.isFollow ? "팔로잉" : "팔로우"
+                owner.isFollowingButton.setTitle(buttonTitle, for: .normal)
+            }
+            .disposed(by: disposeBag)
         
         data.bind(with: self) { owner, creator in
             // print(creator.profileImage)
@@ -60,7 +89,9 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
         
         data.bind(with: self) { owner, creator in
             var buttonTitle = ""
+            
             switch followType {
+                
             case .follower(let profileType):
                 switch profileType {
                 case .me:
@@ -68,17 +99,21 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
                 case .other:
                     buttonTitle = creator.isFollow ? "팔로잉" : "팔로우"
                 }
+                
             case .following(let profileType):
+                
                 switch profileType {
                 case .me:
                     buttonTitle = creator.isFollow ? "팔로잉" : "팔로우"
                 case .other:
                     buttonTitle = creator.isFollow ? "팔로잉" : "팔로우"
                 }
+                
             }
             owner.isFollowingButton.setTitle(buttonTitle, for: .normal)
         }
         .disposed(by: disposeBag)
+        
         
     }
     
@@ -98,6 +133,7 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
             make.centerY.equalTo(userImageView)
             make.leading.equalTo(userImageView.snp.trailing).offset(10)
         }
+        
         isFollowingButton.snp.makeConstraints { make in
             make.width.equalTo(65)
             make.height.equalTo(30)
@@ -106,5 +142,10 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
             make.centerY.equalTo(userImageView)
             
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        viewModel.disposeBag = .init()
     }
 }
