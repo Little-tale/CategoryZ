@@ -84,7 +84,6 @@ extension UIImageView {
             case .success(let result):
                 self.image = result.image
             case .failure(let error):
-                // print(error)
                 break
             }
         }

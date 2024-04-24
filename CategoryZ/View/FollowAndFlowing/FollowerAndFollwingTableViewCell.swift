@@ -15,19 +15,21 @@ import Kingfisher
 final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
     
     private
-    let userImageView = CircleImageView(frame: .zero)
+    let userImageView = CircleImageView(frame: .zero).then {
+        $0.tintColor = JHColor.black
+    }
     
     private
-    let userNameLabel = UILabel()
+    let userNameLabel = UILabel().then {
+        $0.font = JHFont.UIKit.bo20
+        $0.textColor = JHColor.black
+    }
     
     weak var errorCatch: NetworkErrorCatchProtocol?
     
     private
     let isFollowingButton = UIButton().then {
-        $0.backgroundColor = JHColor.darkGray
-        $0.tintColor = JHColor.black
-        $0.layer.cornerRadius = 12
-        $0.clipsToBounds = true
+        $0.configuForFollowing()
     }
     
     
@@ -62,7 +64,10 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
                 owner.isFollowingButton.setTitle(title, for: .normal)
                 
                 if let image = creator.profileImage {
+                    print("이미지 불러오긴함 ",image)
                     owner.userImageView.downloadImage(imageUrl: image, resizing: owner.userImageView.frame.size)
+                } else {
+                    owner.userImageView.image = JHImage.defaultImage
                 }
                 
                 owner.userNameLabel.text = creator.nick
@@ -100,8 +105,8 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
         }
         
         isFollowingButton.snp.makeConstraints { make in
-            make.width.equalTo(65)
-            make.height.equalTo(30)
+            // make.width.equalTo(65)
+            make.height.equalTo(35)
             make.trailing.equalTo(contentView.safeAreaLayoutGuide)
                 .inset(20)
             make.centerY.equalTo(userImageView)

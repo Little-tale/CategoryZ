@@ -82,7 +82,6 @@ final class FollowerAndFolowingViewController: RxHomeBaseViewController<Follower
             print("셀입장에서",item.isFollow)
             cell.errorCatch = self
             cell.setModel(item, myID)
-            cell.backgroundColor = .red
         }
         .disposed(by: disPoseBag)
         
