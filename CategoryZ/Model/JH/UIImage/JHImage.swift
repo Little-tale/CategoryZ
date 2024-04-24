@@ -25,4 +25,6 @@ extension JHImage {
     static let appLogoImage: UIImage = .onboardP
     
     static let moreImage: UIImage? = UIImage(systemName: "ellipsis")
+    
+    static let sendImage: UIImage? = UIImage(systemName: "paperplane.circle.fill")
 }

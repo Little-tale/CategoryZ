@@ -104,7 +104,6 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
                     let title = bool ? "팔로잉" : "팔로우"
                     owner.homeView.leftButton.setTitle(title, for: .normal)
                 }
-                
             }
             .disposed(by: disPoseBag)
         
