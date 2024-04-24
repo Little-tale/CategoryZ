@@ -30,6 +30,9 @@
 		7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCAA2BC591070055D423 /* TargetType.swift */; };
 		7B5E512D2BD9135E00918C53 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512C2BD9135E00918C53 /* CommentViewController.swift */; };
 		7B5E51302BD91BD700918C53 /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512F2BD91BD700918C53 /* CommentTextView.swift */; };
+		7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */; };
+		7B5E51342BD9699400918C53 /* ExUILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E51332BD9699400918C53 /* ExUILabel+.swift */; };
+		7B5E51372BD96BC100918C53 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E51362BD96BC100918C53 /* CommentViewModel.swift */; };
 		7B5EF9F42BD4AFB400F022CB /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EF9F32BD4AFB400F022CB /* String+.swift */; };
 		7B5EF9F62BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */; };
 		7B5EF9F82BD4DFC000F022CB /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EF9F72BD4DFC000F022CB /* ProfileHeaderView.swift */; };
@@ -155,6 +158,9 @@
 		7B11DCAA2BC591070055D423 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
 		7B5E512C2BD9135E00918C53 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		7B5E512F2BD91BD700918C53 /* CommentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
+		7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
+		7B5E51332BD9699400918C53 /* ExUILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExUILabel+.swift"; sourceTree = "<group>"; };
+		7B5E51362BD96BC100918C53 /* CommentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewModel.swift; sourceTree = "<group>"; };
 		7B5EF9F32BD4AFB400F022CB /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostCollectionViewCell.swift; sourceTree = "<group>"; };
 		7B5EF9F72BD4DFC000F022CB /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -372,6 +378,7 @@
 		7B11DC7D2BC58B440055D423 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7B5E51352BD96BB500918C53 /* Comment */,
 				7BD1D9162BD7AE7600B5521F /* FollowerFlowing */,
 				7B0BB2F52BD4A22B00770A04 /* Profile */,
 				7BC51B472BCFF62800E5BF6C /* SNSPhotoMain */,
@@ -460,17 +467,18 @@
 		7B5E512B2BD9134500918C53 /* CommentView */ = {
 			isa = PBXGroup;
 			children = (
-				7B5E512E2BD9197500918C53 /* Sub */,
+				7B5E512F2BD91BD700918C53 /* CommentTextView.swift */,
+				7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */,
 			);
 			path = CommentView;
 			sourceTree = "<group>";
 		};
-		7B5E512E2BD9197500918C53 /* Sub */ = {
+		7B5E51352BD96BB500918C53 /* Comment */ = {
 			isa = PBXGroup;
 			children = (
-				7B5E512F2BD91BD700918C53 /* CommentTextView.swift */,
+				7B5E51362BD96BC100918C53 /* CommentViewModel.swift */,
 			);
-			path = Sub;
+			path = Comment;
 			sourceTree = "<group>";
 		};
 		7B838DD82BCEC953000F2E27 /* LunchScreen */ = {
@@ -658,6 +666,7 @@
 				7BA0E0E32BCD74B2002F0516 /* EXUIImage.swift */,
 				7B0BB2F82BD4ACC800770A04 /* Int+.swift */,
 				7B5EF9F32BD4AFB400F022CB /* String+.swift */,
+				7B5E51332BD9699400918C53 /* ExUILabel+.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -952,6 +961,7 @@
 				7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */,
 				7BD1D9132BD7998800B5521F /* FollowerAndFolowingViewController.swift in Sources */,
 				7BA0E0D82BCD736C002F0516 /* PostRegView.swift in Sources */,
+				7B5E51342BD9699400918C53 /* ExUILabel+.swift in Sources */,
 				7BCF4A7F2BC9281500BCE635 /* NetworkRouter.swift in Sources */,
 				7BD1D9182BD7B42A00B5521F /* FollowerFollowingViewModel.swift in Sources */,
 				7BA0E0F12BCE0791002F0516 /* KingFisherNet.swift in Sources */,
@@ -1000,6 +1010,7 @@
 				7BCF4A442BC6B3A300BCE635 /* Notification.swift in Sources */,
 				7BCF4A9D2BCBE68400BCE635 /* LoginView.swift in Sources */,
 				7BC51B4B2BD019D600E5BF6C /* CursurModel.swift in Sources */,
+				7B5E51372BD96BC100918C53 /* CommentViewModel.swift in Sources */,
 				7BD1D9152BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift in Sources */,
 				7BCF4A2F2BC5A65E00BCE635 /* ViewModelType.swift in Sources */,
 				7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */,
@@ -1008,6 +1019,7 @@
 				7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */,
 				7BCF4A512BC6DDE200BCE635 /* GetStartViewController.swift in Sources */,
 				7B838DF12BCFACC2000F2E27 /* CategoryZTabbarController.swift in Sources */,
+				7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */,
 				7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */,
 				7B838DDE2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift in Sources */,
 				7BD1D8EE2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift in Sources */,

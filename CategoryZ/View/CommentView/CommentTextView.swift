@@ -13,8 +13,7 @@ final class CommentTextView: BaseView {
     
     private
     let textBoxView = UIView().then {
-        $0.backgroundColor = .green
-
+        $0.backgroundColor = .blue
     }
     
     var textViewHeightConstraint : Constraint?
@@ -43,7 +42,9 @@ final class CommentTextView: BaseView {
         textView.snp.makeConstraints { make in
             make.verticalEdges.leading.equalTo(textBoxView).inset(10)
             make.trailing.equalTo(textBoxView).inset(60)
-            textViewHeightConstraint = make.height.greaterThanOrEqualTo(40).constraint
+            // * 회고
+            textViewHeightConstraint = make.height
+                .equalTo(40).priority(.high).constraint
         }
         regButton.snp.makeConstraints { make in
             make.size.equalTo(44)

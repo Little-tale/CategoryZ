@@ -89,6 +89,18 @@ final class TextValid {
         return matchesPatternBool(string, pattern: pattern)
     }
     
+    
+    func commentValid(_ string: String, maxCount: Int) -> Bool {
+        
+        guard !string.isEmpty else {
+            return false
+        }
+        
+        let pattern = "^[^\\n]{1,\(maxCount)}$"
+        
+        return matchesPatternBool(string, pattern: pattern)
+    }
+    
     private func matchesPattern(_ string: String, pattern: String) -> textValidation {
         do {
             let regex = try NSRegularExpression(pattern: pattern)

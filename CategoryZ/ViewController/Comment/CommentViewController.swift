@@ -13,7 +13,19 @@ import RxCocoa
 
 final class CommentViewController: RxBaseViewController {
     
-    let tableView = UITableView()
+    let tableView = UITableView().then {
+        $0.backgroundColor = .green
+        $0.allowsSelection = true
+        $0.separatorStyle = .none
+        $0.bounces = true
+        $0.showsVerticalScrollIndicator = true
+        $0.contentInset = .zero
+        $0.register(CommentTableViewCell.self, forCellReuseIdentifier: CommentTableViewCell.identi)
+    }
+    
+    
+    let viewModel = CommentViewModel()
+    
     let textBox = CommentTextView(frame: .infinite)
     
     override func viewDidLoad() {
@@ -38,8 +50,42 @@ final class CommentViewController: RxBaseViewController {
     
     private
     func subscribe(){
+        // 텍스트 뷰 자동 사이즈 조절
+        autoResizingTextView()
+        
+        // 텍스트 뷰의 텍스트
+        let textViewText = textBox.textView.rx.text.orEmpty
+        // 등록 버튼
+        let regButtonTap = textBox.regButton.rx.tap
+        
+        let input = CommentViewModel.Input(
+            textViewText: textViewText,
+            regButtonTap: regButtonTap
+        )
+        let output = viewModel.transform(input)
+        
+        // 허용된 텍스트
+        output.validText
+            .drive(textBox.textView.rx.text)
+            .disposed(by: disPoseBag)
+        
+        // 허용된 버튼
+        output.regButtonEnabled
+            .drive(textBox.regButton.rx.isEnabled)
+            .disposed(by: disPoseBag)
+    }
+    
+    
+    
+   
+}
+
+extension CommentViewController {
+    
+    private
+    func autoResizingTextView() {
         textBox.textView.rx.text.orEmpty
-            .observe(on: MainScheduler.instance)
+            .observe(on: MainScheduler.instance) // *회고
             .bind(with: self) { owner, text in
                 let size = CGSize(width: owner.textBox.textView.frame.width, height: CGFloat.infinity)
                 let estimate = owner.textBox.textView.sizeThatFits(size)
@@ -48,4 +94,5 @@ final class CommentViewController: RxBaseViewController {
             }
             .disposed(by: disPoseBag)
     }
+    
 }
