@@ -24,45 +24,96 @@ final class CommentViewModel: RxViewModelType {
     struct Input {
         let textViewText: ControlProperty<String?>
         let regButtonTap: ControlEvent<Void>
+        let postIdInput: BehaviorRelay<String>
     }
     
     struct Output {
         let validText: Driver<String?>
         let regButtonEnabled: Driver<Bool>
+        let networkError: Driver<NetworkError>
     }
     
     func transform(_ input: Input) -> Output {
+        // 공통구역
+        let networkError = PublishRelay<NetworkError> ()
+        
         // 테스트 검사 결과값
             // 텍스트
         let commentValidText = BehaviorRelay<String?>(value: nil)
             // 버튼상태
         let regButtonEnabled = BehaviorRelay(value: false)
         
-        // 테스트 검사 결과값
-        input.textViewText
-            .distinctUntilChanged()
-            .compactMap{ $0 }
-            .withUnretained(self)
-            .bind { owner, text in
-                let bool = owner.textValid.commentValid(text, maxCount: 30)
-                regButtonEnabled.accept(bool)
-                if bool {
-                    commentValidText.accept(text)
-                } else if text == "" {
-                    commentValidText.accept(text)
-                } else {
-                    commentValidText.accept(commentValidText.value)
+        textViewLogic(
+            textViewText: input.textViewText,
+            validText: commentValidText,
+            regButtonEnabled: regButtonEnabled
+        )
+        
+        // 포스트 아이디를 통해 버튼을 탭하면 댓글
+        let postIdInput = input.postIdInput
+        let commentText = commentValidText
+        let regButtonTap = input.regButtonTap
+        
+        let combinePostIdAndComment = Observable
+            .combineLatest(postIdInput, commentText)
+        
+        // -- 네트워크 에러를 방출할수있음
+        
+            
+        regButtonTap
+            .withLatestFrom(combinePostIdAndComment)
+            .compactMap { postID, validText -> (String, String)? in
+                guard let text = validText else {
+                    return nil
                 }
-                print(bool)
+                return (postID, text)
+            }
+            .flatMapLatest { postId, text in
+                let commentWriteQuery = CommentWriteQuery(
+                    content: text
+                )
+                return NetworkManager.fetchNetwork(model:CommentsModel.self , router: .comments(.commentsWrite(query: commentWriteQuery, postId: postId)))
+            }
+            .bind { result in
+                switch result {
+                case .success(let model):
+                    print(model)
+                case .failure(let fail):
+                    networkError.accept(fail)
+                }
             }
             .disposed(by: disposeBag)
     
         return Output(
             validText: commentValidText.asDriver(),
-            regButtonEnabled: regButtonEnabled.asDriver()
+            regButtonEnabled: regButtonEnabled.asDriver(),
+            networkError: networkError.asDriver(onErrorDriveWith: .never())
         )
     }
     
+    private
+    func textViewLogic(
+        textViewText: ControlProperty<String?>,
+        validText: BehaviorRelay<String?>,
+        regButtonEnabled: BehaviorRelay<Bool>
+    )  {
+        // 테스트 검사 결과값
+       textViewText
+            .distinctUntilChanged()
+            .compactMap{ $0 }
+            .bind(with: self) { owner, text in
+                let bool = owner.textValid.commentValid(text, maxCount: 30)
+                regButtonEnabled.accept(bool)
+                if bool {
+                    validText.accept(text)
+                } else if text == "" {
+                    validText.accept(text)
+                } else {
+                    validText.accept(validText.value)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
     
 }
 

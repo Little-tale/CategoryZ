@@ -163,6 +163,19 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)
+        
+        NotificationCenter.default.rx.notification(.commentButtonTap)
+            .bind(with: self) { owner, notification in
+                guard let profileType = notification.userInfo? ["SNSDataModel"] as? SNSDataModel else {
+                    print("SNSDataModel2 변환 실패")
+                    return
+                }
+                let vc = CommentViewController()
+                vc.setModel(profileType.postId, commentsModels: profileType.comments)
+                
+                owner.navigationController?.present(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
     }
     
     override func navigationSetting() {
@@ -173,16 +186,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     }
 }
 
-extension UIViewController: NetworkErrorCatchProtocol {
-    
-    func errorCatch(_ error: NetworkError) {
-        showAlert(error: error) { [unowned self] _ in
-            print(error.errorCode)
-            if error.errorCode == 419 {
-                goLoginView()
-            }
-        }
-    }
+extension UIViewController {
     
     func printMemoryAddress<T: AnyObject>(of object: T, addMesage: String) {
         let address = Unmanaged.passUnretained(object).toOpaque()

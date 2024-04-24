@@ -23,7 +23,7 @@ extension UIViewController {
     }
     
     func goLoginView() {
-        let vc = LoginViewController()
+        let vc = LunchScreenViewController()
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
             return
         }
@@ -129,7 +129,18 @@ extension UIViewController {
             }
         }
     }
-   
+}
+
+extension UIViewController: NetworkErrorCatchProtocol {
+    
+    func errorCatch(_ error: NetworkError) {
+        showAlert(error: error) {[unowned self] _ in
+            if error.errorCode == 419 {
+                goLoginView()
+            }
+        }
+    }
+    
 }
 
 // UIScreen.main 대체 2

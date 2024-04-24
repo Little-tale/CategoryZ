@@ -77,7 +77,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     
     func setModel(_ model: SNSDataModel, _ userId: String, delegate: LikeStateProtocol) {
         
-        let model = BehaviorRelay<SNSDataModel> (value: model)
+        let behModel = BehaviorRelay<SNSDataModel> (value: model)
         let userId = BehaviorRelay<String> (value: userId)
         
         // 좋아요 상태 딜리게이트
@@ -86,7 +86,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         //
         let input = SNSTableViewModel
             .Input(
-                snsModel: model,
+                snsModel: behModel,
                 inputUserId: userId,
                 likedButtonTab: likeButton.rx.tap
             )
@@ -157,11 +157,19 @@ final class SNSTableViewCell: RxBaseTableViewCell {
                 NotificationCenter.default.post(
                     name: .selectedMoreButton,
                     object: nil,
-                    userInfo: ["SNSDataModel": model.value]
+                    userInfo: ["SNSDataModel": behModel.value]
                 )
             }
             .disposed(by: disposeBag)
-       
+        
+        // 코멘트 버튼 클릭시 뷰컨에 알리기
+        commentButton.rx.tap
+            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+            .bind { _ in
+                NotificationCenter.default.post(name: .commentButtonTap, object: nil, userInfo: ["SNSDataModel": model])
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     override func designView() {

@@ -124,7 +124,7 @@ final class SNSDataModel: Decodable, Equatable {
     let files: [String]
     var likes: [String]
     let hashTags: [String]
-    var comments: [String]
+    var comments: [CommentsModel]
     var currentRow = 0
     
     enum CodingKeys: String, CodingKey {
@@ -155,7 +155,8 @@ final class SNSDataModel: Decodable, Equatable {
         self.files = try container.decode([String].self, forKey: .files)
         self.likes = try container.decode([String].self, forKey: .likes)
         self.hashTags = try container.decode([String].self, forKey: .hashTags)
-        self.comments = try container.decode([String].self, forKey: .comments)
+        
+        self.comments = try container.decode([CommentsModel].self, forKey: .comments)
     }
     
     func changeLikeModel(_ userID: String, likeBool: Bool) {
@@ -178,11 +179,13 @@ final class SNSDataModel: Decodable, Equatable {
 }
 
 /// 댓글 모델
-struct ComentsModel: Decodable {
+struct CommentsModel: Decodable {
     let commentID: String
     let content: String
     let createdAt: String
     let creator: Creator
+    
+    var postId = ""
     
     enum CodingKeys:String, CodingKey {
         case commentID = "comment_id"

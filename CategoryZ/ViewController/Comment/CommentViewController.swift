@@ -48,9 +48,17 @@ final class CommentViewController: RxBaseViewController {
         }
     }
     
+    
+    func setModel(_ postId: String, commentsModels: [CommentsModel]) {
+        // 포스트 아이디가 필수적
+        
+    }
+    
     private
     func subscribe(){
         // 텍스트 뷰 자동 사이즈 조절
+        // 테스트용 포스트아이디 : 661eb55ce8473868acf68096
+        let testPostId = "661eb55ce8473868acf68096"
         autoResizingTextView()
         
         // 텍스트 뷰의 텍스트
@@ -59,45 +67,36 @@ final class CommentViewController: RxBaseViewController {
         // 등록 버튼
         let regButtonTap = textBox.regButton.rx.tap
         
+        let behPostId = BehaviorRelay(value: testPostId)
+        
         let input = CommentViewModel.Input(
             textViewText: textViewText,
-            regButtonTap: regButtonTap
+            regButtonTap: regButtonTap,
+            postIdInput: behPostId
         )
         let output = viewModel.transform(input)
         
-        // 허용된 텍스트 회고 ( return 이 인식안됨,.... )
-        // 그게 아니라 인식은 되는데 왜 안되는 거지?
+        // 허용된 텍스트 회고 ( return 이슈.... )
         output.validText
             .drive(textBox.textView.rx.value)
             .disposed(by: disPoseBag)
-        
-        output.validText
-            .drive(with: self) { owner, string in
-                owner.textBox.textView.text = string
-            }
-            .disposed(by: disPoseBag)
-        output.validText
-            .drive(textBox.textView.rx.value)
-            .disposed(by: disPoseBag)
-    
-            
-        
+
         // 허용된 버튼
-        output.regButtonEnabled
-            .drive(textBox.regButton.rx.isEnabled)
-            .disposed(by: disPoseBag)
-        
         output.regButtonEnabled
             .drive(with: self) { owner, bool in
                 owner.textBox.regButton.isEnabled = bool
                 owner.textBox.regButton.tintColor = bool ? JHColor.gray : JHColor.likeColor
             }
             .disposed(by: disPoseBag)
+        
+        // 에러 발생시
+        output.networkError
+            .drive(with: self) { owner, error in
+                owner.errorCatch(error)
+            }
+            .disposed(by: disPoseBag)
     }
     
-    
-    
-   
 }
 
 extension CommentViewController {
