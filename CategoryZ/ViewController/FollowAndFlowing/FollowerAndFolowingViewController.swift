@@ -22,12 +22,16 @@ import RxCocoa
  // 타인 : 팔로우 인지 팔로잉인지 나와야 하는데 이때 보인 프로필 조회를 또 해야 하나?
  // 팔로잉 도 똑같음
  
- 
+ /*
+  여기서 유저 아이디가 본인 아이디와 같다면....?
+  그때도... 하...
+  다시 갈고 해보자
+  */
  
  */
 enum FollowType {
-    case follower(ProfileType)
-    case following(ProfileType)
+    case follower
+    case following
 }
 
 final class FollowerAndFolowingViewController: RxHomeBaseViewController<FollowerAndFollowingView> {
@@ -41,40 +45,48 @@ final class FollowerAndFolowingViewController: RxHomeBaseViewController<Follower
         homeView.tableView.estimatedRowHeight = 150
     }
     
-    func setModel(_ creator: [Creator], followType: FollowType) {
+    func setModel(_ creator: [Creator], followType: FollowType, isME: ProfileType) {
         navigationSetting(followType)
-        subscribe(creator, followType: followType)
+        subscribe(creator, isMe: isME, followType: followType)
     }
 
-    
     private
-    func subscribe(_ creator: [Creator], followType: FollowType) {
-        let behivorPersons = BehaviorRelay(value: creator)
-        let behivorFollowType = BehaviorRelay(value: followType)
-        let startTrigger = rx.viewDidAppear
+    func subscribe(_ creator: [Creator], isMe: ProfileType,followType: FollowType) {
         dump(creator)
+        let myID = UserIDStorage.shared.userID
+        guard let myID else {
+            errorCatch(.refreshTokkenError(statusCode: 419, description: "ID Error"))
+            return
+        }
+        
+        let behivorPersons = BehaviorRelay(value: creator)
+        let behaviorRelay = BehaviorRelay(value: isMe)
         
         let input = FollowerFollowingViewModel.Input(
             inputPersons: behivorPersons,
-            inputFollowTypes: behivorFollowType,
-            startTrigger: startTrigger
+            inputProfileType: behaviorRelay,
+            followType: followType,
+            inputMyId: myID
         )
         
         let output = viewModel.transform(input)
         
+        // 에러 발생시
         output.networkError
             .drive(with: self) { owner, error in
                 owner.errorCatch(error)
             }
             .disposed(by: disPoseBag)
         
-        output.outputOtherUser
-            .drive(homeView.tableView.rx.items(cellIdentifier: FollowerAndFollwingTableViewCell.identi, cellType: FollowerAndFollwingTableViewCell.self))
-        { row, item, cell in
-            cell.setModel(item, followType: followType)
+        output.outputOtherUser.drive(homeView.tableView.rx.items(cellIdentifier: FollowerAndFollwingTableViewCell.identi, cellType: FollowerAndFollwingTableViewCell.self)) { row, item, cell in
+            print("셀입장에서",item.isFollow)
             cell.errorCatch = self
+            cell.setModel(item, myID)
+            cell.backgroundColor = .red
         }
         .disposed(by: disPoseBag)
+        
+       
         
     }
     

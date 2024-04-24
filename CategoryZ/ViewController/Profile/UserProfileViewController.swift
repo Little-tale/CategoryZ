@@ -213,7 +213,11 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             .map { $0.followers }
             .bind(with: self) { owner, follower in
                 let vc = FollowerAndFolowingViewController()
-                vc.setModel(follower, followType: .follower(owner.profileType))
+                vc.setModel(
+                    follower,
+                    followType: .follower,
+                    isME: owner.profileType
+                )
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)
@@ -227,7 +231,12 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             .bind(with: self) { owner, following in
                 
                 let vc = FollowerAndFolowingViewController()
-                vc.setModel(following, followType: .follower(owner.profileType))
+                vc.setModel(
+                    following,
+                    followType: .following,
+                    isME: owner.profileType
+                )
+                
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)

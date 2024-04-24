@@ -37,84 +37,49 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
         contentView.addSubview(isFollowingButton)
     }
     
+    private
     let viewModel = FollowerAndFollwingTableViewCellViewModel()
     
-    func setModel(_ model: Creator, followType: FollowType) {
-        subscribe(model,followType)
+    func setModel(_ model: Creator, _ myID: String) {
+        subscribe(model, myID)
         
     }
     
     private
-    func subscribe(_ model: Creator,_ followType: FollowType) {
-        
-        let data = BehaviorRelay(value: model)
-
-        
-        let behaivorModel = data
-        let behaivorFollowType = BehaviorRelay<FollowType> (value: followType)
+    func subscribe(_ model: Creator, _ myID: String) {
+        let behaiviorModel = BehaviorRelay(value: model)
         
         let input = FollowerAndFollwingTableViewCellViewModel.Input(
-            behaivorModel: behaivorModel,
-            behaivorFollowType: behaivorFollowType,
+            behaivorModel: behaiviorModel,
             buttonTap: isFollowingButton.rx.tap
         )
         
         let output = viewModel.transform(input)
         
-        // 네트워크 에러
+        behaiviorModel
+            .bind(with: self) { owner, creator in
+                let title = creator.isFollow ? "팔로잉" : "팔로우"
+                owner.isFollowingButton.setTitle(title, for: .normal)
+                
+                if let image = creator.profileImage {
+                    owner.userImageView.downloadImage(imageUrl: image, resizing: owner.userImageView.frame.size)
+                }
+                
+                owner.userNameLabel.text = creator.nick
+                owner.isFollowingButton.isHidden = myID == creator.userID
+            }
+            .disposed(by: disposeBag)
+        
+        
         output.networkError
-            .drive(with: self) { owner , error in
+            .drive(with: self) { owner, error in
                 owner.errorCatch?.errorCatch(error)
             }
             .disposed(by: disposeBag)
         
         output.changedModel
-            .drive(with: self) { owner, creator in
-                var buttonTitle = creator.isFollow ? "팔로잉" : "팔로우"
-                owner.isFollowingButton.setTitle(buttonTitle, for: .normal)
-            }
+            .drive(behaiviorModel)
             .disposed(by: disposeBag)
-        
-        data.bind(with: self) { owner, creator in
-            // print(creator.profileImage)
-            if let image = creator.profileImage {
-                owner.userImageView.downloadImage(imageUrl: image, resizing: owner.userImageView.frame.size)
-            } else {
-                owner.userImageView.image = JHImage.defaultImage
-            }
-            owner.userNameLabel.text = creator.nick
-        }
-        .disposed(by: disposeBag)
-        
-        
-        data.bind(with: self) { owner, creator in
-            var buttonTitle = ""
-            
-            switch followType {
-                
-            case .follower(let profileType):
-                switch profileType {
-                case .me:
-                    owner.isFollowingButton.isHidden = true
-                case .other:
-                    buttonTitle = creator.isFollow ? "팔로잉" : "팔로우"
-                }
-                
-            case .following(let profileType):
-                
-                switch profileType {
-                case .me:
-                    buttonTitle = creator.isFollow ? "팔로잉" : "팔로우"
-                case .other:
-                    buttonTitle = creator.isFollow ? "팔로잉" : "팔로우"
-                }
-                
-            }
-            owner.isFollowingButton.setTitle(buttonTitle, for: .normal)
-        }
-        .disposed(by: disposeBag)
-        
-        
     }
     
     override func configureLayout() {

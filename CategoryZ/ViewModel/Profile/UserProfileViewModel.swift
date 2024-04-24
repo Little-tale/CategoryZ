@@ -63,6 +63,7 @@ final class UserProfileViewModel: RxViewModelType {
         .bind { result in
             switch result {
             case .success(let profile):
+                print("완전 시작 팔로워들 : ",profile.followers.map({ $0.userID }))
                 outputProfile.onNext(profile)
             case .failure(let error):
                 networkError.onNext(error)
