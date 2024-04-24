@@ -41,6 +41,18 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        guard let userId = UserIDStorage.shared.userID else {
+            errorCatch(.refreshTokkenError(statusCode: 419, description: "로그인 에러 재시도"))
+            return
+        }
+        let reload = PublishSubject<Void> ()
+        
+        rx.viewDidAppear
+            .bind { _ in
+                reload.onNext(())
+            }
+            .disposed(by: disPoseBag)
+        
         let beProfileType = BehaviorRelay(value: profileType)
         // 프로덕트 아이디
         let beProductId = BehaviorRelay(value: ProductID.dailyRoutine)
@@ -52,7 +64,9 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
         let input = UserProfileViewModel.Input(
             inputProfileType: beProfileType,
             inputProducID: beProductId,
-            inputProfileReloadTrigger: reloadTriggerForProfile
+            inputProfileReloadTrigger: reload,
+            userId: userId,
+            leftButtonTap: homeView.leftButton.rx.tap
         )
         
         let output = viewModel.transform(input)
@@ -74,9 +88,17 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
                 if !profileModel.profileImage.isEmpty {
                     owner.homeView.profileView.profileImageView.downloadImage(imageUrl: profileModel.profileImage, resizing: CGSize(width: 100, height: 100))
                 }
+            
             }
             .disposed(by: disPoseBag)
         
+        output
+            .leftButtonState
+            .drive(with: self) { owner, bool in
+                let title = bool ? "팔로잉" : "팔로우"
+                owner.homeView.leftButton.setTitle(title, for: .normal)
+            }
+            .disposed(by: disPoseBag)
         
         // 버튼 분기점
         beProfileType
@@ -87,14 +109,17 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
                 case .me:
                     leftTitle = "프로필 수정"
                     rightTitle = "좋아요한 게시글"
+                    owner.homeView.rightButton.isHidden = false
                 case .other:
-                    leftTitle = "팔로잉"
-                    rightTitle = "팔로우"
+                    owner.homeView.rightButton.isHidden = true
                 }
                 owner.homeView.leftButton.setTitle(leftTitle, for: .normal)
                 owner.homeView.rightButton.setTitle(rightTitle, for: .normal)
             }
             .disposed(by: disPoseBag)
+        
+        
+        
         
         homeView.leftButton.rx
             .tap
