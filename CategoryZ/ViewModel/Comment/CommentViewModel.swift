@@ -41,19 +41,19 @@ final class CommentViewModel: RxViewModelType {
         // 테스트 검사 결과값
         input.textViewText
             .distinctUntilChanged()
+            .compactMap{ $0 }
             .withUnretained(self)
-            .filter { owner, text in
-                print("들어오는 값: \(text)")
-                guard let text else {
-                    return false
-                }
+            .bind { owner, text in
                 let bool = owner.textValid.commentValid(text, maxCount: 30)
                 regButtonEnabled.accept(bool)
-                print("들어오는 값: \(bool)")
-                return bool
-            }
-            .bind { _, text in
-                commentValidText.accept(text)
+                if bool {
+                    commentValidText.accept(text)
+                } else if text == "" {
+                    commentValidText.accept(text)
+                } else {
+                    commentValidText.accept(commentValidText.value)
+                }
+                print(bool)
             }
             .disposed(by: disposeBag)
     

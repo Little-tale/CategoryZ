@@ -55,6 +55,7 @@ final class CommentViewController: RxBaseViewController {
         
         // 텍스트 뷰의 텍스트
         let textViewText = textBox.textView.rx.text
+        
         // 등록 버튼
         let regButtonTap = textBox.regButton.rx.tap
         
@@ -75,6 +76,11 @@ final class CommentViewController: RxBaseViewController {
                 owner.textBox.textView.text = string
             }
             .disposed(by: disPoseBag)
+        output.validText
+            .drive(textBox.textView.rx.value)
+            .disposed(by: disPoseBag)
+    
+            
         
         // 허용된 버튼
         output.regButtonEnabled

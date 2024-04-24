@@ -95,9 +95,12 @@ final class TextValid {
         guard !string.isEmpty else {
             return false
         }
-        let pattern = "^[^\\n]{1,\(maxCount)}$"
-        
-        return matchesPatternBool(string, pattern: pattern)
+        let pattern = "^[^\n]{1,\(maxCount)}$"
+        if string.contains("\n") {
+            return false
+        } else {
+            return matchesPatternBool(string, pattern: pattern)
+        }
     }
     
     private func matchesPattern(_ string: String, pattern: String) -> textValidation {
@@ -114,7 +117,8 @@ final class TextValid {
         }
     }
     
-    private func matchesPatternBool(_ string: String, pattern: String) -> Bool {
+    private 
+    func matchesPatternBool(_ string: String, pattern: String) -> Bool {
         do {
             let regex = try NSRegularExpression(pattern: pattern)
             let range = NSRange(location: 0, length: string.utf16.count)
