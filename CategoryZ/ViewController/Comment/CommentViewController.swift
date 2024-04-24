@@ -54,7 +54,7 @@ final class CommentViewController: RxBaseViewController {
         autoResizingTextView()
         
         // 텍스트 뷰의 텍스트
-        let textViewText = textBox.textView.rx.text.orEmpty
+        let textViewText = textBox.textView.rx.text
         // 등록 버튼
         let regButtonTap = textBox.regButton.rx.tap
         
@@ -64,14 +64,28 @@ final class CommentViewController: RxBaseViewController {
         )
         let output = viewModel.transform(input)
         
-        // 허용된 텍스트
+        // 허용된 텍스트 회고 ( return 이 인식안됨,.... )
+        // 그게 아니라 인식은 되는데 왜 안되는 거지?
         output.validText
-            .drive(textBox.textView.rx.text)
+            .drive(textBox.textView.rx.value)
+            .disposed(by: disPoseBag)
+        
+        output.validText
+            .drive(with: self) { owner, string in
+                owner.textBox.textView.text = string
+            }
             .disposed(by: disPoseBag)
         
         // 허용된 버튼
         output.regButtonEnabled
             .drive(textBox.regButton.rx.isEnabled)
+            .disposed(by: disPoseBag)
+        
+        output.regButtonEnabled
+            .drive(with: self) { owner, bool in
+                owner.textBox.regButton.isEnabled = bool
+                owner.textBox.regButton.tintColor = bool ? JHColor.gray : JHColor.likeColor
+            }
             .disposed(by: disPoseBag)
     }
     

@@ -95,7 +95,6 @@ final class TextValid {
         guard !string.isEmpty else {
             return false
         }
-        
         let pattern = "^[^\\n]{1,\(maxCount)}$"
         
         return matchesPatternBool(string, pattern: pattern)
