@@ -40,7 +40,9 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
+    }
+    override func subscribe() {
         guard let userId = UserIDStorage.shared.userID else {
             errorCatch(.refreshTokkenError(statusCode: 419, description: "로그인 에러 재시도"))
             return
@@ -95,8 +97,14 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
         output
             .leftButtonState
             .drive(with: self) { owner, bool in
-                let title = bool ? "팔로잉" : "팔로우"
-                owner.homeView.leftButton.setTitle(title, for: .normal)
+                switch owner.profileType {
+                case .me:
+                    break
+                case .other:
+                    let title = bool ? "팔로잉" : "팔로우"
+                    owner.homeView.leftButton.setTitle(title, for: .normal)
+                }
+                
             }
             .disposed(by: disPoseBag)
         
@@ -265,7 +273,6 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)
-        
     }
     
     
