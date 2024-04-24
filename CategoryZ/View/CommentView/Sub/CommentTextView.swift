@@ -12,13 +12,20 @@ import Then
 final class CommentTextView: BaseView {
     
     private
-    let textBoxView = UIView()
+    let textBoxView = UIView().then {
+        $0.backgroundColor = .green
+
+    }
+    
+    var textViewHeightConstraint : Constraint?
     
     // 딜리게이트 충돌로 인한 뷰만 구성
-    let textView = UITextView()
+    let textView = UITextView().then {
+        $0.isScrollEnabled = false
+        $0.font = JHFont.UIKit.re17
+    }
     
     let regButton = UIButton().then {
-        $0.setImage(JHImage.sendImage, for: .normal)
         $0.tintColor = JHColor.likeColor
     }
     
@@ -34,12 +41,21 @@ final class CommentTextView: BaseView {
             make.edges.equalTo(safeAreaLayoutGuide)
         }
         textView.snp.makeConstraints { make in
-            make.edges.equalTo(textBoxView).inset(10)
+            make.verticalEdges.leading.equalTo(textBoxView).inset(10)
+            make.trailing.equalTo(textBoxView).inset(60)
+            textViewHeightConstraint = make.height.greaterThanOrEqualTo(40).constraint
         }
         regButton.snp.makeConstraints { make in
-            make.trailing.equalTo(textBoxView)
-            make.verticalEdges.equalTo(textView)
-            make.width.equalTo(textView.snp.height)
+            make.size.equalTo(44)
+            make.trailing.equalTo(textBoxView).inset(8)
+            make.bottom.equalTo(textBoxView).inset(8)
         }
+        regButton.imageView?.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    override func designView() {
+        regButton.setImage(JHImage.sendImage, for: .normal)
+        regButton.imageView?.contentMode = .scaleAspectFit
     }
 }

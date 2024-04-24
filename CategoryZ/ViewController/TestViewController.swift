@@ -16,6 +16,8 @@ final class TestViewController: UIViewController {
     
     let disposeBag = DisposeBag()
     
+    let textBox = CommentTextView(frame: .infinite)
+    
     //let scrollImageView = ScrollImageView(frame: .zero)
 
     override func viewDidLoad() {
@@ -307,6 +309,20 @@ final class TestViewController: UIViewController {
         // 공식문서 방
         guard let screen =  view.window?.windowScene?.screen else { return }
         let screenSize = screen.bounds
+        
+        textBox.textView.rx.text.orEmpty
+            .withUnretained(self)
+            .map{ owner, string in
+                let size = CGSize(width: owner.textBox.textView.frame.width, height: CGFloat.infinity)
+                let estSize = owner.textBox.textView.sizeThatFits(size)
+                return estSize.height
+            }
+            .bind(with: self) { owner, height in
+                owner.textBox.textView.snp.updateConstraints { make in
+                    make
+                }
+            }
+        
     }
     
     @objc

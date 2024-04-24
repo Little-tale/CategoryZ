@@ -28,7 +28,7 @@
 		7B11DCA52BC5902A0055D423 /* authenticationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCA42BC5902A0055D423 /* authenticationRouter.swift */; };
 		7B11DCA72BC590510055D423 /* NetWorkQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCA62BC590510055D423 /* NetWorkQuery.swift */; };
 		7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B11DCAA2BC591070055D423 /* TargetType.swift */; };
-		7B5E512D2BD9135E00918C53 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512C2BD9135E00918C53 /* CommentView.swift */; };
+		7B5E512D2BD9135E00918C53 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512C2BD9135E00918C53 /* CommentViewController.swift */; };
 		7B5E51302BD91BD700918C53 /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512F2BD91BD700918C53 /* CommentTextView.swift */; };
 		7B5EF9F42BD4AFB400F022CB /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EF9F32BD4AFB400F022CB /* String+.swift */; };
 		7B5EF9F62BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */; };
@@ -153,7 +153,7 @@
 		7B11DCA42BC5902A0055D423 /* authenticationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = authenticationRouter.swift; sourceTree = "<group>"; };
 		7B11DCA62BC590510055D423 /* NetWorkQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkQuery.swift; sourceTree = "<group>"; };
 		7B11DCAA2BC591070055D423 /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
-		7B5E512C2BD9135E00918C53 /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
+		7B5E512C2BD9135E00918C53 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		7B5E512F2BD91BD700918C53 /* CommentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
 		7B5EF9F32BD4AFB400F022CB /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -354,7 +354,7 @@
 		7B11DC7C2BC58B3A0055D423 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				7B5E512A2BD9133500918C53 /* Chating */,
+				7B5E512A2BD9133500918C53 /* Comment */,
 				7BD1D90E2BD7988B00B5521F /* FollowAndFlowing */,
 				7B87F0F92BD3FE410006178F /* Profile */,
 				7B838DFA2BCFAE5E000F2E27 /* PhotoSNS */,
@@ -449,18 +449,18 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		7B5E512A2BD9133500918C53 /* Chating */ = {
+		7B5E512A2BD9133500918C53 /* Comment */ = {
 			isa = PBXGroup;
 			children = (
+				7B5E512C2BD9135E00918C53 /* CommentViewController.swift */,
 			);
-			path = Chating;
+			path = Comment;
 			sourceTree = "<group>";
 		};
 		7B5E512B2BD9134500918C53 /* CommentView */ = {
 			isa = PBXGroup;
 			children = (
 				7B5E512E2BD9197500918C53 /* Sub */,
-				7B5E512C2BD9135E00918C53 /* CommentView.swift */,
 			);
 			path = CommentView;
 			sourceTree = "<group>";
@@ -1026,7 +1026,7 @@
 				7B838E082BCFBE9E000F2E27 /* SeletionButton.swift in Sources */,
 				7BA0E0E42BCD74B2002F0516 /* EXUIImage.swift in Sources */,
 				7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */,
-				7B5E512D2BD9135E00918C53 /* CommentView.swift in Sources */,
+				7B5E512D2BD9135E00918C53 /* CommentViewController.swift in Sources */,
 				7B11DCA52BC5902A0055D423 /* authenticationRouter.swift in Sources */,
 				7BCF4A7D2BC922F700BCE635 /* PathRouter.swift in Sources */,
 				7BCF4A952BCBA27F00BCE635 /* FollowRouter.swift in Sources */,
