@@ -29,7 +29,7 @@ final class CommentTableViewCell: RxBaseTableViewCell {
     
     private
     let commentLabel = UILabel().then {
-        $0.numberOfLines = 5
+        $0.numberOfLines = 0
         $0.font = JHFont.UIKit.re14
         $0.textAlignment = .left
     }
@@ -46,6 +46,8 @@ final class CommentTableViewCell: RxBaseTableViewCell {
                 imageUrl: userImage,
                 resizing: userImageView.frame.size
             )
+        } else {
+            userImageView.image = JHImage.defaultImage
         }
         userNameLabel.text = commentsModel.creator.nick
         commentLabel.text = commentsModel.content
