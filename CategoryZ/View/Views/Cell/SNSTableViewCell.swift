@@ -178,7 +178,10 @@ final class SNSTableViewCell: RxBaseTableViewCell {
                     print("SNSDataModelCell 변환 실패")
                     return
                 }
-                owner.commentCountLabel.text = String(snsDataModel.comments.count)
+                print("포스트 아이디: ", model.postId)
+                if model.postId == snsDataModel.postId {
+                    owner.commentCountLabel.text = String(snsDataModel.comments.count)
+                }
             }
             .disposed(by: disposeBag)
     }

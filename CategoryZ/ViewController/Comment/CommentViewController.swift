@@ -76,17 +76,26 @@ final class CommentViewController: RxBaseViewController {
         
         // 등록 버튼
         let regButtonTap = textBox.regButton.rx.tap
+        
         // 포스트 아이디
         let behPostId = BehaviorRelay(value: testPostId)
         
+        // SNS모델
         let behSnsDataModel = BehaviorRelay(value: snsDataModel)
+        
+        // 지워질 모델 indexPath + 삭제 트리거
+        let publishIndexPathForDelete = PublishRelay<IndexPath> ()
+        let publishCurrectDeleteTrigger = PublishRelay<Void> ()
         
         let input = CommentViewModel.Input(
             textViewText: textViewText,
             regButtonTap: regButtonTap,
             postIdInput: behPostId,
-            inputModels: behSnsDataModel
+            inputModels: behSnsDataModel,
+            deleteIndex: publishIndexPathForDelete,
+            deleteTrigger: publishCurrectDeleteTrigger
         )
+        
         let output = viewModel.transform(input)
         
         // 텍스트 뷰 관련 로직
@@ -94,6 +103,32 @@ final class CommentViewController: RxBaseViewController {
             output.validText,
             regButtonEnabled: output.regButtonEnabled
         )
+        // 테이블뷰 관련 로직
+        tableViewBind(
+            output.outputModels,
+            publishIndexPathForDelete,
+            publishCurrectDeleteTrigger
+        )
+        
+        // 에러 발생시
+        output.networkError
+            .drive(with: self) { owner, error in
+                owner.errorCatch(error)
+            }
+            .disposed(by: disPoseBag)
+        
+    }
+}
+
+// MARK: 테이블뷰 바인드
+extension CommentViewController {
+    
+    private
+    func tableViewBind(
+        _ outputModels: Driver<SNSDataModel>,
+        _ publishIndexPathForDelete: PublishRelay<IndexPath>,
+        _ publishCurrectDeleteTrigger: PublishRelay<Void>
+    ) {
         
         let dataSourceRx = DataSource { dataSource, tableView, indexPath, item in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentTableViewCell.identi) as? CommentTableViewCell else {
@@ -104,7 +139,9 @@ final class CommentViewController: RxBaseViewController {
             return cell
         }
         
-        output.outputModels
+        dataSourceRx.canEditRowAtIndexPath = {_, _ in true}
+        
+        outputModels
             .map({ models in
                 return [CommentSection(items: models.comments)]
             })
@@ -115,24 +152,19 @@ final class CommentViewController: RxBaseViewController {
             )
             .disposed(by: disPoseBag)
         
-        // 에러 발생시
-        output.networkError
-            .drive(with: self) { owner, error in
-                owner.errorCatch(error)
+        tableView.rx.itemDeleted
+            .bind(with: self){ owner, indexPath in
+                publishIndexPathForDelete.accept(indexPath)
+                
+                owner.showAlert(
+                    title: "정말 삭제하시겠어요?",
+                    actionTitle: "삭제") { _ in
+                        publishCurrectDeleteTrigger.accept(())
+                    }
             }
             .disposed(by: disPoseBag)
-        
-        // 이 방법 또는
-        rx.viewDidDisapear
-            .bind { _ in
-                NotificationCenter.default.post(name: .commentDidDisAppear, object: nil)
-            }
-            .disposed(by: disPoseBag)
-        
     }
 }
-
-
 
 
 // MARK: 텍스트뷰 로직
@@ -142,8 +174,7 @@ extension CommentViewController {
         _ validText: Driver<String?>,
         regButtonEnabled: Driver<Bool>
     ){
-      
-        
+    
         validText
             .drive(textBox.textView.rx.value)
             .disposed(by: disPoseBag)

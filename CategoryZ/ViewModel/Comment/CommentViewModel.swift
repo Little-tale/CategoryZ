@@ -26,6 +26,8 @@ final class CommentViewModel: RxViewModelType {
         let regButtonTap: ControlEvent<Void>
         let postIdInput: BehaviorRelay<String>
         let inputModels: BehaviorRelay<SNSDataModel>
+        let deleteIndex: PublishRelay<IndexPath>
+        let deleteTrigger: PublishRelay<Void>
     }
     
     struct Output {
@@ -62,13 +64,7 @@ final class CommentViewModel: RxViewModelType {
         let models = input.inputModels
         
         let originalModelsModel = input.inputModels
-        // 테이블뷰 모델들
-//        let outputModels = models
-//            .map { models in
-//                return [CommentSection(items: models.value)]
-//            }
             
-        
         // -- 네트워크 에러를 방출할수있음
         // 등록 버튼 클릭시의 로직
         regButtonTapLogic(
@@ -77,6 +73,16 @@ final class CommentViewModel: RxViewModelType {
             networkError,
             originalModelsModel
         )
+        // 데이터 모델 지우기
+        let deleteIndex = input.deleteIndex
+        let deleteTrigger = input.deleteTrigger
+        
+        deleModelLogic(
+            deleteIndex,
+            deleteTrigger,
+            originalModelsModel,
+            networkError
+        )
         
         return Output(
             validText: commentValidText.asDriver(),
@@ -84,6 +90,66 @@ final class CommentViewModel: RxViewModelType {
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
             outputModels: models.asDriver()
         )
+    }
+    
+    private
+    func deleModelLogic(_
+                        deleteIndex: PublishRelay<IndexPath>,
+                        _ deleteTrigger: PublishRelay<Void>,
+                        _ originalModelsModel: BehaviorRelay<SNSDataModel>,
+                        _ networkError: PublishRelay<NetworkError>
+    ) {
+        let modelCombineCombind = Observable
+            .combineLatest(
+                deleteIndex,
+                originalModelsModel
+            )
+        
+        let publishRealDelete = PublishRelay<CommentsModel> ()
+        
+        deleteTrigger
+            .withLatestFrom(modelCombineCombind)
+            .throttle(
+                .milliseconds(100),
+                scheduler: MainScheduler.instance
+            )
+            .bind { indexPath, snsDataModel in
+                let model = snsDataModel
+                print("중간 : ",model.postId)
+                let willDeleteModel = model.comments[indexPath.row]
+                willDeleteModel.postId = snsDataModel.postId
+                publishRealDelete.accept(willDeleteModel)
+                model.comments.remove(at: indexPath.row)
+                originalModelsModel.accept(model)
+            }
+            .disposed(by: disposeBag)
+        
+        
+        publishRealDelete
+            .flatMapLatest { model in
+                print("어중간: ",model.postId)
+                print("어중간: ",model.commentID)
+                print("어중간: ",model)
+                return NetworkManager.noneModelRequest(
+                    router: .comments(
+                        .commentDelete(
+                            postId: model.postId,
+                            commentsId: model.commentID
+                        )
+                    )
+                )
+            }
+            .bind { result in
+                switch result {
+                case .success:
+                    break
+                case .failure(let fail):
+                    networkError.accept(fail)
+                }
+            }
+            .disposed(by: disposeBag)
+            
+        
     }
     
     // 텍스트 뷰 로직

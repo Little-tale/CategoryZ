@@ -126,6 +126,7 @@ final class SNSDataModel: Decodable, Equatable {
     let hashTags: [String]
     var comments: [CommentsModel]
     var currentRow = 0
+
     
     enum CodingKeys: String, CodingKey {
         case postId = "post_id"
