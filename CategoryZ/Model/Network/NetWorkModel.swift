@@ -179,13 +179,14 @@ final class SNSDataModel: Decodable, Equatable {
 }
 
 /// 댓글 모델
-struct CommentsModel: Decodable {
+class CommentsModel: Decodable {
     let commentID: String
     let content: String
     let createdAt: String
     let creator: Creator
     
     var postId = ""
+    var currentRow = 0
     
     enum CodingKeys:String, CodingKey {
         case commentID = "comment_id"

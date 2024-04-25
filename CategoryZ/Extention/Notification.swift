@@ -23,4 +23,8 @@ extension Notification.Name {
     static let moveToSettingProfile = Notification.Name(rawValue: "moveToSettingProfile")
     
     static let commentButtonTap = Notification.Name(rawValue: "commentButtonTap")
+    
+    static let commentDidDisAppear = Notification.Name(rawValue: "commentDidDisAppear")
+    
+    static let changedComment = Notification.Name("changedComment")
 }

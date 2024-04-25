@@ -45,7 +45,7 @@ final class SNSPhotoMainViewModel: RxViewModelType {
     
     struct Output {
         let networkError: Driver<NetworkError>
-        let tableViewItems: Driver<[SNSDataModel]>
+        let tableViewItems: PublishRelay<[SNSDataModel]>
         let userIDDriver: BehaviorRelay<String>
         let pullDataCount: BehaviorRelay<Int>
         let ifCanReqeust: BehaviorRelay<Bool>
@@ -134,7 +134,7 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         
         return .init(
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
-            tableViewItems: postsDatas.asDriver(onErrorDriveWith: .never()),
+            tableViewItems: postsDatas,
             userIDDriver: userId,
             pullDataCount: pullDataCountBR,
             ifCanReqeust: ifCanReqeust

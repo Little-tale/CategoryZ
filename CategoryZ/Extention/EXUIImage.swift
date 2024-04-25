@@ -50,9 +50,6 @@ extension UIImage {
     }
 }
 
-/*
- 회고
- */
 extension UIImageView {
     func downloadImage(imageUrl: String?, resizing: CGSize) {
 

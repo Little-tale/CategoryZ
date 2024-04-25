@@ -25,12 +25,14 @@ final class CommentViewModel: RxViewModelType {
         let textViewText: ControlProperty<String?>
         let regButtonTap: ControlEvent<Void>
         let postIdInput: BehaviorRelay<String>
+        let inputModels: BehaviorRelay<SNSDataModel>
     }
     
     struct Output {
         let validText: Driver<String?>
         let regButtonEnabled: Driver<Bool>
         let networkError: Driver<NetworkError>
+        let outputModels: Driver<SNSDataModel>
     }
     
     func transform(_ input: Input) -> Output {
@@ -57,40 +59,34 @@ final class CommentViewModel: RxViewModelType {
         let combinePostIdAndComment = Observable
             .combineLatest(postIdInput, commentText)
         
-        // -- 네트워크 에러를 방출할수있음
+        let models = input.inputModels
         
+        let originalModelsModel = input.inputModels
+        // 테이블뷰 모델들
+//        let outputModels = models
+//            .map { models in
+//                return [CommentSection(items: models.value)]
+//            }
             
-        regButtonTap
-            .withLatestFrom(combinePostIdAndComment)
-            .compactMap { postID, validText -> (String, String)? in
-                guard let text = validText else {
-                    return nil
-                }
-                return (postID, text)
-            }
-            .flatMapLatest { postId, text in
-                let commentWriteQuery = CommentWriteQuery(
-                    content: text
-                )
-                return NetworkManager.fetchNetwork(model:CommentsModel.self , router: .comments(.commentsWrite(query: commentWriteQuery, postId: postId)))
-            }
-            .bind { result in
-                switch result {
-                case .success(let model):
-                    print(model)
-                case .failure(let fail):
-                    networkError.accept(fail)
-                }
-            }
-            .disposed(by: disposeBag)
-    
+        
+        // -- 네트워크 에러를 방출할수있음
+        // 등록 버튼 클릭시의 로직
+        regButtonTapLogic(
+            combinePostIdAndComment,
+            regButtonTap,
+            networkError,
+            originalModelsModel
+        )
+        
         return Output(
             validText: commentValidText.asDriver(),
             regButtonEnabled: regButtonEnabled.asDriver(),
-            networkError: networkError.asDriver(onErrorDriveWith: .never())
+            networkError: networkError.asDriver(onErrorDriveWith: .never()),
+            outputModels: models.asDriver()
         )
     }
     
+    // 텍스트 뷰 로직
     private
     func textViewLogic(
         textViewText: ControlProperty<String?>,
@@ -113,6 +109,50 @@ final class CommentViewModel: RxViewModelType {
                 }
             }
             .disposed(by: disposeBag)
+    }
+    
+    // 등록 버튼 탭 로직
+    private
+    func regButtonTapLogic(
+        _ combinePostIdAndComment: Observable<(String, String?)>,
+        _ regButtonTap: ControlEvent<Void>,
+        _ networkError: PublishRelay<NetworkError>,
+        _ originalModelsModel: BehaviorRelay<SNSDataModel>
+    ) {
+        regButtonTap
+            .withLatestFrom(combinePostIdAndComment)
+            .compactMap { postID, validText -> (String, String)? in
+                guard let text = validText else {
+                    return nil
+                }
+                return (postID, text)
+            }
+            .flatMapLatest { postId, text in
+                let commentWriteQuery = CommentWriteQuery(
+                    content: text
+                )
+                return NetworkManager.fetchNetwork(model:CommentsModel.self , router: .comments(.commentsWrite(query: commentWriteQuery, postId: postId)))
+            }
+            .bind { result in
+                switch result {
+                case .success(let model):
+                    let willChange = originalModelsModel.value
+                    model.currentRow = model.currentRow
+                    willChange.comments.append(model)
+                    NotificationCenter.default.post(
+                        name: .changedComment,
+                        object: nil,
+                        userInfo: [
+                            "SNSDataModel" : willChange
+                        ]
+                    )
+                    print(model)
+                case .failure(let fail):
+                    networkError.accept(fail)
+                }
+            }
+            .disposed(by: disposeBag)
+        
     }
     
 }

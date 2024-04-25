@@ -65,7 +65,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         // 데이터 방출시 테이블 뷰
         output.tableViewItems
             .distinctUntilChanged()
-            .drive(homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {[weak self] row, model, cell in
+            .bind(to:homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {[weak self] row, model, cell in
                 guard let self else { return }
                 
                 let reciveModel = model
@@ -171,11 +171,14 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                     return
                 }
                 let vc = CommentViewController()
-                vc.setModel(profileType.postId, commentsModels: profileType.comments)
                 
+                vc.setModel(profileType)
+                profileType.currentRow
                 owner.navigationController?.present(vc, animated: true)
             }
             .disposed(by: disPoseBag)
+        
+        
     }
     
     override func navigationSetting() {

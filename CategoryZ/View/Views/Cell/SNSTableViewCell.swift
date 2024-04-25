@@ -53,12 +53,14 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     }
     
     // 댓글 버튼
-    private let commentButton = SeletionButton(
+    private 
+    let commentButton = SeletionButton(
         selected: JHImage.messageSelected,
         noSelected: JHImage.messageDiselected
     ).then { $0.tintColor = JHColor.black }
     
-    private let commentCountLabel = UILabel().then({
+    private 
+    let commentCountLabel = UILabel().then({
         $0.font = JHFont.UIKit.bo14
     })
     // 컨텐트 라벨
@@ -170,6 +172,16 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             }
             .disposed(by: disposeBag)
         
+        NotificationCenter.default.rx.notification(.changedComment)
+            .bind(with: self) { owner, notification in
+                guard let snsDataModel = notification.userInfo? ["SNSDataModel"] as? SNSDataModel else {
+                    print("SNSDataModelCell 변환 실패")
+                    return
+                }
+                
+                owner.commentCountLabel.text = String(snsDataModel.comments.count)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func designView() {
