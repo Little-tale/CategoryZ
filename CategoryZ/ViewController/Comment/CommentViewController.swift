@@ -168,7 +168,7 @@ extension CommentViewController {
         tableView.rx.itemDeleted
             .bind(with: self){ owner, indexPath in
                
-                if meID == outputModels.value.creator.userID {
+                if meID == outputModels.value.comments[indexPath.row].creator.userID {
                     owner.showAlert(
                         title: "정말 삭제하시겠어요?",
                         actionTitle: "삭제") { _ in
