@@ -147,6 +147,7 @@ final class CommentViewModel: RxViewModelType {
                         ]
                     )
                     print(model)
+                    originalModelsModel.accept(willChange)
                 case .failure(let fail):
                     networkError.accept(fail)
                 }

@@ -178,7 +178,6 @@ final class SNSTableViewCell: RxBaseTableViewCell {
                     print("SNSDataModelCell 변환 실패")
                     return
                 }
-                
                 owner.commentCountLabel.text = String(snsDataModel.comments.count)
             }
             .disposed(by: disposeBag)

@@ -16,6 +16,18 @@ final class CommentTextView: BaseView {
         $0.backgroundColor = .blue
     }
     
+    private
+    var placeholedrText: String
+    
+    
+    lazy var placholderTextLabel = UILabel().then {
+        $0.text = placeholedrText
+    }
+    init(placeholedrText: String) {
+        self.placeholedrText = placeholedrText
+        super.init(frame: .zero)
+    }
+    
     var textViewHeightConstraint : Constraint?
     
     // 딜리게이트 충돌로 인한 뷰만 구성
@@ -32,6 +44,7 @@ final class CommentTextView: BaseView {
     override func configureHierarchy() {
         addSubview(textBoxView)
         textBoxView.addSubview(textView)
+        addSubview(placholderTextLabel)
         addSubview(regButton)
     }
     
@@ -45,6 +58,10 @@ final class CommentTextView: BaseView {
             // * 회고
             textViewHeightConstraint = make.height
                 .equalTo(40).priority(.high).constraint
+        }
+        placholderTextLabel.snp.makeConstraints { make in
+            make.edges.equalTo(textView).inset(2)
+            // make.
         }
         regButton.snp.makeConstraints { make in
             make.size.equalTo(44)

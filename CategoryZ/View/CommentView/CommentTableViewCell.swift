@@ -35,6 +35,7 @@ final class CommentTableViewCell: RxBaseTableViewCell {
     private
     let commentCreatedDate = UILabel().then {
         $0.font = JHFont.UIKit.li14
+        $0.textAlignment = .right
     }
     
     func setModel(_ commentsModel: CommentsModel) {
@@ -47,6 +48,7 @@ final class CommentTableViewCell: RxBaseTableViewCell {
         userNameLabel.text = commentsModel.creator.nick
         commentLabel.text = commentsModel.content
        
+        
         commentCreatedDate.text =  DateManager.shared.differenceDateString(
             commentsModel.createdAt
         )
@@ -56,18 +58,20 @@ final class CommentTableViewCell: RxBaseTableViewCell {
         contentView.addSubview(userImageView)
         contentView.addSubview(userNameLabel)
         contentView.addSubview(commentLabel)
+        contentView.addSubview(commentCreatedDate)
     }
     
-    override func configureLayout() {
+    override 
+    func configureLayout() {
         userImageView.snp.makeConstraints { make in
             make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(6)
-            make.centerY.equalTo(userNameLabel)
+            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(10)
             make.size.equalTo(50)
         }
         
         userNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentView.safeAreaLayoutGuide)
-            make.height.equalTo(26)
+
+            make.top.equalTo(userImageView).offset(4)
             make.leading.equalTo(userImageView.snp.trailing).offset(8)
             make.trailing.equalTo(contentView.safeAreaLayoutGuide)
                 .inset(6)
@@ -76,7 +80,12 @@ final class CommentTableViewCell: RxBaseTableViewCell {
             make.top.equalTo(userNameLabel.snp.bottom).offset(5)
             make.horizontalEdges.equalTo(userNameLabel)
             make.height.greaterThanOrEqualTo(30)
-            make.bottom.equalToSuperview()
+        }
+        commentCreatedDate.snp.makeConstraints { make in
+            make.trailing.equalTo(userNameLabel).inset(2)
+            make.top.equalTo(commentLabel.snp.bottom).offset(4)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide)
         }
     }
+    
 }

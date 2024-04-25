@@ -17,7 +17,7 @@ final class CommentViewController: RxBaseViewController {
     
     typealias DataSource = RxTableViewSectionedReloadDataSource<CommentSection>
     
-    
+    private
     let tableView = UITableView().then {
         $0.backgroundColor = .green
         $0.allowsSelection = true
@@ -27,18 +27,18 @@ final class CommentViewController: RxBaseViewController {
         $0.contentInset = .zero
         $0.register(CommentTableViewCell.self, forCellReuseIdentifier: CommentTableViewCell.identi)
         $0.keyboardDismissMode = .onDragWithAccessory
-        $0.rowHeight = UITableView.automaticDimension
-        $0.estimatedRowHeight = 120
     }
     
-    
+    private
     let viewModel = CommentViewModel()
     
-    let textBox = CommentTextView(frame: .infinite)
+    private
+    let textBox = CommentTextView(placeholedrText: "댓글을 입력해 보세요")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 120
     }
     
     override func configureHierarchy() {
@@ -47,7 +47,8 @@ final class CommentViewController: RxBaseViewController {
     }
     override func configureLayout() {
         tableView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.top.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(textBox.snp.top)
         }
         
         textBox.snp.makeConstraints { make in
@@ -60,7 +61,6 @@ final class CommentViewController: RxBaseViewController {
     func setModel(_ snsDataModel: SNSDataModel) {
         // 포스트 아이디가 필수적
         subscribe(snsDataModel)
-        
     }
     
     private
@@ -100,8 +100,6 @@ final class CommentViewController: RxBaseViewController {
                 print("셀 이닛 문제")
                 return .init()
             }
-            cell.backgroundColor = .red
-            
             cell.setModel(item)
             return cell
         }
@@ -144,6 +142,8 @@ extension CommentViewController {
         _ validText: Driver<String?>,
         regButtonEnabled: Driver<Bool>
     ){
+      
+        
         validText
             .drive(textBox.textView.rx.value)
             .disposed(by: disPoseBag)
@@ -152,6 +152,19 @@ extension CommentViewController {
             .drive(with: self) { owner, bool in
                 owner.textBox.regButton.isEnabled = bool
                 owner.textBox.regButton.tintColor = bool ? JHColor.gray : JHColor.likeColor
+            }
+            .disposed(by: disPoseBag)
+        
+        textBox.textView.rx.didBeginEditing
+            .bind(with:self) {owner, _ in
+                
+                owner.textBox.placholderTextLabel.isHidden = true
+            }
+            .disposed(by: disPoseBag)
+        
+        textBox.textView.rx.didEndEditing
+            .bind(with: self) { owner, _ in
+                owner.textBox.placholderTextLabel.isHidden = !owner.textBox.textView.text.isEmpty
             }
             .disposed(by: disPoseBag)
     }
