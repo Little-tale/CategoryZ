@@ -164,11 +164,11 @@ extension CommentViewController {
                 )
             )
             .disposed(by: disPoseBag)
-        
+        // 본인 게시글의 모든 댓글은 지울수 있게 변경합니다.
         tableView.rx.itemDeleted
             .bind(with: self){ owner, indexPath in
-               
-                if meID == outputModels.value.comments[indexPath.row].creator.userID {
+                
+                if meID == outputModels.value.comments[indexPath.row].creator.userID || meID == outputModels.value.postId {
                     owner.showAlert(
                         title: "정말 삭제하시겠어요?",
                         actionTitle: "삭제") { _ in
