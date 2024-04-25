@@ -88,4 +88,8 @@ final class CommentTableViewCell: RxBaseTableViewCell {
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        userImageView.image = nil
+    }
 }

@@ -128,9 +128,7 @@ final class CommentViewModel: RxViewModelType {
         
         publishRealDelete
             .flatMapLatest { model in
-                print("어중간: ",model.postId)
-                print("어중간: ",model.commentID)
-                print("어중간: ",model)
+    
                 return NetworkManager.noneModelRequest(
                     router: .comments(
                         .commentDelete(
@@ -143,7 +141,9 @@ final class CommentViewModel: RxViewModelType {
             .bind { result in
                 switch result {
                 case .success:
-                    break
+                    NotificationCenter.default.post(name: .changedComment, object: nil, userInfo: [
+                        "SNSDataModel" : originalModelsModel.value
+                    ])
                 case .failure(let fail):
                     networkError.accept(fail)
                 }
@@ -202,8 +202,9 @@ final class CommentViewModel: RxViewModelType {
                 switch result {
                 case .success(let model):
                     let willChange = originalModelsModel.value
-                    model.currentRow = model.currentRow
-                    willChange.comments.append(model)
+                    
+                    //willChange.comments.append(model)
+                    willChange.comments.insert(model, at: 0)
                     NotificationCenter.default.post(
                         name: .changedComment,
                         object: nil,

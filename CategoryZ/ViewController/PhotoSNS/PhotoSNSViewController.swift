@@ -171,8 +171,9 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                     return
                 }
                 let vc = CommentViewController()
+                let nvc = UINavigationController(rootViewController: vc)
                 vc.setModel(profileType)
-                owner.navigationController?.present(vc, animated: true)
+                owner.navigationController?.present(nvc, animated: true)
             }
             .disposed(by: disPoseBag)
         

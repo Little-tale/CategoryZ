@@ -37,6 +37,7 @@ final class CommentViewController: RxBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationSetting()
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 120
     }
@@ -126,7 +127,18 @@ final class CommentViewController: RxBaseViewController {
             }
             .disposed(by: disPoseBag)
         
+        // 레그버튼 클릭시 키보드
+        regButtonTap
+            .bind(with: self) { owner, _ in
+                owner.view.endEditing(true)
+            }
+            .disposed(by: disPoseBag)
        
+    }
+    
+    private
+    func navigationSetting(){
+        navigationItem.title = "댓글"
     }
 }
 
@@ -199,7 +211,7 @@ extension CommentViewController {
         regButtonEnabled
             .drive(with: self) { owner, bool in
                 owner.textBox.regButton.isEnabled = bool
-                owner.textBox.regButton.tintColor = bool ? JHColor.gray : JHColor.likeColor
+                owner.textBox.regButton.tintColor = bool ? JHColor.likeColor : JHColor.gray
             }
             .disposed(by: disPoseBag)
         

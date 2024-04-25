@@ -13,7 +13,7 @@ final class CommentTextView: BaseView {
     
     private
     let textBoxView = UIView().then {
-        $0.backgroundColor = .blue
+        $0.backgroundColor = JHColor.white
     }
     
     private
@@ -34,6 +34,8 @@ final class CommentTextView: BaseView {
     let textView = UITextView().then {
         $0.isScrollEnabled = false
         $0.font = JHFont.UIKit.re17
+        $0.layer.cornerRadius = 12
+        $0.clipsToBounds = true
     }
     
     let regButton = UIButton().then {
