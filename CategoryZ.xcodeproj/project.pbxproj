@@ -33,6 +33,7 @@
 		7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */; };
 		7B5E51342BD9699400918C53 /* ExUILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E51332BD9699400918C53 /* ExUILabel+.swift */; };
 		7B5E51372BD96BC100918C53 /* CommentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E51362BD96BC100918C53 /* CommentViewModel.swift */; };
+		7B5E513A2BDA873400918C53 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 7B5E51392BDA873400918C53 /* Toast */; };
 		7B5EF9F42BD4AFB400F022CB /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EF9F32BD4AFB400F022CB /* String+.swift */; };
 		7B5EF9F62BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */; };
 		7B5EF9F82BD4DFC000F022CB /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EF9F72BD4DFC000F022CB /* ProfileHeaderView.swift */; };
@@ -270,6 +271,7 @@
 				7B838DF72BCFAE06000F2E27 /* ReusableKit in Frameworks */,
 				7B838DFF2BCFAE8C000F2E27 /* Differentiator in Frameworks */,
 				7B11DC8D2BC58D250055D423 /* RxRelay in Frameworks */,
+				7B5E513A2BDA873400918C53 /* Toast in Frameworks */,
 				7B11DC9B2BC58DA40055D423 /* IQKeyboardManagerSwift in Frameworks */,
 				7BCF4A422BC688F100BCE635 /* KeychainAccess in Frameworks */,
 				7B11DC952BC58D390055D423 /* Then in Frameworks */,
@@ -875,6 +877,7 @@
 				7B838DF82BCFAE06000F2E27 /* RxReusableKit */,
 				7B838DFE2BCFAE8C000F2E27 /* Differentiator */,
 				7B838E002BCFAE8C000F2E27 /* RxDataSources */,
+				7B5E51392BDA873400918C53 /* Toast */,
 			);
 			productName = CategoryZ;
 			productReference = 7B11DC642BC58AD40055D423 /* CategoryZ.app */;
@@ -915,6 +918,7 @@
 				7BCF4A6B2BC7C6E400BCE635 /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
 				7B838DF52BCFAE06000F2E27 /* XCRemoteSwiftPackageReference "ReusableKit" */,
 				7B838DFD2BCFAE8C000F2E27 /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				7B5E51382BDA873400918C53 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 7B11DC652BC58AD40055D423 /* Products */;
 			projectDirPath = "";
@@ -1329,6 +1333,14 @@
 				minimumVersion = 7.0.2;
 			};
 		};
+		7B5E51382BDA873400918C53 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
 		7B838DF52BCFAE06000F2E27 /* XCRemoteSwiftPackageReference "ReusableKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/ReusableKit.git";
@@ -1403,6 +1415,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B11DC992BC58DA40055D423 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		7B5E51392BDA873400918C53 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B5E51382BDA873400918C53 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 		7B838DF62BCFAE06000F2E27 /* ReusableKit */ = {
 			isa = XCSwiftPackageProductDependency;

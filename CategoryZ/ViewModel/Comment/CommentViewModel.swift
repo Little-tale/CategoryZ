@@ -34,7 +34,7 @@ final class CommentViewModel: RxViewModelType {
         let validText: Driver<String?>
         let regButtonEnabled: Driver<Bool>
         let networkError: Driver<NetworkError>
-        let outputModels: Driver<SNSDataModel>
+        let outputModels: BehaviorRelay<SNSDataModel>
     }
     
     func transform(_ input: Input) -> Output {
@@ -62,6 +62,7 @@ final class CommentViewModel: RxViewModelType {
             .combineLatest(postIdInput, commentText)
         
         let models = input.inputModels
+            
         
         let originalModelsModel = input.inputModels
             
@@ -84,11 +85,12 @@ final class CommentViewModel: RxViewModelType {
             networkError
         )
         
+        
         return Output(
             validText: commentValidText.asDriver(),
             regButtonEnabled: regButtonEnabled.asDriver(),
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
-            outputModels: models.asDriver()
+            outputModels: models
         )
     }
     
@@ -124,7 +126,6 @@ final class CommentViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
-        
         publishRealDelete
             .flatMapLatest { model in
                 print("어중간: ",model.postId)
@@ -148,8 +149,6 @@ final class CommentViewModel: RxViewModelType {
                 }
             }
             .disposed(by: disposeBag)
-            
-        
     }
     
     // 텍스트 뷰 로직

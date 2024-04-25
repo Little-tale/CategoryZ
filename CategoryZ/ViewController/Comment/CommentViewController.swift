@@ -11,9 +11,9 @@ import Then
 import RxSwift
 import RxCocoa
 import RxDataSources
+import Toast
 
 final class CommentViewController: RxBaseViewController {
-    
     
     typealias DataSource = RxTableViewSectionedReloadDataSource<CommentSection>
     
@@ -83,6 +83,14 @@ final class CommentViewController: RxBaseViewController {
         // SNS모델
         let behSnsDataModel = BehaviorRelay(value: snsDataModel)
         
+        // 본인 아이디
+        let meId = UserIDStorage.shared.userID
+        
+        guard let myId = meId else {
+            errorCatch(.loginError(statusCode: 419, description: "유저 아이디가 조회되질 않아요!"))
+            return
+        }
+        
         // 지워질 모델 indexPath + 삭제 트리거
         let publishIndexPathForDelete = PublishRelay<IndexPath> ()
         let publishCurrectDeleteTrigger = PublishRelay<Void> ()
@@ -107,7 +115,8 @@ final class CommentViewController: RxBaseViewController {
         tableViewBind(
             output.outputModels,
             publishIndexPathForDelete,
-            publishCurrectDeleteTrigger
+            publishCurrectDeleteTrigger,
+            myId
         )
         
         // 에러 발생시
@@ -117,6 +126,7 @@ final class CommentViewController: RxBaseViewController {
             }
             .disposed(by: disPoseBag)
         
+       
     }
 }
 
@@ -125,9 +135,10 @@ extension CommentViewController {
     
     private
     func tableViewBind(
-        _ outputModels: Driver<SNSDataModel>,
+        _ outputModels: BehaviorRelay<SNSDataModel>,
         _ publishIndexPathForDelete: PublishRelay<IndexPath>,
-        _ publishCurrectDeleteTrigger: PublishRelay<Void>
+        _ publishCurrectDeleteTrigger: PublishRelay<Void>,
+        _ meID : String
     ) {
         
         let dataSourceRx = DataSource { dataSource, tableView, indexPath, item in
@@ -135,17 +146,19 @@ extension CommentViewController {
                 print("셀 이닛 문제")
                 return .init()
             }
+            cell.selectionStyle = .none 
             cell.setModel(item)
             return cell
         }
         
         dataSourceRx.canEditRowAtIndexPath = {_, _ in true}
         
+        
         outputModels
             .map({ models in
                 return [CommentSection(items: models.comments)]
             })
-            .drive(
+            .bind(to:
                 tableView.rx.items(
                     dataSource: dataSourceRx
                 )
@@ -154,13 +167,17 @@ extension CommentViewController {
         
         tableView.rx.itemDeleted
             .bind(with: self){ owner, indexPath in
-                publishIndexPathForDelete.accept(indexPath)
-                
-                owner.showAlert(
-                    title: "정말 삭제하시겠어요?",
-                    actionTitle: "삭제") { _ in
-                        publishCurrectDeleteTrigger.accept(())
-                    }
+               
+                if meID == outputModels.value.creator.userID {
+                    owner.showAlert(
+                        title: "정말 삭제하시겠어요?",
+                        actionTitle: "삭제") { _ in
+                            publishIndexPathForDelete.accept(indexPath)
+                            publishCurrectDeleteTrigger.accept(())
+                        }
+                } else {
+                    owner.view.makeToast("본인글만 지우실수 있어요!", duration: 3.0, position: .top)
+                }
             }
             .disposed(by: disPoseBag)
     }

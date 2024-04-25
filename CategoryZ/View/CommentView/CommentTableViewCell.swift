@@ -84,7 +84,7 @@ final class CommentTableViewCell: RxBaseTableViewCell {
         commentCreatedDate.snp.makeConstraints { make in
             make.trailing.equalTo(userNameLabel).inset(2)
             make.top.equalTo(commentLabel.snp.bottom).offset(4)
-            make.bottom.equalTo(contentView.safeAreaLayoutGuide)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(10)
         }
     }
     

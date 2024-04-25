@@ -188,6 +188,7 @@ class CommentsModel: Decodable {
     
     var postId = ""
     var currentRow = 0
+    var isUserMe = false
     
     enum CodingKeys:String, CodingKey {
         case commentID = "comment_id"
