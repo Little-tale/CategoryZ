@@ -24,7 +24,7 @@ final class CommentTableViewCell: RxBaseTableViewCell {
     let userNameLabel = UILabel().then {
         $0.commentStyle()
         $0.textAlignment = .left
-        $0.font = JHFont.UIKit.re17
+        $0.font = JHFont.UIKit.bo14
     }
     
     private
@@ -36,7 +36,7 @@ final class CommentTableViewCell: RxBaseTableViewCell {
     
     private
     let commentCreatedDate = UILabel().then {
-        $0.font = JHFont.UIKit.li14
+        $0.font = JHFont.UIKit.li11
         $0.textAlignment = .right
     }
     
@@ -79,8 +79,8 @@ final class CommentTableViewCell: RxBaseTableViewCell {
     override func configureHierarchy() {
         contentView.addSubview(userImageView)
         contentView.addSubview(userNameLabel)
-        contentView.addSubview(commentLabel)
         contentView.addSubview(commentCreatedDate)
+        contentView.addSubview(commentLabel)
     }
     
     override 
@@ -92,20 +92,20 @@ final class CommentTableViewCell: RxBaseTableViewCell {
         }
         
         userNameLabel.snp.makeConstraints { make in
-
             make.top.equalTo(userImageView).offset(4)
-            make.leading.equalTo(userImageView.snp.trailing).offset(8)
-            make.trailing.equalTo(contentView.safeAreaLayoutGuide)
-                .inset(6)
-        }
-        commentLabel.snp.makeConstraints { make in
-            make.top.equalTo(userNameLabel.snp.bottom).offset(5)
-            make.horizontalEdges.equalTo(userNameLabel)
-            make.height.greaterThanOrEqualTo(30)
+            make.leading.equalTo(userImageView.snp.trailing).offset(12)
         }
         commentCreatedDate.snp.makeConstraints { make in
-            make.trailing.equalTo(userNameLabel).inset(2)
-            make.top.equalTo(commentLabel.snp.bottom).offset(4)
+            make.leading.equalTo(userNameLabel.snp.trailing).offset(8)
+            make.centerY.equalTo(userNameLabel)
+        }
+        
+        commentLabel.snp.makeConstraints { make in
+            make.top.equalTo(userNameLabel.snp.bottom).offset(5)
+           
+            make.leading.equalTo(userNameLabel)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(50)
+            make.height.greaterThanOrEqualTo(30)
             make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(10)
         }
     }

@@ -25,17 +25,19 @@ final class CommentTextView: BaseView {
     }
     init(placeholedrText: String) {
         self.placeholedrText = placeholedrText
-        super.init(frame: .zero)
+        super.init(frame: .infinite)
     }
     
     var textViewHeightConstraint : Constraint?
     
     // 딜리게이트 충돌로 인한 뷰만 구성
     let textView = UITextView().then {
-        $0.isScrollEnabled = false
+        $0.isScrollEnabled = true
         $0.font = JHFont.UIKit.re17
         $0.layer.cornerRadius = 12
         $0.clipsToBounds = true
+        $0.layer.borderWidth = 0.2
+        $0.layer.borderColor = JHColor.darkGray.cgColor
     }
     
     let regButton = UIButton().then {
@@ -59,7 +61,7 @@ final class CommentTextView: BaseView {
             make.trailing.equalTo(textBoxView).inset(60)
             // * 회고
             textViewHeightConstraint = make.height
-                .equalTo(40).priority(.high).constraint
+                .greaterThanOrEqualTo(40).constraint
         }
         placholderTextLabel.snp.makeConstraints { make in
             make.edges.equalTo(textView).inset(2)

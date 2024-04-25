@@ -163,7 +163,7 @@ final class CommentViewModel: RxViewModelType {
             .distinctUntilChanged()
             .compactMap{ $0 }
             .bind(with: self) { owner, text in
-                let bool = owner.textValid.commentValid(text, maxCount: 30)
+                let bool = owner.textValid.commentValid(text, maxCount: 300)
                 regButtonEnabled.accept(bool)
                 if bool {
                     validText.accept(text)

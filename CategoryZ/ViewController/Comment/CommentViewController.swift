@@ -19,9 +19,8 @@ final class CommentViewController: RxBaseViewController {
     
     private
     let tableView = UITableView().then {
-        $0.backgroundColor = .green
         $0.allowsSelection = true
-        $0.separatorStyle = .none
+        $0.separatorStyle = .singleLine
         $0.bounces = true
         $0.showsVerticalScrollIndicator = true
         $0.contentInset = .zero
@@ -127,10 +126,11 @@ final class CommentViewController: RxBaseViewController {
             }
             .disposed(by: disPoseBag)
         
-        // 레그버튼 클릭시 키보드
+        // 레그버튼 클릭시 키보드와 글자 제거
         regButtonTap
             .bind(with: self) { owner, _ in
                 owner.view.endEditing(true)
+                owner.textBox.textView.text = ""
             }
             .disposed(by: disPoseBag)
        
@@ -225,7 +225,7 @@ extension CommentViewController {
         regButtonEnabled
             .drive(with: self) { owner, bool in
                 owner.textBox.regButton.isEnabled = bool
-                owner.textBox.regButton.tintColor = bool ? JHColor.likeColor : JHColor.gray
+                owner.textBox.regButton.tintColor = bool ? JHColor.likeColor : JHColor.darkGray
             }
             .disposed(by: disPoseBag)
         
