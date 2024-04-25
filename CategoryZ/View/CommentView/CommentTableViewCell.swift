@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
 
 final class CommentTableViewCell: RxBaseTableViewCell {
     
@@ -16,6 +17,7 @@ final class CommentTableViewCell: RxBaseTableViewCell {
     let userImageView = CircleImageView(frame: .zero).then {
         $0.tintColor = JHColor.black
         $0.backgroundColor = JHColor.gray
+        $0.isUserInteractionEnabled = true
     }
     
     private
@@ -47,11 +49,31 @@ final class CommentTableViewCell: RxBaseTableViewCell {
         }
         userNameLabel.text = commentsModel.creator.nick
         commentLabel.text = commentsModel.content
-       
+        
         
         commentCreatedDate.text =  DateManager.shared.differenceDateString(
             commentsModel.createdAt
         )
+        
+        let tap = UITapGestureRecognizer()
+        userImageView.addGestureRecognizer(tap)
+        
+        tap.rx.event
+            .bind { _ in
+                print("Tap..! ")
+                if let myId = UserIDStorage.shared.userID  {
+                    print("Tap.. myId")
+                    var userType = ProfileType.me
+                    if commentsModel.creator.userID != myId  {
+                        
+                        userType = .other(otherUserId: commentsModel.creator.userID)
+                    }
+                    NotificationCenter.default.post(name: .moveToProfileForComment, object: nil, userInfo: [
+                        "ProfileType" : userType
+                    ])
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureHierarchy() {
