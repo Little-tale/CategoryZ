@@ -38,10 +38,15 @@ final class ProfileSettingView: RxBaseView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        invalidateIntrinsicContentSize() // 이건 왜...
-        print(profileView.intrinsicContentSize.height)
-        profileView.snp.updateConstraints{ make in
-            make.height.equalTo(profileView.intrinsicContentSize.height + 120)
+        invalidateIntrinsicContentSize() // IntrinsicContentSize 가 변경될때만 레이아웃을 업데이트합니다.
+        
+        UIView.animate(withDuration: 0.3) {[weak self] in
+            guard let self else { return }
+            print("변경사항 발동",profileView.intrinsicContentSize.height)
+            profileView.snp.updateConstraints{ make in
+                make.height.equalTo(self.profileView.intrinsicContentSize.height + 120)
+            }
+            layoutIfNeeded()
         }
     }
     

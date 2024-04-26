@@ -53,7 +53,7 @@ final class CommentViewController: RxBaseViewController {
         
         textBox.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.keyboardLayoutGuide.snp.top)
+            make.bottom.greaterThanOrEqualTo(view.keyboardLayoutGuide.snp.top)
         }
     }
     

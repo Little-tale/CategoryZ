@@ -18,6 +18,7 @@ final class ProfileView: BaseView {
     
     let profileImageView = CircleImageView(frame: .zero).then {
         $0.tintColor = JHColor.darkGray
+        $0.backgroundColor = JHColor.gray
     }
     let userNameLabel = UILabel().then {
         $0.font = JHFont.UIKit.bo20

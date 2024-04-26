@@ -30,8 +30,9 @@ final class LunchScreenViewController: RxHomeBaseViewController<FirstView> {
                     // 현재는 이렇게 하지만 후에 탭바 컨트롤러로 교체
                     let viewController = SNSPhotoViewController()
                     let nvc = UINavigationController(rootViewController: viewController)
-                    nvc.modalPresentationStyle = .fullScreen
-                    owner.present(nvc, animated: false)
+                    let vc = CategoryZTabbarController()
+                    vc.modalPresentationStyle = .fullScreen
+                    owner.present(vc, animated: false)
                 } else {
                     let viewController = GetStartViewController()
                     

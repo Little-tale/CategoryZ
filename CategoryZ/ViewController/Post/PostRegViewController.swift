@@ -153,8 +153,9 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
         // 업로드 성공시
         output.successPost
             .drive(with: self) { owner, _ in
+                
                 owner.showAlert(title: "업로드", message: "업로드 성공") { _ in
-                    // 이때 이제 전뷰로 가주어야 함 전뷰가 없는 관계로 일단 이렇게 진행
+                    
                 }
             }
             .disposed(by: disPoseBag)
@@ -203,7 +204,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                 switch result {
                 case .success(let images):
                     print(images)
-                    // imageView.image = UIImage(data: images.first!)
+                    
                     behiberImageData.accept(images)
                 case .failure(let error):
                     if case .noAuth = error {

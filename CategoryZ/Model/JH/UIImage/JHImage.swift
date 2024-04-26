@@ -27,4 +27,18 @@ extension JHImage {
     static let moreImage: UIImage? = UIImage(systemName: "ellipsis")
     
     static let sendImage: UIImage? = UIImage(systemName: "paperplane.circle.fill")
+    
+    static let homeImage: UIImage? = UIImage(systemName: "house")
+    
+    static let homeSelectedImage: UIImage? = UIImage(systemName: "house.fill")
+    
+    static let addImageNormal: UIImage? = UIImage(systemName: "plus")
+    
+    static let addImage: UIImage? = UIImage(systemName: "plus.circle")
+    
+    static let addSelectedImage: UIImage? = UIImage(systemName: "plus.circle.fill")
+    
+    static let profileImage: UIImage? = UIImage(systemName: "person.crop.circle")
+    
+    static let profileSelectedImage: UIImage? = UIImage(systemName: "person.crop.circle.fill")
 }
