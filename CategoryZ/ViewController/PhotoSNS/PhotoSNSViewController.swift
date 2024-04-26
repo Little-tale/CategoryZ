@@ -37,6 +37,12 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     }
     
     override func subscribe() {
+        
+        guard let myID = UserIDStorage.shared.userID else {
+            errorCatch(.loginError(statusCode: 419, description: "아이디가 조회되지 않고있어요!"))
+            return
+        }
+        
         // 카테고리(프로덕트 아이디) 선택시 방출
         let selectedProductID = BehaviorRelay<ProductID> (value: .dailyRoutine)
         // 추가 요청 발생시
@@ -137,10 +143,18 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         
         moreButtonTap
             .bind(with: self) { owner, model in
-                let modalViewCon = MorePageViewController()
-                modalViewCon.setModel(model.creator)
-                modalViewCon.modalPresentationStyle = .pageSheet
-                owner.present(modalViewCon, animated: true)
+                if model.creator.userID != myID {
+                    let modalViewCon = MorePageViewController()
+                    modalViewCon.setModel(model.creator)
+                    
+                    modalViewCon.modalPresentationStyle = .pageSheet
+                    owner.present(modalViewCon, animated: true)
+                } else {
+                 // 이때는 포스트 수정으로 진행해야 합니다!
+                    let vc = PostRegViewController()
+                    vc.ifModifyModel = model
+                    // 다음에 와야함
+                }
             }
             .disposed(by: disPoseBag)
     
@@ -153,6 +167,12 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 }
                 let vc = UserProfileViewController()
                 vc.profileType = profileType
+                vc.hidesBottomBarWhenPushed = true
+                //vc.modalPresentationStyle = .popover
+//                vc.modalPresentationStyle = .overFullScreen
+                
+                NotificationCenter.default.post(name: .hidesBottomBarWhenPushed, object: nil)
+                vc.hidesBottomBarWhenPushed = true 
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)

@@ -26,6 +26,8 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     
     var selected: ProductID?
     
+    var ifModifyModel: SNSDataModel?
+    
     // let imageView = UIImageView()
     
     override func viewDidLoad() {
@@ -155,7 +157,8 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             .drive(with: self) { owner, _ in
                 
                 owner.showAlert(title: "업로드", message: "업로드 성공") { _ in
-                    
+                    NotificationCenter.default.post(name: .successPost, object: nil)
+                    owner.dismiss(animated: true)
                 }
             }
             .disposed(by: disPoseBag)

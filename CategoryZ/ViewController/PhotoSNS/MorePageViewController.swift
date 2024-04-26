@@ -167,6 +167,7 @@ final class MorePageViewController: RxBaseViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(12)
             make.height.equalTo(220)
         }
+        
         buttonStackView.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
             make.height.equalTo(40)

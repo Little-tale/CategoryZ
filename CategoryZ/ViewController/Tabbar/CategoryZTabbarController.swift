@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxCocoa
 
 final class CategoryZTabbarController: UITabBarController {
     
@@ -15,6 +17,7 @@ final class CategoryZTabbarController: UITabBarController {
     // 1. 메인
     // 2. 등록
     // 3. 프로필
+    let disposeBag = DisposeBag()
     
     let addButton = UIButton().then {
         $0.backgroundColor = JHColor.likeColor
@@ -26,6 +29,7 @@ final class CategoryZTabbarController: UITabBarController {
         view.backgroundColor = .white
         setupMiddleButton()
         settingTabBarItems()
+        subscribe()
     }
     
     func settingTabBarItems() {
@@ -65,7 +69,9 @@ final class CategoryZTabbarController: UITabBarController {
             make.size.equalTo(60)
         }
         if let image = JHImage.addImageNormal {
+            
             let imageConfig = UIImage.SymbolConfiguration(pointSize: 22)
+            
            let configuredImage =  image.withConfiguration(imageConfig)
             
             addButton.layer.cornerRadius = addButton.frame.height / 2
@@ -77,6 +83,8 @@ final class CategoryZTabbarController: UITabBarController {
             action: #selector(addButtonAction),
             for: .touchUpInside
         )
+        
+       
     }
     
     @objc private
@@ -96,3 +104,19 @@ extension UITabBar {
         return sizeThatFits
     }
 }
+
+
+extension CategoryZTabbarController {
+    
+    func subscribe(){
+        NotificationCenter.default.rx.notification(.successPost)
+            .bind(with: self) { owner, _ in
+                owner.selectedIndex = 0
+            }
+            .disposed(by: disposeBag)
+    }
+    
+}
+
+
+

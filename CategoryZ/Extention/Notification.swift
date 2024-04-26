@@ -28,4 +28,9 @@ extension Notification.Name {
     static let commentDidDisAppear = Notification.Name(rawValue: "commentDidDisAppear")
     
     static let changedComment = Notification.Name("changedComment")
+    
+    static let successPost = Notification.Name(rawValue: "successPost")
+    
+    
+    static let hidesBottomBarWhenPushed = Notification.Name(rawValue: "hidesBottomBarWhenPushed")
 }

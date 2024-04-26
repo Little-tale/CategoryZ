@@ -107,7 +107,7 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         // 넥스트를 nil 로 만들고 요청해야 함.
 
         input.selectedProductID
-            .distinctUntilChanged()
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .flatMapLatest { productId in
                 selectedProductId.accept(productId.identi)
                 nextCursor.accept(nil)
@@ -118,8 +118,7 @@ final class SNSPhotoMainViewModel: RxViewModelType {
                 case .success(let model):
                     nextCursor.accept(model.nextCursor)
                     print("model.nextCursor : \(model.nextCursor)")
-                    
-                    owner.realPostData = model.data
+                  owner.realPostData = model.data
                     
                     owner.postsDatas.accept(owner.realPostData)
 
@@ -131,6 +130,15 @@ final class SNSPhotoMainViewModel: RxViewModelType {
                 }
             }
             .disposed(by: disposeBag)
+        
+        NotificationCenter.default.rx.notification(.successPost)
+            .bind { _ in
+                
+                let value = input.selectedProductID.value
+                input.selectedProductID.accept(value)
+            }
+            .disposed(by: disposeBag)
+        
         
         return .init(
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
