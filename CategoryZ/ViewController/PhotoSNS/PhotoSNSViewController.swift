@@ -166,10 +166,10 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                     return
                 }
                 let vc = UserProfileViewController()
+                
                 vc.profileType = profileType
+                
                 vc.hidesBottomBarWhenPushed = true
-                //vc.modalPresentationStyle = .popover
-//                vc.modalPresentationStyle = .overFullScreen
                 
                 NotificationCenter.default.post(name: .hidesBottomBarWhenPushed, object: nil)
                 vc.hidesBottomBarWhenPushed = true 

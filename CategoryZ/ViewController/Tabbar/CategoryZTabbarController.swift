@@ -83,7 +83,11 @@ final class CategoryZTabbarController: UITabBarController {
             action: #selector(addButtonAction),
             for: .touchUpInside
         )
-        
+        NotificationCenter.default.rx.notification(.hidesBottomBarWhenPushed)
+            .bind(with: self) { owner, _ in
+                owner.setTabBarHidden(true, animated: true)
+        }
+        .disposed(by: disposeBag)
        
     }
     
@@ -95,6 +99,25 @@ final class CategoryZTabbarController: UITabBarController {
         present(nvc, animated: true)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if !tabBar.isHidden {
+            setTabBarHidden(tabBar.isHidden, animated: true)
+        }
+        view.bringSubviewToFront(addButton)
+    }
+    
+    func setTabBarHidden(_ hidden: Bool, animated: Bool) {
+        UIView.animate(withDuration: animated ? 0.2 : 0.0) {
+            [weak self] in
+            
+            self?.tabBar.isHidden = hidden
+            self?.addButton.tintColor = hidden ? .clear : JHColor.white
+            self?.addButton.backgroundColor = hidden ? .clear : JHColor.likeColor
+            self?.view.layoutIfNeeded()
+        }
+    }
+
 }
 
 extension UITabBar {
