@@ -61,7 +61,6 @@ struct MainPostQuery: PostsQeuryType {
     var product_id: String
     
     var files: [String]?
-    
 }
 
 

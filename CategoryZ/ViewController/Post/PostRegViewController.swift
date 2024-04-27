@@ -36,7 +36,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     }
     
     override func navigationSetting() {
-        if let ifModifyModel {
+        if ifModifyModel != nil {
             navigationItem.title =  "게시물 수정"
         } else {
             navigationItem.title =  "게시물 작성"
@@ -65,7 +65,9 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             saveButtonTap: rightBarButton.rx.tap,
             contentText: homeView.contentTextView.rx.text,
             startTrigger: rx.viewDidAppear,
-            removeSelectModel: removeSelectModel
+            removeSelectModel: removeSelectModel,
+            ifModifyModel: ifModifyModel,
+            modifyInImageURLs: modifyInImageURLs
         )
         
         let output = viewModel.transform(input)
@@ -164,8 +166,13 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             .drive(with: self) { owner, _ in
                 
                 owner.showAlert(title: "업로드", message: "업로드 성공") { _ in
-                    NotificationCenter.default.post(name: .successPost, object: nil)
-                    owner.dismiss(animated: true)
+                    if owner.ifModifyModel == nil {
+                        NotificationCenter.default.post(name: .successPost, object: nil)
+                        owner.dismiss(animated: true)
+                    } else {
+                        owner.navigationController?.popViewController(animated: true)
+                        NotificationCenter.default.post(name: .successPost, object: nil)
+                    }
                 }
             }
             .disposed(by: disPoseBag)
@@ -196,9 +203,6 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                 owner.homeView.categoryCollectionView.reloadData()
             })
             .disposed(by: disPoseBag)
-        
-        // error2
-        
         
         // 만약 수정 모델이 들어와 존재한다면
 

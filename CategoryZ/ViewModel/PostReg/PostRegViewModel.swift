@@ -31,7 +31,11 @@ final class PostRegViewModel: RxViewModelType {
         let startTrigger: ControlEvent<Bool>
         let removeSelectModel: PublishRelay<IndexPath>
         
+        // 공통모델 명시
+            // insertImageData
         // 수정 모델 구역
+        let ifModifyModel: BehaviorRelay<SNSDataModel?>
+        let modifyInImageURLs: BehaviorRelay<[String]>
     }
     
     struct Output{
@@ -63,6 +67,7 @@ final class PostRegViewModel: RxViewModelType {
         
         // 포스트 성공 트리거
         let successPost = PublishRelay<Void> ()
+        
         
         input.startTrigger.bind { _ in
             NetworkManager.fetchNetwork(model: Creator.self, router: .profile(.profileMeRead))
@@ -158,14 +163,25 @@ final class PostRegViewModel: RxViewModelType {
                 }
             }
             .disposed(by: disposeBag)
-            
         
+        
+        
+            
         // 이미지 업로드를 마치면 다시 포스트 업로드 실행
       imageUploadScueess
-            .flatMap { model in
+            .map({ model in
                 let query = MainPostQuery(title: "", content: model.content, content2: "", content3: "", product_id: model.productId, files: model.imageModel.files)
-                
-                return NetworkManager.fetchNetwork(model: PostModel.self, router: .poster(.postWrite(query: query)))
+                return query
+            })
+            .flatMap { model in
+                if let modify = input.ifModifyModel.value {
+                    return NetworkManager.fetchNetwork(model: PostModel.self, router: .poster(.postModify(
+                        query: model,
+                        postID: modify.postId)
+                    ) )
+                }else {
+                    return NetworkManager.fetchNetwork(model: PostModel.self, router: .poster(.postWrite(query: model)))
+                }
             }
             .bind { result in
                 switch result {
@@ -187,6 +203,8 @@ final class PostRegViewModel: RxViewModelType {
                 outputImageMaxCount.accept( 5 - owner.imageDatas.count)
             }
             .disposed(by: disposeBag)
+        
+        // 만약 수정 모델이 존재한다면
         
         return Output(
             outputIamgeDataDriver: outputImageDatas.asDriver(),
