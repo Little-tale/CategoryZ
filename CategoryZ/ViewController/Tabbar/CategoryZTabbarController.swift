@@ -10,10 +10,11 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-
+/*
+ 회고
+ */
 final class CategoryZTabbarController: UITabBarController {
     
-    // 일단 탭은 두가지 정도로만 구성할수 밖에 없음 준비가 덜됨
     // 1. 메인
     // 2. 등록
     // 3. 프로필

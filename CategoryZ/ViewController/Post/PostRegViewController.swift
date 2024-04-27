@@ -36,7 +36,11 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     }
     
     override func navigationSetting() {
-        navigationItem.title = "게시물 작성"
+        if let ifModifyModel {
+            navigationItem.title =  "게시물 수정"
+        } else {
+            navigationItem.title =  "게시물 작성"
+        }
     }
     
     override func subscribe() {
@@ -51,6 +55,9 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
         // 이미지 데이터들
         let behiberImageData = BehaviorRelay<[Data]> (value: [])
         let removeSelectModel = PublishRelay<IndexPath> ()
+        let modifyInImageURLs = BehaviorRelay<[String]> (value: [])
+        
+        let ifModifyModel = BehaviorRelay<SNSDataModel?> (value: ifModifyModel)
         
         let input = PostRegViewModel.Input(
             selectedProduct: publishSelectProductId,
@@ -190,6 +197,37 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             })
             .disposed(by: disPoseBag)
         
+        // error2
+        
+        
+        // 만약 수정 모델이 들어와 존재한다면
+
+    ifModifyModel
+            .compactMap { $0 }
+            .bind(with: self) { owner, model in
+                owner.homeView.contentTextView.text = model.content
+                owner.homeView.contentTextView.placeholderText = ""
+                if let selectedProduct = ProductID(rawValue: model.productId) {
+                    publishSelectProductId.accept(selectedProduct)
+                    owner.selected = selectedProduct
+                }
+                // 이미지도 다시 넣어 주어야함
+                modifyInImageURLs.accept(model.files)
+            }
+            .disposed(by: disPoseBag)
+        
+        modifyInImageURLs
+            .bind(with: self) {owner, strings in
+                owner.downloadImages(imageUrl: strings, resizing: CGSize(width: 400, height: 400)) { result in
+                    switch result {
+                    case .success(let success):
+                        behiberImageData.accept(success)
+                    case .failure(let failure):
+                        owner.errorCatch(failure)
+                    }
+                }
+            }
+            .disposed(by: disPoseBag)
        
          
         // MARK: === 이미지 서비스 구독 입니다. ===

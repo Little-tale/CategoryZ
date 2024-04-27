@@ -41,6 +41,7 @@ final class CategoryReusableCell: BaseCollectionViewCell {
     }
     
     func isSelected(_ bool: Bool) {
+        print("값을 전달 받긴함 ",bool)
         cellImage.layer.borderWidth = bool ? 3 : 0
         cellImage.layer.borderColor = bool ? JHColor.point.cgColor : .none
     }

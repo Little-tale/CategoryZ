@@ -8,10 +8,10 @@
 import Foundation
 import UIKit.UIImage
 
-enum ProductID: CaseIterable {
-    case dailyRoutine
-    case fashion
-    case pet
+enum ProductID: String, CaseIterable {
+    case dailyRoutine = "CategoryZ_dailyRoutine"
+    case fashion = "CategoryZ_fashion"
+    case pet = "CategoryZ_pet"
     
     var identi: String {
         switch self {
@@ -45,4 +45,10 @@ enum ProductID: CaseIterable {
             return "애완동물"
         }
     }
+    
+    var index: Int {
+        print(ProductID.allCases.firstIndex(of: self))
+        return ProductID.allCases.firstIndex(of: self) ?? 0
+    }
+    
 }

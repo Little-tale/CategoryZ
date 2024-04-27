@@ -29,8 +29,9 @@ final class PostRegViewModel: RxViewModelType {
         let saveButtonTap: ControlEvent<Void> // 저장 버튼탭
         let contentText: ControlProperty<String?>
         let startTrigger: ControlEvent<Bool>
-        
         let removeSelectModel: PublishRelay<IndexPath>
+        
+        // 수정 모델 구역
     }
     
     struct Output{

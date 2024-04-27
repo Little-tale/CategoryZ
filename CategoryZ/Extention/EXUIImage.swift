@@ -86,3 +86,84 @@ extension UIImageView {
         }
     }
 }
+
+extension UIViewController {
+    func downloadImage(imageUrl: String?, resizing: CGSize, complite: @escaping (Result<Data?,NetworkError>)-> Void ) {
+
+        let processor = DownsamplingImageProcessor(size: resizing)
+        var scale: CGFloat = 0
+        
+        if let screenCurrent = UIScreen.current?.scale {
+            
+            scale = screenCurrent
+        } else {
+            scale = UIScreen.main.scale
+        }
+        
+        guard let imageUrl else {
+            complite(.failure(.failMakeURLRequest))
+            return
+        }
+        
+        KingfisherManager.shared.retrieveImage(with: URL(string: imageUrl)!, options: [
+            .processor(processor),
+            .transition(.fade(1)),
+            .requestModifier(KingFisherNet()),
+            .scaleFactor(scale),
+            .cacheOriginalImage
+        ]) { imageResult in
+            switch imageResult {
+            case .success(let result):
+                complite(.success(result.data()))
+            case .failure(let error):
+                // 바꿔야해
+                print("이미지 로드 실패")
+                // complite(.failure(.unknownError))
+                break
+            }
+        }
+    }
+    func downloadImages(imageUrl: [String], resizing: CGSize, complete: @escaping (Result<[Data],NetworkError>)-> Void ) {
+
+        let processor = DownsamplingImageProcessor(size: resizing)
+       
+        var successModels:[Data] = []
+        let group = DispatchGroup()
+        
+        imageUrl.forEach { urlString in
+            guard let url = URL(string: urlString) else {
+                complete(.failure(.failMakeURLRequest))
+                return
+            }
+            group.enter()
+            
+            KingfisherManager.shared.retrieveImage(with: url, options: [
+                .processor(processor),
+                .requestModifier(KingFisherNet()),
+                .scaleFactor(UIScreen.main.scale)
+            ]) { imageResult in
+                defer { group.leave() }
+                switch imageResult {
+                case .success(let result):
+                    if let imageData = result.image.jpegData(compressionQuality: 1.0) {
+                        successModels.append(imageData)
+                    }
+                    
+                case .failure(let error):
+                    // 바꿔야해
+                    print("이미지 로드 실패")
+                    // complite(.failure(.unknownError))
+                    break
+                }
+            }
+        }
+        
+        group.notify(queue: .main) {
+            if successModels.count == imageUrl.count {
+                complete(.success(successModels))
+            } else {
+                complete(.failure(.imageUploadError(statusCode: 400, description: "현재 이미지 서비스에 문제가 있어요!")))
+            }
+        }
+    }
+}

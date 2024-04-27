@@ -54,6 +54,7 @@ final class LoginViewController: RxHomeBaseViewController<LoginView> {
         output.loginSuccess
             .drive(with: self) { owner, login in
                 print(login)
+                owner.changeRootView(to: SNSPhotoViewController(), isNavi: true)
             }
             .disposed(by: disPoseBag)
         

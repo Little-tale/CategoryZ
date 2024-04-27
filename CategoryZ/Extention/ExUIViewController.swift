@@ -105,10 +105,31 @@ extension UIViewController {
             [weak self] in
             self?.present(alertCon,animated: true)
         }
-
     }
     
+    func showActionSheet(
+        title: String?,
+        message: String?,
+        actions: [(title: String, handler: ((UIAlertAction) -> Void)?)]
+    ) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        
+        for action in actions {
+            let alertAction = UIAlertAction(title: action.title, style: .default, handler: action.handler)
+            alertController.addAction(alertAction)
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        alertController.addAction(cancelAction)
+        
+        DispatchQueue.main.async {
+            [weak self] in
+            self?.present(alertController, animated: true)
+        }
+    }
 }
+
+
 
 // MARK: 권한 설정 페이지 이동
 extension UIViewController {

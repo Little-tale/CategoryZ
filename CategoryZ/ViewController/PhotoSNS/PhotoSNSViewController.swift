@@ -47,6 +47,8 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         let selectedProductID = BehaviorRelay<ProductID> (value: .dailyRoutine)
         // 추가 요청 발생시
         let needLoadPage = PublishRelay<Void> ()
+        // 지우기 API 구성 해야함 일단 수정에서 해결해 볼것
+        let deleteModel = PublishRelay<SNSDataModel> ()
         
         let input = SNSPhotoMainViewModel.Input(
             viewDidAppearTrigger: rx.viewDidAppear,
@@ -129,6 +131,8 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             .disposed(by: disPoseBag)
         
         let moreButtonTap = PublishRelay<SNSDataModel> ()
+        let modifyModel = PublishRelay<SNSDataModel> ()
+        
         
         // moreButton 클릭시 모델 받기
         NotificationCenter.default.rx.notification(.selectedMoreButton, object: nil)
@@ -140,7 +144,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 moreButtonTap.accept(dataModel)
             }
             .disposed(by: disPoseBag)
-        
+        // ... 버튼 클릭시
         moreButtonTap
             .bind(with: self) { owner, model in
                 if model.creator.userID != myID {
@@ -151,10 +155,31 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                     owner.present(modalViewCon, animated: true)
                 } else {
                  // 이때는 포스트 수정으로 진행해야 합니다!
-                    let vc = PostRegViewController()
-                    vc.ifModifyModel = model
-                    // 다음에 와야함
+                    owner.showActionSheet(title: nil, message: nil, actions: [
+                        (title: "프로필보기", handler: { _ in
+                            let modalViewCon = MorePageViewController()
+                            modalViewCon.setModel(model.creator)
+                            
+                            modalViewCon.modalPresentationStyle = .pageSheet
+                            owner.present(modalViewCon, animated: true)
+                        }),
+                        (title: "게시글 수정", handler: {_ in
+                            modifyModel.accept(model)
+                        }),
+                        (title: "게시글 삭제", handler: {_ in
+                            deleteModel.accept(model)
+                        })
+                    ]
+                    )
                 }
+            }
+            .disposed(by: disPoseBag)
+        modifyModel
+            .bind(with: self) { owner, model in
+                let vc = PostRegViewController()
+                vc.ifModifyModel = model
+                NotificationCenter.default.post(name: .hidesBottomBarWhenPushed, object: nil)
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)
     
