@@ -36,6 +36,7 @@ final class PostRegViewModel: RxViewModelType {
         // 수정 모델 구역
         let ifModifyModel: BehaviorRelay<SNSDataModel?>
         let modifyInImageURLs: BehaviorRelay<[String]>
+        let removeTrigger: PublishRelay<Void>
     }
     
     struct Output{
@@ -46,6 +47,7 @@ final class PostRegViewModel: RxViewModelType {
         let userInfo: Driver<Creator>
         let networkError: Driver<NetworkError>
         let successPost: Driver<Void>
+        let removePost: Driver<Void>
     }
     
     func transform(_ input: Input) -> Output {
@@ -67,7 +69,8 @@ final class PostRegViewModel: RxViewModelType {
         
         // 포스트 성공 트리거
         let successPost = PublishRelay<Void> ()
-        
+        // 삭제 성공 트리거
+        let removePost = PublishRelay<Void> ()
         
         input.startTrigger.bind { _ in
             NetworkManager.fetchNetwork(model: Creator.self, router: .profile(.profileMeRead))
@@ -204,7 +207,22 @@ final class PostRegViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
-        // 만약 수정 모델이 존재한다면
+        // 포스트 삭제 신호가 왔다면
+        input.removeTrigger
+            .withLatestFrom(input.ifModifyModel)
+            .compactMap { $0 }
+            .flatMapLatest { model in
+                NetworkManager.noneModelRequest(router: .poster(.postDelete(postID: model.postId)))
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success:
+                    removePost.accept(())
+                case .failure(let fail):
+                    networkError.accept(fail)
+                }
+            }
+            .disposed(by: disposeBag)
         
         return Output(
             outputIamgeDataDriver: outputImageDatas.asDriver(),
@@ -213,7 +231,8 @@ final class PostRegViewModel: RxViewModelType {
             contentText: outputText.asDriver(),
             userInfo: outputUserInfo.asDriver(onErrorDriveWith: .never()),
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
-            successPost: successPost.asDriver(onErrorDriveWith: .never())
+            successPost: successPost.asDriver(onErrorDriveWith: .never()),
+            removePost: removePost.asDriver(onErrorDriveWith: .never())
         )
     }
     

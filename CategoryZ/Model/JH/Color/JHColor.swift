@@ -20,4 +20,5 @@ extension JHColor {
     static let darkGray: UIColor = .backDarkGray
     static let likeColor: UIColor = .like
     static let settingColor: UIColor = .setting
+    static let warningColor: UIColor = .warning
 }

@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Toast
 
 enum cameraOrImage {
     case camera
@@ -18,6 +19,12 @@ enum cameraOrImage {
 final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     
     let category = PublishRelay<[ProductID]> ()
+    let rightBarButton = UIBarButtonItem(systemItem: .save).then {
+        $0.tintColor = .point
+    }
+    let deleteButton = UIBarButtonItem(title: "삭제").then {
+        $0.tintColor = JHColor.warningColor
+    }
     
     private
     lazy var imageService = RxCameraImageService(presntationViewController: self, zipRate: 5)
@@ -36,17 +43,27 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     }
     
     override func navigationSetting() {
+        let flexiebelItem = UIBarButtonItem(systemItem: .flexibleSpace)
+        flexiebelItem.width = 40
+        navigationItem.rightBarButtonItems = [
+            rightBarButton,
+            flexiebelItem,
+            deleteButton
+        ]
+        
         if ifModifyModel != nil {
             navigationItem.title =  "게시물 수정"
         } else {
             navigationItem.title =  "게시물 작성"
+            deleteButton.isHidden = true
         }
+        
+        
+        
     }
     
     override func subscribe() {
-        let rightBarButton = UIBarButtonItem(systemItem: .save).then { $0.tintColor = .point
-        }
-        navigationItem.rightBarButtonItem = rightBarButton
+        
         // 프로덕트 아이디
         let product = ProductID.allCases
         
@@ -59,6 +76,8 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
         
         let ifModifyModel = BehaviorRelay<SNSDataModel?> (value: ifModifyModel)
         
+        let postRemveTrigger = PublishRelay<Void> ()
+        
         let input = PostRegViewModel.Input(
             selectedProduct: publishSelectProductId,
             insertImageData: behiberImageData,
@@ -67,7 +86,8 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             startTrigger: rx.viewDidAppear,
             removeSelectModel: removeSelectModel,
             ifModifyModel: ifModifyModel,
-            modifyInImageURLs: modifyInImageURLs
+            modifyInImageURLs: modifyInImageURLs,
+            removeTrigger: postRemveTrigger
         )
         
         let output = viewModel.transform(input)
@@ -233,6 +253,29 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             }
             .disposed(by: disPoseBag)
        
+        // 수정 모드에서 삭제 버튼을 눌렀을때의 로직입니다
+        deleteButton.rx.tap
+            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.showAlert(
+                    title: "삭제",
+                    message: "게시글을 삭제하시면 복구하실수 없습니다!",
+                    actionTitle: "삭제",
+                    complite: { _ in
+                        postRemveTrigger.accept(())
+                    },
+                    .destructive
+                )
+            }
+            .disposed(by: disPoseBag)
+        output.removePost
+            .throttle(.milliseconds(120))
+            .drive(with: self) { owner, _ in
+                owner.view.makeToast("삭제가 완료되었습니다.", duration: 2, position: .center)
+                NotificationCenter.default.post(name: .successPost, object: nil)
+                owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disPoseBag)
          
         // MARK: === 이미지 서비스 구독 입니다. ===
         // imageAddButtonTab
