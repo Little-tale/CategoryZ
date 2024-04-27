@@ -47,7 +47,9 @@ final class RxCameraImageService: NSObject {
     
     /// 결과 옵저버블 JPG
     let imageResult = PublishSubject<Result<[Data], RxImageSearviceError>> ()
-
+    /// 이미지 사이즈도 가지고 싶다면 해당 프로퍼티를 통해 받으세요
+    let imageResultSize = PublishSubject<[CGSize]> ()
+    let imageAcepts = PublishSubject<[CGFloat]> ()
     
     /// 피커를 띄울 부컨과 픽 모드를 선택합니다.
     init(presntationViewController: UIViewController, zipRate: Double?) {
@@ -160,6 +162,8 @@ extension RxCameraImageService: PHPickerViewControllerDelegate {
         
         // 이미지들을 담을 빈 배열선언
         var images: [Data] = []
+        var sizes: [CGSize] = []
+        var aspect: [CGFloat] = []
         // 이미지를 load할때 비동기적으로 함으로 동시에 반영하기 위한 그룹
         let group = DispatchGroup()
         // 반복문을 시도합니다.
@@ -183,11 +187,16 @@ extension RxCameraImageService: PHPickerViewControllerDelegate {
                         self.imageResult.onNext(.failure(.cantGetImage))
                         return
                     }
+                    print("이미지 Size: ",image.size)
+                    let width = image.size.width
+                    let height = image.size.height
+                    aspect.append(width / height)
                     if let zipRate {
                         guard let data = imageZipLimit(image: image, zipRate: zipRate) else {
                             self.imageResult.onNext(.failure(.cantGetImage))
                             return
                         }
+                        
                         images.append(data)
                     } else {
                         if let imageData = image.jpegData(compressionQuality: 1.0) {
@@ -205,7 +214,9 @@ extension RxCameraImageService: PHPickerViewControllerDelegate {
             [weak self] in
             guard let self else { return }
             // 모두 작업이 완료 됬음을 즉 이미지를 넘깁니다
-            self.imageResult.onNext(.success(images))
+            imageResult.onNext(.success(images))
+            imageResultSize.onNext(sizes)
+            imageAcepts.onNext(aspect)
         }
     }
     
@@ -233,6 +244,7 @@ extension RxCameraImageService: UIImagePickerControllerDelegate, UINavigationCon
         } else {
             if let imageData = image.jpegData(compressionQuality: 1) {
                 imageResult.onNext(.success([imageData]))
+                imageResultSize.onNext([image.size])
             } else {
                 imageResult.onNext(.failure(.cantGetImage))
             }
@@ -242,6 +254,7 @@ extension RxCameraImageService: UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
         imageResult.onNext(.success([]))
+        imageResultSize.onNext([])
     }
 }
 

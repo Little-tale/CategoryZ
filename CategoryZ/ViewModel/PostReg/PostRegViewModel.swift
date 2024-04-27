@@ -30,6 +30,7 @@ final class PostRegViewModel: RxViewModelType {
         let contentText: ControlProperty<String?>
         let startTrigger: ControlEvent<Bool>
         let removeSelectModel: PublishRelay<IndexPath>
+        let imageAcepts: BehaviorRelay<[CGFloat]>
         
         // 공통모델 명시
             // insertImageData
@@ -173,7 +174,11 @@ final class PostRegViewModel: RxViewModelType {
         // 이미지 업로드를 마치면 다시 포스트 업로드 실행
       imageUploadScueess
             .map({ model in
-                let query = MainPostQuery(title: "", content: model.content, content2: "", content3: "", product_id: model.productId, files: model.imageModel.files)
+                var accept: CGFloat = 1
+                if let realAccept = input.imageAcepts.value.first {
+                    accept = realAccept
+                }
+                let query = MainPostQuery(title: "", content: model.content, content2: "", content3: "\(accept)", product_id: model.productId, files: model.imageModel.files)
                 return query
             })
             .flatMap { model in

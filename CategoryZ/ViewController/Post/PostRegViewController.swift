@@ -71,6 +71,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
         let publishSelectProductId = BehaviorRelay<ProductID?> (value: nil)
         // 이미지 데이터들
         let behiberImageData = BehaviorRelay<[Data]> (value: [])
+        let behaviorImageAcepts = BehaviorRelay<[CGFloat]> (value: [])
         let removeSelectModel = PublishRelay<IndexPath> ()
         let modifyInImageURLs = BehaviorRelay<[String]> (value: [])
         
@@ -85,6 +86,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             contentText: homeView.contentTextView.rx.text,
             startTrigger: rx.viewDidAppear,
             removeSelectModel: removeSelectModel,
+            imageAcepts: behaviorImageAcepts,
             ifModifyModel: ifModifyModel,
             modifyInImageURLs: modifyInImageURLs,
             removeTrigger: postRemveTrigger
@@ -302,6 +304,13 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                         }
                     }
                 }
+            }
+            .disposed(by: disPoseBag)
+        /// 이미지 사이즈( 비 ) 를 구독합니다.
+        imageService.imageAcepts
+            .bind { acepts in
+                acepts.forEach { print($0) }
+                behaviorImageAcepts.accept(acepts)
             }
             .disposed(by: disPoseBag)
         
