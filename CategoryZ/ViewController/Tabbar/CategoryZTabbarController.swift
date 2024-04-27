@@ -79,11 +79,17 @@ final class CategoryZTabbarController: UITabBarController {
             addButton.setImage(configuredImage, for: .normal)
             addButton.tintColor = JHColor.white
         }
-        addButton.addTarget(
-            self,
-            action: #selector(addButtonAction),
-            for: .touchUpInside
-        )
+        
+        addButton.rx.tap
+            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                let vc = PostRegViewController()
+                vc.modalPresentationStyle = .pageSheet
+                let nvc = UINavigationController(rootViewController: vc)
+                owner.present(nvc, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         NotificationCenter.default.rx.notification(.hidesBottomBarWhenPushed)
             .bind(with: self) { owner, _ in
                 owner.setTabBarHidden(true, animated: true)
@@ -92,13 +98,7 @@ final class CategoryZTabbarController: UITabBarController {
        
     }
     
-    @objc private
-    func addButtonAction(sender: UIButton) {
-        let vc = PostRegViewController()
-        vc.modalPresentationStyle = .pageSheet
-        let nvc = UINavigationController(rootViewController: vc)
-        present(nvc, animated: true)
-    }
+   
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -115,6 +115,7 @@ final class CategoryZTabbarController: UITabBarController {
             self?.tabBar.isHidden = hidden
             self?.addButton.tintColor = hidden ? .clear : JHColor.white
             self?.addButton.backgroundColor = hidden ? .clear : JHColor.likeColor
+            self?.addButton.isEnabled = !hidden
             self?.view.layoutIfNeeded()
         }
     }
