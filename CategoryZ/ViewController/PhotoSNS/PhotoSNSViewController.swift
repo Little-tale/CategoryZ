@@ -178,7 +178,9 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             .bind(with: self) { owner, model in
                 let vc = PostRegViewController()
                 vc.ifModifyModel = model
+                vc.hidesBottomBarWhenPushed = true
                 NotificationCenter.default.post(name: .hidesBottomBarWhenPushed, object: nil)
+                
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)
@@ -197,7 +199,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 vc.hidesBottomBarWhenPushed = true
                 
                 NotificationCenter.default.post(name: .hidesBottomBarWhenPushed, object: nil)
-                vc.hidesBottomBarWhenPushed = true 
+                 
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)

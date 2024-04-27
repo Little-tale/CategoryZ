@@ -170,7 +170,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                         NotificationCenter.default.post(name: .successPost, object: nil)
                         owner.dismiss(animated: true)
                     } else {
-                        owner.navigationController?.popViewController(animated: true)
+                         owner.navigationController?.popViewController(animated: true)
                         NotificationCenter.default.post(name: .successPost, object: nil)
                     }
                 }
