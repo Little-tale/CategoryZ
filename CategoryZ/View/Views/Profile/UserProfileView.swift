@@ -38,17 +38,17 @@ final class UserProfileView: RxBaseView {
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
         $0.isScrollEnabled = true
-        let layout = UICollectionViewFlowLayout()
-        
-        layout.sectionHeadersPinToVisibleBounds = true
-        layout.itemSize = CGSize(width: 165, height: 210)
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 0
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 18, bottom: 10, right: 18
-        )
-        layout.scrollDirection = .vertical
-        
-        $0.collectionViewLayout = layout
+//        let layout = UICollectionViewFlowLayout()
+//        
+//        layout.sectionHeadersPinToVisibleBounds = true
+//        layout.itemSize = CGSize(width: 165, height: 210)
+//        layout.minimumLineSpacing = 10
+//        layout.minimumInteritemSpacing = 0
+//        layout.sectionInset = UIEdgeInsets(top: 10, left: 18, bottom: 10, right: 18
+//        )
+//        layout.scrollDirection = .vertical
+//        
+//        $0.collectionViewLayout = layout
     }
     
     override func configureHierarchy() {

@@ -40,7 +40,13 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        let customLayout = CustomPinterestLayout(
+            numberOfColums: 2,
+            cellPadding: 4
+        )
+        customLayout.delegate = self
+        
+        homeView.collectionView.collectionViewLayout = customLayout
     }
     override func subscribe() {
         guard let userId = UserIDStorage.shared.userID else {
@@ -291,5 +297,18 @@ extension CustomSectionModel: SectionModelType {
 }
 
 
-
-
+extension UserProfileViewController: CustomPinterestLayoutDelegate {
+    
+    func collectionView(
+        for collectionView: UICollectionView,
+        heightForAtIndexPath indexPath: IndexPath) -> CGFloat {
+            let cellWidth: CGFloat = (view.bounds.width - 4) / 2
+            
+            let ratioString = viewModel.realModel[indexPath.item].content3
+            
+            let ratioFloat = CGFloat(Double(ratioString) ?? 1 )
+            
+            return ratioFloat * cellWidth
+    }
+    
+}

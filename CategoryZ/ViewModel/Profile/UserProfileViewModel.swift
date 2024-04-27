@@ -22,8 +22,8 @@ final class UserProfileViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
     
-    private
-    var realModel: CustomSectionModel = CustomSectionModel( items: [])
+    
+    var realModel: [SNSDataModel] = []
     
     struct Input {
         let inputProfileType: BehaviorRelay<ProfileType>
@@ -118,10 +118,11 @@ final class UserProfileViewModel: RxViewModelType {
             .bind(with: self) {owner, result in
                 switch result {
                 case .success(let model):
-                    owner.realModel.items = model.data
+                    owner.realModel = model.data
                     print("통신 결과",model.data)
                     print("통신 결과 : \(model)")
-                    postReadMainModel.accept([owner.realModel])
+                    let acceptModel = CustomSectionModel(items: owner.realModel)
+                    postReadMainModel.accept([acceptModel])
                 case .failure(let fail):
                     networkError.onNext(fail)
                 }
