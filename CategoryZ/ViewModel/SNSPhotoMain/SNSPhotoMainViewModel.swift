@@ -41,6 +41,8 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         let needLoadPageTrigger : PublishRelay<Void>
         // 카테고리 선택시
         let selectedProductID: BehaviorRelay<ProductID>
+        // 체크확인된 지울모델
+        let checkedDeleteModel: PublishRelay<SNSDataModel>
     }
     
     struct Output {
@@ -49,6 +51,7 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         let userIDDriver: BehaviorRelay<String>
         let pullDataCount: BehaviorRelay<Int>
         let ifCanReqeust: BehaviorRelay<Bool>
+        let successDelteTrigger: PublishRelay<SNSDataModel>
     }
     
     func transform(_ input: Input) -> Output {
@@ -62,16 +65,10 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         let pullDataCountBR = BehaviorRelay(value: 0)
         let ifCanReqeust = BehaviorRelay(value: false)
         let selectedProductId = BehaviorRelay(value: "")
+        // 지우기 완료됨의 트리거
+        let successDelteTrigger = PublishRelay<SNSDataModel> ()
         
-        
-        
-        let request = Observable.merge(
-            input.viewDidAppearTrigger
-                .filter({ $0 == true })
-                .take(1)
-                .map({ _ in () }),
-            input.needLoadPageTrigger.asObservable()
-        )
+        let request = input.needLoadPageTrigger.asObservable()
         .flatMapLatest { _ in
             NetworkManager
                 .fetchNetwork(
@@ -83,7 +80,7 @@ final class SNSPhotoMainViewModel: RxViewModelType {
                 )
             )
         }
-        .share()
+        // .share()
         
         request.bind(with: self) { owner, result in
             switch result{
@@ -139,13 +136,33 @@ final class SNSPhotoMainViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
+        input.checkedDeleteModel
+            .flatMapLatest { model in
+            NetworkManager.noneModelRequest(router: .poster(.postDelete(postID: model.postId)))
+                    .map { result in
+                        return (results: result, model: model)
+                    }
+            }
+            .bind(with: self) { owner, results in
+                switch results.results {
+                case .success:
+                    owner.realPostData.remove(at: results.model.currentRow)
+                    owner.postsDatas.accept(owner.realPostData)
+                    successDelteTrigger.accept(results.model)
+                case .failure(let fail):
+                    owner.networkError.accept(fail)
+                }
+            }
+            .disposed(by: disposeBag)
+        
         
         return .init(
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
             tableViewItems: postsDatas,
             userIDDriver: userId,
             pullDataCount: pullDataCountBR,
-            ifCanReqeust: ifCanReqeust
+            ifCanReqeust: ifCanReqeust,
+            successDelteTrigger: successDelteTrigger
         )
     }
 

@@ -16,9 +16,13 @@ import RxReusableKit
  커서기반 페이지 네이션을 알아보도록 하자
  */
 
+
+
 final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     
     typealias RxHeaderDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String,ProductID>>
+    
+    typealias SNSSectionModel = AnimatableSectionModel<String, SNSDataModel>
     
     private let headerItems = Observable.just([
         SectionModel(model: "Section", items: [
@@ -49,14 +53,17 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         let needLoadPage = PublishRelay<Void> ()
         // 지우기 API 구성 해야함 일단 수정에서 해결해 볼것
         let deleteModel = PublishRelay<SNSDataModel> ()
+        let checkedDeleteModel = PublishRelay<SNSDataModel> ()
         
         let input = SNSPhotoMainViewModel.Input(
             viewDidAppearTrigger: rx.viewDidAppear,
             needLoadPageTrigger: needLoadPage,
-            selectedProductID: selectedProductID
+            selectedProductID: selectedProductID,
+            checkedDeleteModel: checkedDeleteModel
         )
         
         let output = viewModel.transform(input)
+        
         
         // MARK: 에러 발생시
         output.networkError
@@ -69,18 +76,41 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             }
             .disposed(by: disPoseBag)
     
-        
+        let dataSource = RxTableViewSectionedAnimatedDataSource<SNSSectionModel>(
+            animationConfiguration: AnimationConfiguration(
+                insertAnimation: .automatic,
+                reloadAnimation: .automatic,
+                deleteAnimation: .automatic)) {[weak self] dataSource, tableView, indexPath, item in
+                    guard let self else {
+                        print("RxTableViewSectionedAnimatedDataSource Error")
+                        return .init()
+                    }
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: SNSTableViewCell.identi, for: indexPath) as? SNSTableViewCell else {
+                        return .init()
+                    }
+                    
+                    let reciveModel = item
+                    reciveModel.currentRow = indexPath.row
+                    cell.setModel(reciveModel, output.userIDDriver.value, delegate: viewModel)
+                    cell.selectionStyle = .none
+                    return cell
+                }
         // 데이터 방출시 테이블 뷰
+//        output.tableViewItems
+//            .distinctUntilChanged()
+//            .bind(to:homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {[weak self] row, model, cell in
+//                guard let self else { return }
+//                
+//                let reciveModel = model
+//                reciveModel.currentRow = row
+//                cell.setModel(reciveModel, output.userIDDriver.value, delegate: viewModel)
+//                cell.selectionStyle = .none
+//            }
+//            .disposed(by: disPoseBag)
+        
         output.tableViewItems
-            .distinctUntilChanged()
-            .bind(to:homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {[weak self] row, model, cell in
-                guard let self else { return }
-                
-                let reciveModel = model
-                reciveModel.currentRow = row
-                cell.setModel(reciveModel, output.userIDDriver.value, delegate: viewModel)
-                cell.selectionStyle = .none
-            }
+            .map { [SNSSectionModel(model: "", items: $0)]}
+            .bind(to: homeView.tableView.rx.items(dataSource: dataSource))
             .disposed(by: disPoseBag)
         
         // View
@@ -185,6 +215,20 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             }
             .disposed(by: disPoseBag)
     
+        deleteModel
+            .bind(with: self) { owner, model in
+                owner.showAlert(
+                    title: "삭제",
+                    message: "삭제하시면 복구하실수 없습니다!",
+                    actionTitle: "삭제",
+                    complite: { _ in
+                        checkedDeleteModel.accept(model)
+                    },
+                    .default
+                )
+            }
+            .disposed(by: disPoseBag)
+
         // 프레젠트 뷰컨에서 프로필 이동 신호를 받았다면
         NotificationCenter.default.rx.notification(.moveToProfile, object: nil)
             .bind(with: self) { owner, notification in
@@ -253,4 +297,14 @@ extension SNSPhotoViewController {
             homeView.tableView.scrollToRow(at: index, at: .top, animated: true)
         }
     }
+}
+
+
+extension SNSDataModel: IdentifiableType {
+    
+    var identity: String {
+        return postId
+    }
+    
+    typealias Identity = String
 }

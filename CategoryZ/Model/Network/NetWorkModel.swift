@@ -111,7 +111,7 @@ struct PostReadMainModel: Decodable {
     }
 }
 // SNS 모델
-final class SNSDataModel: Decodable, Equatable {
+final class SNSDataModel: Decodable, Equatable, Hashable {
     
     let postId: String
     let productId: String
@@ -176,6 +176,10 @@ final class SNSDataModel: Decodable, Equatable {
             return true
         }
         return false
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(postId)
     }
 }
 
