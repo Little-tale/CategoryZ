@@ -70,6 +70,12 @@ final class LikeViewController: RxBaseViewController {
             cell.layer.cornerRadius = 12
         }
         .disposed(by: disPoseBag)
+        
+        collectionView.rx.modelSelected(SNSDataModel.self)
+            .bind(with: self) { owner, model in
+                print(model)
+            }
+            .disposed(by: disPoseBag)
     }
     
     override func configureHierarchy() {

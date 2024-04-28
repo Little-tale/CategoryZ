@@ -33,6 +33,7 @@
 		7B1EE3F32BDE11DC00F109EB /* LikeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE3F22BDE11DC00F109EB /* LikeViewModel.swift */; };
 		7B1EE3F52BDE2A3700F109EB /* PinterestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE3F42BDE2A3700F109EB /* PinterestCell.swift */; };
 		7B1EE3F72BDE417A00F109EB /* RxBaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE3F62BDE417A00F109EB /* RxBaseCollectionViewCell.swift */; };
+		7B1EE3F92BDE4CFB00F109EB /* SingleSNSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE3F82BDE4CFB00F109EB /* SingleSNSView.swift */; };
 		7B5E512D2BD9135E00918C53 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512C2BD9135E00918C53 /* CommentViewController.swift */; };
 		7B5E51302BD91BD700918C53 /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512F2BD91BD700918C53 /* CommentTextView.swift */; };
 		7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */; };
@@ -167,6 +168,7 @@
 		7B1EE3F22BDE11DC00F109EB /* LikeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewModel.swift; sourceTree = "<group>"; };
 		7B1EE3F42BDE2A3700F109EB /* PinterestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestCell.swift; sourceTree = "<group>"; };
 		7B1EE3F62BDE417A00F109EB /* RxBaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		7B1EE3F82BDE4CFB00F109EB /* SingleSNSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleSNSView.swift; sourceTree = "<group>"; };
 		7B5E512C2BD9135E00918C53 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		7B5E512F2BD91BD700918C53 /* CommentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
 		7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -531,6 +533,7 @@
 			isa = PBXGroup;
 			children = (
 				7B838DF32BCFADE3000F2E27 /* PhotoSNSView.swift */,
+				7B1EE3F82BDE4CFB00F109EB /* SingleSNSView.swift */,
 			);
 			path = PhotoSNS;
 			sourceTree = "<group>";
@@ -1030,6 +1033,7 @@
 				7B838DDC2BCEC9B9000F2E27 /* LunchScreenViewController.swift in Sources */,
 				7BA0E0DF2BCD73EC002F0516 /* BaseTableViewCell.swift in Sources */,
 				7BC51B492BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift in Sources */,
+				7B1EE3F92BDE4CFB00F109EB /* SingleSNSView.swift in Sources */,
 				7BCF4A5F2BC6E39700BCE635 /* JHColor.swift in Sources */,
 				7BA0E0E22BCD7458002F0516 /* CircleImageView.swift in Sources */,
 				7BCF4A312BC5A8DB00BCE635 /* ReusableIdentifier.swift in Sources */,
