@@ -134,7 +134,7 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
         
         
         
-        
+        // 좌측 버튼 탭 하였을때
         homeView.leftButton.rx
             .tap
             .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
@@ -147,6 +147,16 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
                 case .other:
                     break
                 }
+            }
+            .disposed(by: disPoseBag)
+    
+        homeView.rightButton.rx
+            .tap
+            .throttle(.milliseconds(100), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                // LikeViewController
+                let vc = LikeViewController()
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)
         

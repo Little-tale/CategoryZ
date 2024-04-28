@@ -9,7 +9,6 @@ import UIKit
 /*
  회고...!
  Masonry or Pinterest Style Layout
- collectionView.collectionViewLayout.invalidateLayout()
  */
 protocol CustomPinterestLayoutDelegate: AnyObject {
     
@@ -75,10 +74,13 @@ final class CustomPinterestLayout: UICollectionViewFlowLayout {
     // ... 해당 메서드는 레이아웃을 미리 계산 하고  메모리에 캐쉬하여
     // ... 불필요한 반복적인 연산을 하는것을 방지하도록 해야한다.
     override func prepare() {
-        guard let collectionView = collectionView else { return }
-        if collectionView.numberOfSections == 0 || cache.isEmpty == false {
-            cache.removeAll()
+        guard let collectionView = collectionView,
+              collectionView.numberOfSections > 0,
+              collectionView.numberOfItems(inSection: 0) > 0,
+              cache.isEmpty else {
+            return
         }
+        cache.removeAll()
         
         let cellWidth = contetnsWidth / CGFloat(numberOfColums)
         

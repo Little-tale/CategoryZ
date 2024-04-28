@@ -251,6 +251,9 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         NotificationCenter.default.rx.notification(.moveToSettingProfile)
             .bind(with: self) { owner, _ in
                 let vc = ProfileSettingViewController()
+                vc.hidesBottomBarWhenPushed = true
+                NotificationCenter.default.post(name: .hidesBottomBarWhenPushed, object: nil)
+                
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)
