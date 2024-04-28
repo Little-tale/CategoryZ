@@ -126,7 +126,8 @@ final class ScrollImageView: RxBaseView {
         var imageViews: [UIImageView] = []
         urlString.forEach { image in
             let view = UIImageView()
-            view.contentMode = .scaleToFill
+            view.contentMode = .scaleAspectFill
+            view.clipsToBounds = true
             view.backgroundColor = JHColor.darkGray
             view.downloadImage(imageUrl: image,resizing: .init(width: 400, height: 300))
             imageViews.append(view)

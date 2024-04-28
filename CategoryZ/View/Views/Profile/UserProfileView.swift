@@ -81,9 +81,9 @@ final class UserProfileView: RxBaseView {
         }
     }
     override func designView() {
-        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.headerReferenceSize = CGSize(width: collectionView.frame.size.width, height: 80)
-        }
+//        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+//            layout.headerReferenceSize = CGSize(width: collectionView.frame.size.width, height: 80)
+//        }
     }
     
     override func register() {

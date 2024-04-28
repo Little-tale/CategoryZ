@@ -42,7 +42,8 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
         super.viewDidLoad()
         let customLayout = CustomPinterestLayout(
             numberOfColums: 2,
-            cellPadding: 4
+            cellPadding: 4,
+            70 // 헤더높이
         )
         customLayout.delegate = self
         
@@ -211,7 +212,7 @@ final class UserProfileViewController: RxHomeBaseViewController<UserProfileView>
             }
             .disposed(by: disPoseBag)
         
-        /// 스크롤뷰 컨트롤
+        // 스크롤뷰 컨트롤
         output.postReadMainModel
             .flatMapLatest { _ in
                 return self.homeView.scrollView.rx.contentOffset.asDriver()
@@ -302,13 +303,13 @@ extension UserProfileViewController: CustomPinterestLayoutDelegate {
     func collectionView(
         for collectionView: UICollectionView,
         heightForAtIndexPath indexPath: IndexPath) -> CGFloat {
-            let cellWidth: CGFloat = (view.bounds.width - 4) / 2
+            let cellWidth: CGFloat = (view.bounds.width) / 2
             
             let ratioString = viewModel.realModel[indexPath.item].content3
             
             let ratioFloat = CGFloat(Double(ratioString) ?? 1 )
             
-            return ratioFloat * cellWidth
+            return cellWidth / ratioFloat
     }
     
 }

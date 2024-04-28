@@ -9,6 +9,7 @@ import UIKit
 /*
  회고...!
  Masonry or Pinterest Style Layout
+ collectionView.collectionViewLayout.invalidateLayout()
  */
 protocol CustomPinterestLayoutDelegate: AnyObject {
     
@@ -24,11 +25,15 @@ final class CustomPinterestLayout: UICollectionViewFlowLayout {
     private let numberOfColums: Int // 한 행의 아이템 갯수
     /// 셀의 패딩
     private let cellPadding: CGFloat // 셀의 패딩
+    /// 필요의 경우 헤더의 높이 지정: Int
+    private
+    let headerHeight: CGFloat?
     
     
-    init(numberOfColums: Int, cellPadding: CGFloat) {
+    init(numberOfColums: Int, cellPadding: CGFloat,_ headerHeight: CGFloat? = nil) {
         self.numberOfColums = numberOfColums
         self.cellPadding = cellPadding
+        self.headerHeight = headerHeight
         super.init()
     }
     
@@ -61,30 +66,50 @@ final class CustomPinterestLayout: UICollectionViewFlowLayout {
     
     // 1.END 컬렉션뷰의 컨텐츠 사이즈를 지정
     override var collectionViewContentSize: CGSize {
-        return CGSize(width: contetnsWidth, height: contentsHeight)
+        let minHeight = collectionView?.bounds.height ?? 0
+        
+        return CGSize(width: contetnsWidth, height: max(contentsHeight,minHeight))
     }
         
     // 2. 컬렉션뷰가 처음 초기화 되거나, 뷰가 변경될때 실행됩니다.
     // ... 해당 메서드는 레이아웃을 미리 계산 하고  메모리에 캐쉬하여
     // ... 불필요한 반복적인 연산을 하는것을 방지하도록 해야한다.
-    
-    // 해당메서드는 플로우 레이아웃에는 보이진 않는데
     override func prepare() {
-        guard let collectionView = collectionView,
-              collectionView.numberOfSections > 0,
-              collectionView.numberOfItems(inSection: 0) > 0,
-              cache.isEmpty else {
-            return
+        guard let collectionView = collectionView else { return }
+        if collectionView.numberOfSections == 0 || cache.isEmpty == false {
+            cache.removeAll()
         }
         
         let cellWidth = contetnsWidth / CGFloat(numberOfColums)
         
+        var yOffSet:[CGFloat] = []
+        
+        if let headerHeight {
+            // 헤더 레이아웃 속성
+            let headerIndexPath = IndexPath(item: 0, section: 0)
+
+            let headerAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: headerIndexPath)
+            
+            headerAttribute.frame = CGRect(
+                x: 0,
+                y: 0,
+                width: collectionView.bounds.width,
+                height: headerHeight
+            ) // 헤더높이 지정
+            
+            cache.append(headerAttribute)
+            // cell 의 Y위치를 나타내는 배열입니다.
+            yOffSet = [CGFloat](repeating: headerAttribute.frame.maxY, count: numberOfColums)
+            
+            yOffSet[0] = headerAttribute.frame.maxY
+            
+        } else {
+            yOffSet = [CGFloat](repeating: 0, count: numberOfColums)
+        }
+        
         // cell 의 X위치를 나타내는 배열입니다.
         let xOffSet:[CGFloat] = [0, cellWidth]
-        
-        // cell 의 Y위치를 나타내는 배열입니다.
-        var yOffSet:[CGFloat] = .init(repeating: 0, count: numberOfColums)
-        
+
         var colum: Int = 0 // 현재 행의 위치
         
         for item in 0..<collectionView.numberOfItems(inSection: 0) {
@@ -110,7 +135,9 @@ final class CustomPinterestLayout: UICollectionViewFlowLayout {
             )
             
             // 계산한 Frame를 통해 레이아웃정보를 반영하고 캐쉬에 저장
-            let attribute = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+            let attribute = UICollectionViewLayoutAttributes(
+                forCellWith: indexPath
+            )
             // 레이아웃정보를 반영
             attribute.frame = insetFrame
             cache.append(attribute)
