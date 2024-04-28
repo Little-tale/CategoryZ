@@ -29,7 +29,8 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
         let setDataBe = BehaviorRelay(value: SNSData)
         
         let input = SingleSNSViewModel.Input(
-            setDataBe: setDataBe
+            setDataBe: setDataBe,
+            likeButtonTap: homeView.singleView.likeButton.rx.tap
         )
         
         homeView.singleView.dateLabel.text = DateManager.shared.differenceDateString(SNSData.createdAt) 
@@ -41,6 +42,7 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
             .disposed(by: disPoseBag)
         
         output.imageStrings
+            .distinctUntilChanged()
             .drive(with: self) { owner, strings in
                 owner.homeView.singleView.imageScrollView.setModel(strings)
             }
@@ -73,6 +75,26 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
             }
             .disposed(by: disPoseBag)
         
+        output
+            .networkError
+            .bind(with: self, onNext: { owner, error in
+                owner.errorCatch(error)
+            })
+            .disposed(by: disPoseBag)
+        
+        
+        settingLikeButton()
     }
     
+    
+    private
+    func settingLikeButton(){
+        homeView.singleView.likeButton
+            .rx.tap
+            .throttle(.milliseconds(400), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.homeView.singleView.likeButton.isSelected.toggle()
+            }
+            .disposed(by: disPoseBag)
+    }
 }
