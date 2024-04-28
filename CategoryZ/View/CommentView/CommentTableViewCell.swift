@@ -61,7 +61,8 @@ final class CommentTableViewCell: RxBaseTableViewCell {
         userImageView.addGestureRecognizer(tap)
         
         tap.rx.event
-            .bind { _ in
+            .withUnretained(self)
+            .bind {owner, _ in
                 print("Tap..! ")
                 if let myId = UserIDStorage.shared.userID  {
                     print("Tap.. myId")

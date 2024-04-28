@@ -95,18 +95,6 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                     cell.selectionStyle = .none
                     return cell
                 }
-        // 데이터 방출시 테이블 뷰
-//        output.tableViewItems
-//            .distinctUntilChanged()
-//            .bind(to:homeView.tableView.rx.items(cellIdentifier: SNSTableViewCell.identi, cellType: SNSTableViewCell.self)) {[weak self] row, model, cell in
-//                guard let self else { return }
-//                
-//                let reciveModel = model
-//                reciveModel.currentRow = row
-//                cell.setModel(reciveModel, output.userIDDriver.value, delegate: viewModel)
-//                cell.selectionStyle = .none
-//            }
-//            .disposed(by: disPoseBag)
         
         output.tableViewItems
             .map { [SNSSectionModel(model: "", items: $0)]}

@@ -28,11 +28,11 @@ final class LunchScreenViewController: RxHomeBaseViewController<FirstView> {
             .drive(with: self) { owner, bool in
                 if bool {
                     // 현재는 이렇게 하지만 후에 탭바 컨트롤러로 교체
-                    let viewController = SNSPhotoViewController()
+                    let viewController = CategoryZTabbarController()
                     let nvc = UINavigationController(rootViewController: viewController)
-                    let vc = CategoryZTabbarController()
-                    vc.modalPresentationStyle = .fullScreen
-                    owner.present(vc, animated: false)
+                    nvc.navigationBar.isHidden = true
+                    
+                    owner.changeRootView(to: nvc, isNavi: false)
                 } else {
                     let viewController = GetStartViewController()
                     

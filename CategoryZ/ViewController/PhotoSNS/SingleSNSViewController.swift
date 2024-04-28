@@ -27,8 +27,6 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
     private
     func subscribe(_ SNSData: SNSDataModel) {
         
-        
-        
         let setDataBe = BehaviorRelay(value: SNSData)
         
         let input = SingleSNSViewModel.Input(
@@ -85,6 +83,30 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
             })
             .disposed(by: disPoseBag)
         
+        homeView.singleView.commentButton.rx.tap
+            .throttle(.milliseconds(100), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                let vc = CommentViewController()
+                vc.setModel(SNSData)
+                let nvc = UINavigationController(rootViewController: vc)
+                
+                nvc.modalPresentationStyle = .pageSheet
+                owner.present(nvc, animated: true)
+            }
+            .disposed(by: disPoseBag)
+        
+        NotificationCenter.default.rx.notification(.changedComment)
+            .bind(with: self) { owner, notification in
+                guard let snsDataModel = notification.userInfo? ["SNSDataModel"] as? SNSDataModel else {
+                    print("SNSDataModelCell 변환 실패")
+                    return
+                }
+                print("포스트 아이디: ", SNSData.postId)
+                if SNSData.postId == snsDataModel.postId {
+                    owner.homeView.singleView.commentCountLabel.text = String(snsDataModel.comments.count)
+                }
+            }
+            .disposed(by: disPoseBag)
         
         settingLikeButton()
     }

@@ -192,20 +192,23 @@ extension CommentViewController {
                 }
             }
             .disposed(by: disPoseBag)
-        
-        NotificationCenter.default
-            .rx.notification(.moveToProfileForComment, object: nil)
-            .bind(with: self) { owner, noti in
-                guard let profileType =  noti.userInfo? ["ProfileType"] as? ProfileType else {
-                    print("ProfileType Fail b")
-                    return
-                }
-                print("Fail? ")
-                let vc = UserProfileViewController()
-                vc.profileType = profileType
-                owner.navigationController?.pushViewController(vc, animated: true)
-            }
-            .disposed(by: disPoseBag)
+        //MARK: 해당 부분에서 프로필 이미지 클릭시 다음 화면으로 이동해야하지만
+        // 그것이 무한히 되면서 문제가 발생하고 있어 일단은 정지
+//        NotificationCenter.default
+//            .rx
+//            .notification(.moveToProfileForComment, object: nil)
+//            .bind(with: self) { owner, noti in
+//                guard let profileType =  noti.userInfo? ["ProfileType"] as? ProfileType else {
+//                    print("ProfileType Fail b")
+//                    return
+//                }
+//                print("Fail? ")
+//                let vc = UserProfileViewController()
+//                vc.profileType = profileType
+//                owner.navigationController?.pushViewController(vc, animated: true)
+//            }
+//            .disposed(by: disPoseBag)
+       
     }
 }
 
