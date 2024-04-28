@@ -9,18 +9,19 @@ import UIKit
 import SnapKit
 import Then
 
-final class SingleSNSView: RxBaseView {
+final class SingleSNSView: BaseView {
+
     // 이미지 스크롤 뷰
-    private let imageScrollView = ScrollImageView().then {
+    let imageScrollView = ScrollImageView().then {
         $0.layer.cornerRadius = 15
         $0.clipsToBounds = true
     }
     
     // 크리에이터 이름 라벨
-    private let userNameLabel = UILabel()
+    let userNameLabel = UILabel()
     
     // 프로필 이미지뷰
-    private let profileImageView = CircleImageView().then {
+    let profileImageView = CircleImageView().then {
         $0.image = JHImage.defaultImage
         $0.tintColor = JHColor.black
     }
@@ -30,35 +31,35 @@ final class SingleSNSView: RxBaseView {
     }
     
     // 좋아요 버튼 옆에는 몇명이 했는지..!
-    private let likeButton = SeletionButton(
+    let likeButton = SeletionButton(
         selected: JHImage.likeImageSelected,
         noSelected: JHImage.likeImageDiselected
     )
         .then { $0.tintColor = JHColor.likeColor }
     
-    private let likeCountLabel = UILabel().then {
+    let likeCountLabel = UILabel().then {
         $0.font = JHFont.UIKit.bo14
     }
     
     // 댓글 버튼
-    private
+    
     let commentButton = SeletionButton(
         selected: JHImage.messageSelected,
         noSelected: JHImage.messageDiselected
     ).then { $0.tintColor = JHColor.black }
     
-    private
+   
     let commentCountLabel = UILabel().then({
         $0.font = JHFont.UIKit.bo14
     })
     // 컨텐트 라벨
-    private let contentLable = UILabel().then {
+    let contentLable = UILabel().then {
         $0.font = JHFont.UIKit.re12
         $0.numberOfLines = 3
     }
     
     // 날짜 라벨인데 (몇일전인지 계산하기)
-    private let dateLabel = UILabel().then {
+    let dateLabel = UILabel().then {
         $0.font = JHFont.UIKit.re10
     }
     override func configureHierarchy() {
@@ -117,13 +118,24 @@ final class SingleSNSView: RxBaseView {
         contentLable.snp.makeConstraints { make in
             make.top.equalTo(likeButton.snp.bottom).offset(4)
             make.leading.equalTo(likeButton)
+            make.trailing.equalTo(imageScrollView.snp.trailing).inset(4)
         }
         
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(contentLable.snp.bottom)
             make.leading.equalTo(contentLable)
-            make.bottom.equalTo(safeAreaLayoutGuide).inset(8)
+            
         }
     }
+    
+    
+    override var intrinsicContentSize: CGSize {
+        layoutIfNeeded()
+        
+        let totalHeight = dateLabel.frame.maxY + safeAreaInsets.bottom  // 날짜 라벨 아래 여백 포함
+
+           return CGSize(width: UIView.noIntrinsicMetric, height: totalHeight)
+       }
+    
   
 }

@@ -226,6 +226,13 @@ final class Creator: Decodable , Equatable{
     static func == (lhs: Creator, rhs: Creator) -> Bool {
         lhs.uuid == rhs.uuid
     }
+    
+    init(userID: String, nick: String, profileImage: String?, isFollow: Bool = false) {
+        self.userID = userID
+        self.nick = nick
+        self.profileImage = profileImage
+        self.isFollow = isFollow
+    }
 }
 
 

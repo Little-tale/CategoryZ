@@ -73,7 +73,9 @@ final class LikeViewController: RxBaseViewController {
         
         collectionView.rx.modelSelected(SNSDataModel.self)
             .bind(with: self) { owner, model in
-                print(model)
+                let vc = SingleSNSViewController()
+                vc.setModel(model)
+                owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)
     }
@@ -90,6 +92,7 @@ final class LikeViewController: RxBaseViewController {
     func navigationSetting(){
         navigationItem.title = "좋아요 모아요"
     }
+    
 }
 
 extension LikeViewController: CustomPinterestLayoutDelegate {

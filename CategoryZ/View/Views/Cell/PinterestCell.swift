@@ -108,6 +108,5 @@ final class PinterestCell: RxBaseCollectionViewCell {
             make.height.equalTo(20)
             make.bottom.equalToSuperview().inset(4)
         }
-
     }
 }

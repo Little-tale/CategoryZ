@@ -247,6 +247,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         contentLable.snp.makeConstraints { make in
             make.top.equalTo(likeButton.snp.bottom).offset(4)
             make.leading.equalTo(likeButton)
+            make.trailing.equalTo(imageScrollView.snp.trailing)
         }
         
         dateLabel.snp.makeConstraints { make in

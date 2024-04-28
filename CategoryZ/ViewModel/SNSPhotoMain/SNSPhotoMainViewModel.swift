@@ -21,7 +21,6 @@ final class SNSPhotoMainViewModel: RxViewModelType {
     private
     var realPostData: [SNSDataModel] = []
     
-    
     // 포스트 데이타들
     private // Value 접근시 무조건 ..... ㅠㅠㅠ
     let postsDatas = PublishRelay<[SNSDataModel]> ()
