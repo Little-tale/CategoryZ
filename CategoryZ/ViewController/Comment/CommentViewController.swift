@@ -208,6 +208,14 @@ extension CommentViewController {
 //                owner.navigationController?.pushViewController(vc, animated: true)
 //            }
 //            .disposed(by: disPoseBag)
+        
+        NotificationCenter.default
+            .rx
+            .notification(.moveToProfileForComment, object: nil)
+            .bind(with: self) { owner, noti in
+                owner.dismiss(animated: true)
+            }
+            .disposed(by: disPoseBag)
        
     }
 }

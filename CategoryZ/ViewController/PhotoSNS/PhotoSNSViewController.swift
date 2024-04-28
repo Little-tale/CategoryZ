@@ -40,6 +40,26 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // disPoseBag = .init()
+        NotificationCenter.default
+            .rx
+            .notification(.moveToProfileForComment, object: nil)
+            .take(until: rx.viewDidDisapear)
+            .bind(with: self) { owner, noti in
+                guard let profileType =  noti.userInfo? ["ProfileType"] as? ProfileType else {
+                    print("ProfileType Fail b")
+                    return
+                }
+                print("Fail? ")
+                let vc = UserProfileViewController()
+                vc.profileType = profileType
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
+    }
+    
     override func subscribe() {
         
         guard let myID = UserIDStorage.shared.userID else {

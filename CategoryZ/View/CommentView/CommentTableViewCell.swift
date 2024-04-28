@@ -77,6 +77,8 @@ final class CommentTableViewCell: RxBaseTableViewCell {
                 }
             }
             .disposed(by: disposeBag)
+        
+        
     }
     
     override func configureHierarchy() {
