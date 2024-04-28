@@ -51,7 +51,7 @@ extension UIImage {
 }
 
 extension UIImageView {
-    func downloadImage(imageUrl: String?, resizing: CGSize) {
+    func downloadImage(imageUrl: String?, resizing: CGSize, _ defaultImage: UIImage? = nil) {
 
         let processor = DownsamplingImageProcessor(size: resizing)
         var scale: CGFloat = 0
@@ -64,6 +64,9 @@ extension UIImageView {
         }
         
         guard let imageUrl else {
+            if defaultImage != nil {
+                image = defaultImage
+            }
             NotificationCenter.default.post(name: .cantChageUrlImage, object: nil)
             return
         }

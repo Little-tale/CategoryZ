@@ -31,6 +31,8 @@
 		7B1EE3ED2BDD45B300F109EB /* CustomPinterestLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE3EC2BDD45B300F109EB /* CustomPinterestLayout.swift */; };
 		7B1EE3F02BDE109500F109EB /* LikeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE3EF2BDE109400F109EB /* LikeViewController.swift */; };
 		7B1EE3F32BDE11DC00F109EB /* LikeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE3F22BDE11DC00F109EB /* LikeViewModel.swift */; };
+		7B1EE3F52BDE2A3700F109EB /* PinterestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE3F42BDE2A3700F109EB /* PinterestCell.swift */; };
+		7B1EE3F72BDE417A00F109EB /* RxBaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE3F62BDE417A00F109EB /* RxBaseCollectionViewCell.swift */; };
 		7B5E512D2BD9135E00918C53 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512C2BD9135E00918C53 /* CommentViewController.swift */; };
 		7B5E51302BD91BD700918C53 /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512F2BD91BD700918C53 /* CommentTextView.swift */; };
 		7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */; };
@@ -163,6 +165,8 @@
 		7B1EE3EC2BDD45B300F109EB /* CustomPinterestLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPinterestLayout.swift; sourceTree = "<group>"; };
 		7B1EE3EF2BDE109400F109EB /* LikeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewController.swift; sourceTree = "<group>"; };
 		7B1EE3F22BDE11DC00F109EB /* LikeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeViewModel.swift; sourceTree = "<group>"; };
+		7B1EE3F42BDE2A3700F109EB /* PinterestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestCell.swift; sourceTree = "<group>"; };
+		7B1EE3F62BDE417A00F109EB /* RxBaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		7B5E512C2BD9135E00918C53 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		7B5E512F2BD91BD700918C53 /* CommentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
 		7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -630,6 +634,7 @@
 				7B838DDF2BCEF2DD000F2E27 /* AddCollectionViewCell.swift */,
 				7B838E052BCFB98F000F2E27 /* SNSTableViewCell.swift */,
 				7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */,
+				7B1EE3F42BDE2A3700F109EB /* PinterestCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -706,6 +711,7 @@
 				7BA0E0DC2BCD73DB002F0516 /* BaseCollectionViewCell.swift */,
 				7BA0E0DE2BCD73EC002F0516 /* BaseTableViewCell.swift */,
 				7BC51B452BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift */,
+				7B1EE3F62BDE417A00F109EB /* RxBaseCollectionViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1036,6 +1042,7 @@
 				7BD1D8F22BD6C87F00B5521F /* UserPhoneNumberModifyViewModel.swift in Sources */,
 				7BCF4A3A2BC5AF4A00BCE635 /* RxBaseViewController.swift in Sources */,
 				7B0BB2F72BD4A24200770A04 /* UserProfileViewModel.swift in Sources */,
+				7B1EE3F72BDE417A00F109EB /* RxBaseCollectionViewCell.swift in Sources */,
 				7BCF4A812BC92C7800BCE635 /* CommonError .swift in Sources */,
 				7BCF4AA62BCBFA6D00BCE635 /* UserIDStorage.swift in Sources */,
 				7BC51B5E2BD0FFD200E5BF6C /* DateManager.swift in Sources */,
@@ -1054,6 +1061,7 @@
 				7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */,
 				7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */,
 				7B838DDE2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift in Sources */,
+				7B1EE3F52BDE2A3700F109EB /* PinterestCell.swift in Sources */,
 				7BD1D8EE2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift in Sources */,
 				7B838E0B2BCFCBC5000F2E27 /* JHPont.swift in Sources */,
 				7BD1D8C12BD53BBD00B5521F /* MorePageViewController.swift in Sources */,

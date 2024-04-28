@@ -16,7 +16,7 @@ final class LikeViewController: RxBaseViewController {
     
     private
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
-        $0.register(ProfilePostCollectionViewCell.self, forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identi)
+        $0.register(PinterestCell.self, forCellWithReuseIdentifier: PinterestCell.identi)
     }
     
     private
@@ -36,7 +36,7 @@ final class LikeViewController: RxBaseViewController {
     override func subscriver() {
         let startTriggerSub = PublishRelay<Void> ()
         
-        rx.viewDidAppear
+        rx.viewWillAppear
             .filter { $0 == true }
             .bind { _ in
                 startTriggerSub.accept(())
@@ -64,18 +64,9 @@ final class LikeViewController: RxBaseViewController {
     }
     private
     func collectionViewRxSetting(_ models: BehaviorRelay<[SNSDataModel]>) {
-        models.bind(to: collectionView.rx.items(cellIdentifier: ProfilePostCollectionViewCell.identi, cellType: ProfilePostCollectionViewCell.self)) {
+        models.bind(to: collectionView.rx.items(cellIdentifier: PinterestCell.identi, cellType: PinterestCell.self)) {
             row, item, cell in
-            
-            if let url =  item.files.first {
-                cell.postImageView.downloadImage(imageUrl:url , resizing: cell.postImageView.frame.size)
-            }
-            
-            cell.postContentLabel.text = DateManager.shared.differenceDateString(item.createdAt)
-            
-            cell.postContentLabel.text = item.content
-            
-            cell.clipsToBounds = true
+            cell.setModel(item)
             cell.layer.cornerRadius = 12
         }
         .disposed(by: disPoseBag)
@@ -98,13 +89,17 @@ final class LikeViewController: RxBaseViewController {
 extension LikeViewController: CustomPinterestLayoutDelegate {
     
     func collectionView(for collectionView: UICollectionView, heightForAtIndexPath indexPath: IndexPath) -> CGFloat {
-        let aspectString = viewModel.realModel
-            .value[indexPath.item].content3
+        
+        let model = viewModel.realModel
+            .value[indexPath.item]
+        
+        let aspectString = model.content3
         let aspect = CGFloat(Double(aspectString) ?? 1 )
         
         let cellWidth: CGFloat = view.bounds.width / 2
+    
+        let date: CGFloat = 24
         
-        return cellWidth / aspect
+        return (cellWidth / aspect) + 24 + date + 12
     }
-
 }
