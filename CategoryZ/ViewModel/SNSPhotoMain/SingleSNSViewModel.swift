@@ -69,9 +69,9 @@ final class SingleSNSViewModel: RxViewModelType {
             .throttle(.milliseconds(400), scheduler: MainScheduler.instance)
             .map { _ in
                 var model = isUserLikeModel.value
-                print("1",model.like_status)
+                print("1",model.like_status) //1. t
                 model.like_status.toggle()
-                print("2",model.like_status)
+                print("2",model.like_status) // f
                 return model
             }
             .flatMapLatest { model in
@@ -80,25 +80,27 @@ final class SingleSNSViewModel: RxViewModelType {
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let like):
+                    print("sad", like.like_status)
                     let value = bebaviorModel.value
+                    
                     guard let id = owner.userId else {
                         networkError.accept(.loginError(statusCode: 419, description: ""))
                         return
                     }
-                    print("2.5",value.likes)
-                    print("3",like.like_status)
+                    isUserLikeModel.accept(like) //f
                     
-                    value.changeLikeModel(id, likeBool: like.like_status)
+                    value.changeLikeModel(id, likeBool: like.like_status)// f
                     
-                    print("4",value.likes)
-                    print("4.5",like)
-                    isUserLikeModel.accept(like)
+                    print("반영 안됨>???",value.likes)
+
                     var count = likeCount.value
+                    
                     if like.like_status {
                         count += 1
                     } else {
                         count -= 1
                     }
+                
                     likeCount.accept(count)
 
                 case .failure(let fail):

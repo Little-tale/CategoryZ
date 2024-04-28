@@ -37,7 +37,6 @@ final class LikeViewController: RxBaseViewController {
         let startTriggerSub = PublishRelay<Void> ()
         
         rx.viewWillAppear
-            .filter { $0 == true }
             .bind { _ in
                 startTriggerSub.accept(())
             }

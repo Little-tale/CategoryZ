@@ -29,17 +29,16 @@ final class LikeViewModel: RxViewModelType {
     struct Output {
         let networkError: Driver<NetworkError>
         let successData: BehaviorRelay<[SNSDataModel]>
+        let successTrigger: PublishRelay<Void>
     }
     
     func transform(_ input: Input) -> Output {
         
         let networkError = PublishRelay<NetworkError> ()
+        let publishVoid = PublishRelay<Void> ()
         
         input.startTriggerSub
             .withUnretained(self)
-            .filter({ owner, void in
-                owner.limit != "0"
-            })
             .flatMapLatest {owner , _ in
                 NetworkManager.fetchNetwork(
                     model: SNSMainModel.self,
@@ -52,10 +51,9 @@ final class LikeViewModel: RxViewModelType {
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let model):
+                    publishVoid.accept(())
                     owner.next = model.nextCursor
-                    var before = owner.realModel.value
-                    before.append(contentsOf: model.data)
-                    owner.realModel.accept(before)
+                    owner.realModel.accept(model.data)
                 case .failure(let error):
                     networkError.accept(error)
                 }
@@ -64,7 +62,8 @@ final class LikeViewModel: RxViewModelType {
         
         return Output(
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
-            successData: realModel
+            successData: realModel,
+            successTrigger: publishVoid
         )
     }
     

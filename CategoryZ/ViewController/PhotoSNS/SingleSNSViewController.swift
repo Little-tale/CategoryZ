@@ -14,6 +14,7 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
     override func viewDidLoad() {
         super.viewDidLoad()
         homeView.singleView.rightMoreBuntton.isHidden = true
+        
     }
     
     private
@@ -25,6 +26,8 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
     
     private
     func subscribe(_ SNSData: SNSDataModel) {
+        
+        
         
         let setDataBe = BehaviorRelay(value: SNSData)
         

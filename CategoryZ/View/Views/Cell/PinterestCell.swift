@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 
+
 final class PinterestCell: RxBaseCollectionViewCell {
     
     let profileImageView = CircleImageView(frame: .zero).then {
