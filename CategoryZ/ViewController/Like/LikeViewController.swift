@@ -14,7 +14,8 @@ import Then
 
 final class LikeViewController: RxBaseViewController {
     
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
+    private
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
         $0.register(ProfilePostCollectionViewCell.self, forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identi)
     }
     
@@ -23,7 +24,7 @@ final class LikeViewController: RxBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationSetting()
         let layout = CustomPinterestLayout(
             numberOfColums: 2,
             cellPadding: 4
@@ -73,10 +74,24 @@ final class LikeViewController: RxBaseViewController {
             cell.postContentLabel.text = DateManager.shared.differenceDateString(item.createdAt)
             
             cell.postContentLabel.text = item.content
-        
+            
+            cell.clipsToBounds = true
+            cell.layer.cornerRadius = 12
         }
         .disposed(by: disPoseBag)
+    }
+    
+    override func configureHierarchy() {
+        view.addSubview(collectionView)
         
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
+    }
+    
+    private
+    func navigationSetting(){
+        navigationItem.title = "좋아요 모아요"
     }
 }
 
@@ -89,7 +104,7 @@ extension LikeViewController: CustomPinterestLayoutDelegate {
         
         let cellWidth: CGFloat = view.bounds.width / 2
         
-        return cellWidth * aspect
+        return cellWidth / aspect
     }
 
 }
