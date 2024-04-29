@@ -29,6 +29,7 @@ final class UserProfileViewModel: RxViewModelType {
         let inputProfileType: BehaviorRelay<ProfileType>
         let inputProducID: BehaviorRelay<ProductID>
         let userId: String?
+        let currentCellAt: BehaviorRelay<Int>
     }
     
     struct Output {
@@ -37,8 +38,12 @@ final class UserProfileViewModel: RxViewModelType {
     }
     
     func transform(_ input: Input) -> Output {
-        let limit = "10"
+        let limit = 15
         let nextCursor: String? = nil
+        
+        var currentTotal = 0
+        let needMoreTrigger = PublishRelay<Void> ()
+        
         var otherId: String? = nil
         
         let currenFollowing = BehaviorRelay<Bool>(value: false)
@@ -70,12 +75,13 @@ final class UserProfileViewModel: RxViewModelType {
             }
             .flatMapLatest { request in
                 print("요청시 \(request)")
-                return NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.userCasePostRead(userId: request.0!, next: nextCursor, limit: limit, productId: request.1)))
+                return NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.userCasePostRead(userId: request.0!, next: nextCursor, limit: String(limit), productId: request.1)))
             }
             .bind(with: self) {owner, result in
                 switch result {
                 case .success(let model):
                     owner.realModel = model.data
+                    currentTotal = owner.realModel.count
                     print("통신 결과",model.data)
                     print("통신 결과 : \(model)")
                     postReadMainModel.accept(owner.realModel)
@@ -88,8 +94,59 @@ final class UserProfileViewModel: RxViewModelType {
         
         let otherCase = input.inputProfileType
             .filter { $0 != .me }
-    
-
+        
+        input.currentCellAt
+            .bind { at in
+                if (currentTotal - 3) >= at {
+                    needMoreTrigger.accept(())
+                }
+            }
+            .disposed(by: disposeBag)
+            
+        needMoreTrigger
+            .filter { _ in
+                nextCursor != "0"
+            }
+            .map({ _ in
+                return nextCursor
+            })
+            .distinctUntilChanged()
+            .withLatestFrom(combineRequest)
+            .map { request in
+                switch request.0 {
+                case .me:
+                    return ( input.userId,  request.1.identi)
+                case .other(let otherUserId):
+                    otherId = otherUserId
+                    return (otherUserId, request.1.identi)
+                }
+            }
+            .filter { userId, productID in
+                if userId == nil {
+                    networkError.onNext(.loginError(statusCode: 419, description: "재로그인"))
+                    return false
+                } else {
+                    return true
+                }
+            }
+            .flatMapLatest { request in
+                print("요청시 \(request)")
+                return NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.userCasePostRead(userId: request.0!, next: nextCursor, limit: String(limit), productId: request.1)))
+            }
+            .bind(with: self) {owner, result in
+                switch result {
+                case .success(let model):
+                    owner.realModel.append(contentsOf: model.data)
+                    currentTotal = owner.realModel.count
+                    print("통신 결과",model.data)
+                    print("통신 결과 : \(model)")
+                    postReadMainModel.accept(owner.realModel)
+                case .failure(let fail):
+                    networkError.onNext(fail)
+                }
+            }
+            .disposed(by: disposeBag)
+        
         return .init(
             networkError: networkError.asDriver(
                 onErrorDriveWith: .never()

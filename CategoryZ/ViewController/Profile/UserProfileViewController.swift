@@ -72,17 +72,21 @@ final class UserProfileViewController: RxBaseViewController {
         
         let behaiviorProfile = BehaviorRelay(value: profileType)
 
+        let currentCellAt = BehaviorRelay(value: 0)
+
+        
         let input = UserProfileViewModel.Input(
             inputProfileType: behaiviorProfile,
             inputProducID: selectedProductId,
-            userId: UserIDStorage.shared.userID
+            userId: UserIDStorage.shared.userID,
+            currentCellAt: currentCellAt
         )
         
         let output = viewModel.transform(input)
         
         output.postReadMainModel
+            .distinctUntilChanged()
             .drive(with: self) {owner, models in
-//                applySnapshot(profileType)
                 if models.isEmpty {
                     owner.applySnapshot(owner.profileType)
                 } else {
@@ -106,7 +110,23 @@ final class UserProfileViewController: RxBaseViewController {
                 selectedProductId.accept(productId)
             }
             .disposed(by: disPoseBag)
-       
+        
+        rx.viewDidAppear
+            .skip(1)
+            .bind(with: self) { owner, _ in
+                owner.collectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
+                behaiviorProfile.accept(owner.profileType)
+            }
+            .disposed(by: disPoseBag)
+        
+        
+        
+        collectionView.rx.willDisplayCell
+            .bind(with: self) { owner, cellInfo in
+                currentCellAt.accept(cellInfo.at.item)
+            }
+            .disposed(by: disPoseBag)
+        
     }
     
     override func configureHierarchy() {
