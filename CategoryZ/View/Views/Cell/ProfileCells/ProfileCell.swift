@@ -68,6 +68,8 @@ final class ProfileCell: RxBaseCollectionViewCell {
         var follower: [Creator] = []
         var following: [Creator] = []
         
+       
+        
         // let modelBH = BehaviorRelay(value: model)
         let beProfileType = BehaviorRelay(value: profileType)
         let leftButtonTap = leftButton.rx.tap
@@ -77,6 +79,13 @@ final class ProfileCell: RxBaseCollectionViewCell {
             leftButtonTap: leftButtonTap,
             inputUserId: UserIDStorage.shared.userID
         )
+        // 노토피케이션 을 사용한 이유가
+        // 현셀 -> 뷰컨 -> 다른 뷰컨-> 셀 에서 정보를 받아와야 하는데 .... ㅠ
+        NotificationCenter.default.rx.notification(.chagedProfileInfo)
+            .bind { _ in
+                beProfileType.accept(profileType)
+            }
+            .disposed(by: disposeBag)
         
         let output = viewModel.transform(input)
         

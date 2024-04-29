@@ -10,18 +10,9 @@ import RxSwift
 import RxCocoa
 
 
-//struct CustomSectionModel {
-//    var items: [SNSDataModel]
-//    
-//    init(items: [SNSDataModel]) {
-//        self.items = items
-//    }
-//}
-
 final class UserProfileViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
-    
     
     var realModel: [SNSDataModel] = []
     

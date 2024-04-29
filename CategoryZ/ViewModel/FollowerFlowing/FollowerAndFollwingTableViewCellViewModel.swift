@@ -52,6 +52,7 @@ final class FollowerAndFollwingTableViewCellViewModel: RxViewModelType {
             .bind { result in
                 switch result {
                 case .success:
+                    NotificationCenter.default.post(name: .chagedProfileInfo, object: nil)
                     break
                 case .failure(let fail):
                     networkError.onNext(fail)

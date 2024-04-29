@@ -85,6 +85,7 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
         output.changedModel
             .drive(behaiviorModel)
             .disposed(by: disposeBag)
+        
     }
     
     override func configureLayout() {

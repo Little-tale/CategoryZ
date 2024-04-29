@@ -85,7 +85,7 @@ final class FollowerAndFolowingViewController: RxHomeBaseViewController<Follower
         }
         .disposed(by: disPoseBag)
         
-       
+    
         
     }
     
