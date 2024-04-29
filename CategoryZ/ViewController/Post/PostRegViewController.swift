@@ -39,10 +39,11 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationSetting()
+        navigationSettings()
     }
     
-    override func navigationSetting() {
+    private
+    func navigationSettings() {
         let flexiebelItem = UIBarButtonItem(systemItem: .flexibleSpace)
         flexiebelItem.width = 40
         navigationItem.rightBarButtonItems = [

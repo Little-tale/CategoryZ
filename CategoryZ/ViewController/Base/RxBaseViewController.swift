@@ -9,9 +9,11 @@ import RxSwift
 
 class RxBaseViewController : BaseViewController {
     var disPoseBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         subscriver()
     }
+    
     func subscriver(){}
 }

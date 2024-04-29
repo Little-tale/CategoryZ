@@ -13,6 +13,7 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white // 수정예정
+        navigationSetting()
         configureHierarchy()
         configureLayout()
         designView()
@@ -35,6 +36,9 @@ class BaseViewController: UIViewController {
         
     }
     func designView(){
+        
+    }
+    func navigationSetting(){
         
     }
 }

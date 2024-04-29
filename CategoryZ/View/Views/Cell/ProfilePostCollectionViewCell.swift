@@ -32,6 +32,15 @@ final class ProfilePostCollectionViewCell: BaseCollectionViewCell {
         $0.numberOfLines = 1
     }
     
+
+    func setModel(_ model: SNSDataModel) {
+        
+    }
+    private
+    func subscribe(_ model: SNSDataModel) {
+        
+    }
+    
     override func configureHierarchy() {
         contentView.addSubview(postImageView)
         contentView.addSubview(shadowView)

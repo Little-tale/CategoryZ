@@ -136,8 +136,8 @@ final class CommentViewController: RxBaseViewController {
        
     }
     
-    private
-    func navigationSetting(){
+
+    override func navigationSetting(){
         navigationItem.title = "댓글"
     }
 }

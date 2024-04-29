@@ -87,8 +87,7 @@ final class LikeViewController: RxBaseViewController {
         }
     }
     
-    private
-    func navigationSetting(){
+    override func navigationSetting(){
         navigationItem.title = "좋아요 모아요"
     }
     

@@ -17,7 +17,6 @@ class RxHomeBaseViewController<T: RxBaseView>: RxBaseViewController {
         super.viewDidLoad()
         subscribe()
         defaultNavigationSetting()
-        navigationSetting()
     }
     
     override func loadView() {
@@ -37,9 +36,6 @@ class RxHomeBaseViewController<T: RxBaseView>: RxBaseViewController {
     
     private func defaultNavigationSetting(){
         navigationController?.navigationBar.tintColor = .black
-    }
-    func navigationSetting() {
-        
     }
 
 }
