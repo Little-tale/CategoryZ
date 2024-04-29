@@ -18,6 +18,11 @@ protocol MoveToLikePosters: NSObject {
     func moveToLikes(_ profileType: ProfileType)
 }
 
+protocol MoveToFollowOrFollower: NSObject {
+    
+    func moveFollowORFollower(_ followType: MoveFllowOrFollower, creator: [Creator])
+}
+
 final class ProfileCell: RxBaseCollectionViewCell {
     
     let profileView = ProfileAndFollowView()
@@ -27,6 +32,8 @@ final class ProfileCell: RxBaseCollectionViewCell {
     weak var moveProfileDelegate: MoveToProfileModify?
     
     weak var moveLikesDelegate: MoveToLikePosters? 
+    
+    weak var MoveToFollowOrFollower: MoveToFollowOrFollower?
     
     let leftButton = UIButton().then {
         $0.backgroundColor = JHColor.black
@@ -58,6 +65,9 @@ final class ProfileCell: RxBaseCollectionViewCell {
     private
     func subscribe(profileType: ProfileType) {
         
+        var follower: [Creator] = []
+        var following: [Creator] = []
+        
         // let modelBH = BehaviorRelay(value: model)
         let beProfileType = BehaviorRelay(value: profileType)
         let leftButtonTap = leftButton.rx.tap
@@ -74,11 +84,15 @@ final class ProfileCell: RxBaseCollectionViewCell {
             .drive(with: self) { owner, profileModel in
                 // 팔로워수
                 owner.profileView.followerCountLabel.text = profileModel.followers.count.asFormatAbbrevation()
+                
+                follower = profileModel.followers
                 // 이름
                 owner.profileView.userNameLabel.text = profileModel.nick
                 
                 // 팔로잉 숫자
                 owner.profileView.followingCountLabel.text = profileModel.following.count.asFormatAbbrevation()
+                
+                following = profileModel.following
                 
                 // 포스트 숫자
                 owner.profileView.postsCountLabel.text = profileModel.posts.count.asFormatAbbrevation()
@@ -138,6 +152,19 @@ final class ProfileCell: RxBaseCollectionViewCell {
                 owner.moveLikesDelegate?.moveToLikes(profileType)
             }
             .disposed(by: disposeBag)
+        
+        profileView.followingButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.MoveToFollowOrFollower?.moveFollowORFollower(.follow(profileType), creator: following)
+            }
+            .disposed(by: disposeBag)
+        
+        profileView.followerButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.MoveToFollowOrFollower?.moveFollowORFollower(.follower(profileType), creator: follower)
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     override func configureHierarchy() {

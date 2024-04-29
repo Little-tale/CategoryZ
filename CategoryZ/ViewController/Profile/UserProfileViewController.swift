@@ -11,18 +11,15 @@ import RxCocoa
 import SnapKit
 import Then
 import Kingfisher
-//import RxDataSources
 
-
-/*
- user 별 작성한 포스트 조회,
- user 프로필 조회 섞어야 해
- productId: 가 문제네...
- */
 
 enum ProfileType: Equatable, Hashable{
     case me
     case other(otherUserId: String)
+}
+enum MoveFllowOrFollower {
+    case follow(ProfileType)
+    case follower(ProfileType)
 }
 
 final class UserProfileViewController: RxBaseViewController {
@@ -161,6 +158,7 @@ extension UserProfileViewController {
                         cell.setModel(profileType: model)
                         cell.moveProfileDelegate = self
                         cell.moveLikesDelegate = self
+                        cell.MoveToFollowOrFollower = self
                     }
                     
                     return cell
@@ -217,8 +215,8 @@ extension UserProfileViewController {
     }
 }
 
-extension UserProfileViewController: MoveToProfileModify, MoveToLikePosters {
-    
+extension UserProfileViewController: MoveToProfileModify, MoveToLikePosters, MoveToFollowOrFollower {
+
     func moveToLikes(_ profileType: ProfileType) {
         switch profileType {
         case .me:
@@ -237,6 +235,18 @@ extension UserProfileViewController: MoveToProfileModify, MoveToLikePosters {
         case .other:
             break
         }
+    }
+    
+    func moveFollowORFollower(_ followType: MoveFllowOrFollower, creator: [Creator]) {
+        let vc = FollowerAndFolowingViewController()
+        switch followType {
+        case .follow(let profileType):
+            vc.setModel(creator, followType: .following, isME: profileType)
+        case .follower(let profileType):
+            vc.setModel(creator, followType: .follower, isME: profileType)
+        }
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 
