@@ -20,9 +20,9 @@ final class FirstView: RxBaseView {
     }
     override func configureLayout() {
         imageView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.center.equalToSuperview().dividedBy(0.5)
             make.width.equalToSuperview().dividedBy(2)
-            make.height.equalTo(200)
+            make.height.equalTo(140)
         }
     }
 }

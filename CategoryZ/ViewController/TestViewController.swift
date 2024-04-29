@@ -323,6 +323,11 @@ final class TestViewController: UIViewController {
 //                }
 //            }
         
+        
+        let trigger = rx.viewWillAppear
+            .skip(1)
+            .map { $0 == true }
+            
     }
     
     @objc
@@ -332,7 +337,6 @@ final class TestViewController: UIViewController {
             print(errorCode)
         }
     }
-    
     
     func testLayout(){
 //        view.addSubview(testButton)

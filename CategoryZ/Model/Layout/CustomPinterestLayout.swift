@@ -6,10 +6,8 @@
 //
 
 import UIKit
-/*
- 회고...!
- Masonry or Pinterest Style Layout
- */
+
+
 protocol CustomPinterestLayoutDelegate: AnyObject {
     
     func collectionView(for collectionView: UICollectionView, heightForAtIndexPath indexPath: IndexPath) -> CGFloat
