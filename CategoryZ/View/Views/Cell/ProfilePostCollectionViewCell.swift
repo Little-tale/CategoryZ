@@ -8,11 +8,14 @@
 import UIKit
 import Then
 import SnapKit
+import RxSwift
+import RxCocoa
 
-final class ProfilePostCollectionViewCell: BaseCollectionViewCell {
+final class ProfilePostCollectionViewCell: RxBaseCollectionViewCell {
     
     let postImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
     }
     
     private let shadowView = UIView().then {
@@ -34,11 +37,22 @@ final class ProfilePostCollectionViewCell: BaseCollectionViewCell {
     
 
     func setModel(_ model: SNSDataModel) {
-        
+        subscribe(model)
     }
     private
     func subscribe(_ model: SNSDataModel) {
+        let behaiviorModel = BehaviorRelay(value: model)
         
+        behaiviorModel
+            .distinctUntilChanged()
+            .bind(with: self) { owner, model in
+                if let url = model.files.first {
+                    owner.postImageView.downloadImage(imageUrl: url, resizing: owner.postImageView.frame.size)
+                }
+                owner.postContentLabel.text = model.content
+                owner.postDateLabel.text = DateManager.shared.differenceDateString(model.createdAt)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureHierarchy() {
@@ -69,5 +83,7 @@ final class ProfilePostCollectionViewCell: BaseCollectionViewCell {
             make.bottom.equalToSuperview()
         }
     }
+    
+    
 }
 

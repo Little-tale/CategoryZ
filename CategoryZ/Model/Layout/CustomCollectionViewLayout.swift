@@ -104,7 +104,7 @@ enum CustomProfileCollectionViewLayout {
         
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(65)
+            heightDimension: .absolute(72)
         )
         
         let header = NSCollectionLayoutBoundarySupplementaryItem(

@@ -24,8 +24,6 @@ enum ProfileType: Equatable, Hashable{
     case me
     case other(otherUserId: String)
 }
-// UserProfileView
-// UserProfileView
 
 final class UserProfileViewController: RxBaseViewController {
     private
@@ -84,10 +82,6 @@ final class UserProfileViewController: RxBaseViewController {
         )
         
         let output = viewModel.transform(input)
-        
-        
-        
-        
         
         output.postReadMainModel
             .drive(with: self) {owner, models in
@@ -165,6 +159,7 @@ extension UserProfileViewController {
                     }
                     if let model = itemIdentifier as? ProfileType {
                         cell.setModel(profileType: model)
+                        cell.moveDelegate = self
                     }
                     
                     return cell
@@ -173,12 +168,10 @@ extension UserProfileViewController {
                         
                         return .init()
                     }
-                    if let item = itemIdentifier as? SNSDataModel {
-                        if let url = item.files.first {
-                            cell.postImageView.downloadImage(imageUrl: url, resizing: cell.postImageView.frame.size)
-                        }
-                        cell.postDateLabel.text = item.createdAt
+                    if let model = itemIdentifier as? SNSDataModel {
+                        cell.setModel(model)
                     }
+                    
                     return cell
                 default :
                     return nil
@@ -221,6 +214,20 @@ extension UserProfileViewController {
             }
         }
     }
+}
+
+extension UserProfileViewController: MoveToProfileModify {
+    
+    func moveToProfile(_ profileType: ProfileType) {
+        switch profileType {
+        case .me:
+            let vc = ProfileSettingViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        case .other:
+            break
+        }
+    }
+    
 }
 
 //extension CustomSectionModel: SectionModelType {

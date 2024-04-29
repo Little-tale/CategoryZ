@@ -10,11 +10,17 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+protocol MoveToProfileModify: NSObject {
+    func moveToProfile(_ profileType: ProfileType)
+}
+
 final class ProfileCell: RxBaseCollectionViewCell {
     
     let profileView = ProfileAndFollowView()
     
     weak var errorDelegate: NetworkErrorCatchProtocol?
+    
+    weak var moveDelegate: MoveToProfileModify?
     
     let leftButton = UIButton().then {
         $0.backgroundColor = JHColor.black
@@ -115,11 +121,17 @@ final class ProfileCell: RxBaseCollectionViewCell {
             }
             .disposed(by: disposeBag)
         
+        leftButtonTap
+            .bind(with: self) { owner, _ in
+                owner.moveDelegate?.moveToProfile(profileType)
+            }
+            .disposed(by: disposeBag)
+        
     }
     
     override func configureHierarchy() {
-        addSubview(profileView)
-        addSubview(buttonStackView)
+        contentView.addSubview(profileView)
+        contentView.addSubview(buttonStackView)
     }
     
     override func configureLayout() {
@@ -136,7 +148,7 @@ final class ProfileCell: RxBaseCollectionViewCell {
     }
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+        viewModel.disposeBag = .init()
     }
     
 }
