@@ -14,13 +14,19 @@ protocol MoveToProfileModify: NSObject {
     func moveToProfile(_ profileType: ProfileType)
 }
 
+protocol MoveToLikePosters: NSObject {
+    func moveToLikes(_ profileType: ProfileType)
+}
+
 final class ProfileCell: RxBaseCollectionViewCell {
     
     let profileView = ProfileAndFollowView()
     
     weak var errorDelegate: NetworkErrorCatchProtocol?
     
-    weak var moveDelegate: MoveToProfileModify?
+    weak var moveProfileDelegate: MoveToProfileModify?
+    
+    weak var moveLikesDelegate: MoveToLikePosters? 
     
     let leftButton = UIButton().then {
         $0.backgroundColor = JHColor.black
@@ -123,10 +129,15 @@ final class ProfileCell: RxBaseCollectionViewCell {
         
         leftButtonTap
             .bind(with: self) { owner, _ in
-                owner.moveDelegate?.moveToProfile(profileType)
+                owner.moveProfileDelegate?.moveToProfile(profileType)
             }
             .disposed(by: disposeBag)
         
+        rightButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.moveLikesDelegate?.moveToLikes(profileType)
+            }
+            .disposed(by: disposeBag)
     }
     
     override func configureHierarchy() {

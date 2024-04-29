@@ -159,7 +159,8 @@ extension UserProfileViewController {
                     }
                     if let model = itemIdentifier as? ProfileType {
                         cell.setModel(profileType: model)
-                        cell.moveDelegate = self
+                        cell.moveProfileDelegate = self
+                        cell.moveLikesDelegate = self
                     }
                     
                     return cell
@@ -216,7 +217,17 @@ extension UserProfileViewController {
     }
 }
 
-extension UserProfileViewController: MoveToProfileModify {
+extension UserProfileViewController: MoveToProfileModify, MoveToLikePosters {
+    
+    func moveToLikes(_ profileType: ProfileType) {
+        switch profileType {
+        case .me:
+            let vc = LikeViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        case .other:
+            break
+        }
+    }
     
     func moveToProfile(_ profileType: ProfileType) {
         switch profileType {
@@ -227,7 +238,6 @@ extension UserProfileViewController: MoveToProfileModify {
             break
         }
     }
-    
 }
 
 //extension CustomSectionModel: SectionModelType {
