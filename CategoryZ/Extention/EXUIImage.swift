@@ -75,15 +75,15 @@ extension UIImageView {
         
         KingfisherManager.shared.retrieveImage(with: URL(string: imageUrl)!, options: [
             .processor(processor),
-            .transition(.fade(1)),
             .requestModifier(KingFisherNet()),
             .scaleFactor(scale),
-            .cacheOriginalImage
+            .cacheOriginalImage,
+            .transition(.fade(1))
         ]) { imageResult in
             switch imageResult {
             case .success(let result):
                 self.image = result.image
-            case .failure(let error):
+            case .failure:
                 break
             }
         }

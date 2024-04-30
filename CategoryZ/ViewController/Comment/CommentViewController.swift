@@ -133,7 +133,13 @@ final class CommentViewController: RxBaseViewController {
                 owner.textBox.textView.text = ""
             }
             .disposed(by: disPoseBag)
-       
+        
+        
+        rx.viewWillDisapear
+            .bind(with: self) { owner, _ in
+                owner.view.endEditing(true)
+            }
+            .disposed(by: disPoseBag)
     }
     
 

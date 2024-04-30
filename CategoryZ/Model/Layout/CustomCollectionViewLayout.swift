@@ -35,7 +35,7 @@ final class CustomFlowLayout {
     
 }
 
-final class CustomCollectionViewLayout {
+struct CustomCollectionViewLayout {
 //    
     static func settingCollectionViewLayout() -> UICollectionViewLayout {
         let configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)

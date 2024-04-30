@@ -56,7 +56,7 @@ final class LoginViewController: RxHomeBaseViewController<LoginView> {
                 print(login)
                 let viewController = CategoryZTabbarController()
             
-                owner.changeRootView(to: viewController, isNavi: true)
+                owner.changeRootView(to: viewController, isNavi: false)
             }
             .disposed(by: disPoseBag)
         

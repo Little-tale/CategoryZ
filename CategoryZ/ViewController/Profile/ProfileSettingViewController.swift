@@ -17,6 +17,7 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
         case profileImage
         case name
         case phoneNumber
+        case deleteAccount
     }
     
     let viewModel = ProfileSettingViewModel()
@@ -31,9 +32,11 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
         let section = Observable.just([
             SettingSection.profileImage,
             SettingSection.name,
-            SettingSection.phoneNumber
+            SettingSection.phoneNumber,
+            SettingSection.deleteAccount
         ])
         
+        let tryAccountDelete = PublishRelay<Void> ()
         
         // 프로필은 뷰가 보일때마다 로드해야 하지 않을까?
         let viewWillTrigger = rx.viewDidAppear
@@ -75,6 +78,8 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
                 content.text = "이름 수정"
             case .phoneNumber:
                 content.text = "전화번호 수정"
+            case .deleteAccount:
+                content.text = "계정 삭제"
             }
             cell.contentConfiguration = content
             
@@ -109,9 +114,23 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
                     let vc = UserPhoneNumberModifyViewController()
                     vc.setModel(cellInfo.model)
                     owner.navigationController?.pushViewController(vc, animated: true)
+                case .deleteAccount:
+                    owner.showAlert(
+                        title: "계정 삭제 시도",
+                        message: "계정 정말 삭제 하시겠어요?",
+                        actionTitle: "삭제") { _ in
+                            tryAccountDelete.accept(())
+                        }
                 }
             }
             .disposed(by: disPoseBag)
+        //CheckUserDeleteViewController
+        tryAccountDelete.bind(with: self) { owner, _ in
+            let vc = CheckUserDeleteViewController()
+            owner.navigationController?.pushViewController(vc, animated: true)
+
+        }
+        .disposed(by: disPoseBag)
     }
     
     override func navigationSetting() {

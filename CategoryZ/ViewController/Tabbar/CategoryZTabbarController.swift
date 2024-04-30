@@ -97,7 +97,7 @@ final class CategoryZTabbarController: UITabBarController {
         .disposed(by: disposeBag)
         
         
-
+        navigationController?.navigationBar.isHidden = true
        
     }
     
