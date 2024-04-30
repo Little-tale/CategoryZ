@@ -57,7 +57,7 @@ final class CheckUserDeleteViewController: RxHomeBaseViewController<CheckedUserV
                     title: "유저 정보 삭제",
                     message: "정말... 떠나실 건가요..?\n떠나시면 복구하실수 없어요...!",
                     actionTitle: "삭제",
-                    complite: { _ in
+                    { _ in
                         userLeaveTrigger.accept(())
                     },
                     .default

@@ -229,7 +229,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                     title: "삭제",
                     message: "삭제하시면 복구하실수 없습니다!",
                     actionTitle: "삭제",
-                    complite: { _ in
+                    { _ in
                         checkedDeleteModel.accept(model)
                     },
                     .default

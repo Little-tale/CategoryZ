@@ -25,12 +25,17 @@ final class CategoryZTabbarController: UITabBarController {
         $0.frame.size = CGSize(width: 60, height: 60)
     }
     
+    let networkMonitor = NetWorkServiceMonitor.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
         view.backgroundColor = .white
         setupMiddleButton()
         settingTabBarItems()
         subscribe()
+        
+        
     }
     
     func settingTabBarItems() {
@@ -140,6 +145,29 @@ extension CategoryZTabbarController {
         NotificationCenter.default.rx.notification(.successPost)
             .bind(with: self) { owner, _ in
                 owner.selectedIndex = 0
+            }
+            .disposed(by: disposeBag)
+        
+        networkMonitor.behaivorNetwork
+            .distinctUntilChanged()
+            .filter({ $0 == false })
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.showAlert(title: "네트워크 불안정", message: "네트워크 연결 상태가 불안정합니다.\n네트워크 연결상태를 확인하여 주세요!")
+            }
+            .disposed(by: disposeBag)
+        
+        rx.viewDidDisapear
+            .bind(with: self) { owner, _ in
+                print("Stop Monitoring")
+                owner.networkMonitor.stopMonitoring()
+            }
+            .disposed(by: disposeBag)
+        
+        rx.viewWillAppear
+            .bind(with: self) { owner, _ in
+                print("Start Monitor")
+                owner.networkMonitor.startMonitor()
             }
             .disposed(by: disposeBag)
     }

@@ -14,23 +14,29 @@
  */
 
 import Network
+import RxSwift
+import RxCocoa
 
 final class NetWorkServiceMonitor {
     
     static
     let shared = NetWorkServiceMonitor()
     
-    private
+    fileprivate
     let queue = DispatchQueue.global(qos: .background)
     
-    private
+    fileprivate
     let monitor: NWPathMonitor
     
-    public
-    private(set) var isConnected: Bool = false
+    fileprivate(set)
+    var isConnected: Bool = false
     
-    public
-    private(set) var connectionType: ConnectionType = .unknown
+    fileprivate(set)
+    var connectionType: ConnectionType = .unknown
+    
+    let behaivorNetwork = PublishRelay<Bool> ()
+    
+    let behaiborNetworkType = PublishRelay<ConnectionType> ()
     
     private
     init(){
@@ -46,7 +52,7 @@ final class NetWorkServiceMonitor {
         case wifi
     }
     // 외부에선 이메서드를 통해 모니터를 시작할수 있습니다.
-    public
+    
     func startMonitor(){
         monitor.start(queue: queue)
         monitor.pathUpdateHandler = {
@@ -54,15 +60,17 @@ final class NetWorkServiceMonitor {
             guard let self else { return }
             isConnected = path.status == .satisfied
             getConnectionType(path)
+            behaivorNetwork.accept(isConnected)
         }
     }
     /// NWPath 에서 path.status 열겨헝중
     /// .satisfied는 인터넷이 연결된 상태임을 뜻한다.
     /// usesInterfaceType 에선 셀룰러 와이파이 무선 연결 등이 더 존재한다.
-    private
+    fileprivate
     func getConnectionType(_ path: NWPath) {
         if path.usesInterfaceType(.wifi){
             connectionType = .wifi
+            
         } else if path.usesInterfaceType(.cellular){
             connectionType = .cellular
         } else if path.usesInterfaceType(.wiredEthernet){
@@ -70,9 +78,9 @@ final class NetWorkServiceMonitor {
         } else {
             connectionType = .unknown
         }
+        behaiborNetworkType.accept(connectionType)
     }
     // MARK: 모니터링을 그만할수 있습니다.
-    public
     func stopMonitoring(){
         monitor.cancel()
     }

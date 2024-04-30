@@ -116,13 +116,16 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
                         title: "계정 삭제 시도",
                         message: "계정 정말 삭제 하시겠어요?",
                         actionTitle: "삭제",
-                        .destructive) { _ in
+                        { _ in
                             tryAccountDelete.accept(())
-                        }
+                        },
+                        .destructive)
+                  
+                
                 }
             }
             .disposed(by: disPoseBag)
-        
+
         
         //CheckUserDeleteViewController
         tryAccountDelete.bind(with: self) { owner, _ in

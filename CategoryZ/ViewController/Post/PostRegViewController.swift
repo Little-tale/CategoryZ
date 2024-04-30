@@ -147,9 +147,14 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             .bind { result in
                 if result.data != nil {
                     // 이미지 삭제 할건지 알리기
-                    result.owner.showAlert(title: "삭제", message: "정말 지우실건가요?", actionTitle: "삭제", .destructive) { _ in
-                        removeSelectModel.accept(result.index) // index 전달
-                    }
+                   
+                    result.owner.showAlert(
+                        title: "삭제",
+                        message: "정말 지우실건가요?",
+                        actionTitle: "삭제",
+                        { _ in
+                            removeSelectModel.accept(result.index) // index 전달
+                        }, .destructive)
                 } else {
                     result.owner.imageService.showImageModeSelectAlert()
                 }
@@ -264,7 +269,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                     title: "삭제",
                     message: "게시글을 삭제하시면 복구하실수 없습니다!",
                     actionTitle: "삭제",
-                    complite: { _ in
+                    { _ in
                         postRemveTrigger.accept(())
                     },
                     .destructive

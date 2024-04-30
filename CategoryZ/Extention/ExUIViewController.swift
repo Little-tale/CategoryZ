@@ -64,20 +64,20 @@ extension Reactive where Base: UIViewController {
 
 extension UIViewController {
     
-    func showAlert(title: String, message : String? = nil, actionTitle: String? = nil , complite: @escaping ((UIAlertAction) -> Void),_ actionStyle: UIAlertAction.Style? = nil) {
+    func showAlert(title: String, message : String? = nil, actionTitle: String? = nil ,_ complite:  ((UIAlertAction) -> Void)? = nil,_ actionStyle: UIAlertAction.Style? = nil) {
         
         let alertCon = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         if let actionTitle {
             let action = UIAlertAction(title: actionTitle, style: actionStyle ?? .default) { action  in
-                complite(action)
+                complite?(action)
             }
             let cancel = UIAlertAction(title: "취소", style: .cancel)
             alertCon.addAction(action)
             alertCon.addAction(cancel)
         } else {
             let check = UIAlertAction(title: "확인", style: .default) { action in
-                complite(action)
+                complite?(action)
             }
             alertCon.addAction(check)
         }
