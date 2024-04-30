@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import Then
 
 protocol MoveToProfileModify: NSObject {
     func moveToProfile(_ profileType: ProfileType)
@@ -34,6 +35,8 @@ final class ProfileCell: RxBaseCollectionViewCell {
     weak var moveLikesDelegate: MoveToLikePosters? 
     
     weak var MoveToFollowOrFollower: MoveToFollowOrFollower?
+    
+    
     
     let leftButton = UIButton().then {
         $0.backgroundColor = JHColor.black

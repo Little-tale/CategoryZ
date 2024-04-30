@@ -23,6 +23,20 @@ enum MoveFllowOrFollower {
 }
 
 final class UserProfileViewController: RxBaseViewController {
+    
+    private lazy var donateButton = UIBarButtonItem().then {
+        let button = UIButton()
+        button.setImage(JHImage.donateImage, for: .normal)
+        button.imageView?.frame = .init(x: 0, y: 0, width: 30, height: 30)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.sizeToFit()
+        $0.customView = button
+    }
+    
+    private
+    lazy var negativeSpacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+    
+    
     private
     typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
     private
@@ -47,7 +61,6 @@ final class UserProfileViewController: RxBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         collectionView.register(ProfileCell.self, forCellWithReuseIdentifier: ProfileCell.identi)
         
         collectionView.register(ProfileHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProfileHeaderView.identi)
@@ -56,6 +69,12 @@ final class UserProfileViewController: RxBaseViewController {
         
         collectionView.collectionViewLayout = createLayout()
         
+        switch profileType {
+        case .me:
+            break
+        case .other:
+            navigationItem.rightBarButtonItem = donateButton
+        }
     }
     override func subscriver() {
         configureDataSource()

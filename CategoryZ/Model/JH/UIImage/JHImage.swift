@@ -43,4 +43,6 @@ extension JHImage {
     static let profileSelectedImage: UIImage? = UIImage(systemName: "person.crop.circle.fill")
     
     static let deleteUserSadImage: UIImage = .sad
+    
+    static let donateImage: UIImage = .heart1
 }
