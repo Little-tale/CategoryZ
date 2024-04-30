@@ -103,6 +103,7 @@ final class DeleteUserViewModel: RxViewModelType {
                 switch result {
                 case .success:
                     successDeleteTrigger.accept(())
+                    UserIDStorage.shared.userID = nil 
                 case .failure(let error):
                     networkError.accept(error)
                 }

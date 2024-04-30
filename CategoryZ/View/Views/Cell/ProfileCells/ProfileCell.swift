@@ -177,6 +177,7 @@ final class ProfileCell: RxBaseCollectionViewCell {
     }
     
     override func configureHierarchy() {
+        self.contentView.backgroundColor = .red
         contentView.addSubview(profileView)
         contentView.addSubview(buttonStackView)
     }

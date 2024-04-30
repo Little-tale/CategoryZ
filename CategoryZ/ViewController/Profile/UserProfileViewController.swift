@@ -46,8 +46,7 @@ final class UserProfileViewController: RxBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureDataSource()
-        applySnapshot()
+        
         
         collectionView.register(ProfileCell.self, forCellWithReuseIdentifier: ProfileCell.identi)
         
@@ -59,6 +58,8 @@ final class UserProfileViewController: RxBaseViewController {
         
     }
     override func subscriver() {
+        configureDataSource()
+        applySnapshot()
         subscribe()
     }
     
@@ -73,7 +74,7 @@ final class UserProfileViewController: RxBaseViewController {
         let behaiviorProfile = BehaviorRelay(value: profileType)
 
         let currentCellAt = BehaviorRelay(value: 0)
-
+        var currentCount = 0
         
         let input = UserProfileViewModel.Input(
             inputProfileType: behaiviorProfile,
@@ -87,8 +88,8 @@ final class UserProfileViewController: RxBaseViewController {
         output.postReadMainModel
             .distinctUntilChanged()
             .drive(with: self) {owner, models in
+                currentCount = models.count
                 if models.isEmpty {
-                    
                     owner.applySnapshot(owner.profileType)
                 } else {
                     owner.applySnapshot(owner.profileType,models: models)
@@ -115,13 +116,14 @@ final class UserProfileViewController: RxBaseViewController {
         rx.viewDidAppear
             .skip(1)
             .bind(with: self) { owner, _ in
-                owner.collectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
-                behaiviorProfile.accept(owner.profileType)
+                if currentCount > 0 {
+                    owner.collectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
+                    behaiviorProfile.accept(owner.profileType)
+                }
             }
             .disposed(by: disPoseBag)
         
-        
-        
+    
         collectionView.rx.willDisplayCell
             .bind(with: self) { owner, cellInfo in
                 currentCellAt.accept(cellInfo.at.item)
@@ -149,11 +151,15 @@ extension UserProfileViewController {
         snapShot.appendSections([.profile, .poster])
         
         if let profile {
+            
             snapShot.appendItems([profile], toSection: .profile)
         }
         
         if let models {
-            snapShot.appendItems(models, toSection: .poster)
+            if !models.isEmpty {
+               
+                snapShot.appendItems(models, toSection: .poster)
+            }
         }
         
         dataSource?.apply(snapShot,animatingDifferences: true)
