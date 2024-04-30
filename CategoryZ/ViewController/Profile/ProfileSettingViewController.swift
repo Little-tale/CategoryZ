@@ -131,6 +131,11 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
 
         }
         .disposed(by: disPoseBag)
+        
+        rx.viewDidDisapear.bind(with: self) { owner, _ in
+            NotificationCenter.default.post(name: .chagedProfileInfo, object: nil)
+        }
+        .disposed(by: disPoseBag)
     }
     
     override func navigationSetting() {

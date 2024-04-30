@@ -76,6 +76,7 @@ final class UserProfileViewController: RxBaseViewController {
         let currentCellAt = BehaviorRelay(value: 0)
         var currentCount = 0
         
+        
         let input = UserProfileViewModel.Input(
             inputProfileType: behaiviorProfile,
             inputProducID: selectedProductId,

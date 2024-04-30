@@ -70,6 +70,7 @@
 		7B87F0F82BD3FE2F0006178F /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */; };
 		7B87F0FC2BD3FE850006178F /* ProfileAndFollowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */; };
 		7B8CAEB42BD480D600347FAC /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */; };
+		7B9403192BE119D8004A1A8E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9403182BE119D8004A1A8E /* NetworkService.swift */; };
 		7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */; };
 		7BA0E0D32BCD72C3002F0516 /* PostRegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */; };
 		7BA0E0D52BCD730C002F0516 /* ProductID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D42BCD730C002F0516 /* ProductID.swift */; };
@@ -209,6 +210,7 @@
 		7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAndFollowView.swift; sourceTree = "<group>"; };
 		7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		7B9403182BE119D8004A1A8E /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCameraImageService.swift; sourceTree = "<group>"; };
 		7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRegViewController.swift; sourceTree = "<group>"; };
 		7BA0E0D42BCD730C002F0516 /* ProductID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductID.swift; sourceTree = "<group>"; };
@@ -461,6 +463,7 @@
 				7BCF4A3B2BC6873600BCE635 /* AccessTokkenAdapter.swift */,
 				7BCF4A7E2BC9281500BCE635 /* NetworkRouter.swift */,
 				7BA0E0F02BCE0791002F0516 /* KingFisherNet.swift */,
+				7B9403182BE119D8004A1A8E /* NetworkService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1025,6 +1028,7 @@
 				7B11DC852BC58CB90055D423 /* NetWorkModel.swift in Sources */,
 				7BD1D8E02BD6259700B5521F /* ProfileSettingView.swift in Sources */,
 				7BC06FD02BE0190F00651529 /* CheckUserDeleteViewController.swift in Sources */,
+				7B9403192BE119D8004A1A8E /* NetworkService.swift in Sources */,
 				7B1EE46E2BDF9E3600F109EB /* ProfileCell.swift in Sources */,
 				7BCF4A572BC6E1C600BCE635 /* LoginButton.swift in Sources */,
 				7B11DC682BC58AD40055D423 /* AppDelegate.swift in Sources */,
