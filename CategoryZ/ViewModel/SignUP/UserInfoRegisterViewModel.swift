@@ -22,6 +22,8 @@ final class UserInfoRegisterViewModel: RxViewModelType {
         let inputPhoneNum : ControlProperty<String?>
         let inputButtonTab: ControlEvent<Void>
         let inputEmailButtonTap: ControlEvent<Void>
+        // 확인 버튼 클릭시(강제) 로그인
+        let successCliked: PublishRelay<Void>
     }
     
     struct Output {
@@ -43,6 +45,9 @@ final class UserInfoRegisterViewModel: RxViewModelType {
         let networkForEmailSuccess: PublishRelay<String>
         // 네트워크를 통해 회원가입 성공
         let networkForSignUpSuccess: PublishRelay<String>
+        // 마지막 성공 트리거
+        let finalSuccesTrigger: Driver<Void>
+        let finalFailTrigger: Driver<Void>
     }
     
     func transform(_ input: Input) -> Output {
@@ -56,8 +61,8 @@ final class UserInfoRegisterViewModel: RxViewModelType {
         let networkError = PublishRelay<NetworkError> ()
         // 이메일 검사 종합 결과 UI 반영
         let emailValidTest = BehaviorRelay<EmailTextValid> (value: .isEmpty)
-        
-        
+        let finalSuccesTrigger = PublishRelay<Void> ()
+        let finalFailTrigger = PublishRelay<Void> ()
         
         // 이메일 텍스트 input
        let emailText = input.inputEmail.orEmpty
@@ -151,6 +156,8 @@ final class UserInfoRegisterViewModel: RxViewModelType {
                         phoneNum: combine.3
                 )
             }
+            .share()
+        
        // 가입 버튼 클릭시
         input.inputButtonTab
             .withLatestFrom(combineText)
@@ -167,8 +174,29 @@ final class UserInfoRegisterViewModel: RxViewModelType {
                 }
             }
             .disposed(by: disposeBag)
+        
+        networkForSignUpSuccess
+            .withLatestFrom(combineText)
+            .flatMapLatest { userInfo in
+                let loginModel = LoginQuery(email: userInfo.email, password: userInfo.password)
+                return NetworkManager.fetchNetwork(model: LoginModel.self, router: .authentication(.login(query: loginModel)))
+            }
+            .bind { result in
+                switch result {
+                case .success(let loginModel):
+                    UserIDStorage.shared.userID = loginModel.user_id
+                    
+                    TokenStorage.shared.accessToken = loginModel.accessToken
+                    
+                    TokenStorage.shared.refreshToken = loginModel.refreshToken
+                    finalSuccesTrigger.accept(())
+                case .failure:
+                    finalFailTrigger.accept(())
+                }
+            }
+            .disposed(by: disposeBag)
             
-    
+            
         return Output(
             nameValid: nameValid,
             emailValid: emailValidTest.asDriver(onErrorJustReturn: .isEmpty),
@@ -178,7 +206,9 @@ final class UserInfoRegisterViewModel: RxViewModelType {
             emailButtonEnabled: emailButtonEnabled.asDriver(onErrorJustReturn: false),
             networkError: networkError,
             networkForEmailSuccess: networkForEmailSuccess,
-            networkForSignUpSuccess: networkForSignUpSuccess
+            networkForSignUpSuccess: networkForSignUpSuccess,
+            finalSuccesTrigger: finalSuccesTrigger.asDriver(onErrorDriveWith: .never()),
+            finalFailTrigger: finalFailTrigger.asDriver(onErrorDriveWith: .never())
         )
     }
 }

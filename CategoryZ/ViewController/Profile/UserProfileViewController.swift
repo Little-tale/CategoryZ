@@ -258,6 +258,8 @@ extension UserProfileViewController: MoveToProfileModify, MoveToLikePosters, Mov
         switch profileType {
         case .me:
             let vc = ProfileSettingViewController()
+            vc.hidesBottomBarWhenPushed = true
+            NotificationCenter.default.post(name: .hidesBottomBarWhenPushed, object: nil)
             navigationController?.pushViewController(vc, animated: true)
         case .other:
             break

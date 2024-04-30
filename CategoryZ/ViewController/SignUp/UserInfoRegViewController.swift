@@ -22,6 +22,7 @@ final class UserInfoRegViewController: RxHomeBaseViewController<UserInfoRegView>
     // 오늘 키워드 : 핫 옵저버블 콜드 옵저버블
     override func subscribe() {
         
+        let successCliked = PublishRelay<Void> ()
     
         let input = UserInfoRegisterViewModel
             .Input(
@@ -30,7 +31,8 @@ final class UserInfoRegViewController: RxHomeBaseViewController<UserInfoRegView>
                 inputPassword: homeView.passWordTextField.rx.text,
                 inputPhoneNum: homeView.phoneNumberTextField.rx.text,
                 inputButtonTab: homeView.successButton.rx.tap,
-                inputEmailButtonTap: homeView.emailValidTextButton.rx.tap
+                inputEmailButtonTap: homeView.emailValidTextButton.rx.tap,
+                successCliked: successCliked
             )
         
         let output = viewModel.transform(input)
@@ -76,7 +78,9 @@ final class UserInfoRegViewController: RxHomeBaseViewController<UserInfoRegView>
         output.networkForSignUpSuccess
             .bind(with: self) { owner, name in
                 owner.showAlert(title: name + "님", message: "가입을 축하 드립니다.") { _ in
-                    owner.changeRootView(to: GetStartViewController(), isNavi: true)
+                    // 가입 성공 버튼 클릭시
+                // 바로 로그인 하여 다음 뷰로 넘어가도록 하기
+                    successCliked.accept(())
                 }
             }
             .disposed(by: disPoseBag)
@@ -111,6 +115,21 @@ final class UserInfoRegViewController: RxHomeBaseViewController<UserInfoRegView>
                 }
             }
             .disposed(by: disPoseBag)
+        
+        output.finalFailTrigger
+            .drive(with: self) { owner, _ in
+                owner.changeRootView(to: LunchScreenViewController(), isNavi: true)
+            }
+            .disposed(by: disPoseBag)
+        
+        
+        successCliked
+            .withLatestFrom(output.finalSuccesTrigger)
+            .bind(with: self) { owner, _ in
+                owner.changeRootView(to: CategoryZTabbarController(), isNavi: false)
+            }
+            .disposed(by: disPoseBag)
+        
     }
     
     override func navigationSetting() {

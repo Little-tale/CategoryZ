@@ -77,8 +77,7 @@ extension authenticationRouter: TargetType {
                 NetHTTPHeader.refresh.rawValue :
                     refresh
             ]
-        case .userWithDraw: // 60PFsVaFr9iSRk
-            //print("시점: ", TokenStorage.shared.accessToken ?? "토큰 없쪄")
+        case .userWithDraw:
             return [
                 NetHTTPHeader.sesacKey.rawValue :
                     APIKey.sesacKey.rawValue
@@ -134,7 +133,7 @@ extension authenticationRouter {
     fileprivate func jsEncoding(_ target: Encodable) -> Data? {
 
         let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.keyEncodingStrategy = .useDefaultKeys
         do {
             let result = try  encoder.encode(target)
             // print(result)
