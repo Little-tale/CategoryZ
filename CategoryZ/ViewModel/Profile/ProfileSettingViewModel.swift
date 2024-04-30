@@ -39,6 +39,7 @@ final class ProfileSettingViewModel: RxViewModelType {
                 }
             }
             .disposed(by: disposeBag)
+        
         return Output(
             outputNetwork: netwrokError.asDriver(onErrorDriveWith: .never()),
             successModel: publishModel.asDriver(onErrorDriveWith: .never())

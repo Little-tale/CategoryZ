@@ -29,6 +29,8 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
     
     override func subscribe() {
         
+        var emptyModel = ProfileModel()
+        
         let section = Observable.just([
             SettingSection.profileImage,
             SettingSection.name,
@@ -52,6 +54,7 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
         
         output.successModel
             .drive(with: self) { owner, model in
+                emptyModel = model
                 owner.homeView.profileView.userNameLabel.text = model.nick
                 owner.homeView.profileView.phoneNumLabel.text = model.phoneNum
                 if !model.profileImage.isEmpty {
@@ -91,39 +94,36 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
                 owner.homeView.collectionView.deselectItem(at: indexPath, animated: true)
             }
             .disposed(by: disPoseBag)
-        
-        let zipCell = Observable.zip(homeView.collectionView.rx.modelSelected(SettingSection.self), output.successModel.asObservable())
             
-        
-        zipCell
-            .map { cellInfo, model in
-                return (cellInfo: cellInfo, model: model)
-            }
-            .bind(with: self) { owner, cellInfo in
-                
-                switch cellInfo.cellInfo {
+        homeView.collectionView.rx.modelSelected(SettingSection.self)
+            .bind(with: self) { owner, section in
+                let model = emptyModel
+                switch section {
                 case .profileImage:
                     let vc = UserProfileImageModifyViewController()
-                    vc.setModel(cellInfo.model)
+                    vc.setModel(model)
                     owner.navigationController?.pushViewController(vc, animated: true)
                 case .name:
                     let vc = NameModifyViewController()
-                    vc.setModel(cellInfo.model)
+                    vc.setModel(model)
                     owner.navigationController?.pushViewController(vc, animated: true)
                 case .phoneNumber:
                     let vc = UserPhoneNumberModifyViewController()
-                    vc.setModel(cellInfo.model)
+                    vc.setModel(model)
                     owner.navigationController?.pushViewController(vc, animated: true)
                 case .deleteAccount:
                     owner.showAlert(
                         title: "계정 삭제 시도",
                         message: "계정 정말 삭제 하시겠어요?",
-                        actionTitle: "삭제") { _ in
+                        actionTitle: "삭제",
+                        .destructive) { _ in
                             tryAccountDelete.accept(())
                         }
                 }
             }
             .disposed(by: disPoseBag)
+        
+        
         //CheckUserDeleteViewController
         tryAccountDelete.bind(with: self) { owner, _ in
             let vc = CheckUserDeleteViewController()

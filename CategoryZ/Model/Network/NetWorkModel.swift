@@ -268,6 +268,17 @@ struct ProfileModel: Decodable {
         case phoneNum
     }
     
+    init() {
+        self.userID = ""
+        self.email = ""
+        self.nick = ""
+        self.phoneNum = ""
+        self.followers = []
+        self.following = []
+        self.profileImage = ""
+        self.posts = []
+    }
+    
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.userID = try container.decode(String.self, forKey: .userID)
