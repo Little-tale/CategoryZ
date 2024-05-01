@@ -24,13 +24,16 @@ enum MoveFllowOrFollower {
 
 final class UserProfileViewController: RxBaseViewController {
     
-    private lazy var donateButton = UIBarButtonItem().then {
-        let button = UIButton()
-        button.setImage(JHImage.donateImage, for: .normal)
-        button.imageView?.frame = .init(x: 0, y: 0, width: 30, height: 30)
-        button.imageView?.contentMode = .scaleAspectFit
-        button.sizeToFit()
-        $0.customView = button
+    private
+    let donateButton = UIButton()
+    
+    private lazy var donateNavButton = UIBarButtonItem().then {
+        
+        donateButton.setImage(JHImage.donateImage, for: .normal)
+        donateButton.imageView?.frame = .init(x: 0, y: 0, width: 30, height: 30)
+        donateButton.imageView?.contentMode = .scaleAspectFit
+        donateButton.sizeToFit()
+        $0.customView = donateButton
     }
     
     
@@ -70,7 +73,7 @@ final class UserProfileViewController: RxBaseViewController {
         case .me:
             break
         case .other:
-            navigationItem.rightBarButtonItem = donateButton
+            navigationItem.rightBarButtonItem = donateNavButton
         }
     }
     override func subscriver() {
@@ -109,6 +112,7 @@ final class UserProfileViewController: RxBaseViewController {
             .bind(with: self) { owner, models in
                 let bool = models.isEmpty
                 owner.donateButton.isHidden = bool
+                owner.donateButton.isEnabled = !bool
             }
             .disposed(by: disPoseBag)
         
@@ -184,6 +188,20 @@ final class UserProfileViewController: RxBaseViewController {
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)
+        
+        
+        
+        // 후훤 버튼을 클릭시
+        donateButton.rx.tap
+            .bind(with: self) { owner, _ in
+                if case .other(let otherUserId) = owner.profileType {
+                    let vc = DonateViewController()
+                    vc.setModel(otherUserId)
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
+            .disposed(by: disPoseBag)
+        
     }
     
     override func configureHierarchy() {
