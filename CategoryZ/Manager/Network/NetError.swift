@@ -58,6 +58,9 @@ enum NetworkError: Error {
     /// 프로필 수정 에러
     case profileModifyError(statusCode: Int, description: String)
     
+    /// 결제 영수증 검증
+    case paymentsValidError(statusCode: Int, description: String)
+    
     /// URLRequest 생성중 에러
     case failMakeURLRequest
     
@@ -296,6 +299,24 @@ extension NetworkError {
             default:
                 return "알수 없는 에러 \(description)"
             }
+        case .paymentsValidError(let statusCode, let description):
+            switch statusCode {
+            case 400:
+                return "잘못된 요청입니다"
+            case 401:
+                return "인증할 수 없는 엑세스 토큰입니다."
+            case 403:
+                return "접근 권한이 없습니다."
+            case 409:
+                return "검증처리가 완료된 결제건입니다."
+            case 410:
+                return "게시글을 찾을 수 없습니다."
+            case 419:
+                return "엑세스 토큰이 만료되었습니다."
+            default:
+                return "알수 없는 에러 \(description)"
+            }
+    
             
         case .failMakeURLRequest:
             return "URL Request Error"
@@ -365,6 +386,9 @@ extension NetworkError {
             return statusCode
             
         case .followError(let statusCode,_):
+            return statusCode
+            
+        case .paymentsValidError(let statusCode,_):
             return statusCode
             
         case .usurWithDrawError (let statusCode,_):

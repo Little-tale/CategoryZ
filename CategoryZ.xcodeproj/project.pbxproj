@@ -105,6 +105,7 @@
 		7BCC9D832BE289D300A6CEC3 /* CheckedUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC9D822BE289D300A6CEC3 /* CheckedUserViewController.swift */; };
 		7BCC9D852BE28A9100A6CEC3 /* CheckUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC9D842BE28A9100A6CEC3 /* CheckUserViewModel.swift */; };
 		7BCC9D872BE29DCB00A6CEC3 /* PaymentsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC9D862BE29DCB00A6CEC3 /* PaymentsModel.swift */; };
+		7BCC9D892BE2A06400A6CEC3 /* PaymentsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC9D882BE2A06400A6CEC3 /* PaymentsRouter.swift */; };
 		7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */; };
 		7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A292BC598D700BCE635 /* NetError.swift */; };
 		7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */; };
@@ -255,6 +256,7 @@
 		7BCC9D822BE289D300A6CEC3 /* CheckedUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckedUserViewController.swift; sourceTree = "<group>"; };
 		7BCC9D842BE28A9100A6CEC3 /* CheckUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserViewModel.swift; sourceTree = "<group>"; };
 		7BCC9D862BE29DCB00A6CEC3 /* PaymentsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsModel.swift; sourceTree = "<group>"; };
+		7BCC9D882BE2A06400A6CEC3 /* PaymentsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsRouter.swift; sourceTree = "<group>"; };
 		7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetHTTPHeader.swift; sourceTree = "<group>"; };
 		7BCF4A292BC598D700BCE635 /* NetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetError.swift; sourceTree = "<group>"; };
 		7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -919,6 +921,7 @@
 				7BCF4A922BCB80F100BCE635 /* LikeRouter.swift */,
 				7BCF4A942BCBA27F00BCE635 /* FollowRouter.swift */,
 				7BCF4A962BCBB6C900BCE635 /* ProfileRouter.swift */,
+				7BCC9D882BE2A06400A6CEC3 /* PaymentsRouter.swift */,
 			);
 			path = SubRouter;
 			sourceTree = "<group>";
@@ -1195,6 +1198,7 @@
 				7BA0E0E82BCD7593002F0516 /* PlaceholderTextView.swift in Sources */,
 				7BD1D8E82BD6596F00B5521F /* UserProfileImageModifyViewController.swift in Sources */,
 				7B94033E2BE265F3004A1A8E /* PriceModel .swift in Sources */,
+				7BCC9D892BE2A06400A6CEC3 /* PaymentsRouter.swift in Sources */,
 				7B5EF9F62BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift in Sources */,
 				7BD1D9112BD798B800B5521F /* FollowerAndFollowingView.swift in Sources */,
 				7B9403462BE280A7004A1A8E /* DonateModel.swift in Sources */,
