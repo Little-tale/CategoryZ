@@ -16,6 +16,11 @@ final class DonateViewModel: RxViewModelType {
     
     struct Input {
         let inputUserId: BehaviorRelay<String>
+        
+        let ifSelectedPrice: BehaviorRelay<PriceModel>
+        
+        // 버튼을 누른후 본인 인증이 완료된다면
+        
     }
     
     struct Output {
@@ -68,11 +73,22 @@ final class DonateViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
+        
+        
         return Output(
             networkError: networkError.asDriver(onErrorJustReturn: .loginError(statusCode: 419, description: "Reload")),
             successModel: successModel.asDriver(onErrorDriveWith: .never()),
             successProfile: successProfile.asDriver(onErrorDriveWith: .never())
         )
+    }
+    
+}
+extension DonateViewModel: checkUserModelDelegate {
+    
+    func checkdUserCurrect(_ bool: Bool) {
+        if bool == true {
+            print(bool)
+        }
     }
     
 }

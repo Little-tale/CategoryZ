@@ -1,15 +1,17 @@
 //
-//  DeleteUserViewModel.swift
+//  CheckUserViewModel.swift
 //  CategoryZ
 //
-//  Created by Jae hyung Kim on 4/30/24.
+//  Created by Jae hyung Kim on 5/1/24.
 //
 
 import Foundation
 import RxSwift
 import RxCocoa
 
-final class DeleteUserViewModel: RxViewModelType {
+
+final class CheckUserViewModel: RxViewModelType {
+    
     var disposeBag: RxSwift.DisposeBag = .init()
     
     private
@@ -18,32 +20,30 @@ final class DeleteUserViewModel: RxViewModelType {
     struct Input {
         let inputEmailText: ControlProperty<String?>
         let inputPasswordText: ControlProperty<String?>
-        let deleteButtonTap: ControlEvent<Void>
-        let userLeaveTrigger: PublishRelay<Void>
+        let loginButtonTap: ControlEvent<Void>
     }
     
     struct Output {
-        let networkError: PublishRelay<NetworkError>
+        let networkError: Driver<NetworkError>
         let loginButtonEnabled: Driver<Bool>
         let isUserCurrectTrigger: Driver<Bool>
-        let successDeleteTrigger: Driver<Void>
     }
     
     func transform(_ input: Input) -> Output {
+        // output
         let networkError = PublishRelay<NetworkError>()
+        
         let loginSuccess = PublishRelay<LoginModel> ()
-        let loginButtonEnabled = BehaviorRelay(value: false)
         
         let isUserCureectTrigger = PublishRelay<Bool> ()
         
-        let successDeleteTrigger = PublishRelay<Void> ()
+        let loginButtonEnabled = BehaviorRelay(value: false)
+        
         
         let loginTextCombine = Observable.combineLatest(
             input.inputEmailText.orEmpty,
             input.inputPasswordText.orEmpty
         )
-        
-        
         
         loginTextCombine
             .map { combine in
@@ -54,8 +54,7 @@ final class DeleteUserViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
-        // 로그인 버튼 탭
-        input.deleteButtonTap
+        input.loginButtonTap
             .withLatestFrom(loginTextCombine)
             .throttle(.milliseconds(400), scheduler: MainScheduler.instance)
             .map { combine in
@@ -69,21 +68,15 @@ final class DeleteUserViewModel: RxViewModelType {
             }
             .bind { result in
                 switch result {
-                case .success(let loginModel):
-//                    UserIDStorage.shared.userID = loginModel.user_id
-//                    
-//                    TokenStorage.shared.accessToken = loginModel.accessToken
-//                    
-//                    TokenStorage.shared.refreshToken = loginModel.refreshToken
-                    
-                    loginSuccess.accept(loginModel)
-                case .failure(let fail):
-                    networkError.accept(fail)
+                case .success(let model):
+                    loginSuccess.accept(model)
+                case .failure(let error):
+                    networkError.accept(error)
                 }
             }
             .disposed(by: disposeBag)
         
-        // 로그인 성공시 현재 계정의 아이디와 비교합니다.
+        
         loginSuccess
             .bind(with: self) { owner, model in
                 if let userId = owner.userId {
@@ -95,28 +88,12 @@ final class DeleteUserViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
-        // 유저가 떠남을 최종 결정했을때
-        input.userLeaveTrigger
-            .flatMapLatest { _ in
-                NetworkManager.noneModelRequest(router: .authentication(.userWithDraw))
-            }
-            .bind { result in
-                switch result {
-                case .success:
-                    successDeleteTrigger.accept(())
-                    UserIDStorage.shared.userID = nil 
-                case .failure(let error):
-                    networkError.accept(error)
-                }
-            }
-            .disposed(by: disposeBag)
-        
         
         return Output(
-            networkError: networkError,
+            networkError: networkError.asDriver(onErrorJustReturn: .loginError(statusCode: 419 , description: "")),
             loginButtonEnabled: loginButtonEnabled.asDriver(),
-            isUserCurrectTrigger: isUserCureectTrigger.asDriver(onErrorDriveWith: .never()),
-            successDeleteTrigger: successDeleteTrigger.asDriver(onErrorDriveWith: .never())
+            isUserCurrectTrigger: isUserCureectTrigger.asDriver(onErrorDriveWith: .never())
         )
     }
+    
 }

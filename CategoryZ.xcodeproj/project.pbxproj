@@ -78,6 +78,7 @@
 		7B94033C2BE260FC004A1A8E /* DonateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94033B2BE260FC004A1A8E /* DonateViewModel.swift */; };
 		7B94033E2BE265F3004A1A8E /* PriceModel .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94033D2BE265F3004A1A8E /* PriceModel .swift */; };
 		7B9403412BE26F89004A1A8E /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9403402BE26F89004A1A8E /* iamport-ios */; };
+		7B9403462BE280A7004A1A8E /* DonateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9403452BE280A7004A1A8E /* DonateModel.swift */; };
 		7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */; };
 		7BA0E0D32BCD72C3002F0516 /* PostRegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */; };
 		7BA0E0D52BCD730C002F0516 /* ProductID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D42BCD730C002F0516 /* ProductID.swift */; };
@@ -101,6 +102,8 @@
 		7BC51B4B2BD019D600E5BF6C /* CursurModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */; };
 		7BC51B4D2BD0986E00E5BF6C /* SNSTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B4C2BD0986E00E5BF6C /* SNSTableViewModel.swift */; };
 		7BC51B5E2BD0FFD200E5BF6C /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B5D2BD0FFD200E5BF6C /* DateManager.swift */; };
+		7BCC9D832BE289D300A6CEC3 /* CheckedUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC9D822BE289D300A6CEC3 /* CheckedUserViewController.swift */; };
+		7BCC9D852BE28A9100A6CEC3 /* CheckUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC9D842BE28A9100A6CEC3 /* CheckUserViewModel.swift */; };
 		7BCF4A282BC5976100BCE635 /* NetHTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */; };
 		7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A292BC598D700BCE635 /* NetError.swift */; };
 		7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */; };
@@ -224,6 +227,7 @@
 		7B9403382BE25FAD004A1A8E /* DonateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateViewController.swift; sourceTree = "<group>"; };
 		7B94033B2BE260FC004A1A8E /* DonateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateViewModel.swift; sourceTree = "<group>"; };
 		7B94033D2BE265F3004A1A8E /* PriceModel .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PriceModel .swift"; sourceTree = "<group>"; };
+		7B9403452BE280A7004A1A8E /* DonateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateModel.swift; sourceTree = "<group>"; };
 		7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCameraImageService.swift; sourceTree = "<group>"; };
 		7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRegViewController.swift; sourceTree = "<group>"; };
 		7BA0E0D42BCD730C002F0516 /* ProductID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductID.swift; sourceTree = "<group>"; };
@@ -247,6 +251,8 @@
 		7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursurModel.swift; sourceTree = "<group>"; };
 		7BC51B4C2BD0986E00E5BF6C /* SNSTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSTableViewModel.swift; sourceTree = "<group>"; };
 		7BC51B5D2BD0FFD200E5BF6C /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
+		7BCC9D822BE289D300A6CEC3 /* CheckedUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckedUserViewController.swift; sourceTree = "<group>"; };
+		7BCC9D842BE28A9100A6CEC3 /* CheckUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserViewModel.swift; sourceTree = "<group>"; };
 		7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetHTTPHeader.swift; sourceTree = "<group>"; };
 		7BCF4A292BC598D700BCE635 /* NetError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetError.swift; sourceTree = "<group>"; };
 		7BCF4A2B2BC59A8900BCE635 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -357,6 +363,7 @@
 		7B11DC5B2BC58AD40055D423 = {
 			isa = PBXGroup;
 			children = (
+				7B9403452BE280A7004A1A8E /* DonateModel.swift */,
 				7BCF4A9A2BCBE5E100BCE635 /* Memo.txt */,
 				7B11DCA22BC58FB60055D423 /* APIKey.swift */,
 				7B11DCA02BC58F620055D423 /* .gitignore */,
@@ -925,6 +932,7 @@
 			isa = PBXGroup;
 			children = (
 				7BCF4AA02BCBEB3300BCE635 /* LoginViewController.swift */,
+				7BCC9D822BE289D300A6CEC3 /* CheckedUserViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -933,6 +941,7 @@
 			isa = PBXGroup;
 			children = (
 				7BCF4AA32BCBF68E00BCE635 /* LoginViewModel.swift */,
+				7BCC9D842BE28A9100A6CEC3 /* CheckUserViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1096,6 +1105,7 @@
 				7B5EF9F82BD4DFC000F022CB /* ProfileHeaderView.swift in Sources */,
 				7BCF4A6F2BC7D96400BCE635 /* UserInfoRegView.swift in Sources */,
 				7B1EE3FF2BDE57E100F109EB /* SingleViewRx.swift in Sources */,
+				7BCC9D852BE28A9100A6CEC3 /* CheckUserViewModel.swift in Sources */,
 				7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */,
 				7BD1D9132BD7998800B5521F /* FollowerAndFolowingViewController.swift in Sources */,
 				7BA0E0D82BCD736C002F0516 /* PostRegView.swift in Sources */,
@@ -1149,6 +1159,7 @@
 				7BCF4A612BC6E5BD00BCE635 /* SignUpButton.swift in Sources */,
 				7BD1D8F22BD6C87F00B5521F /* UserPhoneNumberModifyViewModel.swift in Sources */,
 				7B94031B2BE1D553004A1A8E /* RegisterDonateViewController.swift in Sources */,
+				7BCC9D832BE289D300A6CEC3 /* CheckedUserViewController.swift in Sources */,
 				7BCF4A3A2BC5AF4A00BCE635 /* RxBaseViewController.swift in Sources */,
 				7B0BB2F72BD4A24200770A04 /* UserProfileViewModel.swift in Sources */,
 				7B1EE3F72BDE417A00F109EB /* RxBaseCollectionViewCell.swift in Sources */,
@@ -1182,6 +1193,7 @@
 				7B94033E2BE265F3004A1A8E /* PriceModel .swift in Sources */,
 				7B5EF9F62BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift in Sources */,
 				7BD1D9112BD798B800B5521F /* FollowerAndFollowingView.swift in Sources */,
+				7B9403462BE280A7004A1A8E /* DonateModel.swift in Sources */,
 				7B838DE02BCEF2DD000F2E27 /* AddCollectionViewCell.swift in Sources */,
 				7BCF4AA42BCBF68E00BCE635 /* LoginViewModel.swift in Sources */,
 				7BCF4A482BC6CEF800BCE635 /* BaseView.swift in Sources */,

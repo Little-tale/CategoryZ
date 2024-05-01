@@ -9,6 +9,10 @@ import UIKit
 import RxSwift
 import RxCocoa
 import iamport_ios
+/*
+ need To DonateModel
+ 
+ */
 
 final class DonateViewController: RxHomeBaseViewController<DonateView> {
     
@@ -35,11 +39,23 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
             .disposed(by: disPoseBag)
         
         
+        
         let inputUserId = BehaviorRelay<String> (value: userID)
         
-        let input = DonateViewModel.Input(inputUserId: inputUserId)
+        let ifSelectedPrice = BehaviorRelay<PriceModel> (value: .thousand1)
+        
+        let donateButtonTap = homeView.donateButton.rx.tap
+        
+        let input = DonateViewModel.Input(
+            inputUserId: inputUserId,
+            ifSelectedPrice: ifSelectedPrice
+            
+        )
         
         let output = viewModel.transform(input)
+        
+        
+        
         
         output.successProfile
             .drive(with: self) { owner, model in
@@ -72,6 +88,27 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
                 
             }
             .disposed(by: disPoseBag)
+        
+        // 선택 되어질 값
+        homeView.pricePicker.rx.modelSelected(PriceModel.self)
+            .bind { models in
+                ifSelectedPrice.accept(models.first!)
+            }
+            .disposed(by: disPoseBag)
+        
+        // 버튼을 누르면 본인인증을 하게 유도
+        donateButtonTap
+            .bind(with: self) { owner, _ in
+                let vc = CheckedUserViewController()
+                vc.checkUserDelegate = owner.viewModel
+                vc.modalPresentationStyle = .pageSheet
+
+                owner.navigationController?
+                    .present(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
     }
-    
 }
+
+
+
