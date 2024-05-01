@@ -77,7 +77,6 @@ final class ProfileHeaderView: UICollectionReusableView {
                 NotificationCenter.default.post(name: .selectedProductId, object: nil, userInfo: ["productID": productId])
             }
             .disposed(by: disPoseBag)
-        
     }
     
     private

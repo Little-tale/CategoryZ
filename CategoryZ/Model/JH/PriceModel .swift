@@ -27,3 +27,4 @@ extension PriceModel {
         return "\(self.rawValue)원"
     }
 }
+

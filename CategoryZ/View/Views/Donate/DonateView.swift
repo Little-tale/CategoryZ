@@ -60,6 +60,7 @@ final class DonateView: RxBaseView {
             make.top.equalTo(priceLabel.snp.bottom).offset(14)
             make.height.equalTo(180)
         }
+        
         donateButton.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(pricePicker)
             make.top.equalTo(pricePicker.snp.bottom).offset(12)

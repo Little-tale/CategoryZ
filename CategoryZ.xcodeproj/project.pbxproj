@@ -20,7 +20,6 @@
 		7B11DC8D2BC58D250055D423 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 7B11DC8C2BC58D250055D423 /* RxRelay */; };
 		7B11DC8F2BC58D250055D423 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7B11DC8E2BC58D250055D423 /* RxSwift */; };
 		7B11DC922BC58D2F0055D423 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7B11DC912BC58D2F0055D423 /* Kingfisher */; };
-		7B11DC952BC58D390055D423 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 7B11DC942BC58D390055D423 /* Then */; };
 		7B11DC982BC58D640055D423 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B11DC972BC58D640055D423 /* SnapKit */; };
 		7B11DC9B2BC58DA40055D423 /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7B11DC9A2BC58DA40055D423 /* IQKeyboardManagerSwift */; };
 		7B11DCA12BC58F620055D423 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 7B11DCA02BC58F620055D423 /* .gitignore */; };
@@ -78,6 +77,7 @@
 		7B9403392BE25FAD004A1A8E /* DonateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9403382BE25FAD004A1A8E /* DonateViewController.swift */; };
 		7B94033C2BE260FC004A1A8E /* DonateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94033B2BE260FC004A1A8E /* DonateViewModel.swift */; };
 		7B94033E2BE265F3004A1A8E /* PriceModel .swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94033D2BE265F3004A1A8E /* PriceModel .swift */; };
+		7B9403412BE26F89004A1A8E /* iamport-ios in Frameworks */ = {isa = PBXBuildFile; productRef = 7B9403402BE26F89004A1A8E /* iamport-ios */; };
 		7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */; };
 		7BA0E0D32BCD72C3002F0516 /* PostRegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */; };
 		7BA0E0D52BCD730C002F0516 /* ProductID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D42BCD730C002F0516 /* ProductID.swift */; };
@@ -320,7 +320,6 @@
 				7B5E513A2BDA873400918C53 /* Toast in Frameworks */,
 				7B11DC9B2BC58DA40055D423 /* IQKeyboardManagerSwift in Frameworks */,
 				7BCF4A422BC688F100BCE635 /* KeychainAccess in Frameworks */,
-				7B11DC952BC58D390055D423 /* Then in Frameworks */,
 				7B11DC8B2BC58D250055D423 /* RxCocoa in Frameworks */,
 				7B11DC982BC58D640055D423 /* SnapKit in Frameworks */,
 				7B11DC8F2BC58D250055D423 /* RxSwift in Frameworks */,
@@ -328,6 +327,7 @@
 				7B11DC922BC58D2F0055D423 /* Kingfisher in Frameworks */,
 				7B1EE4022BDE897A00F109EB /* SkeletonView in Frameworks */,
 				7B94031E2BE1DCC2004A1A8E /* BetterSegmentedControl in Frameworks */,
+				7B9403412BE26F89004A1A8E /* iamport-ios in Frameworks */,
 				7B838E012BCFAE8C000F2E27 /* RxDataSources in Frameworks */,
 				7B838DF92BCFAE06000F2E27 /* RxReusableKit in Frameworks */,
 				7BCF4A6D2BC7C6E400BCE635 /* TextFieldEffects in Frameworks */,
@@ -415,6 +415,7 @@
 		7B11DC7C2BC58B3A0055D423 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				7B9403422BE27B43004A1A8E /* Donate */,
 				7B1EE3EE2BDE107900F109EB /* Like */,
 				7B5E512A2BD9133500918C53 /* Comment */,
 				7BD1D90E2BD7988B00B5521F /* FollowAndFlowing */,
@@ -673,7 +674,6 @@
 		7B9403372BE25FA3004A1A8E /* Donate */ = {
 			isa = PBXGroup;
 			children = (
-				7B9403382BE25FAD004A1A8E /* DonateViewController.swift */,
 			);
 			path = Donate;
 			sourceTree = "<group>";
@@ -682,6 +682,14 @@
 			isa = PBXGroup;
 			children = (
 				7B94033B2BE260FC004A1A8E /* DonateViewModel.swift */,
+			);
+			path = Donate;
+			sourceTree = "<group>";
+		};
+		7B9403422BE27B43004A1A8E /* Donate */ = {
+			isa = PBXGroup;
+			children = (
+				7B9403382BE25FAD004A1A8E /* DonateViewController.swift */,
 			);
 			path = Donate;
 			sourceTree = "<group>";
@@ -986,7 +994,6 @@
 				7B11DC8C2BC58D250055D423 /* RxRelay */,
 				7B11DC8E2BC58D250055D423 /* RxSwift */,
 				7B11DC912BC58D2F0055D423 /* Kingfisher */,
-				7B11DC942BC58D390055D423 /* Then */,
 				7B11DC972BC58D640055D423 /* SnapKit */,
 				7B11DC9A2BC58DA40055D423 /* IQKeyboardManagerSwift */,
 				7BCF4A412BC688F100BCE635 /* KeychainAccess */,
@@ -998,6 +1005,7 @@
 				7B5E51392BDA873400918C53 /* Toast */,
 				7B1EE4012BDE897A00F109EB /* SkeletonView */,
 				7B94031D2BE1DCC2004A1A8E /* BetterSegmentedControl */,
+				7B9403402BE26F89004A1A8E /* iamport-ios */,
 			);
 			productName = CategoryZ;
 			productReference = 7B11DC642BC58AD40055D423 /* CategoryZ.app */;
@@ -1031,7 +1039,6 @@
 				7B11DC862BC58CF20055D423 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				7B11DC892BC58D250055D423 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				7B11DC902BC58D2F0055D423 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				7B11DC932BC58D390055D423 /* XCRemoteSwiftPackageReference "Then" */,
 				7B11DC962BC58D640055D423 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				7B11DC992BC58DA40055D423 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				7BCF4A402BC688F100BCE635 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
@@ -1041,6 +1048,7 @@
 				7B5E51382BDA873400918C53 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				7B1EE4002BDE897A00F109EB /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				7B94031C2BE1DCC2004A1A8E /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
+				7B94033F2BE26F89004A1A8E /* XCRemoteSwiftPackageReference "iamport-ios" */,
 			);
 			productRefGroup = 7B11DC652BC58AD40055D423 /* Products */;
 			projectDirPath = "";
@@ -1453,14 +1461,6 @@
 				minimumVersion = 7.11.0;
 			};
 		};
-		7B11DC932BC58D390055D423 /* XCRemoteSwiftPackageReference "Then" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/devxoul/Then";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
 		7B11DC962BC58D640055D423 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -1517,6 +1517,14 @@
 				minimumVersion = 2.0.1;
 			};
 		};
+		7B94033F2BE26F89004A1A8E /* XCRemoteSwiftPackageReference "iamport-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iamport/iamport-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.1;
+			};
+		};
 		7BCF4A402BC688F100BCE635 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
@@ -1560,11 +1568,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B11DC902BC58D2F0055D423 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		7B11DC942BC58D390055D423 /* Then */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7B11DC932BC58D390055D423 /* XCRemoteSwiftPackageReference "Then" */;
-			productName = Then;
 		};
 		7B11DC972BC58D640055D423 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1610,6 +1613,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B94031C2BE1DCC2004A1A8E /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */;
 			productName = BetterSegmentedControl;
+		};
+		7B9403402BE26F89004A1A8E /* iamport-ios */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B94033F2BE26F89004A1A8E /* XCRemoteSwiftPackageReference "iamport-ios" */;
+			productName = "iamport-ios";
 		};
 		7BCF4A412BC688F100BCE635 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;

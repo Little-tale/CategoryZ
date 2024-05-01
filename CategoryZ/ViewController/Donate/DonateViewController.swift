@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import iamport_ios
 
 final class DonateViewController: RxHomeBaseViewController<DonateView> {
     
@@ -21,6 +22,7 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
     
     func setModel(_ userID: String) {
         subscribe(userID)
+        
     }
     
     private
