@@ -71,9 +71,12 @@ final class RegisterDonateViewController: RxBaseViewController {
             .map { _ in ()}
         let behaiviorModel = BehaviorRelay(value: model)
         
+        let selectedSegmentIndexAt = PublishRelay<Int> ()
+        
         let input = RegisterDonateViewModel.Input(
             viewWillTrigger: viewWillTrigger,
-            behaiviorModel: behaiviorModel
+            behaiviorModel: behaiviorModel,
+            selectedSegmentIndexAt: selectedSegmentIndexAt
         )
         
         let output = viewModel.transform(input)
@@ -91,6 +94,45 @@ final class RegisterDonateViewController: RxBaseViewController {
             }
             .disposed(by: disPoseBag)
         
+        publisheCurrentIndexAt
+            .bind(with: self) { owner, at in
+                if at == 0 {
+                    owner.showAlert(
+                        title: "후원시작",
+                        message: "후원을 시작하시면, 다른유저에게 후원을 받으실수 있습니다.",
+                        actionTitle: "시작하기",
+                        { _ in
+                            selectedSegmentIndexAt.accept(at)
+                        },
+                        { _ in
+                            owner.control.setIndex(1)
+                        },
+                        .default)
+                } else {
+                    owner.showAlert(
+                        title: "후원 정지",
+                        message: "후원을 정지하시면, 다른유저에게 후원을 받으실수 없습니다.",
+                        actionTitle: "시작하기",
+                        { _ in
+                            selectedSegmentIndexAt.accept(at)
+                        },
+                        { _ in
+                            owner.control.setIndex(0)
+                        },
+                        .destructive)
+                }
+            }
+            .disposed(by: disPoseBag)
+        
+        output.successTrigger
+            .drive(with: self) { owner, _ in
+                if let nevi = owner.navigationController {
+                    owner.navigationController?.popViewController(animated: true)
+                } else {
+                    owner.dismiss(animated: true)
+                }
+            }
+            .disposed(by: disPoseBag)
     }
     
     override func configureHierarchy() {

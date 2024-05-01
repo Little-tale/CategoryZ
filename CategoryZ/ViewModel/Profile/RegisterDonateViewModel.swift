@@ -17,11 +17,13 @@ final class RegisterDonateViewModel: RxViewModelType {
     struct Input {
         let viewWillTrigger: Observable<Void>
         let behaiviorModel: BehaviorRelay<ProfileModel>
+        let selectedSegmentIndexAt: PublishRelay<Int>
     }
     
     struct Output {
         let networkError: Driver<NetworkError>
         let currentIndex: Driver<Bool>
+        let successTrigger: Driver<Void>
     }
     
     func transform(_ input: Input) -> Output {
@@ -32,7 +34,10 @@ final class RegisterDonateViewModel: RxViewModelType {
         
         let checkModel = PublishRelay<PostReadMainModel> ()
         
-    
+        let successTrigger = PublishRelay<Void> ()
+        
+        var postId = ""
+        
         input.viewWillTrigger
             .throttle(.milliseconds(50), scheduler: MainScheduler.asyncInstance)
             .flatMapLatest { _ in
@@ -47,7 +52,9 @@ final class RegisterDonateViewModel: RxViewModelType {
                 switch result {
                 case .success(let model):
                     checkModel.accept(model)
-                    
+                    if let post = model.data.first {
+                        postId = post.postId
+                    }
                 case .failure(let error):
                     networkError.accept(error)
                 }
@@ -59,20 +66,56 @@ final class RegisterDonateViewModel: RxViewModelType {
         }
         .disposed(by: disposeBag)
         
+        // 후원 On을 눌러 설명을 듣고 확인을 눌렀을때
+        input.selectedSegmentIndexAt
+            .filter { $0 == 0 }
+            .flatMapLatest { _ in
+                let postsQuery = MainPostQuery(
+                    title: "",
+                    content: "#후원",
+                    content2: "",
+                    content3: "",
+                    product_id: ProductID.userProduct)
+                
+                return NetworkManager.fetchNetwork(
+                    model: PostModel.self,
+                    router: .poster(.postWrite(
+                        query: postsQuery)
+                    )
+                )
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success:
+                    successTrigger.accept(())
+                case .failure(let fail):
+                    networkError.accept(fail)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 후원 off를 눌러 설명을 듣고 확인을 눌렀을때
+        input.selectedSegmentIndexAt
+            .filter { $0 == 1 }
+            .flatMapLatest { current in
+                NetworkManager.noneModelRequest(router: .poster(.postDelete(postID: postId)))
+            }
+            .bind { result in
+                switch result {
+                case .success:
+                    successTrigger.accept(())
+                case .failure(let error):
+                    networkError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        
         return Output(
             networkError: networkError.asDriver(onErrorJustReturn: .loginError(statusCode: 419, description: "")),
-            currentIndex: behaiviorCurrent.asDriver()
+            currentIndex: behaiviorCurrent.asDriver(),
+            successTrigger: successTrigger.asDriver(onErrorJustReturn: ())
         )
     }
 }
 
-/*
- let postsQuery = MainPostQuery(
-     title: "",
-     content: "#후원",
-     content2: "",
-     content3: "",
-     product_id: ProductID.userProduct)
- 
-return NetworkManager.fetchNetwork(model: PostModel.self, router: .poster(.postWrite(query: postsQuery)))
- */
