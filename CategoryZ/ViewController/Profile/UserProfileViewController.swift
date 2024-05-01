@@ -33,9 +33,6 @@ final class UserProfileViewController: RxBaseViewController {
         $0.customView = button
     }
     
-    private
-    lazy var negativeSpacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-    
     
     private
     typealias DataSource = UICollectionViewDiffableDataSource<Section, AnyHashable>
@@ -106,6 +103,14 @@ final class UserProfileViewController: RxBaseViewController {
         )
         
         let output = viewModel.transform(input)
+        
+        // 후원기능을 켜져 있는 유저는 상단의 후원 버튼이 나오게 됩니다.
+        output.donateEnabledModel
+            .bind(with: self) { owner, models in
+                let bool = models.isEmpty
+                owner.donateButton.isHidden = bool
+            }
+            .disposed(by: disPoseBag)
         
         output.postReadMainModel
             .distinctUntilChanged()

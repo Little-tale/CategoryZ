@@ -26,6 +26,7 @@ final class UserProfileViewModel: RxViewModelType {
     struct Output {
         let networkError : Driver<NetworkError>
         let postReadMainModel: BehaviorRelay<[SNSDataModel]>
+        let donateEnabledModel: BehaviorRelay<[SNSDataModel]>
     }
     
     func transform(_ input: Input) -> Output {
@@ -42,6 +43,8 @@ final class UserProfileViewModel: RxViewModelType {
         let networkError = PublishSubject<NetworkError> ()
         // let outputProfile = PublishSubject<ProfileModel> ()
         let postReadMainModel = BehaviorRelay<[SNSDataModel]> (value: [])
+        
+        let donateEnabledModel = BehaviorRelay<[SNSDataModel]> (value: [])
         
         let combineRequest = Observable.combineLatest(input.inputProfileType, input.inputProducID)
         
@@ -82,6 +85,33 @@ final class UserProfileViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
+        input.inputProfileType
+            .filter { $0 != .me }
+            .map { type -> String in
+                switch type {
+                case .me:
+                    return ""
+                case .other(let otherUserId):
+                    return otherUserId
+                }
+            }
+            .flatMapLatest { otherUserId in
+                return NetworkManager.fetchNetwork(model: SNSMainModel.self, router: .poster(.userCasePostRead(
+                    userId: otherUserId,
+                    next: nil,
+                    limit: "1",
+                    productId: ProductID.userProduct))
+                )
+            }
+            .bind { result in
+                switch result {
+                case .success(let successPost):
+                    donateEnabledModel.accept(successPost.data)
+                case .failure(let error):
+                    networkError.onNext(error)
+                }
+            }
+            .disposed(by: disposeBag)
         
         let otherCase = input.inputProfileType
             .filter { $0 != .me }
@@ -141,7 +171,8 @@ final class UserProfileViewModel: RxViewModelType {
         return .init(
             networkError: networkError.asDriver(
                 onErrorDriveWith: .never()
-            ), postReadMainModel: postReadMainModel
+            ), postReadMainModel: postReadMainModel,
+            donateEnabledModel: donateEnabledModel
         )
     }
     

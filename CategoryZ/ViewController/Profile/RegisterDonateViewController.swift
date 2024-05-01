@@ -142,6 +142,7 @@ final class RegisterDonateViewController: RxBaseViewController {
         
         
     }
+    
     override func configureLayout() {
         titleText.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(20)
