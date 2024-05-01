@@ -17,6 +17,7 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
         case profileImage
         case name
         case phoneNumber
+        case registerDonate
         case deleteAccount
     }
     
@@ -35,6 +36,7 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
             SettingSection.profileImage,
             SettingSection.name,
             SettingSection.phoneNumber,
+            SettingSection.registerDonate,
             SettingSection.deleteAccount
         ])
         
@@ -83,6 +85,8 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
                 content.text = "전화번호 수정"
             case .deleteAccount:
                 content.text = "계정 삭제"
+            case .registerDonate:
+                content.text = "후원 등록 / 취소"
             }
             cell.contentConfiguration = content
             
@@ -121,7 +125,10 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
                         },
                         .destructive)
                   
-                
+                case .registerDonate:
+                    let vc = RegisterDonateViewController()
+                    vc.setModel(model)
+                    owner.navigationController?.pushViewController(vc, animated: true)
                 }
             }
             .disposed(by: disPoseBag)
@@ -143,5 +150,6 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
     
     override func navigationSetting() {
         navigationItem.title = "설정"
+        navigationController?.navigationBar.isTranslucent = true
     }
 }

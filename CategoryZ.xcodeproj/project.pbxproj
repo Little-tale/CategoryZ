@@ -71,6 +71,9 @@
 		7B87F0FC2BD3FE850006178F /* ProfileAndFollowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */; };
 		7B8CAEB42BD480D600347FAC /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */; };
 		7B9403192BE119D8004A1A8E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9403182BE119D8004A1A8E /* NetworkService.swift */; };
+		7B94031B2BE1D553004A1A8E /* RegisterDonateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94031A2BE1D553004A1A8E /* RegisterDonateViewController.swift */; };
+		7B94031E2BE1DCC2004A1A8E /* BetterSegmentedControl in Frameworks */ = {isa = PBXBuildFile; productRef = 7B94031D2BE1DCC2004A1A8E /* BetterSegmentedControl */; };
+		7B9403202BE1EB3E004A1A8E /* RegisterDonateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B94031F2BE1EB3E004A1A8E /* RegisterDonateViewModel.swift */; };
 		7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */; };
 		7BA0E0D32BCD72C3002F0516 /* PostRegViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */; };
 		7BA0E0D52BCD730C002F0516 /* ProductID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0D42BCD730C002F0516 /* ProductID.swift */; };
@@ -211,6 +214,8 @@
 		7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAndFollowView.swift; sourceTree = "<group>"; };
 		7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		7B9403182BE119D8004A1A8E /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		7B94031A2BE1D553004A1A8E /* RegisterDonateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterDonateViewController.swift; sourceTree = "<group>"; };
+		7B94031F2BE1EB3E004A1A8E /* RegisterDonateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterDonateViewModel.swift; sourceTree = "<group>"; };
 		7BA0E0CF2BCD7251002F0516 /* RxCameraImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCameraImageService.swift; sourceTree = "<group>"; };
 		7BA0E0D22BCD72C3002F0516 /* PostRegViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRegViewController.swift; sourceTree = "<group>"; };
 		7BA0E0D42BCD730C002F0516 /* ProductID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductID.swift; sourceTree = "<group>"; };
@@ -314,6 +319,7 @@
 				7B11DC882BC58CF20055D423 /* Alamofire in Frameworks */,
 				7B11DC922BC58D2F0055D423 /* Kingfisher in Frameworks */,
 				7B1EE4022BDE897A00F109EB /* SkeletonView in Frameworks */,
+				7B94031E2BE1DCC2004A1A8E /* BetterSegmentedControl in Frameworks */,
 				7B838E012BCFAE8C000F2E27 /* RxDataSources in Frameworks */,
 				7B838DF92BCFAE06000F2E27 /* RxReusableKit in Frameworks */,
 				7BCF4A6D2BC7C6E400BCE635 /* TextFieldEffects in Frameworks */,
@@ -335,6 +341,7 @@
 				7B1EE46F2BDFACBB00F109EB /* ProfilePostViewModel.swift */,
 				7B1EE4712BDFBB3A00F109EB /* ProfileCellViewModel.swift */,
 				7BC06FD32BE01A6400651529 /* DeleteUserViewModel.swift */,
+				7B94031F2BE1EB3E004A1A8E /* RegisterDonateViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -627,6 +634,7 @@
 				7BD1D8EB2BD6B70300B5521F /* NameModifyViewController.swift */,
 				7BD1D8EF2BD6C7AC00B5521F /* UserPhoneNumberModifyViewController.swift */,
 				7BC06FCF2BE0190F00651529 /* CheckUserDeleteViewController.swift */,
+				7B94031A2BE1D553004A1A8E /* RegisterDonateViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -953,6 +961,7 @@
 				7B838E002BCFAE8C000F2E27 /* RxDataSources */,
 				7B5E51392BDA873400918C53 /* Toast */,
 				7B1EE4012BDE897A00F109EB /* SkeletonView */,
+				7B94031D2BE1DCC2004A1A8E /* BetterSegmentedControl */,
 			);
 			productName = CategoryZ;
 			productReference = 7B11DC642BC58AD40055D423 /* CategoryZ.app */;
@@ -995,6 +1004,7 @@
 				7B838DFD2BCFAE8C000F2E27 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				7B5E51382BDA873400918C53 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				7B1EE4002BDE897A00F109EB /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				7B94031C2BE1DCC2004A1A8E /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 			);
 			productRefGroup = 7B11DC652BC58AD40055D423 /* Products */;
 			projectDirPath = "";
@@ -1065,6 +1075,7 @@
 				7B838E0E2BCFCBEA000F2E27 /* JHImage.swift in Sources */,
 				7BCF4A592BC6E20600BCE635 /* BaseButton.swift in Sources */,
 				7BCF4A712BC7D9A900BCE635 /* UserInfoRegViewController.swift in Sources */,
+				7B9403202BE1EB3E004A1A8E /* RegisterDonateViewModel.swift in Sources */,
 				7B1EE3FB2BDE4DF100F109EB /* SingleSNSViewController.swift in Sources */,
 				7BA0E0EA2BCD75F9002F0516 /* BlackPointButton.swift in Sources */,
 				7BC06FD22BE019B100651529 /* CheckedUserView.swift in Sources */,
@@ -1092,6 +1103,7 @@
 				7B0BB2F92BD4ACC800770A04 /* Int+.swift in Sources */,
 				7BCF4A612BC6E5BD00BCE635 /* SignUpButton.swift in Sources */,
 				7BD1D8F22BD6C87F00B5521F /* UserPhoneNumberModifyViewModel.swift in Sources */,
+				7B94031B2BE1D553004A1A8E /* RegisterDonateViewController.swift in Sources */,
 				7BCF4A3A2BC5AF4A00BCE635 /* RxBaseViewController.swift in Sources */,
 				7B0BB2F72BD4A24200770A04 /* UserProfileViewModel.swift in Sources */,
 				7B1EE3F72BDE417A00F109EB /* RxBaseCollectionViewCell.swift in Sources */,
@@ -1457,6 +1469,14 @@
 				minimumVersion = 5.0.2;
 			};
 		};
+		7B94031C2BE1DCC2004A1A8E /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gmarm/BetterSegmentedControl.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.1;
+			};
+		};
 		7BCF4A402BC688F100BCE635 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
@@ -1545,6 +1565,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B838DFD2BCFAE8C000F2E27 /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
+		};
+		7B94031D2BE1DCC2004A1A8E /* BetterSegmentedControl */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B94031C2BE1DCC2004A1A8E /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */;
+			productName = BetterSegmentedControl;
 		};
 		7BCF4A412BC688F100BCE635 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;

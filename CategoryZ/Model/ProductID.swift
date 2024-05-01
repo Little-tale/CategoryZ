@@ -13,6 +13,8 @@ enum ProductID: String, CaseIterable {
     case fashion = "CategoryZ_fashion"
     case pet = "CategoryZ_pet"
     
+    static let userProduct = "CategoryZ_UserDonate"
+    
     var identi: String {
         switch self {
         case .dailyRoutine:
@@ -52,3 +54,4 @@ enum ProductID: String, CaseIterable {
     }
     
 }
+

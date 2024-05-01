@@ -25,7 +25,7 @@ final class UserProfileViewModel: RxViewModelType {
     
     struct Output {
         let networkError : Driver<NetworkError>
-        let postReadMainModel: Driver<[SNSDataModel]>
+        let postReadMainModel: BehaviorRelay<[SNSDataModel]>
     }
     
     func transform(_ input: Input) -> Output {
@@ -141,7 +141,7 @@ final class UserProfileViewModel: RxViewModelType {
         return .init(
             networkError: networkError.asDriver(
                 onErrorDriveWith: .never()
-            ), postReadMainModel: postReadMainModel.asDriver()
+            ), postReadMainModel: postReadMainModel
         )
     }
     

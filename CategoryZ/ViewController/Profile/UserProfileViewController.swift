@@ -84,6 +84,8 @@ final class UserProfileViewController: RxBaseViewController {
     
     override func navigationSetting() {
         navigationItem.title = "프로필"
+        navigationController?.navigationBar.isTranslucent = false
+        tabBarController?.tabBar.isTranslucent = false
     }
     
     private
@@ -107,7 +109,7 @@ final class UserProfileViewController: RxBaseViewController {
         
         output.postReadMainModel
             .distinctUntilChanged()
-            .drive(with: self) {owner, models in
+            .bind(with: self) {owner, models in
                 currentCount = models.count
                 if models.isEmpty {
                     owner.applySnapshot(owner.profileType)
@@ -150,6 +152,33 @@ final class UserProfileViewController: RxBaseViewController {
             }
             .disposed(by: disPoseBag)
         
+        let selectedModel = PublishRelay<SNSDataModel> ()
+        
+        collectionView.rx.itemSelected
+            .filter({ $0.section == 1 })
+            .map({ indexPath in
+                let value = output.postReadMainModel.value
+                return (indexPath.item, value)
+            })
+            .map { item, models in
+                return(item: item, models: models)
+            }
+            .filter { $0.models.isEmpty == false }
+            .bind { result in
+                let models = result.models
+                let selected = models[result.item]
+                selectedModel.accept(selected)
+            }
+            .disposed(by: disPoseBag)
+            
+        
+        selectedModel
+            .bind(with: self) { owner, model in
+                let vc = SingleSNSViewController()
+                vc.setModel(model, me: true)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
     }
     
     override func configureHierarchy() {

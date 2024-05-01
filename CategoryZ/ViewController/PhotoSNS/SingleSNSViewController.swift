@@ -44,8 +44,12 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
         subscribe(SNSData)
     }
     
+    func setModel(_ SNSData: SNSDataModel, me: Bool){
+        subscribe(SNSData, me: true)
+    }
+    
     private
-    func subscribe(_ SNSData: SNSDataModel) {
+    func subscribe(_ SNSData: SNSDataModel, me: Bool? = nil) {
         
         let setDataBe = BehaviorRelay(value: SNSData)
         
