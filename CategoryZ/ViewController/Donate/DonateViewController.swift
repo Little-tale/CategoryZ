@@ -32,6 +32,8 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
     private
     func subscribe(_ userID : String) {
         
+        var currentIsUser = false
+        
         Observable.just(PriceModel.allCases)
             .bind(to: homeView.pricePicker.rx.itemTitles) { _, item in
                 return item.price
@@ -98,15 +100,25 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
         
         // 버튼을 누르면 본인인증을 하게 유도
         donateButtonTap
+            .filter({ _ in
+                currentIsUser == false
+            })
             .bind(with: self) { owner, _ in
                 let vc = CheckedUserViewController()
                 vc.checkUserDelegate = owner.viewModel
                 vc.modalPresentationStyle = .pageSheet
-
                 owner.navigationController?
                     .present(vc, animated: true)
             }
             .disposed(by: disPoseBag)
+        
+        donateButtonTap
+            .filter { _ in currentIsUser == true }
+            .bind(with: self) { owner, _ in
+                print("이때 결제 뷰")
+            }
+            .disposed(by: disPoseBag)
+        
     }
 }
 
