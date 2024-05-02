@@ -174,6 +174,9 @@
 		7BDF40C52BE37886005274F9 /* DonateListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C42BE37886005274F9 /* DonateListCell.swift */; };
 		7BDF40C72BE37E8D005274F9 /* DonateListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C62BE37E8D005274F9 /* DonateListViewModel.swift */; };
 		7BDF40C92BE3846E005274F9 /* DonateListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C82BE3846E005274F9 /* DonateListCellViewModel.swift */; };
+		7BDF40CB2BE3A9FB005274F9 /* RxCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40CA2BE3A9FB005274F9 /* RxCollectionView.swift */; };
+		7BDF40CD2BE3AA94005274F9 /* SeachHashTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40CC2BE3AA94005274F9 /* SeachHashTagViewController.swift */; };
+		7BDF40D02BE3B2E2005274F9 /* SearchHashTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40CF2BE3B2E2005274F9 /* SearchHashTagViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -329,6 +332,9 @@
 		7BDF40C42BE37886005274F9 /* DonateListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListCell.swift; sourceTree = "<group>"; };
 		7BDF40C62BE37E8D005274F9 /* DonateListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListViewModel.swift; sourceTree = "<group>"; };
 		7BDF40C82BE3846E005274F9 /* DonateListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListCellViewModel.swift; sourceTree = "<group>"; };
+		7BDF40CA2BE3A9FB005274F9 /* RxCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionView.swift; sourceTree = "<group>"; };
+		7BDF40CC2BE3AA94005274F9 /* SeachHashTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeachHashTagViewController.swift; sourceTree = "<group>"; };
+		7BDF40CF2BE3B2E2005274F9 /* SearchHashTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHashTagViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -458,6 +464,7 @@
 		7B11DC7D2BC58B440055D423 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7BDF40CE2BE3B2D3005274F9 /* Search */,
 				7B94033A2BE260ED004A1A8E /* Donate */,
 				7B1EE3F12BDE11CE00F109EB /* Like */,
 				7B5E51352BD96BB500918C53 /* Comment */,
@@ -623,6 +630,7 @@
 				7BD1D8C02BD53BBD00B5521F /* MorePageViewController.swift */,
 				7B1EE3FA2BDE4DF100F109EB /* SingleSNSViewController.swift */,
 				7B1EE3FE2BDE57E100F109EB /* SingleViewRx.swift */,
+				7BDF40CC2BE3AA94005274F9 /* SeachHashTagViewController.swift */,
 			);
 			path = PhotoSNS;
 			sourceTree = "<group>";
@@ -632,6 +640,7 @@
 			children = (
 				7B838E032BCFAEDF000F2E27 /* SNSHeaderWithCollectionVIew.swift */,
 				7B5EF9F72BD4DFC000F022CB /* ProfileHeaderView.swift */,
+				7BDF40CA2BE3A9FB005274F9 /* RxCollectionView.swift */,
 			);
 			path = CollectionView;
 			sourceTree = "<group>";
@@ -1005,6 +1014,14 @@
 			path = FollowerFlowing;
 			sourceTree = "<group>";
 		};
+		7BDF40CE2BE3B2D3005274F9 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				7BDF40CF2BE3B2E2005274F9 /* SearchHashTagViewModel.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1135,6 +1152,7 @@
 				7BD1D9132BD7998800B5521F /* FollowerAndFolowingViewController.swift in Sources */,
 				7BA0E0D82BCD736C002F0516 /* PostRegView.swift in Sources */,
 				7B1EE3ED2BDD45B300F109EB /* CustomPinterestLayout.swift in Sources */,
+				7BDF40D02BE3B2E2005274F9 /* SearchHashTagViewModel.swift in Sources */,
 				7B5E51342BD9699400918C53 /* ExUILabel+.swift in Sources */,
 				7BCF4A7F2BC9281500BCE635 /* NetworkRouter.swift in Sources */,
 				7BD1D9182BD7B42A00B5521F /* FollowerFollowingViewModel.swift in Sources */,
@@ -1197,6 +1215,7 @@
 				7BC51B5E2BD0FFD200E5BF6C /* DateManager.swift in Sources */,
 				7BCF4A442BC6B3A300BCE635 /* Notification.swift in Sources */,
 				7B1EE4702BDFACBB00F109EB /* ProfilePostViewModel.swift in Sources */,
+				7BDF40CD2BE3AA94005274F9 /* SeachHashTagViewController.swift in Sources */,
 				7BCF4A9D2BCBE68400BCE635 /* LoginView.swift in Sources */,
 				7BC51B4B2BD019D600E5BF6C /* CursurModel.swift in Sources */,
 				7B5E51372BD96BC100918C53 /* CommentViewModel.swift in Sources */,
@@ -1256,6 +1275,7 @@
 				7BCF4A972BCBB6C900BCE635 /* ProfileRouter.swift in Sources */,
 				7BDF40C92BE3846E005274F9 /* DonateListCellViewModel.swift in Sources */,
 				7B838DFC2BCFAE69000F2E27 /* PhotoSNSViewController.swift in Sources */,
+				7BDF40CB2BE3A9FB005274F9 /* RxCollectionView.swift in Sources */,
 				7B5E51302BD91BD700918C53 /* CommentTextView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

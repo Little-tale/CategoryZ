@@ -204,3 +204,13 @@ extension UIViewController {
         return window.screen
     }
 }
+
+
+extension UIViewController {
+    ///메모리 주소 확인해 드립니다 단 클래스
+    func printMemoryAddress<T: AnyObject>(of object: T, addMesage: String) {
+        let address = Unmanaged.passUnretained(object).toOpaque()
+        print("주소 \(addMesage): \(address)")
+    }
+
+}

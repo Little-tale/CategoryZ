@@ -20,6 +20,9 @@ import RxReusableKit
 
 final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     
+    private
+    let searchViewController = SeachHashTagViewController()
+    
     typealias RxHeaderDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String,ProductID>>
     
     typealias SNSSectionModel = AnimatableSectionModel<String, SNSDataModel>
@@ -278,8 +281,6 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 owner.navigationController?.present(nvc, animated: true)
             }
             .disposed(by: disPoseBag)
-        
-        
     }
     
     override func navigationSetting() {
@@ -287,16 +288,24 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         imageView.contentMode = .scaleAspectFit
         imageView.image = JHImage.appLogoImage
         navigationItem.titleView = imageView
+         
+        let searchController = UISearchController(searchResultsController: searchViewController)
+        
+        searchController.searchBar.placeholder = "Search For HashTag"
+        
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        self.navigationItem.searchController = searchController
+        
+        self.navigationItem.hidesSearchBarWhenScrolling = true
+        
+        
+        searchController.searchBar.rx.text.orEmpty
+            .bind(with: self) { owner, text in
+                owner.searchViewController.getText(text)
+            }
+            .disposed(by: disPoseBag)
     }
-}
-
-extension UIViewController {
-    
-    func printMemoryAddress<T: AnyObject>(of object: T, addMesage: String) {
-        let address = Unmanaged.passUnretained(object).toOpaque()
-        print("주소 \(addMesage): \(address)")
-    }
-
 }
 
 
