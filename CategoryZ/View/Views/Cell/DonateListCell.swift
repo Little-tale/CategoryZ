@@ -32,7 +32,7 @@ final class DonateListCell: RxBaseTableViewCell {
     private
     let contentLabel = UILabel().then {
         $0.numberOfLines = 0
-        $0.font = JHFont.UIKit.re14
+        $0.font = JHFont.UIKit.bo16
         $0.textAlignment = .left
     }
     
@@ -71,14 +71,14 @@ final class DonateListCell: RxBaseTableViewCell {
     
     override func configureLayout() {
       
-        
         productName.snp.makeConstraints { make in
             make.top.equalTo(contentView.safeAreaLayoutGuide).offset(4)
             make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(12)
         }
+        
         DonatedDate.snp.makeConstraints { make in
-            make.leading.equalTo(productName.snp.trailing).offset(8)
-            make.centerY.equalTo(productName)
+            make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(8)
+            make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(4)
         }
         
         contentLabel.snp.makeConstraints { make in

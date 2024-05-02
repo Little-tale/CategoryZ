@@ -11,7 +11,10 @@ import Then
 
 final class DonateListView: RxBaseView {
     
-    let tableView = UITableView(frame: .zero)
+    let tableView = UITableView(frame: .zero).then { $0.rowHeight = UITableView.automaticDimension
+        $0.estimatedRowHeight = 100
+    }
+    
     
     let emaptyImageView = UIImageView(frame: .zero).then {
         $0.image = JHImage.emptyForPaymentsList
