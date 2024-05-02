@@ -172,6 +172,7 @@
 		7BDF40C12BE37752005274F9 /* DonateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C02BE37752005274F9 /* DonateListViewController.swift */; };
 		7BDF40C32BE3775D005274F9 /* DonateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C22BE3775D005274F9 /* DonateListView.swift */; };
 		7BDF40C52BE37886005274F9 /* DonateListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C42BE37886005274F9 /* DonateListCell.swift */; };
+		7BDF40C72BE37E8D005274F9 /* DonateListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C62BE37E8D005274F9 /* DonateListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -325,6 +326,7 @@
 		7BDF40C02BE37752005274F9 /* DonateListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListViewController.swift; sourceTree = "<group>"; };
 		7BDF40C22BE3775D005274F9 /* DonateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListView.swift; sourceTree = "<group>"; };
 		7BDF40C42BE37886005274F9 /* DonateListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListCell.swift; sourceTree = "<group>"; };
+		7BDF40C62BE37E8D005274F9 /* DonateListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -704,6 +706,7 @@
 			isa = PBXGroup;
 			children = (
 				7B94033B2BE260FC004A1A8E /* DonateViewModel.swift */,
+				7BDF40C62BE37E8D005274F9 /* DonateListViewModel.swift */,
 			);
 			path = Donate;
 			sourceTree = "<group>";
@@ -1182,6 +1185,7 @@
 				7BD1D8F22BD6C87F00B5521F /* UserPhoneNumberModifyViewModel.swift in Sources */,
 				7B94031B2BE1D553004A1A8E /* RegisterDonateViewController.swift in Sources */,
 				7BCC9D832BE289D300A6CEC3 /* CheckedUserViewController.swift in Sources */,
+				7BDF40C72BE37E8D005274F9 /* DonateListViewModel.swift in Sources */,
 				7BCF4A3A2BC5AF4A00BCE635 /* RxBaseViewController.swift in Sources */,
 				7B0BB2F72BD4A24200770A04 /* UserProfileViewModel.swift in Sources */,
 				7B1EE3F72BDE417A00F109EB /* RxBaseCollectionViewCell.swift in Sources */,

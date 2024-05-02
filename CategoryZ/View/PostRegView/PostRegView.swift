@@ -103,17 +103,17 @@ final class PostRegView: RxBaseView {
     override func register() {
         categoryCollectionView
             .register(CategoryReusableCell.self,
-                      forCellWithReuseIdentifier: CategoryReusableCell.identi
+                      forCellWithReuseIdentifier: CategoryReusableCell.reusableIdenti
             )
         
         imageCollectionView
             .register(OnlyImageCollectionViewCell.self,
-                      forCellWithReuseIdentifier: OnlyImageCollectionViewCell.identi
+                      forCellWithReuseIdentifier: OnlyImageCollectionViewCell.reusableIdenti
             )
         
         imageCollectionView
             .register(AddCollectionViewCell.self,
-                      forCellWithReuseIdentifier: AddCollectionViewCell.identi
+                      forCellWithReuseIdentifier: AddCollectionViewCell.reusableIdenti
             )
     }
     

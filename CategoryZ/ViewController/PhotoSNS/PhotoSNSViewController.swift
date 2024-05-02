@@ -105,7 +105,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                         print("RxTableViewSectionedAnimatedDataSource Error")
                         return .init()
                     }
-                    guard let cell = tableView.dequeueReusableCell(withIdentifier: SNSTableViewCell.identi, for: indexPath) as? SNSTableViewCell else {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: SNSTableViewCell.reusableIdenti, for: indexPath) as? SNSTableViewCell else {
                         return .init()
                     }
                     
@@ -123,7 +123,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         
         // View
         let hearderDataSource = RxHeaderDataSource { dataSource, collectionView, IndexPath, model in
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryReusableCell.identi, for: IndexPath) as? CategoryReusableCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryReusableCell.reusableIdenti, for: IndexPath) as? CategoryReusableCell else {
                 return .init()
             }
             let isSelected = selectedProductID.value.identi == model.identi

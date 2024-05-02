@@ -61,11 +61,11 @@ final class UserProfileViewController: RxBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.register(ProfileCell.self, forCellWithReuseIdentifier: ProfileCell.identi)
+        collectionView.register(ProfileCell.self, forCellWithReuseIdentifier: ProfileCell.reusableIdenti)
         
-        collectionView.register(ProfileHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProfileHeaderView.identi)
+        collectionView.register(ProfileHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProfileHeaderView.reusableIdenti)
         
-        collectionView.register(ProfilePostCollectionViewCell.self, forCellWithReuseIdentifier: ProfilePostCollectionViewCell.identi)
+        collectionView.register(ProfilePostCollectionViewCell.self, forCellWithReuseIdentifier: ProfilePostCollectionViewCell.reusableIdenti)
         
         collectionView.collectionViewLayout = createLayout()
         
@@ -249,7 +249,7 @@ extension UserProfileViewController {
                 let section = Section(rawValue: indexPath.section)
                 switch section {
                 case .profile:
-                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCell.identi, for: indexPath) as? ProfileCell else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCell.reusableIdenti, for: indexPath) as? ProfileCell else {
                         
                         return .init()
                     }
@@ -262,7 +262,7 @@ extension UserProfileViewController {
                     
                     return cell
                 case .poster:
-                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfilePostCollectionViewCell.identi, for: indexPath) as? ProfilePostCollectionViewCell else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfilePostCollectionViewCell.reusableIdenti, for: indexPath) as? ProfilePostCollectionViewCell else {
                         
                         return .init()
                     }
@@ -284,7 +284,7 @@ extension UserProfileViewController {
             case .poster:
                 guard let header = collectionView.dequeueReusableSupplementaryView(
                     ofKind: kind,
-                    withReuseIdentifier: ProfileHeaderView.identi,
+                    withReuseIdentifier: ProfileHeaderView.reusableIdenti,
                     for: indexPath) as? ProfileHeaderView else {
                     
                     return nil

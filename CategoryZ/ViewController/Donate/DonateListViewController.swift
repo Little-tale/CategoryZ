@@ -11,9 +11,12 @@ import RxCocoa
 
 final class DonateListViewController: RxHomeBaseViewController<DonateListView> {
     
+    private
+    let viewModel = DonateListViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
     }
     

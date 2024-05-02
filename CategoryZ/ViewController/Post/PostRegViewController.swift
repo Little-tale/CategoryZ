@@ -109,14 +109,14 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
         addORImageDataDriver
             .drive(homeView.imageCollectionView.rx.items) { collectionView, row, item in
                 if let item {
-                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnlyImageCollectionViewCell.identi, for: IndexPath(row: row, section: 0)) as? OnlyImageCollectionViewCell else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OnlyImageCollectionViewCell.reusableIdenti, for: IndexPath(row: row, section: 0)) as? OnlyImageCollectionViewCell else {
                         print("OnlyImageCollectionViewCell Error")
                         return UICollectionViewCell.init()
                     }
                     cell.imageSetting(item)
                     return cell
                 } else {
-                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddCollectionViewCell.identi, for: IndexPath(row: row, section: 0)) as? AddCollectionViewCell else {
+                    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddCollectionViewCell.reusableIdenti, for: IndexPath(row: row, section: 0)) as? AddCollectionViewCell else {
                         print("AddCollectionViewCell Error")
                         return UICollectionViewCell.init()
                     }
@@ -206,7 +206,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             .disposed(by: disPoseBag)
         
         // 카테고리 뿌리기
-        category.bind(to: homeView.categoryCollectionView.rx.items(cellIdentifier: CategoryReusableCell.identi, cellType: CategoryReusableCell.self)) {[weak self] row , item, cell in
+        category.bind(to: homeView.categoryCollectionView.rx.items(cellIdentifier: CategoryReusableCell.reusableIdenti, cellType: CategoryReusableCell.self)) {[weak self] row , item, cell in
             guard let self else { return }
             
             cell.setSection(item)

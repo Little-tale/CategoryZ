@@ -56,7 +56,7 @@ final class ProfileHeaderView: UICollectionReusableView {
         let selectedProduct = PublishRelay<ProductID> ()
         
         behiber
-        .bind(to: collectionView.rx.items(cellIdentifier: CategoryReusableCell.identi, cellType: CategoryReusableCell.self)) { [weak self] row, item ,cell in
+        .bind(to: collectionView.rx.items(cellIdentifier: CategoryReusableCell.reusableIdenti, cellType: CategoryReusableCell.self)) { [weak self] row, item ,cell in
             cell.setSection(item)
             cell.isSelected(self?.selectedProduct == item)
         }
@@ -93,6 +93,6 @@ final class ProfileHeaderView: UICollectionReusableView {
     
     private
      func register() {
-        collectionView.register(CategoryReusableCell.self, forCellWithReuseIdentifier: CategoryReusableCell.identi)
+        collectionView.register(CategoryReusableCell.self, forCellWithReuseIdentifier: CategoryReusableCell.reusableIdenti)
     }
 }

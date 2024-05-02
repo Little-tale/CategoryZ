@@ -13,7 +13,7 @@ import Kingfisher
 
 final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettingView> {
 
-    enum SettingSection {
+    enum SettingSection: Int, CaseIterable {
         case profileImage
         case name
         case phoneNumber
@@ -33,13 +33,7 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
         
         var emptyModel = ProfileModel()
         
-        let section = Observable.just([
-            SettingSection.profileImage,
-            SettingSection.name,
-            SettingSection.phoneNumber,
-            SettingSection.registerDonate,
-            SettingSection.deleteAccount
-        ])
+        let section = Observable.just(SettingSection.allCases)
         
         let tryAccountDelete = PublishRelay<Void> ()
         
@@ -74,7 +68,7 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
             }
             .disposed(by: disPoseBag)
         
-        section.bind(to: homeView.collectionView.rx.items(cellIdentifier: UICollectionViewListCell.identi)) {row, item, cell in
+        section.bind(to: homeView.collectionView.rx.items(cellIdentifier: UICollectionViewListCell.reusableIdenti)) {row, item, cell in
             var content = UIListContentConfiguration.valueCell()
             
             switch item {

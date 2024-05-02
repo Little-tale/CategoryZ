@@ -12,7 +12,7 @@ protocol ReusableIdentifier {
 }
 
 extension ReusableIdentifier {
-    static var identi: String {
+    static var reusableIdenti: String {
         return String(describing: self)
     }
 }

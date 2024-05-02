@@ -10,6 +10,7 @@ import Alamofire
 
 enum PaymentsRouter {
     case validation(paymentsQeury: PaymentsModel)
+    case paymentsList
 }
 
 extension PaymentsRouter: TargetType {
@@ -18,6 +19,8 @@ extension PaymentsRouter: TargetType {
         switch self {
         case .validation:
             return .post
+        case .paymentsList:
+            return .get
         }
     }
     
@@ -25,12 +28,14 @@ extension PaymentsRouter: TargetType {
         switch self {
         case .validation:
             return PathRouter.payments.path + "/validation"
+        case .paymentsList:
+            return PathRouter.payments.path + "/me"
         }
     }
     
     var parametters: Alamofire.Parameters? {
         switch self {
-        case .validation:
+        case .validation, .paymentsList:
             return nil
         }
     }
@@ -44,19 +49,23 @@ extension PaymentsRouter: TargetType {
                 NetHTTPHeader.sesacKey.rawValue: APIKey.sesacKey.rawValue
             ]
         
+        case .paymentsList:
+            return [
+                NetHTTPHeader.sesacKey.rawValue: APIKey.sesacKey.rawValue
+            ]
         }
     }
     
     var queryItems: [URLQueryItem]? {
         switch self {
-        case .validation:
+        case .validation, .paymentsList:
             return nil
         }
     }
     
     var version: String {
         switch self {
-        case .validation:
+        case .validation, .paymentsList:
             return "v1/"
         }
     }
@@ -65,6 +74,8 @@ extension PaymentsRouter: TargetType {
         switch self {
         case .validation(let paymentsQeury):
             return NetworkRouter.jsEncoding(paymentsQeury)
+        case .paymentsList:
+            return nil
         }
     }
     
@@ -72,6 +83,8 @@ extension PaymentsRouter: TargetType {
         switch self {
         case .validation:
             return .paymentsValidError(statusCode: errorCode, description: description)
+        case .paymentsList:
+            return .usurWithDrawError(statusCode: errorCode, description: description)
         }
     }
 }

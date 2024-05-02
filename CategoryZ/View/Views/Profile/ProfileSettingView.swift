@@ -51,7 +51,7 @@ final class ProfileSettingView: RxBaseView {
     }
     
     override func register() {
-        collectionView.register(UICollectionViewListCell.self, forCellWithReuseIdentifier: UICollectionViewListCell.identi)
+        collectionView.register(UICollectionViewListCell.self, forCellWithReuseIdentifier: UICollectionViewListCell.reusableIdenti)
     }
 }
 

@@ -78,7 +78,7 @@ final class FollowerAndFolowingViewController: RxHomeBaseViewController<Follower
             }
             .disposed(by: disPoseBag)
         
-        output.outputOtherUser.drive(homeView.tableView.rx.items(cellIdentifier: FollowerAndFollwingTableViewCell.identi, cellType: FollowerAndFollwingTableViewCell.self)) { row, item, cell in
+        output.outputOtherUser.drive(homeView.tableView.rx.items(cellIdentifier: FollowerAndFollwingTableViewCell.reusableIdenti, cellType: FollowerAndFollwingTableViewCell.self)) { row, item, cell in
             print("셀입장에서",item.isFollow)
             cell.errorCatch = self
             cell.setModel(item, myID)

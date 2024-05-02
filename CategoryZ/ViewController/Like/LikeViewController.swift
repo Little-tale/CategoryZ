@@ -16,7 +16,7 @@ final class LikeViewController: RxBaseViewController {
     
     private
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).then {
-        $0.register(PinterestCell.self, forCellWithReuseIdentifier: PinterestCell.identi)
+        $0.register(PinterestCell.self, forCellWithReuseIdentifier: PinterestCell.reusableIdenti)
     }
     
     private
@@ -63,7 +63,7 @@ final class LikeViewController: RxBaseViewController {
     }
     private
     func collectionViewRxSetting(_ models: BehaviorRelay<[SNSDataModel]>) {
-        models.bind(to: collectionView.rx.items(cellIdentifier: PinterestCell.identi, cellType: PinterestCell.self)) {
+        models.bind(to: collectionView.rx.items(cellIdentifier: PinterestCell.reusableIdenti, cellType: PinterestCell.self)) {
             row, item, cell in
             cell.setModel(item)
             cell.layer.cornerRadius = 12

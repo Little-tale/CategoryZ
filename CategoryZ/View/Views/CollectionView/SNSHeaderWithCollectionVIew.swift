@@ -45,6 +45,6 @@ final class SNSHeaderWithCollectionView: BaseView {
     }
     
     override func register() {
-        collectionView.register(CategoryReusableCell.self, forCellWithReuseIdentifier: CategoryReusableCell.identi)
+        collectionView.register(CategoryReusableCell.self, forCellWithReuseIdentifier: CategoryReusableCell.reusableIdenti)
     }
 }

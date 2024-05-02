@@ -24,6 +24,6 @@ final class FollowerAndFollowingView: RxBaseView {
     }
     
     override func register() {
-        tableView.register(FollowerAndFollwingTableViewCell.self, forCellReuseIdentifier: FollowerAndFollwingTableViewCell.identi)
+        tableView.register(FollowerAndFollwingTableViewCell.self, forCellReuseIdentifier: FollowerAndFollwingTableViewCell.reusableIdenti)
     }
 }

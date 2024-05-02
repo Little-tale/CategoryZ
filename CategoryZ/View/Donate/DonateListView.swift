@@ -20,4 +20,8 @@ final class DonateListView: RxBaseView {
             make.edges.equalTo(safeAreaLayoutGuide)
         }
     }
+    
+    override func register() {
+        tableView.register(DonateListCell.self, forCellReuseIdentifier: DonateListCell.reusableIdenti)
+    }
 }

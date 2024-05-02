@@ -45,7 +45,7 @@ final class PhotoSNSView: RxBaseView {
     }
     
     override func register() {
-        tableView.register(SNSTableViewCell.self, forCellReuseIdentifier: SNSTableViewCell.identi)
+        tableView.register(SNSTableViewCell.self, forCellReuseIdentifier: SNSTableViewCell.reusableIdenti)
     }
     
     override func designView() {

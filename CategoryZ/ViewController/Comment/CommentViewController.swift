@@ -24,7 +24,7 @@ final class CommentViewController: RxBaseViewController {
         $0.bounces = true
         $0.showsVerticalScrollIndicator = true
         $0.contentInset = .zero
-        $0.register(CommentTableViewCell.self, forCellReuseIdentifier: CommentTableViewCell.identi)
+        $0.register(CommentTableViewCell.self, forCellReuseIdentifier: CommentTableViewCell.reusableIdenti)
         $0.keyboardDismissMode = .onDragWithAccessory
     }
     
@@ -160,7 +160,7 @@ extension CommentViewController {
     ) {
         
         let dataSourceRx = DataSource { dataSource, tableView, indexPath, item in
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentTableViewCell.identi) as? CommentTableViewCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: CommentTableViewCell.reusableIdenti) as? CommentTableViewCell else {
                 print("셀 이닛 문제")
                 return .init()
             }
