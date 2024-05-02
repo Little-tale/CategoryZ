@@ -13,9 +13,11 @@ final class SearchHashTagViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
     
+    let behaiviorProductID = BehaviorRelay<ProductID> (value: .dailyRoutine)
+    
     struct Input {
         let behaiviorText: BehaviorRelay<String>
-        let behaiviorProductID: BehaviorRelay<ProductID>
+
     }
     
     struct Output {
@@ -30,15 +32,20 @@ final class SearchHashTagViewModel: RxViewModelType {
         
         let outputError = PublishRelay<NetworkError> ()
         
-        input.behaiviorText
-            .debounce(.seconds(1), scheduler: MainScheduler.instance)
-            .map({ text in
+        let combineDebounce = Observable.combineLatest(
+            input.behaiviorText.debounce(.seconds(1), scheduler: MainScheduler.instance),
+            behaiviorProductID
+        )
+        
+        combineDebounce
+            .map({ models in
                 next = nil
-                return text
+                return models
             })
-            .flatMapLatest { ifTag in
-                print(ifTag)
-                return NetworkManager.fetchNetwork(model: SNSMainModel.self, router: .poster(.findHashTag(next: next, limit: "30", productId: input.behaiviorProductID.value.identi, hashTag: ifTag)))
+            .withUnretained(self)
+            .flatMapLatest { owner, ifTag in
+                
+                return NetworkManager.fetchNetwork(model: SNSMainModel.self, router: .poster(.findHashTag(next: next, limit: "30", productId: ifTag.1.identi, hashTag: ifTag.0 )))
             }
             .bind { result in
                 switch result {
@@ -58,4 +65,10 @@ final class SearchHashTagViewModel: RxViewModelType {
         )
     }
     
+}
+
+extension SearchHashTagViewModel: SelectedProductId {
+    func selected(productID: ProductID) {
+        behaiviorProductID.accept(productID)
+    }
 }

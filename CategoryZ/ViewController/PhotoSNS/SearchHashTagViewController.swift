@@ -48,11 +48,9 @@ final class SearchHashTagViewController: RxHomeBaseViewController<RxCollectionVi
     func subscribe(_ text: String) {
         
         let behaiviorText = BehaviorRelay(value: text)
-        let behaiviorProductId = BehaviorRelay(value: ProductID.dailyRoutine)
         
         let input = SearchHashTagViewModel.Input(
-            behaiviorText: behaiviorText,
-            behaiviorProductID: behaiviorProductId
+            behaiviorText: behaiviorText
         )
         
         let output = viewModel.transform(input)
@@ -98,12 +96,11 @@ extension SearchHashTagViewController {
                     return .init()
                 }
                 cell.setModel(item.files)
-                cell.backgroundColor = .red
                 return cell
             }
         )
         
-        dataSource?.supplementaryViewProvider = {
+        dataSource?.supplementaryViewProvider = { [unowned self]
             (collectionView, kind, indexPath) -> UICollectionReusableView? in
             
             guard kind == UICollectionView.elementKindSectionHeader else { return nil }
@@ -114,7 +111,9 @@ extension SearchHashTagViewController {
                 for: indexPath) as? ProfileHeaderView else {
                 return nil
             }
+            header.selectedProductDelegate = viewModel
             return header
         }
     }
 }
+

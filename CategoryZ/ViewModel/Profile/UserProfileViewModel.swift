@@ -131,7 +131,6 @@ final class UserProfileViewModel: RxViewModelType {
             
         needMoreTrigger
             .filter { _ in
-                print (nextCursor)
                 return (nextCursor != "0" && nextCursor != nil)
             }
             .map({ _ in

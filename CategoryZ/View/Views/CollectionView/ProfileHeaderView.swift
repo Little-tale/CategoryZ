@@ -11,7 +11,7 @@ import Then
 import RxSwift
 import RxCocoa
 
-protocol SelectedProductId: NSObject {
+protocol SelectedProductId: AnyObject {
     func selected(productID: ProductID)
 }
 

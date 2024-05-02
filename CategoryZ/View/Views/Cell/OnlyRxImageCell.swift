@@ -14,7 +14,11 @@ import Then
 final class OnlyRxImageCollectionViewCell: RxBaseCollectionViewCell {
     
     private
-    let backgoundImage = UIImageView()
+    let backgoundImage = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
+    }
+    
     private
     let moreImage = UIImageView().then {
         $0.image = JHImage.morePostImage
