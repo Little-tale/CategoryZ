@@ -168,6 +168,7 @@
 		7BD1D9152BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9142BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift */; };
 		7BD1D9182BD7B42A00B5521F /* FollowerFollowingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9172BD7B42A00B5521F /* FollowerFollowingViewModel.swift */; };
 		7BD1D91A2BD8011900B5521F /* FollowerAndFollwingTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9192BD8011800B5521F /* FollowerAndFollwingTableViewCellViewModel.swift */; };
+		7BD421A52BE3E8E00005562F /* OnlyRxImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD421A42BE3E8E00005562F /* OnlyRxImageCell.swift */; };
 		7BDF40BF2BE3752A005274F9 /* PaymentsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40BE2BE3752A005274F9 /* PaymentsListModel.swift */; };
 		7BDF40C12BE37752005274F9 /* DonateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C02BE37752005274F9 /* DonateListViewController.swift */; };
 		7BDF40C32BE3775D005274F9 /* DonateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C22BE3775D005274F9 /* DonateListView.swift */; };
@@ -177,7 +178,6 @@
 		7BDF40CB2BE3A9FB005274F9 /* RxCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40CA2BE3A9FB005274F9 /* RxCollectionView.swift */; };
 		7BDF40CD2BE3AA94005274F9 /* SearchHashTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40CC2BE3AA94005274F9 /* SearchHashTagViewController.swift */; };
 		7BDF40D02BE3B2E2005274F9 /* SearchHashTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40CF2BE3B2E2005274F9 /* SearchHashTagViewModel.swift */; };
-		7BDF40D42BE3C3BC005274F9 /* OnlyRxImageCollectionViewCell.Swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40D32BE3C3BC005274F9 /* OnlyRxImageCollectionViewCell.Swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -327,6 +327,7 @@
 		7BD1D9142BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerAndFollwingTableViewCell.swift; sourceTree = "<group>"; };
 		7BD1D9172BD7B42A00B5521F /* FollowerFollowingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerFollowingViewModel.swift; sourceTree = "<group>"; };
 		7BD1D9192BD8011800B5521F /* FollowerAndFollwingTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerAndFollwingTableViewCellViewModel.swift; sourceTree = "<group>"; };
+		7BD421A42BE3E8E00005562F /* OnlyRxImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlyRxImageCell.swift; sourceTree = "<group>"; };
 		7BDF40BE2BE3752A005274F9 /* PaymentsListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsListModel.swift; sourceTree = "<group>"; };
 		7BDF40C02BE37752005274F9 /* DonateListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListViewController.swift; sourceTree = "<group>"; };
 		7BDF40C22BE3775D005274F9 /* DonateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListView.swift; sourceTree = "<group>"; };
@@ -336,7 +337,6 @@
 		7BDF40CA2BE3A9FB005274F9 /* RxCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionView.swift; sourceTree = "<group>"; };
 		7BDF40CC2BE3AA94005274F9 /* SearchHashTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHashTagViewController.swift; sourceTree = "<group>"; };
 		7BDF40CF2BE3B2E2005274F9 /* SearchHashTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHashTagViewModel.swift; sourceTree = "<group>"; };
-		7BDF40D32BE3C3BC005274F9 /* OnlyRxImageCollectionViewCell.Swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlyRxImageCollectionViewCell.Swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -769,7 +769,7 @@
 				7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */,
 				7B1EE3F42BDE2A3700F109EB /* PinterestCell.swift */,
 				7BDF40C42BE37886005274F9 /* DonateListCell.swift */,
-				7BDF40D32BE3C3BC005274F9 /* OnlyRxImageCollectionViewCell.Swift */,
+				7BD421A42BE3E8E00005562F /* OnlyRxImageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1168,6 +1168,7 @@
 				7B1EE3F32BDE11DC00F109EB /* LikeViewModel.swift in Sources */,
 				7BCF4A542BC6E0ED00BCE635 /* GetStartView.swift in Sources */,
 				7BCC9D872BE29DCB00A6CEC3 /* PaymentsModel.swift in Sources */,
+				7BD421A52BE3E8E00005562F /* OnlyRxImageCell.swift in Sources */,
 				7BCF4A872BC947DE00BCE635 /* MulipartTargetType.swift in Sources */,
 				7B87F0F82BD3FE2F0006178F /* UserProfileView.swift in Sources */,
 				7BC51B462BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift in Sources */,
@@ -1222,7 +1223,6 @@
 				7BCF4A9D2BCBE68400BCE635 /* LoginView.swift in Sources */,
 				7BC51B4B2BD019D600E5BF6C /* CursurModel.swift in Sources */,
 				7B5E51372BD96BC100918C53 /* CommentViewModel.swift in Sources */,
-				7BDF40D42BE3C3BC005274F9 /* OnlyRxImageCollectionViewCell.Swift in Sources */,
 				7BD1D9152BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift in Sources */,
 				7BCF4A2F2BC5A65E00BCE635 /* ViewModelType.swift in Sources */,
 				7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */,

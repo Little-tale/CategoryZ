@@ -49,7 +49,7 @@ enum ProductID: String, CaseIterable {
     }
     
     var index: Int {
-        print(ProductID.allCases.firstIndex(of: self))
+      
         return ProductID.allCases.firstIndex(of: self) ?? 0
     }
     

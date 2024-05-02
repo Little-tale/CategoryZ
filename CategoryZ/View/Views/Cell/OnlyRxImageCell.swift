@@ -1,8 +1,8 @@
 //
-//  RxOnlyImageCell.swift
+//  OnlyRxImageCell.swift
 //  CategoryZ
 //
-//  Created by Jae hyung Kim on 5/2/24.
+//  Created by Jae hyung Kim on 5/3/24.
 //
 
 import UIKit
@@ -16,6 +16,7 @@ final class OnlyRxImageCollectionViewCell: RxBaseCollectionViewCell {
     
     override func configureHierarchy() {
         contentView.addSubview(backgoundImage)
+        
     }
     override func configureLayout() {
         backgoundImage.snp.makeConstraints { make in

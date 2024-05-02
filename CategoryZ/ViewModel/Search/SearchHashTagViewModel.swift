@@ -37,11 +37,13 @@ final class SearchHashTagViewModel: RxViewModelType {
                 return text
             })
             .flatMapLatest { ifTag in
+                print(ifTag)
                 return NetworkManager.fetchNetwork(model: SNSMainModel.self, router: .poster(.findHashTag(next: next, limit: "30", productId: input.behaiviorProductID.value.identi, hashTag: ifTag)))
             }
             .bind { result in
                 switch result {
                 case .success(let model):
+                    print("엥?",model.data)
                     next = model.nextCursor
                     outputModels.accept(model.data)
                 case .failure(let error):

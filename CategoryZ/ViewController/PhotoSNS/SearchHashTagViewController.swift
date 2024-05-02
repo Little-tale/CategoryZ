@@ -59,14 +59,15 @@ final class SearchHashTagViewController: RxHomeBaseViewController<RxCollectionVi
         
         output.successModel
             .drive(with: self) { owner, models in
+                print(models)
                 owner.applySnapshot(models: models)
             }
             .disposed(by: disPoseBag)
     }
     
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         viewModel.disposeBag = .init()
     }
 }
@@ -97,6 +98,7 @@ extension SearchHashTagViewController {
                     return .init()
                 }
                 cell.setModel(item.files.first)
+                cell.backgroundColor = .red
                 return cell
             }
         )

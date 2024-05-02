@@ -301,6 +301,8 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         
         
         searchController.searchBar.rx.text.orEmpty
+            .skip(1)
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, text in
                 owner.searchViewController.getText(text)
             }
