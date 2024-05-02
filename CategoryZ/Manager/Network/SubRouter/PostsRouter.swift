@@ -17,6 +17,13 @@ enum PostsRouter {
     case postDelete(postID: String)
     /// 다른 유저가 작성한 포스터 혹은 자신의 포스터들
     case userCasePostRead(userId: String,next: String? = nil, limit: String, productId: String? = nil)
+    /// 새롭게 해쉬태그 기능이 추가되었습니다.
+    case findHashTag(
+        next: String? = nil,
+        limit: String,
+        productId: String? = nil,
+        hashTag: String?
+    )
 }
 
 extension PostsRouter: TargetType {
@@ -27,7 +34,11 @@ extension PostsRouter: TargetType {
         case .imageUpload, .postWrite:
             return .post
     
-        case .postRead, .selectPostRead, .userCasePostRead:
+        case    .postRead,
+                .selectPostRead,
+                .userCasePostRead,
+                .findHashTag:
+            
             return .get
             
         case .postModify:
@@ -35,6 +46,7 @@ extension PostsRouter: TargetType {
             
         case .postDelete:
             return .delete
+            
         }
     }
     
@@ -42,21 +54,27 @@ extension PostsRouter: TargetType {
         switch self {
         case .imageUpload:
             return PathRouter.posts.path + "/files"
+            
         case .postWrite, .postRead:
             return PathRouter.posts.path
+            
         case .postModify(_, let postId),
                 .selectPostRead(let postId),
                 .postDelete(let postId):
             return PathRouter.posts.path + "/\(postId)"
+            
         case .userCasePostRead(let userId,_,_,_):
             return PathRouter.posts.path + "/users/\(userId)"
+            
+        case .findHashTag:
+            return PathRouter.hashTag.path
         }
         
     }
     
     var parametters: Alamofire.Parameters? {
         switch self {
-        case .imageUpload, .postWrite, .postRead, .postModify, .selectPostRead, .postDelete, .userCasePostRead:
+        case .imageUpload, .postWrite, .postRead, .postModify, .selectPostRead, .postDelete, .userCasePostRead, .findHashTag:
             return nil
         }
     }
@@ -68,7 +86,7 @@ extension PostsRouter: TargetType {
                 NetHTTPHeader.sesacKey.rawValue: APIKey.sesacKey.rawValue,
                 NetHTTPHeader.contentType.rawValue : NetHTTPHeader.multipart.rawValue
             ]
-        case .postWrite, .postModify:
+        case .postWrite, .postModify, .findHashTag:
             return [
                 NetHTTPHeader.sesacKey.rawValue: APIKey.sesacKey.rawValue,
                 NetHTTPHeader.contentType.rawValue: NetHTTPHeader.json.rawValue
@@ -86,33 +104,31 @@ extension PostsRouter: TargetType {
         case .imageUpload, .postWrite, .postModify, .selectPostRead, .postDelete:
             return nil
         case .postRead(let next, let limit, let product) , .userCasePostRead(_, let next, let limit, let product):
-            if let product {
-                return [
-                    URLQueryItem(name: "next", value: next),
-                    URLQueryItem(name: "limit", value: limit),
-                    URLQueryItem(name: "product_id", value: product)
-                ]
-            }
-            return [
-                URLQueryItem(name: "next", value: next),
-                URLQueryItem(name: "limit", value: limit)
-            ]
+            
+           return createPostQueryItems(next: next, limit: limit, product: product)
+            
+        case .findHashTag(let next, let limit, let product, let hashTag) :
+            
+            var items = createPostQueryItems(next: next, limit: limit, product: product)
+            items.append(URLQueryItem(name: "hashTag", value: hashTag))
+            
+            return items
         }
     }
     
     var version: String {
         switch self {
-        case .imageUpload, .postWrite, .postRead, .postModify, .selectPostRead, .postDelete, .userCasePostRead:
+        case .imageUpload, .postWrite, .postRead, .postModify, .selectPostRead, .postDelete, .userCasePostRead, .findHashTag:
             return "v1/"
         }
     }
     
     var body: Data? {
         switch self {
-        case .imageUpload, .postRead, .selectPostRead, .postDelete, .userCasePostRead:
+        case .imageUpload, .postRead, .selectPostRead, .postDelete, .userCasePostRead, .findHashTag:
             return nil
         case .postWrite(let query), .postModify(let query, _):
-            return jsEncoding(query)
+            return NetworkRouter.jsEncoding(query)
         }
     }
 
@@ -133,27 +149,25 @@ extension PostsRouter: TargetType {
             
         case .userCasePostRead:
             return .postReadError(statusCode: errorCode, description: description)
+            
+        case .findHashTag:
+            return .postReadError(statusCode: errorCode, description: description)
         }
     }
     
 }
 
-
 extension PostsRouter {
-    fileprivate func jsEncoding(_ target: Encodable) -> Data? {
-
-        let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
-        do {
-            let result = try  encoder.encode(target)
-            // print(result)
-            return result
-        } catch {
-            return nil
+    
+    private
+    func createPostQueryItems(next: String?, limit: String?, product: String?) -> [URLQueryItem] {
+        var items = [
+            URLQueryItem(name: "next", value: next),
+            URLQueryItem(name: "limit", value: limit)
+        ]
+        if let product = product {
+            items.append(URLQueryItem(name: "product_id", value: product))
         }
-
+        return items
     }
 }
-
-
-

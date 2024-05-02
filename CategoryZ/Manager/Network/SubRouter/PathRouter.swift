@@ -18,6 +18,7 @@ enum PathRouter {
     case usersMe
     case comments
     case payments
+    case hashTag
     
     var path: String {
         switch self {
@@ -37,6 +38,8 @@ enum PathRouter {
             return "comments"
         case .payments:
             return "payments"
+        case .hashTag:
+            return "posts/hashTags"
         }
     }
 }

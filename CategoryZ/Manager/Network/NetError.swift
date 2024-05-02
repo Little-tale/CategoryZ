@@ -61,6 +61,9 @@ enum NetworkError: Error {
     /// 결제 영수증 검증
     case paymentsValidError(statusCode: Int, description: String)
     
+    /// 해쉬테그 에러
+    
+    
     /// URLRequest 생성중 에러
     case failMakeURLRequest
     
