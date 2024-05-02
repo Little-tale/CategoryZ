@@ -31,8 +31,6 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
     
     private
     func subscribe(_ userID : String) {
-        
-        
         var userNick = ""
 
         Observable.just(PriceModel.allCases)
@@ -104,7 +102,7 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
         // test@test.com
         output.moveToDonateView
             .bind(with: self) { owner, model in
-                print("^^^^^^^")
+
                 let modelRequest = model.makePayment()
                 
                 publishModelRequest.accept(modelRequest)
@@ -126,7 +124,7 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
         output.successTrigger
             .drive(with: self) { owner, model in
                 owner.showAlert(
-                    title: "결제 성공",
+                    title: userNick + "님 결제 성공",
                     message: model.amount + " 원 결제 완료되었어요!",
                     actionTitle: "확인") { _ in
                         owner.navigationController?.popViewController(animated: true)

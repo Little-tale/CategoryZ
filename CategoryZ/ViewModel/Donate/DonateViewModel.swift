@@ -113,8 +113,6 @@ final class DonateViewModel: RxViewModelType {
                     amount: String(selctedPrice)
                 )
                 
-                print("1231",donateModel)
-                
                 return donateModel
             })
             .bind(with: self) { owner, model in
@@ -138,7 +136,7 @@ final class DonateViewModel: RxViewModelType {
                 let post = emptyMoPost!
                 
                 let product = emptyProduct!
-                print("errorCode: ",response.error_code)
+    
                 guard let imp_uid = response.imp_uid,
                       let booTrigger = response.success else {
                     networkError.accept(.paymentsValidError(statusCode: 800, description: "결제 서비스 서버 문제가 발생했습니다."))
@@ -151,11 +149,7 @@ final class DonateViewModel: RxViewModelType {
                     productName: product.productName,
                     price: Int(product.amount) ?? 0
                 )
-                print("//////////////////")
-                dump(query)
-                //dump(post)
-                dump(product)
-                print("//////////////////")
+                
                 startPaymentsTest.accept(query)
             }
             .disposed(by: disposeBag)

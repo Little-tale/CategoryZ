@@ -123,7 +123,11 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             .filter({ $0 != nil })
             .drive(with: self) { owner, imageURL in
                 print("asd",owner.profileImageView.frame.size)
-                owner.profileImageView.downloadImage(imageUrl: imageURL, resizing: owner.profileImageView.frame.size)
+                if imageURL != "" {
+                    owner.profileImageView.downloadImage(imageUrl: imageURL, resizing: owner.profileImageView.frame.size)
+                } else {
+                    owner.profileImageView.image = JHImage.defaultImage
+                }
             }
             .disposed(by: disposeBag)
         

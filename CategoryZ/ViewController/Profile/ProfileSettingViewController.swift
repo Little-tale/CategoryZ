@@ -18,6 +18,7 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
         case name
         case phoneNumber
         case registerDonate
+        case myPayments
         case deleteAccount
     }
     
@@ -87,6 +88,8 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
                 content.text = "계정 삭제"
             case .registerDonate:
                 content.text = "후원 등록 / 취소"
+            case .myPayments:
+                content.text = "결제 내역"
             }
             cell.contentConfiguration = content
             
@@ -128,6 +131,10 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
                 case .registerDonate:
                     let vc = RegisterDonateViewController()
                     vc.setModel(model)
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                    
+                case .myPayments:
+                    let vc = DonateListViewController()
                     owner.navigationController?.pushViewController(vc, animated: true)
                 }
             }

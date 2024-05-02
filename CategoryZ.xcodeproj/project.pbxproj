@@ -168,6 +168,10 @@
 		7BD1D9152BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9142BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift */; };
 		7BD1D9182BD7B42A00B5521F /* FollowerFollowingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9172BD7B42A00B5521F /* FollowerFollowingViewModel.swift */; };
 		7BD1D91A2BD8011900B5521F /* FollowerAndFollwingTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD1D9192BD8011800B5521F /* FollowerAndFollwingTableViewCellViewModel.swift */; };
+		7BDF40BF2BE3752A005274F9 /* PaymentsListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40BE2BE3752A005274F9 /* PaymentsListModel.swift */; };
+		7BDF40C12BE37752005274F9 /* DonateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C02BE37752005274F9 /* DonateListViewController.swift */; };
+		7BDF40C32BE3775D005274F9 /* DonateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C22BE3775D005274F9 /* DonateListView.swift */; };
+		7BDF40C52BE37886005274F9 /* DonateListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C42BE37886005274F9 /* DonateListCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -317,6 +321,10 @@
 		7BD1D9142BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerAndFollwingTableViewCell.swift; sourceTree = "<group>"; };
 		7BD1D9172BD7B42A00B5521F /* FollowerFollowingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerFollowingViewModel.swift; sourceTree = "<group>"; };
 		7BD1D9192BD8011800B5521F /* FollowerAndFollwingTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerAndFollwingTableViewCellViewModel.swift; sourceTree = "<group>"; };
+		7BDF40BE2BE3752A005274F9 /* PaymentsListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsListModel.swift; sourceTree = "<group>"; };
+		7BDF40C02BE37752005274F9 /* DonateListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListViewController.swift; sourceTree = "<group>"; };
+		7BDF40C22BE3775D005274F9 /* DonateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListView.swift; sourceTree = "<group>"; };
+		7BDF40C42BE37886005274F9 /* DonateListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -500,10 +508,12 @@
 		7B11DC832BC58CAA0055D423 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				7B94033D2BE265F3004A1A8E /* PriceModel .swift */,
 				7B11DC842BC58CB90055D423 /* NetWorkModel.swift */,
 				7B11DCA62BC590510055D423 /* NetWorkQuery.swift */,
 				7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */,
 				7BCC9D862BE29DCB00A6CEC3 /* PaymentsModel.swift */,
+				7BDF40BE2BE3752A005274F9 /* PaymentsListModel.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -628,7 +638,6 @@
 				7B838E0C2BCFCBDB000F2E27 /* UIImage */,
 				7BCF4A5D2BC6E38E00BCE635 /* Color */,
 				7BCF4A5A2BC6E34C00BCE635 /* Font */,
-				7B94033D2BE265F3004A1A8E /* PriceModel .swift */,
 			);
 			path = JH;
 			sourceTree = "<group>";
@@ -686,6 +695,7 @@
 		7B9403372BE25FA3004A1A8E /* Donate */ = {
 			isa = PBXGroup;
 			children = (
+				7BDF40C22BE3775D005274F9 /* DonateListView.swift */,
 			);
 			path = Donate;
 			sourceTree = "<group>";
@@ -702,6 +712,7 @@
 			isa = PBXGroup;
 			children = (
 				7B9403382BE25FAD004A1A8E /* DonateViewController.swift */,
+				7BDF40C02BE37752005274F9 /* DonateListViewController.swift */,
 			);
 			path = Donate;
 			sourceTree = "<group>";
@@ -740,6 +751,7 @@
 				7B838E052BCFB98F000F2E27 /* SNSTableViewCell.swift */,
 				7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */,
 				7B1EE3F42BDE2A3700F109EB /* PinterestCell.swift */,
+				7BDF40C42BE37886005274F9 /* DonateListCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1095,6 +1107,7 @@
 			files = (
 				7BCF4A912BCB69E500BCE635 /* CommentRouter.swift in Sources */,
 				7B11DC852BC58CB90055D423 /* NetWorkModel.swift in Sources */,
+				7BDF40C32BE3775D005274F9 /* DonateListView.swift in Sources */,
 				7BD1D8E02BD6259700B5521F /* ProfileSettingView.swift in Sources */,
 				7BC06FD02BE0190F00651529 /* CheckUserDeleteViewController.swift in Sources */,
 				7B9403192BE119D8004A1A8E /* NetworkService.swift in Sources */,
@@ -1154,6 +1167,7 @@
 				7BA0E0DF2BCD73EC002F0516 /* BaseTableViewCell.swift in Sources */,
 				7B94033C2BE260FC004A1A8E /* DonateViewModel.swift in Sources */,
 				7BC51B492BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift in Sources */,
+				7BDF40C12BE37752005274F9 /* DonateListViewController.swift in Sources */,
 				7B1EE3F92BDE4CFB00F109EB /* SingleSNSView.swift in Sources */,
 				7BCF4A5F2BC6E39700BCE635 /* JHColor.swift in Sources */,
 				7BA0E0E22BCD7458002F0516 /* CircleImageView.swift in Sources */,
@@ -1161,6 +1175,7 @@
 				7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */,
 				7B1EE3F02BDE109500F109EB /* LikeViewController.swift in Sources */,
 				7B11DC6A2BC58AD40055D423 /* SceneDelegate.swift in Sources */,
+				7BDF40C52BE37886005274F9 /* DonateListCell.swift in Sources */,
 				7B838DF42BCFADE3000F2E27 /* PhotoSNSView.swift in Sources */,
 				7B0BB2F92BD4ACC800770A04 /* Int+.swift in Sources */,
 				7BCF4A612BC6E5BD00BCE635 /* SignUpButton.swift in Sources */,
@@ -1197,6 +1212,7 @@
 				7BCF4A3C2BC6873600BCE635 /* AccessTokkenAdapter.swift in Sources */,
 				7BA0E0E82BCD7593002F0516 /* PlaceholderTextView.swift in Sources */,
 				7BD1D8E82BD6596F00B5521F /* UserProfileImageModifyViewController.swift in Sources */,
+				7BDF40BF2BE3752A005274F9 /* PaymentsListModel.swift in Sources */,
 				7B94033E2BE265F3004A1A8E /* PriceModel .swift in Sources */,
 				7BCC9D892BE2A06400A6CEC3 /* PaymentsRouter.swift in Sources */,
 				7B5EF9F62BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift in Sources */,
