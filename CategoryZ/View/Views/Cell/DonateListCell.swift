@@ -14,14 +14,10 @@ import SnapKit
 final class DonateListCell: RxBaseTableViewCell {
     
     private
-    let userImageView = CircleImageView(frame: .zero).then {
-        $0.tintColor = JHColor.black
-        $0.backgroundColor = JHColor.gray
-        $0.isUserInteractionEnabled = true
-    }
-    
+    let viewModel = DonateLisCelViewModel()
+
     private
-    let userNameLabel = UILabel().then {
+    let productName = UILabel().then {
         $0.commentStyle()
         $0.textAlignment = .left
         $0.font = JHFont.UIKit.bo14
@@ -40,39 +36,63 @@ final class DonateListCell: RxBaseTableViewCell {
         $0.textAlignment = .left
     }
     
+    func setModel(_ model: PaymentData) {
+        subscribe(model)
+    }
+    
+    private
+    func subscribe(_ model: PaymentData) {
+        let behModel = BehaviorRelay(value: model)
+        
+        let input = DonateLisCelViewModel.Input(
+            behModel: behModel
+        )
+        
+        let output = viewModel.transform(input)
+        
+        output.productName
+            .drive(productName.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.donateDate
+            .drive(DonatedDate.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.contents
+            .drive(contentLabel.rx.text)
+            .disposed(by: disposeBag)
+    }
     
     override func configureHierarchy() {
-        contentView.addSubview(userImageView)
-        contentView.addSubview(userNameLabel)
+        contentView.addSubview(productName)
         contentView.addSubview(DonatedDate)
         contentView.addSubview(contentLabel)
     }
     
     override func configureLayout() {
-        userImageView.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(6)
-            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(10)
-            make.size.equalTo(34)
-        }
+      
         
-        userNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(userImageView).offset(4)
-            make.leading.equalTo(userImageView.snp.trailing).offset(12)
+        productName.snp.makeConstraints { make in
+            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(4)
+            make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(12)
         }
         DonatedDate.snp.makeConstraints { make in
-            make.leading.equalTo(userNameLabel.snp.trailing).offset(8)
-            make.centerY.equalTo(userNameLabel)
+            make.leading.equalTo(productName.snp.trailing).offset(8)
+            make.centerY.equalTo(productName)
         }
         
         contentLabel.snp.makeConstraints { make in
-            make.top.equalTo(userNameLabel.snp.bottom).offset(5)
+            make.top.equalTo(productName.snp.bottom).offset(5)
            
-            make.leading.equalTo(userNameLabel)
+            make.leading.equalTo(productName)
             make.trailing.equalTo(contentView.safeAreaLayoutGuide).inset(50)
             make.height.greaterThanOrEqualTo(30)
             make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(10)
         }
     }
     
-    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        viewModel.disposeBag = .init()
+    }
 }

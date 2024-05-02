@@ -16,9 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Category Z" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HNT-vC-f47">
-                                <rect key="frame" x="42" y="297" width="309" height="178"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category Z" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HNT-vC-f47">
+                                <rect key="frame" x="42" y="374.33333333333331" width="309" height="103.66666666666669"/>
                                 <fontDescription key="fontDescription" name="SavoyeLetPlain" family="Savoye LET" pointSize="87"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -26,6 +25,12 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="HNT-vC-f47" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Poh-FN-OYQ"/>
+                            <constraint firstItem="HNT-vC-f47" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="cVg-tp-AAh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="HNT-vC-f47" secondAttribute="trailing" constant="42" id="hRq-Il-EGa"/>
+                            <constraint firstItem="HNT-vC-f47" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="42" id="svA-2W-bC7"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>

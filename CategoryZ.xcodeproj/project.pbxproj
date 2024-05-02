@@ -173,6 +173,7 @@
 		7BDF40C32BE3775D005274F9 /* DonateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C22BE3775D005274F9 /* DonateListView.swift */; };
 		7BDF40C52BE37886005274F9 /* DonateListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C42BE37886005274F9 /* DonateListCell.swift */; };
 		7BDF40C72BE37E8D005274F9 /* DonateListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C62BE37E8D005274F9 /* DonateListViewModel.swift */; };
+		7BDF40C92BE3846E005274F9 /* DonateListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C82BE3846E005274F9 /* DonateListCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -327,6 +328,7 @@
 		7BDF40C22BE3775D005274F9 /* DonateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListView.swift; sourceTree = "<group>"; };
 		7BDF40C42BE37886005274F9 /* DonateListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListCell.swift; sourceTree = "<group>"; };
 		7BDF40C62BE37E8D005274F9 /* DonateListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListViewModel.swift; sourceTree = "<group>"; };
+		7BDF40C82BE3846E005274F9 /* DonateListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -707,6 +709,7 @@
 			children = (
 				7B94033B2BE260FC004A1A8E /* DonateViewModel.swift */,
 				7BDF40C62BE37E8D005274F9 /* DonateListViewModel.swift */,
+				7BDF40C82BE3846E005274F9 /* DonateListCellViewModel.swift */,
 			);
 			path = Donate;
 			sourceTree = "<group>";
@@ -1251,6 +1254,7 @@
 				7BA0E0EC2BCD7664002F0516 /* CustomCollectionViewLayout.swift in Sources */,
 				7B1EE4722BDFBB3A00F109EB /* ProfileCellViewModel.swift in Sources */,
 				7BCF4A972BCBB6C900BCE635 /* ProfileRouter.swift in Sources */,
+				7BDF40C92BE3846E005274F9 /* DonateListCellViewModel.swift in Sources */,
 				7B838DFC2BCFAE69000F2E27 /* PhotoSNSViewController.swift in Sources */,
 				7B5E51302BD91BD700918C53 /* CommentTextView.swift in Sources */,
 			);

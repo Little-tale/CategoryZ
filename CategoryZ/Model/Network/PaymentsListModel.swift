@@ -10,6 +10,10 @@ import Foundation
 /// 해당 모델을 통해 통신 하여야 합니다.
 struct PaymentsListModel: Decodable {
     let dataList: [PaymentData]
+    
+    enum CodingKeys:String, CodingKey {
+        case dataList = "data"
+    }
 }
 
 struct PaymentData: Decodable {
