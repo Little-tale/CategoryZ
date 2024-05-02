@@ -6,12 +6,12 @@
 //
 
 import UIKit
+import WebKit
 import RxSwift
 import RxCocoa
 import iamport_ios
 /*
  need To DonateModel
- 
  */
 
 final class DonateViewController: RxHomeBaseViewController<DonateView> {
@@ -32,33 +32,35 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
     private
     func subscribe(_ userID : String) {
         
-        var currentIsUser = false
         
+        var userNick = ""
+
         Observable.just(PriceModel.allCases)
             .bind(to: homeView.pricePicker.rx.itemTitles) { _, item in
                 return item.price
             }
             .disposed(by: disPoseBag)
         
-        
-        
         let inputUserId = BehaviorRelay<String> (value: userID)
-        
-        let ifSelectedPrice = BehaviorRelay<PriceModel> (value: .thousand1)
+        let firstPrice = PriceModel.allCases.first!
+        let ifSelectedPrice = BehaviorRelay<PriceModel> (value:firstPrice)
         
         let donateButtonTap = homeView.donateButton.rx.tap
         
+        let publishModelRequest = PublishRelay<IamportPayment> ()
+       
+        let publishModelResponse = PublishRelay<IamportResponse?> ()
+        
         let input = DonateViewModel.Input(
             inputUserId: inputUserId,
-            ifSelectedPrice: ifSelectedPrice
-            
+            ifSelectedPrice: ifSelectedPrice,
+            donateButtonTap: donateButtonTap,
+            publishModelResponse: publishModelResponse
         )
         
         let output = viewModel.transform(input)
         
-        
-        
-        
+    
         output.successProfile
             .drive(with: self) { owner, model in
                 if model.profileImage != "" {
@@ -71,6 +73,7 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
                 }
                 
                 owner.homeView.userNameLabel.text = model.nick
+                userNick = model.nick
             }
             .disposed(by: disPoseBag)
         
@@ -81,13 +84,14 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
             }
             .disposed(by: disPoseBag)
         
-        
-        // 후원 포스터
-        output.successModel
-            .filter({ $0.count != 0 })
-            .drive(with: self) { owner, models in
-                let model = models.first
-                
+        // 본인인증뷰
+        output.moveToCheckUserTrigger
+            .drive(with: self) { owner, _ in
+                let vc = CheckedUserViewController()
+                vc.checkUserDelegate = owner.viewModel
+                vc.modalPresentationStyle = .pageSheet
+                owner.navigationController?
+                    .present(vc, animated: true)
             }
             .disposed(by: disPoseBag)
         
@@ -97,27 +101,39 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
                 ifSelectedPrice.accept(models.first!)
             }
             .disposed(by: disPoseBag)
-        
-        // 버튼을 누르면 본인인증을 하게 유도
-        donateButtonTap
-            .filter({ _ in
-                currentIsUser == false
-            })
-            .bind(with: self) { owner, _ in
-                let vc = CheckedUserViewController()
-                vc.checkUserDelegate = owner.viewModel
-                vc.modalPresentationStyle = .pageSheet
-                owner.navigationController?
-                    .present(vc, animated: true)
+        // test@test.com
+        output.moveToDonateView
+            .bind(with: self) { owner, model in
+                print("^^^^^^^")
+                let modelRequest = model.makePayment()
+                
+                publishModelRequest.accept(modelRequest)
+                
+                Iamport.shared.payment(
+                    navController: owner.navigationController!,
+                    userCode: APIKey.userCode.rawValue,
+                    payment: modelRequest,
+                    paymentResultCallback: { iamportResponse in
+                        
+                        print(String(describing: iamportResponse))
+                        publishModelResponse.accept(iamportResponse)
+                    })
             }
             .disposed(by: disPoseBag)
         
-        donateButtonTap
-            .filter { _ in currentIsUser == true }
-            .bind(with: self) { owner, _ in
-                print("이때 결제 뷰")
+        
+        
+        output.successTrigger
+            .drive(with: self) { owner, model in
+                owner.showAlert(
+                    title: "결제 성공",
+                    message: model.amount + " 원 결제 완료되었어요!",
+                    actionTitle: "확인") { _ in
+                        owner.navigationController?.popViewController(animated: true)
+                    }
             }
             .disposed(by: disPoseBag)
+        
         
     }
 }

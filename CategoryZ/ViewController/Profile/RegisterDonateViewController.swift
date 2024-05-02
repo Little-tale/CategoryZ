@@ -76,7 +76,8 @@ final class RegisterDonateViewController: RxBaseViewController {
         let input = RegisterDonateViewModel.Input(
             viewWillTrigger: viewWillTrigger,
             behaiviorModel: behaiviorModel,
-            selectedSegmentIndexAt: selectedSegmentIndexAt
+            selectedSegmentIndexAt: selectedSegmentIndexAt,
+            inputProfileModel: model
         )
         
         let output = viewModel.transform(input)
@@ -126,7 +127,7 @@ final class RegisterDonateViewController: RxBaseViewController {
         
         output.successTrigger
             .drive(with: self) { owner, _ in
-                if let nevi = owner.navigationController {
+                if owner.navigationController != nil {
                     owner.navigationController?.popViewController(animated: true)
                 } else {
                     owner.dismiss(animated: true)

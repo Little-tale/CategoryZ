@@ -20,6 +20,7 @@ enum NetworkRouter {
     case like(LikeRouter)
     case follow(FollowRouter)
     case profile(ProfileRouter)
+    case payments(PaymentsRouter)
 }
 
 extension NetworkRouter: URLRequestConvertible {
@@ -44,6 +45,9 @@ extension NetworkRouter: URLRequestConvertible {
                 return try router.asURLRequest()
                 
             case .profile(let router):
+                return try router.asURLRequest()
+                
+            case .payments(let router):
                 return try router.asURLRequest()
             }
         } catch {
@@ -72,6 +76,9 @@ extension NetworkRouter: ErrorCase {
             
         case .profile(let profileRouter):
             return profileRouter.errorCase(errorCode, description)
+            
+        case .payments(let paymonetsRouter):
+            return paymonetsRouter.errorCase(errorCode, description)
         }
     }
 }
@@ -92,7 +99,7 @@ extension NetworkRouter {
     static func jsEncoding(_ target: Encodable) -> Data? {
         
         let encoder = JSONEncoder()
-        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.keyEncodingStrategy = .useDefaultKeys
         do {
             let result = try  encoder.encode(target)
             // print(result)

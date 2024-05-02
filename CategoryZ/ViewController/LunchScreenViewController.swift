@@ -19,7 +19,8 @@ final class LunchScreenViewController: RxHomeBaseViewController<FirstView> {
     }
     
     override func subscribe() {
-        
+        print(TokenStorage.shared.accessToken)
+        print(TokenStorage.shared.refreshToken)
         let input = FirstViewValidViewModel.Input(viewdidAppearTrigger: rx.viewDidAppear)
         
         let output = viewModel.transform(input)

@@ -9,6 +9,7 @@ import Foundation
 
 
 enum PriceModel: Int, CaseIterable {
+    case test = 100
     case thousand1 = 1000
     case thousand2 = 2000
     case thousand3 = 3000

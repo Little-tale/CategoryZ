@@ -313,6 +313,8 @@ extension NetworkError {
                 return "게시글을 찾을 수 없습니다."
             case 419:
                 return "엑세스 토큰이 만료되었습니다."
+            case 800:
+                return description
             default:
                 return "알수 없는 에러 \(description)"
             }

@@ -38,7 +38,9 @@ extension PaymentsRouter: TargetType {
     var headers: [String : String] {
         switch self {
         case .validation:
-            return [
+            return [ 
+                NetHTTPHeader.contentType.rawValue :
+                        NetHTTPHeader.json.rawValue,
                 NetHTTPHeader.sesacKey.rawValue: APIKey.sesacKey.rawValue
             ]
         

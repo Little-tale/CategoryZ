@@ -18,6 +18,7 @@ final class RegisterDonateViewModel: RxViewModelType {
         let viewWillTrigger: Observable<Void>
         let behaiviorModel: BehaviorRelay<ProfileModel>
         let selectedSegmentIndexAt: PublishRelay<Int>
+        let inputProfileModel: ProfileModel
     }
     
     struct Output {
@@ -63,6 +64,7 @@ final class RegisterDonateViewModel: RxViewModelType {
         
         checkModel.bind { model in
             behaiviorCurrent.accept(model.data.count >= 1)
+           
         }
         .disposed(by: disposeBag)
         
@@ -71,7 +73,7 @@ final class RegisterDonateViewModel: RxViewModelType {
             .filter { $0 == 0 }
             .flatMapLatest { _ in
                 let postsQuery = MainPostQuery(
-                    title: "",
+                    title: "\(input.inputProfileModel.nick)후원",
                     content: "#후원",
                     content2: "",
                     content3: "",
