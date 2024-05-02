@@ -22,4 +22,10 @@ final class RxCollectionView: RxBaseView {
             make.edges.equalTo(safeAreaLayoutGuide)
         }
     }
+    
+    override func register() {
+        collectionView.register(ProfileHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProfileHeaderView.reusableIdenti)
+        
+        collectionView.register(OnlyRxImageCollectionViewCell.self, forCellWithReuseIdentifier: OnlyRxImageCollectionViewCell.reusableIdenti)
+    }
 }

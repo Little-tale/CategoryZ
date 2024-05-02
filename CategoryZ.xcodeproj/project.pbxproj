@@ -175,8 +175,9 @@
 		7BDF40C72BE37E8D005274F9 /* DonateListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C62BE37E8D005274F9 /* DonateListViewModel.swift */; };
 		7BDF40C92BE3846E005274F9 /* DonateListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40C82BE3846E005274F9 /* DonateListCellViewModel.swift */; };
 		7BDF40CB2BE3A9FB005274F9 /* RxCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40CA2BE3A9FB005274F9 /* RxCollectionView.swift */; };
-		7BDF40CD2BE3AA94005274F9 /* SeachHashTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40CC2BE3AA94005274F9 /* SeachHashTagViewController.swift */; };
+		7BDF40CD2BE3AA94005274F9 /* SearchHashTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40CC2BE3AA94005274F9 /* SearchHashTagViewController.swift */; };
 		7BDF40D02BE3B2E2005274F9 /* SearchHashTagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40CF2BE3B2E2005274F9 /* SearchHashTagViewModel.swift */; };
+		7BDF40D42BE3C3BC005274F9 /* OnlyRxImageCollectionViewCell.Swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDF40D32BE3C3BC005274F9 /* OnlyRxImageCollectionViewCell.Swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -333,8 +334,9 @@
 		7BDF40C62BE37E8D005274F9 /* DonateListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListViewModel.swift; sourceTree = "<group>"; };
 		7BDF40C82BE3846E005274F9 /* DonateListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateListCellViewModel.swift; sourceTree = "<group>"; };
 		7BDF40CA2BE3A9FB005274F9 /* RxCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionView.swift; sourceTree = "<group>"; };
-		7BDF40CC2BE3AA94005274F9 /* SeachHashTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeachHashTagViewController.swift; sourceTree = "<group>"; };
+		7BDF40CC2BE3AA94005274F9 /* SearchHashTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHashTagViewController.swift; sourceTree = "<group>"; };
 		7BDF40CF2BE3B2E2005274F9 /* SearchHashTagViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHashTagViewModel.swift; sourceTree = "<group>"; };
+		7BDF40D32BE3C3BC005274F9 /* OnlyRxImageCollectionViewCell.Swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlyRxImageCollectionViewCell.Swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -630,7 +632,7 @@
 				7BD1D8C02BD53BBD00B5521F /* MorePageViewController.swift */,
 				7B1EE3FA2BDE4DF100F109EB /* SingleSNSViewController.swift */,
 				7B1EE3FE2BDE57E100F109EB /* SingleViewRx.swift */,
-				7BDF40CC2BE3AA94005274F9 /* SeachHashTagViewController.swift */,
+				7BDF40CC2BE3AA94005274F9 /* SearchHashTagViewController.swift */,
 			);
 			path = PhotoSNS;
 			sourceTree = "<group>";
@@ -767,6 +769,7 @@
 				7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */,
 				7B1EE3F42BDE2A3700F109EB /* PinterestCell.swift */,
 				7BDF40C42BE37886005274F9 /* DonateListCell.swift */,
+				7BDF40D32BE3C3BC005274F9 /* OnlyRxImageCollectionViewCell.Swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1215,10 +1218,11 @@
 				7BC51B5E2BD0FFD200E5BF6C /* DateManager.swift in Sources */,
 				7BCF4A442BC6B3A300BCE635 /* Notification.swift in Sources */,
 				7B1EE4702BDFACBB00F109EB /* ProfilePostViewModel.swift in Sources */,
-				7BDF40CD2BE3AA94005274F9 /* SeachHashTagViewController.swift in Sources */,
+				7BDF40CD2BE3AA94005274F9 /* SearchHashTagViewController.swift in Sources */,
 				7BCF4A9D2BCBE68400BCE635 /* LoginView.swift in Sources */,
 				7BC51B4B2BD019D600E5BF6C /* CursurModel.swift in Sources */,
 				7B5E51372BD96BC100918C53 /* CommentViewModel.swift in Sources */,
+				7BDF40D42BE3C3BC005274F9 /* OnlyRxImageCollectionViewCell.Swift in Sources */,
 				7BD1D9152BD79C7100B5521F /* FollowerAndFollwingTableViewCell.swift in Sources */,
 				7BCF4A2F2BC5A65E00BCE635 /* ViewModelType.swift in Sources */,
 				7B11DCA32BC58FB60055D423 /* APIKey.swift in Sources */,

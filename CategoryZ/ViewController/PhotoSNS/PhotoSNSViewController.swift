@@ -21,7 +21,7 @@ import RxReusableKit
 final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     
     private
-    let searchViewController = SeachHashTagViewController()
+    let searchViewController = SearchHashTagViewController()
     
     typealias RxHeaderDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String,ProductID>>
     

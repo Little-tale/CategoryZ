@@ -111,7 +111,8 @@ struct PostReadMainModel: Decodable {
     }
 }
 // SNS 모델
-final class SNSDataModel: Decodable, Equatable, Hashable {
+final
+class SNSDataModel: Decodable, Equatable, Hashable {
     
     let postId: String
     let productId: String
@@ -182,6 +183,9 @@ final class SNSDataModel: Decodable, Equatable, Hashable {
         hasher.combine(postId)
     }
 }
+
+
+
 
 /// 댓글 모델
 class CommentsModel: Decodable {

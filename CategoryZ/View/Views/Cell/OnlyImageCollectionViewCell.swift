@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-
+ 
 final class OnlyImageCollectionViewCell: BaseCollectionViewCell {
     
     let backgoundImage = UIImageView()
@@ -15,11 +15,13 @@ final class OnlyImageCollectionViewCell: BaseCollectionViewCell {
     override func configureHierarchy() {
         contentView.addSubview(backgoundImage)
     }
+    
     override func configureLayout() {
         backgoundImage.snp.makeConstraints { make in
             make.edges.equalTo(contentView.safeAreaLayoutGuide)
         }
     }
+    
     override func designView() {
         self.layer.cornerRadius = 14
         self.clipsToBounds = true

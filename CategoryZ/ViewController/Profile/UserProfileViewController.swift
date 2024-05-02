@@ -46,7 +46,7 @@ final class UserProfileViewController: RxBaseViewController {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     
     
-    private var dataSource:DataSource?
+    private var dataSource: DataSource?
     
     private
     enum Section: Int {
@@ -294,7 +294,6 @@ extension UserProfileViewController {
                 return nil
             }
         }
-        
     }
 }
 

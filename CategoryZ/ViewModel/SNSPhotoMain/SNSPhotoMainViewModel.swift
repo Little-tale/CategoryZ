@@ -79,7 +79,6 @@ final class SNSPhotoMainViewModel: RxViewModelType {
                 )
             )
         }
-        // .share()
         
         request.bind(with: self) { owner, result in
             switch result{
