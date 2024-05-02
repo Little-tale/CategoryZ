@@ -123,8 +123,8 @@ enum CustomProfileCollectionViewLayout {
     static func createSearchCollectionViewLayout() -> UICollectionViewLayout {
         
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1/5),
-            heightDimension: .fractionalWidth(1/5)
+            widthDimension: .fractionalWidth(1/3),
+            heightDimension: .fractionalWidth(1/3)
         )
         
         let item = NSCollectionLayoutItem(layoutSize: itemSize)

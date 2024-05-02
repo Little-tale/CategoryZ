@@ -97,7 +97,7 @@ extension SearchHashTagViewController {
                 print("Error")
                     return .init()
                 }
-                cell.setModel(item.files.first)
+                cell.setModel(item.files)
                 cell.backgroundColor = .red
                 return cell
             }

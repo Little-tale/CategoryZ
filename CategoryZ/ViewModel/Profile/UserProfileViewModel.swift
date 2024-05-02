@@ -46,9 +46,13 @@ final class UserProfileViewModel: RxViewModelType {
         
         let donateEnabledModel = BehaviorRelay<[SNSDataModel]> (value: [])
         
-        let combineRequest = Observable.combineLatest(input.inputProfileType, input.inputProducID)
+        let combineRequest = Observable.combineLatest(
+            input.inputProfileType,
+            input.inputProducID
+        )
         
         combineRequest
+            .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .map { owner, request in
                 switch request.0 {
@@ -86,6 +90,7 @@ final class UserProfileViewModel: RxViewModelType {
             .disposed(by: disposeBag)
         
         input.inputProfileType
+            .skip(1)
             .filter { $0 != .me }
             .map { type -> String in
                 switch type {
@@ -126,7 +131,8 @@ final class UserProfileViewModel: RxViewModelType {
             
         needMoreTrigger
             .filter { _ in
-                nextCursor != "0"
+                print (nextCursor)
+                return (nextCursor != "0" && nextCursor != nil)
             }
             .map({ _ in
                 return nextCursor

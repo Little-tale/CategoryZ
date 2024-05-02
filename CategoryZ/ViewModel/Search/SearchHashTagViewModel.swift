@@ -43,7 +43,6 @@ final class SearchHashTagViewModel: RxViewModelType {
             .bind { result in
                 switch result {
                 case .success(let model):
-                    print("엥?",model.data)
                     next = model.nextCursor
                     outputModels.accept(model.data)
                 case .failure(let error):

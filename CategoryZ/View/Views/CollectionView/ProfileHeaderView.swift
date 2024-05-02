@@ -11,6 +11,10 @@ import Then
 import RxSwift
 import RxCocoa
 
+protocol SelectedProductId: NSObject {
+    func selected(productID: ProductID)
+}
+
 final class ProfileHeaderView: UICollectionReusableView {
     
     private
@@ -21,6 +25,8 @@ final class ProfileHeaderView: UICollectionReusableView {
     
     private
     var selectedProduct = ProductID.dailyRoutine
+    
+    weak var selectedProductDelegate: SelectedProductId?
     
     override init(frame: CGRect) {
         let layout = UICollectionViewFlowLayout()
@@ -75,6 +81,7 @@ final class ProfileHeaderView: UICollectionReusableView {
         selectedProduct
             .bind(with: self) { owner, productId in
                 NotificationCenter.default.post(name: .selectedProductId, object: nil, userInfo: ["productID": productId])
+                owner.selectedProductDelegate?.selected(productID: productId)
             }
             .disposed(by: disPoseBag)
     }

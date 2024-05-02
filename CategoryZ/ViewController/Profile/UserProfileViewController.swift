@@ -46,7 +46,11 @@ final class UserProfileViewController: RxBaseViewController {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     
     
-    private var dataSource: DataSource?
+    private 
+    var dataSource: DataSource?
+    
+    private
+    let selectedProductId = BehaviorRelay(value: ProductID.dailyRoutine)
     
     private
     enum Section: Int {
@@ -90,7 +94,7 @@ final class UserProfileViewController: RxBaseViewController {
     
     private
     func subscribe(){
-        let selectedProductId = BehaviorRelay(value: ProductID.dailyRoutine)
+       
         
         let behaiviorProfile = BehaviorRelay(value: profileType)
 
@@ -134,18 +138,8 @@ final class UserProfileViewController: RxBaseViewController {
             }
             .disposed(by: disPoseBag)
         
-        NotificationCenter.default.rx.notification(.selectedProductId)
-            .map { notification in
-                return notification.userInfo?["productID"] as? ProductID
-            }
-            .compactMap { $0 }
-            .subscribe(with: self) { owner, productId in
-                selectedProductId.accept(productId)
-            }
-            .disposed(by: disPoseBag)
-        
         rx.viewDidAppear
-            .skip(1)
+            .skip(2)
             .bind(with: self) { owner, _ in
                 if currentCount > 0 {
                     owner.collectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
@@ -286,14 +280,20 @@ extension UserProfileViewController {
                     ofKind: kind,
                     withReuseIdentifier: ProfileHeaderView.reusableIdenti,
                     for: indexPath) as? ProfileHeaderView else {
-                    
                     return nil
                 }
+                header.selectedProductDelegate = self
                 return header
             default:
                 return nil
             }
         }
+    }
+}
+
+extension UserProfileViewController: SelectedProductId {
+    func selected(productID: ProductID) {
+        selectedProductId.accept(productID)
     }
 }
 

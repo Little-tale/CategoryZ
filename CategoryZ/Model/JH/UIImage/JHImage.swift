@@ -47,4 +47,8 @@ extension JHImage {
     static let donateImage: UIImage = .heart1
     
     static let emptyForPaymentsList: UIImage = .emptyForPayments
+    
+    static let morePhotoImageWhite: UIImage = .multipleWhite
+    
+    static let morePostImage: UIImage = .more
 }
