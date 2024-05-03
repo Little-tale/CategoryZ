@@ -33,7 +33,6 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     
     // 프로필 이미지뷰
     private let profileImageView = CircleImageView().then {
-        $0.image = JHImage.defaultImage
         $0.tintColor = JHColor.black
     }
     let rightMoreBuntton = UIButton().then {
@@ -75,7 +74,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     }
 
     // 뷰모델
-    private let viewModel = SNSTableViewModel()
+    private var viewModel = SNSTableViewModel()
     
     func setModel(_ model: SNSDataModel, _ userId: String, delegate: LikeStateProtocol) {
         
@@ -120,17 +119,18 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         
         // 프로필 이미지 반영
         output.userProfileImage
-            .filter({ $0 != nil })
             .drive(with: self) { owner, imageURL in
                 print("asd",owner.profileImageView.frame.size)
-                if imageURL != "" {
-                    owner.profileImageView.downloadImage(imageUrl: imageURL, resizing: owner.profileImageView.frame.size)
-                } else {
+                if imageURL == nil || imageURL == "" {
                     owner.profileImageView.image = JHImage.defaultImage
+                    print("프로필 이미지 XXX ")
+                } else {
+                    owner.profileImageView.downloadImage(imageUrl: imageURL, resizing: owner.profileImageView.frame.size)
+                    print("프로필 이미지 있데")
                 }
             }
             .disposed(by: disposeBag)
-        
+        //$0.image = JHImage.defaultImage
         // 프로필 이름 반영
         output.profileName
             .drive(userNameLabel.rx.text)
@@ -263,7 +263,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        viewModel.disposeBag = .init()
+        profileImageView.image = nil
+         viewModel = .init()
     }
-    
 }

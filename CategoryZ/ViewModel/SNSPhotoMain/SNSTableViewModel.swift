@@ -146,7 +146,9 @@ final class SNSTableViewModel: RxViewModelType {
             diffDate: diffDate.asDriver()
         )
     }
-    
+    deinit {
+        print("SNS TableView Cell View Model Deinit")
+    }
     
 }
 
