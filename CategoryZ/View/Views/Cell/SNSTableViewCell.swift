@@ -29,7 +29,9 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     }
     
     // 크리에이터 이름 라벨
-    private let userNameLabel = UILabel()
+    private let userNameLabel = UILabel().then {
+        $0.font = JHFont.UIKit.re14
+    }
     
     // 프로필 이미지뷰
     private let profileImageView = CircleImageView().then {
@@ -190,10 +192,6 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             .disposed(by: disposeBag)
     }
     
-    override func designView() {
-        //imageScrollView.pageController.currentPage = 0
-    }
-    
     
     override func configureHierarchy() {
         contentView.addSubview(profileImageView)
@@ -210,8 +208,8 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     
     override func configureLayout() {
         profileImageView.snp.makeConstraints { make in
-            make.leading.top.equalTo(contentView.safeAreaLayoutGuide).offset(12)
-            make.size.equalTo(35)
+            make.leading.top.equalTo(contentView.safeAreaLayoutGuide).offset(14)
+            make.size.equalTo(30)
         }
         userNameLabel.snp.makeConstraints { make in
             make.centerY.equalTo(profileImageView)
@@ -229,7 +227,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             make.height.equalTo(320)
         }
         likeButton.snp.makeConstraints { make in
-            make.top.equalTo(imageScrollView.snp.bottom).offset(4)
+            make.top.equalTo(imageScrollView.snp.bottom).offset(8)
             make.leading.equalTo(imageScrollView).offset(8)
             make.size.equalTo(24)
         }
@@ -249,13 +247,13 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         }
         
         contentLable.snp.makeConstraints { make in
-            make.top.equalTo(likeButton.snp.bottom).offset(4)
+            make.top.equalTo(likeButton.snp.bottom).offset(6)
             make.leading.equalTo(likeButton)
             make.trailing.equalTo(imageScrollView.snp.trailing)
         }
         
         dateLabel.snp.makeConstraints { make in
-            make.top.equalTo(contentLable.snp.bottom)
+            make.top.equalTo(contentLable.snp.bottom).offset(2)
             make.leading.equalTo(contentLable)
             make.bottom.equalTo(contentView.safeAreaLayoutGuide).inset(8)
         }

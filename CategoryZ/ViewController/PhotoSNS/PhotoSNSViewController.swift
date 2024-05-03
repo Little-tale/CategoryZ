@@ -20,8 +20,6 @@ import RxReusableKit
 
 final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     
-    
-    
     typealias RxHeaderDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String,ProductID>>
     
     typealias SNSSectionModel = AnimatableSectionModel<String, SNSDataModel>
@@ -78,9 +76,9 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         let searchController = UISearchController(searchResultsController: searchViewController)
         
         searchController.searchBar.placeholder = "Search For HashTag"
-        searchController.hidesNavigationBarDuringPresentation = false
-        self.navigationItem.searchController = searchController
-        self.navigationItem.hidesSearchBarWhenScrolling = true
+         searchController.hidesNavigationBarDuringPresentation = true
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
         
         
         searchController.searchBar.rx.text.orEmpty
@@ -98,6 +96,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 owner.navigationItem.searchController = nil
             }
             .disposed(by: disPoseBag)
+        
     }
     
     override func subscribe() {

@@ -105,7 +105,7 @@ final class UserProfileImageModifyViewController: RxBaseViewController {
             .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.profileImageView.image = JHImage.defaultImage
-                let data = JHImage.defaultImage?.jpegData(compressionQuality: 1.0)
+                let data = JHImage.defaultImage.jpegData(compressionQuality: 1.0)
                 if let data {
                     publishDataImage.accept(data)
                 } else { // 후에 변경해야 해

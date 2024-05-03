@@ -192,7 +192,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                 }
             }
             .disposed(by: disPoseBag)
-        
+    
         // 업로드 성공시
         output.successPost
             .drive(with: self) { owner, model in

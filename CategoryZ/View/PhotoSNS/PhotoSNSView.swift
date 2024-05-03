@@ -11,7 +11,7 @@ import Then
 
 final class PhotoSNSView: RxBaseView {
     
-    lazy var headerView = SNSHeaderWithCollectionView(frame: CGRect(x: 0, y: 0, width: frame.width, height: 80)
+    lazy var headerView = SNSHeaderWithCollectionView(frame: CGRect(x: 0, y: 0, width: frame.width, height: 66)
     )
     
     let tableView = UITableView(frame: .zero).then {
@@ -29,20 +29,18 @@ final class PhotoSNSView: RxBaseView {
     }
     override func configureLayout() {
         tableView.snp.makeConstraints { make in
-            make.edges.equalTo(safeAreaLayoutGuide)
+            make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
+            make.top.equalTo(safeAreaLayoutGuide) // 슈퍼뷰로 해야 네비가 정상 작동됨...? 왜지
         }
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 240
     }
    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        let borderWidth: CGFloat = 0.5
-
-        layerLine.frame = CGRect(x: 0, y: 80, width: tableView.frame.width, height: borderWidth)
-        
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        let borderWidth: CGFloat = 0.5
+//        layerLine.frame = CGRect(x: 0, y: 80, width: tableView.frame.width, height: borderWidth)
+//    }
     
     override func register() {
         tableView.register(SNSTableViewCell.self, forCellReuseIdentifier: SNSTableViewCell.reusableIdenti)
