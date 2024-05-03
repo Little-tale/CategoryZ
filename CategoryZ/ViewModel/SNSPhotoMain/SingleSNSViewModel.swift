@@ -53,7 +53,7 @@ final class SingleSNSViewModel: RxViewModelType {
                     let modelLike = LikeQueryModel(like_status: true)
                     isUserLikeModel.accept(modelLike)
                 } else {
-                    let modelLike = LikeQueryModel(like_status: true)
+                    let modelLike = LikeQueryModel(like_status: false)
                     isUserLikeModel.accept(modelLike)
                 }
                 likeCount.accept(model.likes.count)
