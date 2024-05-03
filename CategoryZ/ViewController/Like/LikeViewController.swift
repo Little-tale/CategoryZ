@@ -81,11 +81,21 @@ final class LikeViewController: RxBaseViewController {
         models
             .distinctUntilChanged()
             .bind(to: collectionView.rx.items(cellIdentifier: PinterestCell.reusableIdenti, cellType: PinterestCell.self)) {
-            row, item, cell in
-            cell.setModel(item)
-            cell.layer.cornerRadius = 12
-        }
-        .disposed(by: disPoseBag)
+                row, item, cell in
+                
+                cell.layer.cornerRadius = 12
+                if !item.animated {
+                    cell.transform = CGAffineTransform(
+                        translationX: 0, y: 80 // 초기 위치 정하기
+                    )
+                    UIView.animate(withDuration: 0.3, delay: 0.02 * Double(row), options: .showHideTransitionViews, animations: {
+                        cell.transform = CGAffineTransform.identity
+                    }, completion: nil)
+                }
+                item.animated = true
+                cell.setModel(item)
+            }
+            .disposed(by: disPoseBag)
         
         
         rx.viewWillAppear
@@ -94,7 +104,7 @@ final class LikeViewController: RxBaseViewController {
                 owner.collectionView.collectionViewLayout.invalidateLayout()
             }
             .disposed(by: disPoseBag)
-        
+    
     }
     
     override func configureHierarchy() {
@@ -119,11 +129,8 @@ extension LikeViewController: CustomPinterestLayoutDelegate {
         
         let aspectString = model.content3
         let aspect = CGFloat(Double(aspectString) ?? 1 )
-        
         let cellWidth: CGFloat = view.bounds.width / 2
-    
         let date: CGFloat = 24
-        
         return (cellWidth / aspect) + 24 + date + 12
     }
 }

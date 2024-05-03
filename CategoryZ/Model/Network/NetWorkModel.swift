@@ -127,7 +127,7 @@ class SNSDataModel: Decodable, Equatable, Hashable {
     let hashTags: [String]
     var comments: [CommentsModel]
     var currentRow = 0
-
+    var animated: Bool = false
     
     enum CodingKeys: String, CodingKey {
         case postId = "post_id"
