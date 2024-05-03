@@ -105,6 +105,7 @@ final class UserProfileViewController: RxBaseViewController {
         var currentCount = 0
         
         
+        
         let input = UserProfileViewModel.Input(
             inputProfileType: behaiviorProfile,
             inputProducID: selectedProductId,

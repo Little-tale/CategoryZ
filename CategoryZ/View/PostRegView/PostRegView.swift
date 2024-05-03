@@ -17,6 +17,7 @@ final class PostRegView: RxBaseView {
     let profileImage = UIImageView().then {
         $0.image = UIImage.appLogo
         $0.clipsToBounds = true
+        $0.contentMode = .scaleAspectFill
     }
     
     let nameLabel = UILabel().then { $0.text = "이름들어감" }

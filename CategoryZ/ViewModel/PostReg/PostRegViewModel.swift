@@ -9,10 +9,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-import Foundation
-import RxSwift
-import RxCocoa
-
 final class PostRegViewModel: RxViewModelType {
     
     var disposeBag: RxSwift.DisposeBag = .init()
@@ -21,6 +17,10 @@ final class PostRegViewModel: RxViewModelType {
     
     let textValid = TextValid()
     var currentText = ""
+    
+    init() {
+        print("이닛이 두번인가...")
+    }
     
     struct Input {
         // 선택된 모델 ID
@@ -148,7 +148,7 @@ final class PostRegViewModel: RxViewModelType {
       // 버튼을 누르면 이미지 먼저 업로드후
        input.saveButtonTap
             .withLatestFrom(tapValidConbine)
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance) // 회고
             .filter({ $0.2 != nil })
             .map({ content in
                 return (contents: content.0, datas: content.1, productId: content.2!)

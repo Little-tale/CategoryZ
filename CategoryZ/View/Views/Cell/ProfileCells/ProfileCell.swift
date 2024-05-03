@@ -123,7 +123,7 @@ final class ProfileCell: RxBaseCollectionViewCell {
                 var rightTitle = ""
                 switch type {
                 case .me:
-                    leftTitle = "프로필 수정"
+                    leftTitle = "프로필 설정"
                     rightTitle = "좋아요한 게시글"
                     owner.rightButton.isHidden = false
                 case .other:

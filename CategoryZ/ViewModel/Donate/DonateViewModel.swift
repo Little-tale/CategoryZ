@@ -142,7 +142,7 @@ final class DonateViewModel: RxViewModelType {
                     networkError.accept(.paymentsValidError(statusCode: 800, description: "결제 서비스 서버 문제가 발생했습니다."))
                     return
                 }
-                print(booTrigger)
+                print(booTrigger) // true
                 let query = PaymentsModel(
                     impUID: imp_uid,
                     postID: post.postId,
@@ -156,6 +156,7 @@ final class DonateViewModel: RxViewModelType {
         
         startPaymentsTest
             .flatMapLatest { model in
+                print("결제 완료건 -> ",model)
                 return NetworkManager.noneModelRequest(router: .payments(.validation(paymentsQeury: model)))
             }
             .bind { result in

@@ -33,7 +33,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     private
     lazy var imageService = RxCameraImageService(presntationViewController: self, zipRate: 5)
     
-    let viewModel = PostRegViewModel()
+    var viewModel = PostRegViewModel()
     
     var selected: ProductID?
     
@@ -344,7 +344,10 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             .disposed(by: disPoseBag)
 
     }
-
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        viewModel = .init()
+    }
     
 }
 

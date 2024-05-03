@@ -90,7 +90,6 @@ final class UserProfileViewModel: RxViewModelType {
             .disposed(by: disposeBag)
         
         input.inputProfileType
-            .skip(1)
             .filter { $0 != .me }
             .map { type -> String in
                 switch type {
@@ -111,6 +110,7 @@ final class UserProfileViewModel: RxViewModelType {
             .bind { result in
                 switch result {
                 case .success(let successPost):
+                    print(successPost)
                     donateEnabledModel.accept(successPost.data)
                 case .failure(let error):
                     networkError.onNext(error)

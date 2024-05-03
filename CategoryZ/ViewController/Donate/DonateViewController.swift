@@ -82,17 +82,7 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
             }
             .disposed(by: disPoseBag)
         
-        // 본인인증뷰
-        output.moveToCheckUserTrigger
-            .drive(with: self) { owner, _ in
-                let vc = CheckedUserViewController()
-                vc.checkUserDelegate = owner.viewModel
-                vc.modalPresentationStyle = .pageSheet
-                owner.navigationController?
-                    .present(vc, animated: true)
-            }
-            .disposed(by: disPoseBag)
-        
+      
         // 선택 되어질 값
         homeView.pricePicker.rx.modelSelected(PriceModel.self)
             .bind { models in
