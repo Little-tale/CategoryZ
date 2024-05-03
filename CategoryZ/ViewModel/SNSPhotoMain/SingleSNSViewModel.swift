@@ -20,7 +20,7 @@ final class SingleSNSViewModel: RxViewModelType {
     }
     
     struct Output {
-        let isuserLike: Driver<LikeQueryModel>
+        let isuserLike: BehaviorRelay<LikeQueryModel>
         let likeCount: Driver<Int>
         let messageCount: Driver<Int>
         let imageStrings: Driver<[String]>
@@ -56,6 +56,7 @@ final class SingleSNSViewModel: RxViewModelType {
                     let modelLike = LikeQueryModel(like_status: false)
                     isUserLikeModel.accept(modelLike)
                 }
+                print("현재 좋아요 갯수",model.likes)
                 likeCount.accept(model.likes.count)
                 messageCount.accept(model.comments.count)
                 imagesString.accept(model.files)
@@ -112,7 +113,7 @@ final class SingleSNSViewModel: RxViewModelType {
         
         
         return Output(
-            isuserLike: isUserLikeModel.asDriver(),
+            isuserLike: isUserLikeModel,
             likeCount: likeCount.asDriver(),
             messageCount: messageCount.asDriver(),
             imageStrings: imagesString.asDriver(),

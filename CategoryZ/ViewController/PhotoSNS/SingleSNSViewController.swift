@@ -9,6 +9,11 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+// MARK: 좋아요 한것을 바로 반영 하지 않기로 결정하였으나 대기.
+protocol changedIfLikeModel: AnyObject {
+    func mayBeLike(_ model: SNSDataModel)
+}
+
 final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
     
     override func viewDidLoad() {
@@ -16,6 +21,7 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
         homeView.singleView.rightMoreBuntton.isHidden = true
         
     }
+    weak var ifChangeOfLikeDelegate: changedIfLikeModel?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -43,9 +49,9 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
     func setModel(_ SNSData: SNSDataModel) {
         subscribe(SNSData)
     }
-    
+    // 자신의 것만 지원하기에 현재는 이렇게 처리해 놓게습니다.
     func setModel(_ SNSData: SNSDataModel, me: Bool){
-        subscribe(SNSData, me: true)
+        subscribe(SNSData, me: me)
     }
     
     private
@@ -74,10 +80,11 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
             .disposed(by: disPoseBag)
         
         output.isuserLike
-            .drive(with: self) { owner, model in
+            .bind(with: self) { owner, model in
                 owner.homeView.singleView.likeButton.isSelected = model.like_status
             }
             .disposed(by: disPoseBag)
+    
         
         output.likeCount
             .map { String($0) }

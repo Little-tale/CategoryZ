@@ -22,8 +22,11 @@ final class LikeViewModel: RxViewModelType {
     
     let realModel = BehaviorRelay<[SNSDataModel]> (value: [])
     
+    private
+    let ifModifyModel = PublishRelay<SNSDataModel> ()
+    
     struct Input {
-        let startTriggerSub: PublishRelay<Void>
+        let startTriggerSub: BehaviorRelay<Void>
     }
     
     struct Output {
@@ -60,6 +63,27 @@ final class LikeViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
+        ifModifyModel
+            .filter({ _ in
+                UserIDStorage.shared.userID != nil
+            })
+            .bind(with: self) { owner, model in
+                let current = owner.realModel.value[model.currentRow]
+                print(current.likes, "", model.likes)
+                if current.likes != model.likes {
+                    
+                    var value = owner.realModel.value
+                    value.remove(at: model.currentRow)
+                    owner.realModel.accept(value)
+                }
+                else if !current.likes.contains(UserIDStorage.shared.userID!) {
+                    var value = owner.realModel.value
+                    value.remove(at: model.currentRow)
+                    owner.realModel.accept(value)
+                }
+            }
+            .disposed(by: disposeBag)
+        
         return Output(
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
             successData: realModel,
@@ -67,4 +91,10 @@ final class LikeViewModel: RxViewModelType {
         )
     }
     
+}
+
+extension LikeViewModel: changedIfLikeModel {
+    func mayBeLike(_ model: SNSDataModel) {
+        ifModifyModel.accept(model)
+    }
 }

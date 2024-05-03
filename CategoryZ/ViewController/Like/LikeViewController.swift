@@ -25,6 +25,7 @@ final class LikeViewController: RxBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationSetting()
+        
         let layout = CustomPinterestLayout(
             numberOfColums: 2,
             cellPadding: 4
@@ -34,13 +35,9 @@ final class LikeViewController: RxBaseViewController {
     }
     
     override func subscriver() {
-        let startTriggerSub = PublishRelay<Void> ()
+        let startTriggerSub = BehaviorRelay<Void> (value: ())
         
-        rx.viewWillAppear
-            .bind { _ in
-                startTriggerSub.accept(())
-            }
-            .disposed(by: disPoseBag)
+      
         
         let input = LikeViewModel.Input(
             startTriggerSub: startTriggerSub
@@ -51,6 +48,23 @@ final class LikeViewController: RxBaseViewController {
         networkError(output.networkError)
         
         collectionViewRxSetting(output.successData)
+        
+        let zipCollectionView = Observable.zip(collectionView.rx.itemSelected, collectionView.rx.modelSelected(SNSDataModel.self))
+            
+        zipCollectionView
+            .bind(with: self) { owner, collectionView in
+                let vc = SingleSNSViewController()
+                
+                let model = collectionView.1
+                
+                model.currentRow = collectionView.0.item
+                
+                vc.setModel(model)
+                
+                vc.ifChangeOfLikeDelegate = owner.viewModel
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
         
     }
     
@@ -63,20 +77,24 @@ final class LikeViewController: RxBaseViewController {
     }
     private
     func collectionViewRxSetting(_ models: BehaviorRelay<[SNSDataModel]>) {
-        models.bind(to: collectionView.rx.items(cellIdentifier: PinterestCell.reusableIdenti, cellType: PinterestCell.self)) {
+        
+        models
+            .distinctUntilChanged()
+            .bind(to: collectionView.rx.items(cellIdentifier: PinterestCell.reusableIdenti, cellType: PinterestCell.self)) {
             row, item, cell in
             cell.setModel(item)
             cell.layer.cornerRadius = 12
         }
         .disposed(by: disPoseBag)
         
-        collectionView.rx.modelSelected(SNSDataModel.self)
-            .bind(with: self) { owner, model in
-                let vc = SingleSNSViewController()
-                vc.setModel(model)
-                owner.navigationController?.pushViewController(vc, animated: true)
+        
+        rx.viewWillAppear
+            .skip(1)
+            .bind(with: self) { owner, _ in
+                owner.collectionView.collectionViewLayout.invalidateLayout()
             }
             .disposed(by: disPoseBag)
+        
     }
     
     override func configureHierarchy() {
@@ -97,8 +115,7 @@ extension LikeViewController: CustomPinterestLayoutDelegate {
     
     func collectionView(for collectionView: UICollectionView, heightForAtIndexPath indexPath: IndexPath) -> CGFloat {
         
-        let model = viewModel.realModel
-            .value[indexPath.item]
+        let model = viewModel.realModel.value[indexPath.item]
         
         let aspectString = model.content3
         let aspect = CGFloat(Double(aspectString) ?? 1 )
