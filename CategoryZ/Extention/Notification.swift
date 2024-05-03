@@ -31,6 +31,8 @@ extension Notification.Name {
     
     static let successPost = Notification.Name(rawValue: "successPost")
     
+    static let modifyPost = Notification.Name(rawValue: "modifyPost")
+    
     static let chagedProfileInfo = Notification.Name(rawValue : "chagedProfileInfo")
     
     static let hidesBottomBarWhenPushed = Notification.Name(rawValue: "hidesBottomBarWhenPushed")

@@ -140,7 +140,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             animationConfiguration: AnimationConfiguration(
                 insertAnimation: .automatic,
                 reloadAnimation: .automatic,
-                deleteAnimation: .automatic)) {[weak self] dataSource, tableView, indexPath, item in
+                deleteAnimation: .fade)) {[weak self] dataSource, tableView, indexPath, item in
                     guard let self else {
                         print("RxTableViewSectionedAnimatedDataSource Error")
                         return .init()
@@ -150,7 +150,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                     }
                     
                     let reciveModel = item
-                    reciveModel.currentRow = indexPath.row
+                    reciveModel.currentRow = indexPath.item
                     cell.setModel(reciveModel, output.userIDDriver.value, delegate: viewModel)
                     cell.selectionStyle = .none
                     return cell
@@ -257,7 +257,10 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 let vc = PostRegViewController()
                 vc.ifModifyModel = model
                 vc.hidesBottomBarWhenPushed = true
+                
                 NotificationCenter.default.post(name: .hidesBottomBarWhenPushed, object: nil)
+                
+                vc.modifyDelegate = owner.viewModel
                 
                 owner.navigationController?.pushViewController(vc, animated: true)
             }

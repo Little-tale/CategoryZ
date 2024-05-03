@@ -14,7 +14,9 @@ enum cameraOrImage {
     case camera
     case image
 }
-
+protocol ModifyDelegate: AnyObject {
+    func mofifyedModel(_ model: SNSDataModel)
+}
 
 final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     
@@ -25,6 +27,8 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     let deleteButton = UIBarButtonItem(title: "삭제").then {
         $0.tintColor = JHColor.warningColor
     }
+    
+    weak var modifyDelegate: ModifyDelegate?
     
     private
     lazy var imageService = RxCameraImageService(presntationViewController: self, zipRate: 5)
@@ -191,7 +195,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
         
         // 업로드 성공시
         output.successPost
-            .drive(with: self) { owner, _ in
+            .drive(with: self) { owner, model in
                 
                 owner.showAlert(title: "업로드", message: "업로드 성공") { _ in
                     if owner.ifModifyModel == nil {
@@ -199,11 +203,19 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                         owner.dismiss(animated: true)
                     } else {
                          owner.navigationController?.popViewController(animated: true)
-                        NotificationCenter.default.post(name: .successPost, object: nil)
+                        owner.modifyDelegate?.mofifyedModel(model)
                     }
                 }
             }
             .disposed(by: disPoseBag)
+        
+        /*
+         NotificationCenter.default.post(name: .modifyPost, object: nil)
+         NotificationCenter.default.post(
+             name: <#T##NSNotification.Name#>,
+             object: <#T##Any?#>,
+             userInfo: <#T##[AnyHashable : Any]?#>)
+         */
         
         // 카테고리 뿌리기
         category.bind(to: homeView.categoryCollectionView.rx.items(cellIdentifier: CategoryReusableCell.reusableIdenti, cellType: CategoryReusableCell.self)) {[weak self] row , item, cell in

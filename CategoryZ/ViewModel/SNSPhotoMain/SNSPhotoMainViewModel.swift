@@ -32,6 +32,9 @@ final class SNSPhotoMainViewModel: RxViewModelType {
     
     private
     let userId = UserIDStorage.shared.userID
+    
+    private
+    let allReloadTrigger = PublishRelay<Void> ()
 
     struct Input {
         // 첫 시작 트리거
@@ -56,19 +59,22 @@ final class SNSPhotoMainViewModel: RxViewModelType {
     func transform(_ input: Input) -> Output {
         let limit = "10"
         
-        // 다음 커서
-        let nextCursor = BehaviorRelay<String?> (value: nil)
-        
         let userId = BehaviorRelay<String> (value: UserIDStorage.shared.userID ?? "" )
     
         let pullDataCountBR = BehaviorRelay(value: 0)
-        let ifCanReqeust = BehaviorRelay(value: false)
+        let ifCanReqeust = BehaviorRelay(value: false
+        )
         let selectedProductId = BehaviorRelay(value: "")
+        
+        // 다음 커서
+        let nextCursor = BehaviorRelay<String?> (value: nil)
+        
         // 지우기 완료됨의 트리거
         let successDelteTrigger = PublishRelay<SNSDataModel> ()
         
         let request = input.needLoadPageTrigger.asObservable()
-        .flatMapLatest { _ in
+            .withUnretained(self)
+        .flatMapLatest { owner, _ in
             NetworkManager
                 .fetchNetwork(
                 model: PostReadMainModel.self,
@@ -98,14 +104,29 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         }
         .disposed(by: disposeBag)
         
+        // 강제 리로드
+        allReloadTrigger
+            .bind(with: self) { owner, _ in
+                nextCursor.accept(nil)
+                owner.realPostData = []
+                owner.postsDatas.accept(owner.realPostData)
+                input.needLoadPageTrigger.accept(())
+            }
+            .disposed(by: disposeBag)
+        
+        
         // 카테고리를 클릭하였을때
         // 넥스트를 nil 로 만들고 요청해야 함.
 
         input.selectedProductID
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .flatMapLatest { productId in
+            .withUnretained(self)
+            .flatMapLatest { owner, productId in
+                
                 selectedProductId.accept(productId.identi)
+                
                 nextCursor.accept(nil)
+                
                 return NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.postRead(next: nil, limit: limit, productId: productId.identi)))
             }
             .bind(with: self) { owner, result in
@@ -208,4 +229,12 @@ extension SNSPhotoMainViewModel: LikeStateProtocol {
         let address = Unmanaged.passUnretained(object).toOpaque()
         print("주소 \(addMesage): \(address)")
     }
+}
+
+extension SNSPhotoMainViewModel: ModifyDelegate {
+    
+    func mofifyedModel(_ model: SNSDataModel) {
+        allReloadTrigger.accept(())
+    }
+    
 }

@@ -47,7 +47,7 @@ final class PostRegViewModel: RxViewModelType {
         let contentText: Driver<String>
         let userInfo: Driver<Creator>
         let networkError: Driver<NetworkError>
-        let successPost: Driver<Void>
+        let successPost: Driver<SNSDataModel>
         let removePost: Driver<Void>
     }
     
@@ -69,7 +69,7 @@ final class PostRegViewModel: RxViewModelType {
         let imageUploadScueess = PublishRelay<(imageModel:ImageDataModel, content:String, productId: String)> ()
         
         // 포스트 성공 트리거
-        let successPost = PublishRelay<Void> ()
+        let successPost = PublishRelay<SNSDataModel> ()
         // 삭제 성공 트리거
         let removePost = PublishRelay<Void> ()
         
@@ -183,18 +183,18 @@ final class PostRegViewModel: RxViewModelType {
             })
             .flatMap { model in
                 if let modify = input.ifModifyModel.value {
-                    return NetworkManager.fetchNetwork(model: PostModel.self, router: .poster(.postModify(
+                    return NetworkManager.fetchNetwork(model: SNSDataModel.self, router: .poster(.postModify(
                         query: model,
                         postID: modify.postId)
                     ) )
                 }else {
-                    return NetworkManager.fetchNetwork(model: PostModel.self, router: .poster(.postWrite(query: model)))
+                    return NetworkManager.fetchNetwork(model: SNSDataModel.self, router: .poster(.postWrite(query: model)))
                 }
             }
             .bind { result in
                 switch result {
-                case .success(_):
-                    successPost.accept(())
+                case .success(let model):
+                    successPost.accept(model)
                 case .failure(let error):
                     networkError.accept(error)
                 }
