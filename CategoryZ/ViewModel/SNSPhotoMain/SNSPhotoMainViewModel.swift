@@ -35,6 +35,9 @@ final class SNSPhotoMainViewModel: RxViewModelType {
     
     private
     let allReloadTrigger = PublishRelay<Void> ()
+    
+    private
+    let ifModifyModel = PublishRelay<SNSDataModel> ()
 
     struct Input {
         // 첫 시작 트리거
@@ -104,7 +107,7 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         }
         .disposed(by: disposeBag)
         
-        // 강제 리로드
+        // 강제 리로드 (사용되진 않지만 특수 케이스가 발생하면 사용할것)
         allReloadTrigger
             .bind(with: self) { owner, _ in
                 nextCursor.accept(nil)
@@ -174,6 +177,17 @@ final class SNSPhotoMainViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
+        ifModifyModel
+            .bind(with: self) { owner, model in
+                if owner.realPostData[model.currentRow].productId == model.productId {
+                    owner.realPostData[model.currentRow] = model
+                    owner.postsDatas.accept(owner.realPostData)
+                } else {
+                    owner.realPostData.remove(at: model.currentRow)
+                    owner.postsDatas.accept(owner.realPostData)
+                }
+            }
+            .disposed(by: disposeBag)
         
         return .init(
             networkError: networkError.asDriver(onErrorDriveWith: .never()),
@@ -234,7 +248,9 @@ extension SNSPhotoMainViewModel: LikeStateProtocol {
 extension SNSPhotoMainViewModel: ModifyDelegate {
     
     func mofifyedModel(_ model: SNSDataModel) {
-        allReloadTrigger.accept(())
+         // model.productId 해당 것과 비교후 변경
+        // 현재 로우 왜 현재 반영 안되고 있는지 확인할것.
+        ifModifyModel.accept(model)
     }
     
 }

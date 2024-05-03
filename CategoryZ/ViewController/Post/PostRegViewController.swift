@@ -198,12 +198,14 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             .drive(with: self) { owner, model in
                 
                 owner.showAlert(title: "업로드", message: "업로드 성공") { _ in
-                    if owner.ifModifyModel == nil {
+                    if let before = owner.ifModifyModel {
+
+                         owner.navigationController?.popViewController(animated: true)
+                        model.currentRow = before.currentRow
+                        owner.modifyDelegate?.mofifyedModel(model)
+                    } else {
                         NotificationCenter.default.post(name: .successPost, object: nil)
                         owner.dismiss(animated: true)
-                    } else {
-                         owner.navigationController?.popViewController(animated: true)
-                        owner.modifyDelegate?.mofifyedModel(model)
                     }
                 }
             }
