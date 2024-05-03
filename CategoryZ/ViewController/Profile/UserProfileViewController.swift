@@ -53,6 +53,9 @@ final class UserProfileViewController: RxBaseViewController {
     let selectedProductId = BehaviorRelay(value: ProductID.dailyRoutine)
     
     private
+    let moveProfile = PublishRelay<Creator> ()
+    
+    private
     enum Section: Int {
         case profile // Profile 모델
         case poster // SNSDataModel
@@ -194,6 +197,19 @@ final class UserProfileViewController: RxBaseViewController {
                     owner.navigationController?.pushViewController(vc, animated: true)
                 }
             }
+            .disposed(by: disPoseBag)
+        
+        moveProfile
+            .bind(with: self) { owner, creator in
+                guard let userId = UserIDStorage.shared.userID else { return }
+                let vc = UserProfileViewController()
+                if creator.userID == userId {
+                    vc.profileType = .me
+                } else {
+                    vc.profileType = .other(otherUserId: creator.userID)
+                }
+                owner.navigationController?.pushViewController(vc, animated: true)
+        }
             .disposed(by: disPoseBag)
         
     }
@@ -339,6 +355,8 @@ extension UserProfileViewController: MoveToProfileModify, MoveToLikePosters, Mov
     
     func moveFollowORFollower(_ followType: MoveFllowOrFollower, creator: [Creator]) {
         let vc = FollowerAndFolowingViewController()
+        vc.moveProfileDelegate = self
+        
         switch followType {
         case .follow(let profileType):
             vc.setModel(creator, followType: .following, isME: profileType)
@@ -347,5 +365,11 @@ extension UserProfileViewController: MoveToProfileModify, MoveToLikePosters, Mov
         }
         
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension UserProfileViewController: moveProfileDelegate {
+    func moveProfile(_ model: Creator) {
+        moveProfile.accept(model)
     }
 }

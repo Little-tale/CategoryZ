@@ -9,35 +9,21 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-/*
- //1. 팔로워 인지 팔로워 인지 구분져야함
- 
- //2. 본인 팔로워 인지 팔로우 인지도 구분해야함
- 
- // 본인 팔로워 일땐 버튼이 없어져야함
- // 본인 팔로잉 일땐 팔로우취소할지 팔로우 할지
- 
- 즉 타인이든 본인읻든 프로필 조회를 다시 해와야 간편해짐
- 
- // 타인 : 팔로우 인지 팔로잉인지 나와야 하는데 이때 보인 프로필 조회를 또 해야 하나?
- // 팔로잉 도 똑같음
- 
- /*
-  여기서 유저 아이디가 본인 아이디와 같다면....?
-  그때도... 하...
-  다시 갈고 해보자
-  */
- 
- */
+
 enum FollowType {
     case follower
     case following
+}
+protocol moveProfileDelegate: NSObject {
+    func moveProfile(_ model: Creator)
 }
 
 final class FollowerAndFolowingViewController: RxHomeBaseViewController<FollowerAndFollowingView> {
     
     private
     let viewModel = FollowerFollowingViewModel()
+    
+    weak var moveProfileDelegate: moveProfileDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +55,14 @@ final class FollowerAndFolowingViewController: RxHomeBaseViewController<Follower
             inputMyId: myID
         )
         
+        rx.viewWillAppear
+            .skip(1)
+            .bind { _ in
+                let value = behaviorRelay.value
+                behaviorRelay.accept(value)
+            }
+            .disposed(by: disPoseBag)
+        
         let output = viewModel.transform(input)
         
         // 에러 발생시
@@ -85,8 +79,30 @@ final class FollowerAndFolowingViewController: RxHomeBaseViewController<Follower
         }
         .disposed(by: disPoseBag)
         
-    
+        homeView.tableView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                owner.homeView.tableView.deselectRow(at: indexPath, animated: true)
+            }
+            .disposed(by: disPoseBag)
         
+        homeView.tableView.rx.modelSelected(Creator.self)
+            .bind(with: self) { owner, creator in
+                guard let userId = UserIDStorage.shared.userID else {
+                    owner.errorCatch(
+                        .loginError(statusCode: 419, description: "재 로그인 요망"))
+                    return
+                }
+                
+                if userId == creator.userID {
+                    return
+                }
+                
+                let vc = UserProfileViewController()
+                vc.profileType = .other(otherUserId: creator.userID)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
+    
     }
     
     private

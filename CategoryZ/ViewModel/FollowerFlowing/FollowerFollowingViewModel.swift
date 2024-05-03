@@ -104,7 +104,8 @@ final class FollowerFollowingViewModel: RxViewModelType {
         
         updatedCreators
             .bind(with: self) { owner, creators in
-                owner.followUsers.append(contentsOf: creators)
+                // owner.followUsers.append(contentsOf: creators)
+                owner.followUsers = creators
                 followTypePersons.accept(owner.followUsers)
             }
             .disposed(by: disposeBag)
