@@ -22,7 +22,7 @@ final class SearchHashTagViewModel: RxViewModelType {
     
     struct Output {
         let networkError: Driver<NetworkError>
-        let successModel: Driver<[SNSDataModel]>
+        let successModel: BehaviorRelay<[SNSDataModel]>
     }
     
     func transform(_ input: Input) -> Output {
@@ -63,7 +63,7 @@ final class SearchHashTagViewModel: RxViewModelType {
         
         return Output(
             networkError: outputError.asDriver(onErrorJustReturn: .loginError(statusCode: 419, description: "재시도")),
-            successModel: outputModels.asDriver()
+            successModel: outputModels
         )
     }
     

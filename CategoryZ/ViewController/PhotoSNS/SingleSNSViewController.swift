@@ -19,7 +19,7 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
     override func viewDidLoad() {
         super.viewDidLoad()
         homeView.singleView.rightMoreBuntton.isHidden = true
-        
+        homeView.singleView.contentLable.asHashTag()
     }
     weak var ifChangeOfLikeDelegate: changedIfLikeModel?
     

@@ -71,7 +71,9 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     private
     func viewWillNavigationSettring(){
         // MARK: 네비게이션 세팅
-        let searchViewController = SearchHashTagViewController()
+        let searchViewController = SearchHashTagViewController(
+            backNavigation: navigationController
+        )
         
         let searchController = UISearchController(searchResultsController: searchViewController)
         
@@ -79,6 +81,8 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
          searchController.hidesNavigationBarDuringPresentation = true
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
+        
+        
         
         
         searchController.searchBar.rx.text.orEmpty

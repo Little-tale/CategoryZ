@@ -11,6 +11,8 @@ import RxCocoa
 
 final class SearchHashTagViewController: RxHomeBaseViewController<RxCollectionView> {
     
+    weak var backNavigation: UINavigationController?
+    
     enum Section: Int, CaseIterable{
         case posts
     }
@@ -23,7 +25,10 @@ final class SearchHashTagViewController: RxHomeBaseViewController<RxCollectionVi
     
     private 
     var dataSource: DataSource?
-    
+    init(backNavigation: UINavigationController?) {
+        self.backNavigation = backNavigation
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,11 +59,27 @@ final class SearchHashTagViewController: RxHomeBaseViewController<RxCollectionVi
         let output = viewModel.transform(input)
         
         output.successModel
-            .drive(with: self) { owner, models in
+            .bind(with: self) { owner, models in
                 print(models)
                 owner.applySnapshot(models: models)
             }
             .disposed(by: disPoseBag)
+        
+        homeView.collectionView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                // 시점 문제로 인한 처리
+                if output.successModel.value.count < indexPath.item + 1 {
+                    return
+                }
+            
+                let value = output.successModel.value[indexPath.item]
+                
+                let vc = SingleSNSViewController()
+                vc.setModel(value)
+                owner.backNavigation?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
+    
     }
     
     

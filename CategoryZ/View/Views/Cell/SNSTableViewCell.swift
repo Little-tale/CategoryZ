@@ -190,6 +190,8 @@ final class SNSTableViewCell: RxBaseTableViewCell {
                 }
             }
             .disposed(by: disposeBag)
+        // 라벨 해쉬태그화
+        contentLable.asHashTag()
     }
     
     

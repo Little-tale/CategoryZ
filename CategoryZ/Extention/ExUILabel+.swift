@@ -16,4 +16,22 @@ extension UILabel {
         textAlignment = .left
     }
     
+    func asHashTag() {
+        if let text{
+            let attributeString = NSMutableAttributedString(string: text)
+            
+            let matches = RegularExpressionManager.hashTag
+                .matchesResults(text)
+            
+            for match in matches {
+                attributeString.addAttribute(
+                    NSAttributedString.Key.foregroundColor,
+                    value: JHColor.point,
+                    range: match.range
+                )
+            }
+            
+            attributedText = attributeString
+        }
+    }
 }
