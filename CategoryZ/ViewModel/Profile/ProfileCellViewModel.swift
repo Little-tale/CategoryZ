@@ -90,7 +90,7 @@ final class ProfileCellViewModel: RxViewModelType {
             }
             .bind { result in
                 switch result {
-                case .success(let model):
+                case .success(_):
                     // currenFollowing.accept(!currenFollowing.value)
                     outputReloadTrigger.accept(())
                 case .failure(let error):

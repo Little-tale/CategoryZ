@@ -28,11 +28,9 @@ final class SearchHashTagViewController: RxHomeBaseViewController<RxCollectionVi
         super.viewDidLoad()
         
     }
-    
-    
+
     override func designView() {
         homeView.collectionView.setCollectionViewLayout(CustomProfileCollectionViewLayout.createSearchCollectionViewLayout(), animated: true)
-        view.backgroundColor = .red
     }
     
     func getText(_ text: String) {
@@ -67,7 +65,13 @@ final class SearchHashTagViewController: RxHomeBaseViewController<RxCollectionVi
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         viewModel.disposeBag = .init()
+        disPoseBag = .init()
     }
+    
+    deinit{
+        print("Deinit For SearchControl")
+    }
+    
 }
 
 extension SearchHashTagViewController {
@@ -100,9 +104,9 @@ extension SearchHashTagViewController {
             }
         )
         
-        dataSource?.supplementaryViewProvider = { [unowned self]
+        dataSource?.supplementaryViewProvider = { [weak self]
             (collectionView, kind, indexPath) -> UICollectionReusableView? in
-            
+            guard let self else { return nil }
             guard kind == UICollectionView.elementKindSectionHeader else { return nil }
             
             guard let header = collectionView.dequeueReusableSupplementaryView(

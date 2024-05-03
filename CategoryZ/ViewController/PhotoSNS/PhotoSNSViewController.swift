@@ -20,8 +20,7 @@ import RxReusableKit
 
 final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     
-    private
-    let searchViewController = SearchHashTagViewController()
+    
     
     typealias RxHeaderDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String,ProductID>>
     
@@ -59,6 +58,44 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 let vc = UserProfileViewController()
                 vc.profileType = profileType
                 owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
+        // MARK: 네비게이션 세팅
+        viewWillNavigationSettring()
+    }
+    override func navigationSetting() {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 25))
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = JHImage.appLogoImage
+        navigationItem.titleView = imageView
+    }
+    
+    private
+    func viewWillNavigationSettring(){
+        // MARK: 네비게이션 세팅
+        let searchViewController = SearchHashTagViewController()
+        
+        let searchController = UISearchController(searchResultsController: searchViewController)
+        
+        searchController.searchBar.placeholder = "Search For HashTag"
+        searchController.hidesNavigationBarDuringPresentation = false
+        self.navigationItem.searchController = searchController
+        self.navigationItem.hidesSearchBarWhenScrolling = true
+        
+        
+        searchController.searchBar.rx.text.orEmpty
+            .skip(1)
+            .distinctUntilChanged()
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, text in
+                searchViewController.getText(text)
+            }
+            .disposed(by: disPoseBag)
+        
+        rx.viewDidDisapear
+            .bind(with: self) { owner, _ in
+                owner.navigationItem.searchController?.isActive = false
+                owner.navigationItem.searchController = nil
             }
             .disposed(by: disPoseBag)
     }
@@ -283,31 +320,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             .disposed(by: disPoseBag)
     }
     
-    override func navigationSetting() {
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 60, height: 25))
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = JHImage.appLogoImage
-        navigationItem.titleView = imageView
-         
-        let searchController = UISearchController(searchResultsController: searchViewController)
-        
-        searchController.searchBar.placeholder = "Search For HashTag"
-        
-        searchController.hidesNavigationBarDuringPresentation = false
-        
-        self.navigationItem.searchController = searchController
-        
-        self.navigationItem.hidesSearchBarWhenScrolling = true
-        
-        
-        searchController.searchBar.rx.text.orEmpty
-            .skip(1)
-            .debounce(.seconds(1), scheduler: MainScheduler.instance)
-            .bind(with: self) { owner, text in
-                owner.searchViewController.getText(text)
-            }
-            .disposed(by: disPoseBag)
-    }
+    
 }
 
 

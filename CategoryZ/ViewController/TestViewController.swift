@@ -179,7 +179,7 @@ final class TestViewController: UIViewController {
         //            }
         //            .disposed(by: disposeBag)
         
-        let comment = CommentWriteQuery(content: "댓글 수정합니다")
+//        let comment = CommentWriteQuery(content: "댓글 수정합니다")
         
         //        NetworkManager.fetchNetwork(model: ComentsModel.self, router: .comments(.commentsWrite(query: comment, postId: "661a9b61e8473868acf65bff")))
         //            .subscribe(with: self) { owner, result in

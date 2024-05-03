@@ -33,8 +33,10 @@ final class SearchHashTagViewModel: RxViewModelType {
         let outputError = PublishRelay<NetworkError> ()
         
         let combineDebounce = Observable.combineLatest(
-            input.behaiviorText.debounce(.seconds(1), scheduler: MainScheduler.instance),
-            behaiviorProductID
+            input.behaiviorText
+                .debounce(.seconds(1) , scheduler: MainScheduler.instance)
+                .distinctUntilChanged(),
+            behaiviorProductID.distinctUntilChanged()
         )
         
         combineDebounce
