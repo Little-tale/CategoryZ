@@ -17,7 +17,7 @@ final class LikeViewModel: RxViewModelType {
     var next: String? = nil
     
     private
-    let limit = "10"
+    let limit = "12"
     
     
     let realModel = BehaviorRelay<[SNSDataModel]> (value: [])
@@ -27,6 +27,7 @@ final class LikeViewModel: RxViewModelType {
     
     struct Input {
         let startTriggerSub: BehaviorRelay<Void>
+        let currentCellItemAt: PublishRelay<Int>
     }
     
     struct Output {
@@ -39,6 +40,9 @@ final class LikeViewModel: RxViewModelType {
         
         let networkError = PublishRelay<NetworkError> ()
         let publishVoid = PublishRelay<Void> ()
+        let needMoreTrigger = PublishRelay<Void> ()
+        
+        var totalCount = 0
         
         input.startTriggerSub
             .withUnretained(self)
@@ -54,11 +58,40 @@ final class LikeViewModel: RxViewModelType {
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let model):
-                    publishVoid.accept(())
+                    
+                    print("** 서버에서 주는 ",model.nextCursor)
+                    print("** 요청시점 토탈개수", owner.realModel.value.count)
                     owner.next = model.nextCursor
-                    owner.realModel.accept(model.data)
+                    if owner.realModel.value.isEmpty {
+                        owner.realModel.accept(model.data)
+                    } else {
+                        var value = owner.realModel.value
+                        value.append(contentsOf: model.data)
+                        owner.realModel.accept(value)
+                    }
+                    totalCount =  owner.realModel.value.count
+                    publishVoid.accept(())
                 case .failure(let error):
                     networkError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        
+        input.currentCellItemAt
+            .withUnretained(self)
+            .filter({owner, cellInfo in
+                print("** 필터 되기전 현재셀정보 : \(cellInfo)")
+                print("** 필터 되기전 넥스트\(owner.next ?? "nopppe")")
+                print("** 필터 시점 토탈개수", owner.realModel.value.count)
+                return owner.next != nil && owner.next != "0"
+            })
+            .filter({ _ in
+                return totalCount != 0
+            })
+            .bind { currentAt in
+                if (totalCount - 1) <= currentAt.1 {
+                    input.startTriggerSub.accept(())
                 }
             }
             .disposed(by: disposeBag)

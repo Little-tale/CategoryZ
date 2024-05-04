@@ -37,10 +37,11 @@ final class LikeViewController: RxBaseViewController {
     override func subscriver() {
         let startTriggerSub = BehaviorRelay<Void> (value: ())
         
-      
+        let currentCellItemAt = PublishRelay<Int> ()
         
         let input = LikeViewModel.Input(
-            startTriggerSub: startTriggerSub
+            startTriggerSub: startTriggerSub,
+            currentCellItemAt: currentCellItemAt
         )
         
         let output = viewModel.transform(input)
@@ -66,6 +67,12 @@ final class LikeViewController: RxBaseViewController {
             }
             .disposed(by: disPoseBag)
         
+        collectionView.rx.willDisplayCell
+            .bind { cellInfo in
+                currentCellItemAt.accept(cellInfo.at.item)
+            }
+            .disposed(by: disPoseBag)
+        
     }
     
     private
@@ -78,11 +85,12 @@ final class LikeViewController: RxBaseViewController {
     private
     func collectionViewRxSetting(_ models: BehaviorRelay<[SNSDataModel]>) {
         
+        
         models
             .distinctUntilChanged()
             .bind(to: collectionView.rx.items(cellIdentifier: PinterestCell.reusableIdenti, cellType: PinterestCell.self)) {
                 row, item, cell in
-                
+                print("** 방출시점 갯수",models.value.count)
                 cell.layer.cornerRadius = 12
                 if !item.animated {
                     cell.transform = CGAffineTransform(
@@ -96,7 +104,7 @@ final class LikeViewController: RxBaseViewController {
                 cell.setModel(item)
             }
             .disposed(by: disPoseBag)
-        
+
         
         rx.viewWillAppear
             .skip(1)
@@ -124,7 +132,7 @@ final class LikeViewController: RxBaseViewController {
 extension LikeViewController: CustomPinterestLayoutDelegate {
     
     func collectionView(for collectionView: UICollectionView, heightForAtIndexPath indexPath: IndexPath) -> CGFloat {
-        
+        print("**셀을 그리는 펑션입장 : \(indexPath.item)")
         let model = viewModel.realModel.value[indexPath.item]
         
         let aspectString = model.content3

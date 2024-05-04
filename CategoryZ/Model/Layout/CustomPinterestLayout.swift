@@ -71,14 +71,15 @@ final class CustomPinterestLayout: UICollectionViewFlowLayout {
     // 2. 컬렉션뷰가 처음 초기화 되거나, 뷰가 변경될때 실행됩니다.
     // ... 해당 메서드는 레이아웃을 미리 계산 하고  메모리에 캐쉬하여
     // ... 불필요한 반복적인 연산을 하는것을 방지하도록 해야한다.
+    // ISSUE: 페이지 네이션 하려면 캐시 존재 여부로 PREPARE 해놓으면 일안함
     override func prepare() {
         guard let collectionView = collectionView,
               collectionView.numberOfSections > 0,
-              collectionView.numberOfItems(inSection: 0) > 0,
-              cache.isEmpty else {
+              collectionView.numberOfItems(inSection: 0) > 0 else {
             return
         }
         cache.removeAll()
+        contentsHeight = 0
         
         let cellWidth = contetnsWidth / CGFloat(numberOfColums)
         
@@ -104,11 +105,11 @@ final class CustomPinterestLayout: UICollectionViewFlowLayout {
             yOffSet[0] = headerAttribute.frame.maxY
             
         } else {
-            yOffSet = [CGFloat](repeating: 0, count: numberOfColums)
+            yOffSet = [CGFloat](repeating: headerHeight ?? 0, count: numberOfColums)
         }
         
         // cell 의 X위치를 나타내는 배열입니다.
-        let xOffSet:[CGFloat] = [0, cellWidth]
+        let xOffSet:[CGFloat] = (0..<numberOfColums).map { CGFloat($0) * cellWidth }
 
         var colum: Int = 0 // 현재 행의 위치
         

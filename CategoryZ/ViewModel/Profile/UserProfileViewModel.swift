@@ -62,6 +62,7 @@ final class UserProfileViewModel: RxViewModelType {
         )
         
         combineRequest
+            .throttle(.milliseconds(100), scheduler: MainScheduler.asyncInstance)
             .debounce(.milliseconds(200), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .map { owner, request in
