@@ -31,11 +31,7 @@ final class UserProfileViewModel: RxViewModelType {
     
     func transform(_ input: Input) -> Output {
         let limit = 20
-        var nextCursor: String? = nil {
-            didSet {
-                print("다음 커서",nextCursor)
-            }
-        }
+        var nextCursor: String? = nil
         
         var currentTotal = 0
         let needMoreTrigger = PublishRelay<Void> ()
@@ -53,6 +49,7 @@ final class UserProfileViewModel: RxViewModelType {
         let start = PublishRelay<ProductID> ()
         
         input.inputProducID
+            .distinctUntilChanged()
             .bind { id in
                 nextCursor = nil
                 start.accept(id)
@@ -96,6 +93,7 @@ final class UserProfileViewModel: RxViewModelType {
                     currentTotal = owner.realModel.count
                     
                     print("현재 모델수",currentTotal)
+                    print("다음 커서: ", model.nextCursor)
                     
                     postReadMainModel.accept(owner.realModel)
                 case .failure(let fail):
@@ -137,11 +135,13 @@ final class UserProfileViewModel: RxViewModelType {
             .filter { $0 != .me }
         
         input.currentCellAt
+            .distinctUntilChanged()
             .filter({ _ in
                 currentTotal != 0
             })
             .bind { at in
-                if (currentTotal - 3) >= at {
+                print("요청 예정임 현\(currentTotal) 셀\(at), 다음요청건\(nextCursor)")
+                if currentTotal >= (at - 3) {
                     needMoreTrigger.accept(())
                 }
             }
@@ -149,12 +149,13 @@ final class UserProfileViewModel: RxViewModelType {
             
         needMoreTrigger
             .filter { _ in
+                print("needMoreTrigger: \(nextCursor)")
                 return (nextCursor != "0" && nextCursor != nil)
             }
             .map({ _ in
                 return nextCursor
             })
-            .distinctUntilChanged()
+            
             .withLatestFrom(combineRequest)
             .map { request in
                 switch request.0 {
@@ -175,13 +176,15 @@ final class UserProfileViewModel: RxViewModelType {
             }
             .flatMapLatest { request in
                 print("요청시 \(request)")
-                return NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.userCasePostRead(userId: request.0!, next: nextCursor, limit: String(limit), productId: request.1)))
+                print("재 요청 시점: \(nextCursor)")
+                return NetworkManager.fetchNetwork(model: SNSMainModel.self, router: .poster(.userCasePostRead(userId: request.0!, next: nextCursor, limit: String(limit), productId: request.1)))
             }
             .bind(with: self) {owner, result in
                 switch result {
                 case .success(let model):
                     owner.realModel.append(contentsOf: model.data)
                     currentTotal = owner.realModel.count
+                    nextCursor = model.nextCursor
                     print("통신 결과",model.data)
                     print("통신 결과 : \(model)")
                     postReadMainModel.accept(owner.realModel)
