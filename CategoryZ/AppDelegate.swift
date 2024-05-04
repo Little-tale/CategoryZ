@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.disabledToolbarClasses = [ CommentViewController.self ]
         IQKeyboardManager.shared.disabledDistanceHandlingClasses = [CommentViewController.self]
 
-        
+        UINavigationBar.appearance().isTranslucent = false
         
         return true
     }

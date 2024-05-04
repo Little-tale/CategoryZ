@@ -91,8 +91,6 @@ final class UserProfileViewController: RxBaseViewController {
     
     override func navigationSetting() {
         navigationItem.title = "프로필"
-        navigationController?.navigationBar.isTranslucent = false
-        tabBarController?.tabBar.isTranslucent = false
     }
     
     private

@@ -151,6 +151,6 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
     
     override func navigationSetting() {
         navigationItem.title = "설정"
-        navigationController?.navigationBar.isTranslucent = true
+        // navigationController?.navigationBar.isTranslucent = true
     }
 }
