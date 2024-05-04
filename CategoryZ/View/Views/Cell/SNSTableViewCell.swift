@@ -68,6 +68,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     private let contentLable = UILabel().then {
         $0.font = JHFont.UIKit.re12
         $0.numberOfLines = 3
+        $0.textColor = JHColor.black
     }
     
     // 날짜 라벨인데 (몇일전인지 계산하기)
@@ -147,8 +148,12 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             .disposed(by: disposeBag)
         
         // 컨텐트 반영
+      
         output.content
-            .drive(contentLable.rx.text)
+            .drive(with: self) { owner, text in
+                owner.contentLable.text = text
+                owner.contentLable.asHashTag()
+            }
             .disposed(by: disposeBag)
         
         // 지난 시간 반영
@@ -190,8 +195,6 @@ final class SNSTableViewCell: RxBaseTableViewCell {
                 }
             }
             .disposed(by: disposeBag)
-        // 라벨 해쉬태그화
-        contentLable.asHashTag()
     }
     
     
@@ -263,7 +266,13 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        prepareList()
+    }
+    
+    private
+    func prepareList(){
         profileImageView.image = nil
-         viewModel = .init()
+        viewModel = .init()
+        contentLable.textColor = JHColor.black
     }
 }
