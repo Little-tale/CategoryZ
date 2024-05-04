@@ -20,9 +20,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.resignOnTouchOutside = true
         IQKeyboardManager.shared.disabledToolbarClasses = [ CommentViewController.self ]
         IQKeyboardManager.shared.disabledDistanceHandlingClasses = [CommentViewController.self]
-
-        UINavigationBar.appearance().isTranslucent = false
         
+        if #available(iOS 15, *) {
+            let appearnace = UINavigationBarAppearance()
+            appearnace.configureWithOpaqueBackground()
+            appearnace.titleTextAttributes = [NSAttributedString.Key.foregroundColor : JHColor.black]
+            appearnace.backgroundColor = JHColor.white
+            UINavigationBar.appearance().standardAppearance = appearnace
+            UINavigationBar.appearance().compactAppearance = appearnace
+            UINavigationBar.appearance().scrollEdgeAppearance = appearnace
+        }
         return true
     }
 

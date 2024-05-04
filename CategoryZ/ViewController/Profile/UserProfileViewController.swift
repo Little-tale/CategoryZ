@@ -101,9 +101,7 @@ final class UserProfileViewController: RxBaseViewController {
 
         let currentCellAt = BehaviorRelay(value: 0)
         var currentCount = 0
-        
-        
-        
+    
         let input = UserProfileViewModel.Input(
             inputProfileType: behaiviorProfile,
             inputProducID: selectedProductId,
@@ -143,10 +141,7 @@ final class UserProfileViewController: RxBaseViewController {
         rx.viewDidAppear
             .skip(2)
             .bind(with: self) { owner, _ in
-                if currentCount > 0 {
-                    owner.collectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
-                    behaiviorProfile.accept(owner.profileType)
-                }
+                behaiviorProfile.accept(owner.profileType)
             }
             .disposed(by: disPoseBag)
         

@@ -57,7 +57,7 @@ final class UserProfileViewModel: RxViewModelType {
             .disposed(by: disposeBag)
         
         let combineRequest = Observable.combineLatest(
-            input.inputProfileType,
+            input.inputProfileType.distinctUntilChanged(),
             start.startWith(input.inputProducID.value)
         )
         
@@ -103,6 +103,7 @@ final class UserProfileViewModel: RxViewModelType {
             .disposed(by: disposeBag)
         
         input.inputProfileType
+            .distinctUntilChanged()
             .filter { $0 != .me }
             .map { type -> String in
                 switch type {
