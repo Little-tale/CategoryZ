@@ -35,12 +35,12 @@ final class LoginView: RxBaseView {
         startMent.snp.makeConstraints { make in
             make.centerX.equalTo(safeAreaLayoutGuide)
             make.top.equalTo(safeAreaLayoutGuide).offset(14)
+            make.height.equalTo(30)
         }
         imageView.snp.makeConstraints { make in
-            // make.top.equalTo(startMent.snp.bottom).offset(50)
-            // make.width.equalTo(imageView.snp.height)
-            make.size.equalTo(140)
+            make.top.equalTo(startMent.snp.bottom).offset(20)
             make.centerX.equalTo(safeAreaLayoutGuide)
+            make.width.equalTo(imageView.snp.height)
             make.bottom.equalTo(emailTextField.snp.top).inset( -16 )
         }
         emailTextField.snp.makeConstraints { make in

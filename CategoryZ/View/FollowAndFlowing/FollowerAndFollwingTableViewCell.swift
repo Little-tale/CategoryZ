@@ -21,7 +21,7 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
     
     private
     let userNameLabel = UILabel().then {
-        $0.font = JHFont.UIKit.bo20
+        $0.font = JHFont.UIKit.bo17
         $0.textColor = JHColor.black
     }
     
@@ -93,11 +93,11 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
             
             make.leading.equalTo(contentView.safeAreaLayoutGuide).offset(20)
             
-            make.top.equalTo(contentView.safeAreaLayoutGuide).offset(10)
+            make.top.equalToSuperview().offset(10)
             
-            make.size.equalTo(60)
+            make.size.equalTo(50)
             
-            make.bottom.equalToSuperview().inset(20).priority(.high)
+            make.bottom.lessThanOrEqualToSuperview().inset(15)
         }
         
         userNameLabel.snp.makeConstraints { make in
@@ -111,7 +111,6 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
             make.trailing.equalTo(contentView.safeAreaLayoutGuide)
                 .inset(20)
             make.centerY.equalTo(userImageView)
-            
         }
     }
     

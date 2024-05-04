@@ -23,7 +23,12 @@ final class KingFisherNet: ImageDownloadRequestModifier {
             return nil
         }
         var components = URLComponents(string: baseURL)
-        components?.path = version + (request.url?.path() ?? "")
+        
+        if #available(iOS 16.0, *) {
+            components?.path = version + (request.url?.path() ?? "")
+        } else {
+            components?.path = version + (request.url?.path ?? "")
+        }
         
         guard let url = components?.url else {
             return nil
