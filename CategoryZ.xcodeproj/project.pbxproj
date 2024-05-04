@@ -99,6 +99,7 @@
 		7BC06FD42BE01A6400651529 /* DeleteUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC06FD32BE01A6400651529 /* DeleteUserViewModel.swift */; };
 		7BC4E5072BE6540400F0C5C2 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 7BC4E5062BE6540400F0C5C2 /* Lottie */; };
 		7BC4E5092BE6546B00F0C5C2 /* Lunning.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BC4E5082BE6546B00F0C5C2 /* Lunning.json */; };
+		7BC4E50C2BE673F900F0C5C2 /* CustomTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4E50B2BE673F900F0C5C2 /* CustomTabbar.swift */; };
 		7BC51B462BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B452BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift */; };
 		7BC51B492BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B482BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift */; };
 		7BC51B4B2BD019D600E5BF6C /* CursurModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */; };
@@ -262,6 +263,7 @@
 		7BC06FD12BE019B100651529 /* CheckedUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckedUserView.swift; sourceTree = "<group>"; };
 		7BC06FD32BE01A6400651529 /* DeleteUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserViewModel.swift; sourceTree = "<group>"; };
 		7BC4E5082BE6546B00F0C5C2 /* Lunning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Lunning.json; sourceTree = "<group>"; };
+		7BC4E50B2BE673F900F0C5C2 /* CustomTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabbar.swift; sourceTree = "<group>"; };
 		7BC51B452BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBaseTableViewCell.swift; sourceTree = "<group>"; };
 		7BC51B482BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSPhotoMainViewModel.swift; sourceTree = "<group>"; };
 		7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursurModel.swift; sourceTree = "<group>"; };
@@ -801,6 +803,7 @@
 		7BA0E0E02BCD744C002F0516 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7BC4E50A2BE673E800F0C5C2 /* Tabbar */,
 				7B9403342BE25DE5004A1A8E /* Donate */,
 				7B87F0FA2BD3FE700006178F /* Profile */,
 				7B838E0F2BCFD96E000F2E27 /* SrollImageView */,
@@ -818,6 +821,14 @@
 				7BA0E0EE2BCD76D0002F0516 /* PostRegViewModel.swift */,
 			);
 			path = PostReg;
+			sourceTree = "<group>";
+		};
+		7BC4E50A2BE673E800F0C5C2 /* Tabbar */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4E50B2BE673F900F0C5C2 /* CustomTabbar.swift */,
+			);
+			path = Tabbar;
 			sourceTree = "<group>";
 		};
 		7BC51B472BCFF62800E5BF6C /* SNSPhotoMain */ = {
@@ -1242,6 +1253,7 @@
 				7BCF4A3A2BC5AF4A00BCE635 /* RxBaseViewController.swift in Sources */,
 				7B0BB2F72BD4A24200770A04 /* UserProfileViewModel.swift in Sources */,
 				7B1EE3F72BDE417A00F109EB /* RxBaseCollectionViewCell.swift in Sources */,
+				7BC4E50C2BE673F900F0C5C2 /* CustomTabbar.swift in Sources */,
 				7BCF4A812BC92C7800BCE635 /* CommonError .swift in Sources */,
 				7BCF4AA62BCBFA6D00BCE635 /* UserIDStorage.swift in Sources */,
 				7BC51B5E2BD0FFD200E5BF6C /* DateManager.swift in Sources */,
