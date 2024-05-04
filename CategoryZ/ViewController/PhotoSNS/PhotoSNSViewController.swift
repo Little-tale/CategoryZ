@@ -77,9 +77,6 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
         
-        
-        
-        
         searchController.searchBar.rx.text.orEmpty
             .skip(1)
             .distinctUntilChanged()
@@ -95,7 +92,8 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 owner.navigationItem.searchController = nil
             }
             .disposed(by: disPoseBag)
-        
+    
+        navigationController?.hidesBarsOnSwipe = true
     }
     
     override func subscribe() {

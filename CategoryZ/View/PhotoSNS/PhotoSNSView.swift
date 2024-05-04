@@ -14,6 +14,11 @@ final class PhotoSNSView: RxBaseView {
     lazy var headerView = SNSHeaderWithCollectionView(frame: CGRect(x: 0, y: 0, width: frame.width, height: 74)
     )
     
+    private
+    let emptyView = UIView().then {
+        $0.backgroundColor = JHColor.white
+    }
+    
     let tableView = UITableView(frame: .zero).then {
         $0.separatorStyle = .none
     }
@@ -25,12 +30,17 @@ final class PhotoSNSView: RxBaseView {
     
     override func configureHierarchy() {
         addSubview(tableView)
+        addSubview(emptyView)
         tableView.layer.addSublayer(layerLine)
     }
     override func configureLayout() {
+        emptyView.snp.makeConstraints { make in
+            make.top.horizontalEdges.equalToSuperview()
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.top)
+        }
         tableView.snp.makeConstraints { make in
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
-            make.top.equalTo(safeAreaLayoutGuide) // 슈퍼뷰로 해야 네비가 정상 작동됨...? 왜지
+            make.top.equalToSuperview()
         }
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 240
