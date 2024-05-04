@@ -30,8 +30,12 @@ final class UserProfileViewModel: RxViewModelType {
     }
     
     func transform(_ input: Input) -> Output {
-        let limit = 15
-        let nextCursor: String? = nil
+        let limit = 20
+        var nextCursor: String? = nil {
+            didSet {
+                print("다음 커서",nextCursor)
+            }
+        }
         
         var currentTotal = 0
         let needMoreTrigger = PublishRelay<Void> ()
@@ -46,9 +50,18 @@ final class UserProfileViewModel: RxViewModelType {
         
         let donateEnabledModel = BehaviorRelay<[SNSDataModel]> (value: [])
         
+        let start = PublishRelay<ProductID> ()
+        
+        input.inputProducID
+            .bind { id in
+                nextCursor = nil
+                start.accept(id)
+            }
+            .disposed(by: disposeBag)
+        
         let combineRequest = Observable.combineLatest(
             input.inputProfileType,
-            input.inputProducID
+            start.startWith(input.inputProducID.value)
         )
         
         combineRequest
@@ -73,15 +86,17 @@ final class UserProfileViewModel: RxViewModelType {
             }
             .flatMapLatest { request in
                 print("요청시 \(request)")
-                return NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.userCasePostRead(userId: request.0!, next: nextCursor, limit: String(limit), productId: request.1)))
+                return NetworkManager.fetchNetwork(model: SNSMainModel.self, router: .poster(.userCasePostRead(userId: request.0!, next: nextCursor, limit: String(limit), productId: request.1)))
             }
             .bind(with: self) {owner, result in
                 switch result {
                 case .success(let model):
                     owner.realModel = model.data
+                    nextCursor = model.nextCursor
                     currentTotal = owner.realModel.count
-                    print("통신 결과",model.data)
-                    print("통신 결과 : \(model)")
+                    
+                    print("현재 모델수",currentTotal)
+                    
                     postReadMainModel.accept(owner.realModel)
                 case .failure(let fail):
                     networkError.onNext(fail)
@@ -122,6 +137,9 @@ final class UserProfileViewModel: RxViewModelType {
             .filter { $0 != .me }
         
         input.currentCellAt
+            .filter({ _ in
+                currentTotal != 0
+            })
             .bind { at in
                 if (currentTotal - 3) >= at {
                     needMoreTrigger.accept(())
