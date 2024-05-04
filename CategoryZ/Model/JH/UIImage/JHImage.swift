@@ -51,4 +51,6 @@ extension JHImage {
     static let morePhotoImageWhite: UIImage = .multipleWhite
     
     static let morePostImage: UIImage = .more
+    
+    static let talent: UIImage = .talent
 }

@@ -53,11 +53,7 @@ final class ProfileHeaderView: UICollectionReusableView {
     private
     func bind(){
         
-        let behiber = BehaviorRelay(value: [
-            ProductID.dailyRoutine,
-            ProductID.fashion,
-            ProductID.pet
-        ])
+        let behiber = BehaviorRelay(value: ProductID.allCases)
         
         let selectedProduct = PublishRelay<ProductID> ()
         

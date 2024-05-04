@@ -22,11 +22,9 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     typealias SNSSectionModel = AnimatableSectionModel<String, SNSDataModel>
     
     private let headerItems = Observable.just([
-        SectionModel(model: "Section", items: [
-            ProductID.dailyRoutine,
-            ProductID.fashion,
-            ProductID.pet
-        ])
+        SectionModel(
+            model: "Section",
+            items: ProductID.allCases)
     ])
     
     private let viewModel = SNSPhotoMainViewModel()

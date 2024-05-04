@@ -12,18 +12,14 @@ enum ProductID: String, CaseIterable {
     case dailyRoutine = "CategoryZ_dailyRoutine"
     case fashion = "CategoryZ_fashion"
     case pet = "CategoryZ_pet"
+    case talent = "CategoryZ_telent"
+    case song = "CategoryZ_song"
+    case book = "CategoryZ_books"
     
     static let userProduct = "CategoryZ_UserDonate"
     
     var identi: String {
-        switch self {
-        case .dailyRoutine:
-            return "CategoryZ_dailyRoutine"
-        case .fashion:
-            return "CategoryZ_fashion"
-        case .pet:
-            return "CategoryZ_pet"
-        }
+        return rawValue
     }
     
     var image: UIImage {
@@ -34,6 +30,12 @@ enum ProductID: String, CaseIterable {
             return .fashion
         case .pet:
             return .pet
+        case .talent:
+            return .talent
+        case .song:
+            return .song
+        case .book:
+            return .book
         }
     }
     
@@ -45,6 +47,12 @@ enum ProductID: String, CaseIterable {
             return "패션"
         case .pet:
             return "애완동물"
+        case .talent:
+            return "연예인"
+        case .song:
+            return "Sing"
+        case .book:
+            return "독서"
         }
     }
     

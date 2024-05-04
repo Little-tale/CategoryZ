@@ -11,7 +11,7 @@ import Then
 
 final class PhotoSNSView: RxBaseView {
     
-    lazy var headerView = SNSHeaderWithCollectionView(frame: CGRect(x: 0, y: 0, width: frame.width, height: 66)
+    lazy var headerView = SNSHeaderWithCollectionView(frame: CGRect(x: 0, y: 0, width: frame.width, height: 74)
     )
     
     let tableView = UITableView(frame: .zero).then {
@@ -35,19 +35,10 @@ final class PhotoSNSView: RxBaseView {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 240
     }
-   
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        let borderWidth: CGFloat = 0.5
-//        layerLine.frame = CGRect(x: 0, y: 80, width: tableView.frame.width, height: borderWidth)
-//    }
     
     override func register() {
         tableView.register(SNSTableViewCell.self, forCellReuseIdentifier: SNSTableViewCell.reusableIdenti)
     }
     
-    override func designView() {
-        
-    }
 }
 

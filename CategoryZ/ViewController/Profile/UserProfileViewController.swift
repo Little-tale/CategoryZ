@@ -27,7 +27,8 @@ final class UserProfileViewController: RxBaseViewController {
     private
     let donateButton = UIButton()
     
-    private lazy var donateNavButton = UIBarButtonItem().then {
+    private 
+    lazy var donateNavButton = UIBarButtonItem().then {
         
         donateButton.setImage(JHImage.donateImage, for: .normal)
         donateButton.imageView?.frame = .init(x: 0, y: 0, width: 30, height: 30)

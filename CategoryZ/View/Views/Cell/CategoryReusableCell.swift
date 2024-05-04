@@ -16,8 +16,8 @@ final class CategoryReusableCell: BaseCollectionViewCell {
     private let cellImage = CircleImageView()
     
     private let nameLable = UILabel().then {
-        $0.font = JHFont.UIKit.bo14
-        $0.textColor = .textWhite
+        $0.font = JHFont.UIKit.bo12
+        $0.textColor = JHColor.black
     }
     
     override func configureHierarchy() {
@@ -25,18 +25,22 @@ final class CategoryReusableCell: BaseCollectionViewCell {
         contentView.addSubview(nameLable)
     }
     override func configureLayout() {
-        cellImage.snp.makeConstraints { make in
-            make.verticalEdges.horizontalEdges.equalTo(contentView.safeAreaLayoutGuide)
-            make.width.equalTo(cellImage.snp.height)
-        }
         nameLable.snp.makeConstraints { make in
-            make.center.equalTo(cellImage)
+            make.centerX.equalTo(cellImage)
+            make.bottom.equalToSuperview()
+            make.height.equalTo(14)
+        }
+        
+        cellImage.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.width.equalTo(cellImage.snp.height)
+            make.bottom.equalTo(nameLable.snp.top)
         }
     }
     
     func setSection(_ product: ProductID) {
         identi = product.identi
-        cellImage.image = product.image.blurCiMode(radius: 3)
+        cellImage.image = product.image
         nameLable.text = product.title
     }
     
