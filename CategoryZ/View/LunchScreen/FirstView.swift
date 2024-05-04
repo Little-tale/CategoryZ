@@ -8,21 +8,21 @@
 import UIKit
 import SnapKit
 import Then
+import Lottie
 
 final class FirstView: RxBaseView {
    
-    let imageView = UIImageView().then {
-        $0.image = .onboardP
-    }
+    let animaionView: LottieAnimationView = .init(name: "Lunning")
+        .then { 
+            $0.loopMode = .autoReverse
+        }
     
     override func configureHierarchy() {
-        addSubview(imageView)
+        addSubview(animaionView)
     }
     override func configureLayout() {
-        imageView.snp.makeConstraints { make in
-            make.center.equalToSuperview().dividedBy(0.5)
-            make.width.equalToSuperview().dividedBy(2)
-            make.height.equalTo(140)
+        animaionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
 }

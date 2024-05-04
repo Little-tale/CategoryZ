@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Lottie
 
 final class LunchScreenViewController: RxHomeBaseViewController<FirstView> {
     
@@ -18,14 +19,24 @@ final class LunchScreenViewController: RxHomeBaseViewController<FirstView> {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        homeView.animaionView.play()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        homeView.animaionView.stop()
+    }
+    
     override func subscribe() {
-        print(TokenStorage.shared.accessToken)
-        print(TokenStorage.shared.refreshToken)
+        
         let input = FirstViewValidViewModel.Input(viewdidAppearTrigger: rx.viewDidAppear)
         
         let output = viewModel.transform(input)
             
         output.changeViewController
+            .delay(.seconds(2))
             .drive(with: self) { owner, bool in
                 if bool {
                     // 현재는 이렇게 하지만 후에 탭바 컨트롤러로 교체
@@ -46,6 +57,8 @@ final class LunchScreenViewController: RxHomeBaseViewController<FirstView> {
         
     }
     
-    
+    deinit {
+        print("bye: LunchScreenViewController")
+    }
     
 }

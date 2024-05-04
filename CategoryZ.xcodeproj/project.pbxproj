@@ -97,6 +97,8 @@
 		7BC06FD02BE0190F00651529 /* CheckUserDeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC06FCF2BE0190F00651529 /* CheckUserDeleteViewController.swift */; };
 		7BC06FD22BE019B100651529 /* CheckedUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC06FD12BE019B100651529 /* CheckedUserView.swift */; };
 		7BC06FD42BE01A6400651529 /* DeleteUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC06FD32BE01A6400651529 /* DeleteUserViewModel.swift */; };
+		7BC4E5072BE6540400F0C5C2 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 7BC4E5062BE6540400F0C5C2 /* Lottie */; };
+		7BC4E5092BE6546B00F0C5C2 /* Lunning.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BC4E5082BE6546B00F0C5C2 /* Lunning.json */; };
 		7BC51B462BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B452BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift */; };
 		7BC51B492BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B482BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift */; };
 		7BC51B4B2BD019D600E5BF6C /* CursurModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */; };
@@ -259,6 +261,7 @@
 		7BC06FCF2BE0190F00651529 /* CheckUserDeleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserDeleteViewController.swift; sourceTree = "<group>"; };
 		7BC06FD12BE019B100651529 /* CheckedUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckedUserView.swift; sourceTree = "<group>"; };
 		7BC06FD32BE01A6400651529 /* DeleteUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserViewModel.swift; sourceTree = "<group>"; };
+		7BC4E5082BE6546B00F0C5C2 /* Lunning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Lunning.json; sourceTree = "<group>"; };
 		7BC51B452BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBaseTableViewCell.swift; sourceTree = "<group>"; };
 		7BC51B482BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNSPhotoMainViewModel.swift; sourceTree = "<group>"; };
 		7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursurModel.swift; sourceTree = "<group>"; };
@@ -357,6 +360,7 @@
 				7B11DC8F2BC58D250055D423 /* RxSwift in Frameworks */,
 				7B11DC882BC58CF20055D423 /* Alamofire in Frameworks */,
 				7B11DC922BC58D2F0055D423 /* Kingfisher in Frameworks */,
+				7BC4E5072BE6540400F0C5C2 /* Lottie in Frameworks */,
 				7B1EE4022BDE897A00F109EB /* SkeletonView in Frameworks */,
 				7B94031E2BE1DCC2004A1A8E /* BetterSegmentedControl in Frameworks */,
 				7B9403412BE26F89004A1A8E /* iamport-ios in Frameworks */,
@@ -409,6 +413,7 @@
 		7B11DC662BC58AD40055D423 /* CategoryZ */ = {
 			isa = PBXGroup;
 			children = (
+				7B61CAE32BE64CB800114BDE /* JsonFiles */,
 				7BCF4A3D2BC687C800BCE635 /* Storage */,
 				7BCF4A322BC5AA2900BCE635 /* Extention */,
 				7B11DCA82BC590C10055D423 /* Protocol */,
@@ -601,6 +606,22 @@
 				7B5E51362BD96BC100918C53 /* CommentViewModel.swift */,
 			);
 			path = Comment;
+			sourceTree = "<group>";
+		};
+		7B61CAE32BE64CB800114BDE /* JsonFiles */ = {
+			isa = PBXGroup;
+			children = (
+				7B61CAE62BE64CED00114BDE /* LunchScreen */,
+			);
+			path = JsonFiles;
+			sourceTree = "<group>";
+		};
+		7B61CAE62BE64CED00114BDE /* LunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				7BC4E5082BE6546B00F0C5C2 /* Lunning.json */,
+			);
+			path = LunchScreen;
 			sourceTree = "<group>";
 		};
 		7B838DD82BCEC953000F2E27 /* LunchScreen */ = {
@@ -1062,6 +1083,7 @@
 				7B1EE4012BDE897A00F109EB /* SkeletonView */,
 				7B94031D2BE1DCC2004A1A8E /* BetterSegmentedControl */,
 				7B9403402BE26F89004A1A8E /* iamport-ios */,
+				7BC4E5062BE6540400F0C5C2 /* Lottie */,
 			);
 			productName = CategoryZ;
 			productReference = 7B11DC642BC58AD40055D423 /* CategoryZ.app */;
@@ -1105,6 +1127,7 @@
 				7B1EE4002BDE897A00F109EB /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				7B94031C2BE1DCC2004A1A8E /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 				7B94033F2BE26F89004A1A8E /* XCRemoteSwiftPackageReference "iamport-ios" */,
+				7BC4E5052BE6540300F0C5C2 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 7B11DC652BC58AD40055D423 /* Products */;
 			projectDirPath = "";
@@ -1121,6 +1144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7BCF4A9B2BCBE5E100BCE635 /* Memo.txt in Resources */,
+				7BC4E5092BE6546B00F0C5C2 /* Lunning.json in Resources */,
 				7B11DC712BC58AD60055D423 /* Assets.xcassets in Resources */,
 				7B11DCA12BC58F620055D423 /* .gitignore in Resources */,
 				7B11DC742BC58AD60055D423 /* Base in Resources */,
@@ -1597,6 +1621,14 @@
 				minimumVersion = 1.4.1;
 			};
 		};
+		7BC4E5052BE6540300F0C5C2 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.0;
+			};
+		};
 		7BCF4A402BC688F100BCE635 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
@@ -1690,6 +1722,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B94033F2BE26F89004A1A8E /* XCRemoteSwiftPackageReference "iamport-ios" */;
 			productName = "iamport-ios";
+		};
+		7BC4E5062BE6540400F0C5C2 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BC4E5052BE6540300F0C5C2 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		7BCF4A412BC688F100BCE635 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
