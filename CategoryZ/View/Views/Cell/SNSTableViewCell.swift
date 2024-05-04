@@ -23,33 +23,38 @@ import Kingfisher
 final class SNSTableViewCell: RxBaseTableViewCell {
     
     // 이미지 스크롤 뷰 -> 안에 Rx 게심
-    private let imageScrollView = ScrollImageView().then {
+    private
+    let imageScrollView = ScrollImageView().then {
         $0.layer.cornerRadius = 15
         $0.clipsToBounds = true
     }
     
     // 크리에이터 이름 라벨
-    private let userNameLabel = UILabel().then {
+    private
+    let userNameLabel = UILabel().then {
         $0.font = JHFont.UIKit.re14
     }
     
     // 프로필 이미지뷰
-    private let profileImageView = CircleImageView().then {
+    private
+    let profileImageView = CircleImageView().then {
         $0.tintColor = JHColor.black
     }
+    
     let rightMoreBuntton = UIButton().then {
         $0.setImage(JHImage.moreImage, for: .normal)
         $0.tintColor = JHColor.black
     }
     
     // 좋아요 버튼 옆에는 몇명이 했는지..!
-    private let likeButton = SeletionButton(
+    private
+    let likeButton = SeletionButton(
         selected: JHImage.likeImageSelected,
         noSelected: JHImage.likeImageDiselected
-    )
-        .then { $0.tintColor = JHColor.likeColor }
+    ).then { $0.tintColor = JHColor.likeColor }
     
-    private let likeCountLabel = UILabel().then {
+    private
+    let likeCountLabel = UILabel().then {
         $0.font = JHFont.UIKit.bo14
     }
     
@@ -64,20 +69,25 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     let commentCountLabel = UILabel().then({
         $0.font = JHFont.UIKit.bo14
     })
+    
     // 컨텐트 라벨
-    private let contentLable = UILabel().then {
+    private
+    let contentLable = UILabel().then {
         $0.font = JHFont.UIKit.re12
         $0.numberOfLines = 3
         $0.textColor = JHColor.black
     }
     
     // 날짜 라벨인데 (몇일전인지 계산하기)
-    private let dateLabel = UILabel().then {
+    private
+    let dateLabel = UILabel().then {
         $0.font = JHFont.UIKit.re10
+        $0.textColor = JHColor.darkGray
     }
 
     // 뷰모델
-    private var viewModel = SNSTableViewModel()
+    private 
+    var viewModel = SNSTableViewModel()
     
     func setModel(_ model: SNSDataModel, _ userId: String, delegate: LikeStateProtocol) {
         

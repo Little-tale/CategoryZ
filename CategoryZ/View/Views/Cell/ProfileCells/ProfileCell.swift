@@ -39,16 +39,18 @@ final class ProfileCell: RxBaseCollectionViewCell {
     
     
     let leftButton = UIButton().then {
-        $0.backgroundColor = JHColor.black
-        $0.tintColor = JHColor.white
-        $0.layer.cornerRadius = 6
-        $0.clipsToBounds = true
+        var config = UIButton.Configuration.bordered()
+        config.baseForegroundColor = JHColor.white
+        config.background.backgroundColor = JHColor.black
+        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0)
+        $0.configuration = config
     }
     let rightButton = UIButton().then {
-        $0.backgroundColor = JHColor.black
-        $0.tintColor = JHColor.white
-        $0.layer.cornerRadius = 6
-        $0.clipsToBounds = true
+        var config = UIButton.Configuration.bordered()
+        config.baseForegroundColor = JHColor.white
+        config.background.backgroundColor = JHColor.black
+        config.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 0, bottom: 8, trailing: 0)
+        $0.configuration = config
     }
     
     private
@@ -59,7 +61,7 @@ final class ProfileCell: RxBaseCollectionViewCell {
         $0.distribution = .fillEqually
     }
     private
-    let viewModel = ProfileCellViewModel()
+    var viewModel = ProfileCellViewModel()
     
     func setModel(profileType: ProfileType) {
         subscribe(profileType: profileType)
@@ -129,8 +131,10 @@ final class ProfileCell: RxBaseCollectionViewCell {
                 case .other:
                     owner.rightButton.isHidden = true
                 }
-                owner.leftButton.setTitle(leftTitle, for: .normal)
-                owner.rightButton.setTitle(rightTitle, for: .normal)
+                owner.setButton(
+                    lbt: leftTitle,
+                    rbt: rightTitle
+                )
             }
             .disposed(by: disposeBag)
         
@@ -148,7 +152,7 @@ final class ProfileCell: RxBaseCollectionViewCell {
                     break
                 case .other:
                     let title = bool ? "팔로잉" : "팔로우"
-                    owner.leftButton.setTitle(title, for: .normal)
+                    owner.setButton(lbt: title, rbt: nil)
                 }
             }
             .disposed(by: disposeBag)
@@ -178,6 +182,44 @@ final class ProfileCell: RxBaseCollectionViewCell {
             .disposed(by: disposeBag)
         
     }
+    /*
+     Cannot assign value of type 'NSAttributedString' to type 'AttributedString?'
+     회고
+     */
+    private
+    func setButton(lbt: String?, rbt: String?) {
+        
+        if let lbt {
+            if #available(iOS 15, *) {
+                var attTitle = AttributedString(lbt)
+                attTitle.font =  JHFont.UIKit.bo12
+                attTitle.foregroundColor = JHColor.white
+                    
+                leftButton.configurationUpdateHandler = {
+                    button in
+                    button.configuration?.attributedTitle = attTitle
+                }
+            } else {
+                leftButton.setTitle(lbt, for: .normal)
+            }
+            
+        }
+        
+        if let rbt{
+            if #available(iOS 15, *) {
+                var attTitle = AttributedString(rbt)
+                attTitle.font =  JHFont.UIKit.bo12
+                attTitle.foregroundColor = JHColor.white
+                    
+                rightButton.configurationUpdateHandler = {
+                    button in
+                    button.configuration?.attributedTitle = attTitle
+                }
+            } else {
+                rightButton.setTitle(rbt, for: .normal)
+            }
+        }
+    }
     
     override func configureHierarchy() {
         contentView.addSubview(profileView)
@@ -198,7 +240,7 @@ final class ProfileCell: RxBaseCollectionViewCell {
     }
     override func prepareForReuse() {
         super.prepareForReuse()
-        viewModel.disposeBag = .init()
+        viewModel = .init()
     }
     
 }

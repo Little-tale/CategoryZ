@@ -34,7 +34,7 @@ final class SeletionButton: BaseButton {
     override func setting() {
         clipsToBounds = true
         setImage(noSelectedImage, for: .normal)
-        contentMode = .scaleAspectFit
+        contentMode = .scaleToFill
         
         if let imageView {
             imageView.snp.makeConstraints { make in
