@@ -8,7 +8,7 @@
 import UIKit
 
 
-protocol CustomPinterestLayoutDelegate: AnyObject {
+protocol CustomPinterestLayoutDelegate: NSObject {
     
     func collectionView(for collectionView: UICollectionView, heightForAtIndexPath indexPath: IndexPath) -> CGFloat
     

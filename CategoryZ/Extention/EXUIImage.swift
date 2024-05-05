@@ -54,14 +54,8 @@ extension UIImageView {
     func downloadImage(imageUrl: String?, resizing: CGSize, _ defaultImage: UIImage? = nil) {
 
         let processor = DownsamplingImageProcessor(size: resizing)
-        var scale: CGFloat = 0
         
-        if let screenCurrent = UIScreen.current?.scale {
-            
-            scale = screenCurrent
-        } else {
-            scale = UIScreen.main.scale
-        }
+        var scale: CGFloat =  UIScreen.main.scale
         
         guard let imageUrl else {
             if defaultImage != nil {
@@ -71,18 +65,24 @@ extension UIImageView {
             return
         }
         
+        guard let url = URL(string: imageUrl) else {
+            NotificationCenter.default.post(name: .cantChageUrlImage, object: nil)
+            return
+        }
+        
         kf.indicatorType = .activity
         
-        KingfisherManager.shared.retrieveImage(with: URL(string: imageUrl)!, options: [
+        KingfisherManager.shared.retrieveImage(
+            with: url, options: [
             .processor(processor),
             .requestModifier(KingFisherNet()),
             .scaleFactor(scale),
             .cacheOriginalImage,
             .transition(.fade(1))
-        ]) { imageResult in
+        ]) {[unowned self] imageResult in
             switch imageResult {
             case .success(let result):
-                self.image = result.image
+                image = result.image
             case .failure:
                 NotificationCenter.default.post(name: .cantChageUrlImage, object: nil)
             }
@@ -124,6 +124,7 @@ extension UIViewController {
             }
         }
     }
+    
     func downloadImages(imageUrl: [String], resizing: CGSize, complete: @escaping (Result<[Data],NetworkError>)-> Void ) {
 
         let processor = DownsamplingImageProcessor(size: resizing)

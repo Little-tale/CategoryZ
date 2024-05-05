@@ -92,18 +92,11 @@ final class LikeViewController: RxBaseViewController {
                 row, item, cell in
                 print("** 방출시점 갯수",models.value.count)
                 cell.layer.cornerRadius = 12
-              
+               
                 cell.setModel(item)
             }
             .disposed(by: disPoseBag)
 
-        
-        rx.viewWillAppear
-            .skip(1)
-            .bind(with: self) { owner, _ in
-                owner.collectionView.collectionViewLayout.invalidateLayout()
-            }
-            .disposed(by: disPoseBag)
     
     }
     
@@ -134,15 +127,3 @@ extension LikeViewController: CustomPinterestLayoutDelegate {
         return (cellWidth / aspect) + 24 + date + 12
     }
 }
-
-/*
- if !item.animated {
-     cell.transform = CGAffineTransform(
-         translationX: 0, y: 80 // 초기 위치 정하기
-     )
-     UIView.animate(withDuration: 0.3, delay: 0.02 * Double(row), options: .showHideTransitionViews, animations: {
-         cell.transform = CGAffineTransform.identity
-     }, completion: nil)
- }
- item.animated = true
- */

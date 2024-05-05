@@ -511,6 +511,7 @@
 		7B11DC7E2BC58B4C0055D423 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				7BC43D772BE7ADC4001A109B /* KingFisher */,
 				7BC51B5C2BD0FFC500E5BF6C /* Date */,
 				7BA0E0CE2BCD7240002F0516 /* CameraAndImage */,
 				7BCF4A782BC7EBAE00BCE635 /* TextValid */,
@@ -892,6 +893,13 @@
 				7B11DCA22BC58FB60055D423 /* APIKey.swift */,
 			);
 			path = SecretFiles;
+			sourceTree = "<group>";
+		};
+		7BC43D772BE7ADC4001A109B /* KingFisher */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = KingFisher;
 			sourceTree = "<group>";
 		};
 		7BC4E50A2BE673E800F0C5C2 /* Tabbar */ = {

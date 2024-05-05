@@ -49,6 +49,7 @@ final class PinterestCell: RxBaseCollectionViewCell {
     func subscribe(_ model: SNSDataModel) {
         let behaiviorModel = BehaviorRelay(value: model)
         behaiviorModel
+            .delay(.milliseconds(50), scheduler: MainScheduler.asyncInstance)
             .distinctUntilChanged()
             .bind(with: self) { owner, model in
                 if let url =  model.files.first {
@@ -113,7 +114,6 @@ final class PinterestCell: RxBaseCollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        postImageView.image = nil
         disposeBag = .init()
     }
 }
