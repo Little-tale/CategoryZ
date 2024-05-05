@@ -156,11 +156,11 @@ final class UserProfileImageModifyViewController: RxBaseViewController {
         profileImageView.snp.makeConstraints { make in
             make.centerX.equalTo(view.safeAreaLayoutGuide)
             make.top.equalTo(titleText.snp.bottom).offset(20)
-            make.size.equalTo(120)
+            make.size.equalTo(200)
         }
         modifyButton.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(90)
-            make.top.equalTo(profileImageView.snp.bottom).offset(16)
+            make.top.equalTo(profileImageView.snp.bottom).offset(24)
             make.height.equalTo(50)
         }
         deleteButton.snp.makeConstraints { make in

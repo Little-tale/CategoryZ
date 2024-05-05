@@ -43,7 +43,7 @@ final class ProfileView: BaseView {
         profileImageView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).inset(10)
             make.centerX.equalToSuperview()
-            make.size.equalTo(100)
+            make.size.equalTo(88)
         }
         userNameLabel.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(14)

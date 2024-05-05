@@ -42,9 +42,9 @@ final class DonateView: RxBaseView {
     
     override func configureLayout() {
         profileImageView.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).inset(10)
+            make.top.equalTo(safeAreaLayoutGuide).inset(25)
             make.centerX.equalToSuperview()
-            make.size.equalTo(100)
+            make.size.equalTo(180)
         }
         userNameLabel.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(14)

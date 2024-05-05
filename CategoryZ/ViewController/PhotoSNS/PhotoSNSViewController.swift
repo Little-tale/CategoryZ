@@ -88,7 +88,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         
         rx.viewDidDisapear
             .bind(with: self) { owner, _ in
-                owner.navigationItem.searchController?.isActive = false
+//                owner.navigationItem.searchController?.isActive = false
                 owner.navigationItem.searchController = nil
             }
             .disposed(by: disPoseBag)
@@ -286,7 +286,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 let vc = UserProfileViewController()
                 
                 vc.profileType = profileType
-                
+                owner.navigationController?.setNavigationBarHidden(false, animated: true)
                 vc.hidesBottomBarWhenPushed = true
                 
                 NotificationCenter.default.post(name: .hidesBottomBarWhenPushed, object: nil)

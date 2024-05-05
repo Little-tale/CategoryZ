@@ -84,7 +84,7 @@ extension UIImageView {
             case .success(let result):
                 self.image = result.image
             case .failure:
-                break
+                NotificationCenter.default.post(name: .cantChageUrlImage, object: nil)
             }
         }
     }
@@ -118,10 +118,8 @@ extension UIViewController {
             switch imageResult {
             case .success(let result):
                 complite(.success(result.data()))
-            case .failure(let error):
-                // 바꿔야해
-                print("이미지 로드 실패")
-                // complite(.failure(.unknownError))
+            case .failure(_):
+                complite(.failure(.failMakeURLRequest))
                 break
             }
         }
@@ -152,11 +150,8 @@ extension UIViewController {
                         successModels.append(imageData)
                     }
                     
-                case .failure(let error):
-                    // 바꿔야해
-                    print("이미지 로드 실패")
-                    // complite(.failure(.unknownError))
-                    break
+                case .failure:
+                    complete(.failure(.failMakeURLRequest))
                 }
             }
         }

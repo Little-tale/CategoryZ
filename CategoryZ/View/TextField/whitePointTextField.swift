@@ -10,7 +10,7 @@ import Then
 import SnapKit
 import TextFieldEffects
 
-class WhitePointTextField: HoshiTextField {
+final class WhitePointTextField: HoshiTextField {
     
     var deFaultPlaceholderText = ""
     

@@ -43,13 +43,13 @@ final class PinterestCell: RxBaseCollectionViewCell {
     
     func setModel(_ data: SNSDataModel) {
         subscribe(data)
-        
     }
     
     private
     func subscribe(_ model: SNSDataModel) {
         let behaiviorModel = BehaviorRelay(value: model)
         behaiviorModel
+            .distinctUntilChanged()
             .bind(with: self) { owner, model in
                 if let url =  model.files.first {
                     owner.postImageView.downloadImage(imageUrl:url , resizing: owner.postImageView.frame.size)
@@ -59,7 +59,7 @@ final class PinterestCell: RxBaseCollectionViewCell {
                 
                 owner.profileImageView.downloadImage(
                     imageUrl: model.creator.profileImage,
-                    resizing: owner.postImageView.frame.size,
+                    resizing: CGSize(width: 200, height: 200),
                     JHImage.defaultImage
                 )
                 
@@ -109,5 +109,11 @@ final class PinterestCell: RxBaseCollectionViewCell {
             make.height.equalTo(20)
             make.bottom.equalToSuperview().inset(4)
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        postImageView.image = nil
+        disposeBag = .init()
     }
 }

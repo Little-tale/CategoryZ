@@ -82,13 +82,13 @@ final class UserPhoneNumberModifyViewController: RxBaseViewController {
         }
         userPhoneNumberTextField.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(25)
-            make.top.equalTo(titleText.snp.bottom).offset(20)
+            make.top.equalTo(titleText.snp.bottom).offset(25)
             make.height.equalTo(60)
         }
         saveButton.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(userPhoneNumberTextField)
-            make.top.equalTo(userPhoneNumberTextField.snp.bottom).offset(10)
-            make.height.equalTo(40)
+            make.top.equalTo(userPhoneNumberTextField.snp.bottom).offset(20)
+            make.height.equalTo(44)
         }
     }
     
@@ -98,11 +98,11 @@ extension UserPhoneNumberModifyViewController {
     
     private
     func textFieldValidText(_ textFiled: WhitePointTextField, _ valid: textValidation) {
-       textFiled.borderActiveColor = .point
+        textFiled.borderActiveColor = JHColor.black
        switch valid {
        case .isEmpty:
            textFiled.placeholderColor = JHColor.black
-           textFiled.borderActiveColor = JHColor.currect
+           textFiled.borderActiveColor = JHColor.likeColor
            textFiled.setDefaultPlaceHolder()
            break
        case .minCount:
@@ -110,7 +110,7 @@ extension UserPhoneNumberModifyViewController {
            textFiled.placeholder = "글자수(숫자만)가 부족해요!"
        case .match:
            textFiled.placeholder = ""
-           textFiled.borderActiveColor = JHColor.currect
+           textFiled.borderActiveColor = JHColor.likeColor
        case .noMatch:
            textFiled.placeholderColor = .point
            textFiled.placeholder = "숫자만 넣어주세요"

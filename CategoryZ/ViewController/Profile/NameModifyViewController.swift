@@ -86,13 +86,13 @@ final class NameModifyViewController: RxBaseViewController {
         }
         nameTextFiled.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(view.safeAreaLayoutGuide).inset(25)
-            make.top.equalTo(titleText.snp.bottom).offset(20)
+            make.top.equalTo(titleText.snp.bottom).offset(25)
             make.height.equalTo(60)
         }
         saveButton.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(nameTextFiled)
-            make.top.equalTo(nameTextFiled.snp.bottom).offset(10)
-            make.height.equalTo(40)
+            make.top.equalTo(nameTextFiled.snp.bottom).offset(20)
+            make.height.equalTo(44)
         }
     }
     
@@ -103,18 +103,18 @@ extension NameModifyViewController {
     
     private
     func textFieldValidText(_ textFiled: WhitePointTextField, _ valid: textValidation) {
-       textFiled.borderActiveColor = .point
+        textFiled.borderActiveColor = JHColor.black
        switch valid {
        case .isEmpty:
-           textFiled.placeholderColor = .systemGray
+           textFiled.placeholderColor = JHColor.darkGray
            textFiled.setDefaultPlaceHolder()
            break
        case .minCount:
-           textFiled.placeholderColor = .point
+           textFiled.placeholderColor = JHColor.likeColor
            textFiled.placeholder = "글자수가 부족해요!"
        case .match:
            textFiled.placeholder = ""
-           textFiled.borderActiveColor = JHColor.currect
+           textFiled.borderActiveColor = JHColor.likeColor
        case .noMatch:
            textFiled.placeholderColor = .point
            textFiled.placeholder = "양식에 맞지 않아요!"

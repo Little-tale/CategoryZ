@@ -70,7 +70,7 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
                     owner.homeView.profileImageView.image = JHImage.defaultImage
                 }
                 
-                owner.homeView.userNameLabel.text = model.nick
+                owner.homeView.userNameLabel.text = model.nick + "님께 후원"
                 userNick = model.nick
             }
             .disposed(by: disPoseBag)
