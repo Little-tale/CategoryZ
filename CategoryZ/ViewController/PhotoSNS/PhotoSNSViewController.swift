@@ -88,7 +88,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         
         rx.viewDidDisapear
             .bind(with: self) { owner, _ in
-//                owner.navigationItem.searchController?.isActive = false
+                owner.navigationItem.searchController?.isActive = false
                 owner.navigationItem.searchController = nil
             }
             .disposed(by: disPoseBag)

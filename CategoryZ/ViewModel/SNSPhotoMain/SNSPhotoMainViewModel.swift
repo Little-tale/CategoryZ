@@ -80,7 +80,7 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         .flatMapLatest { owner, _ in
             NetworkManager
                 .fetchNetwork(
-                model: PostReadMainModel.self,
+                model: SNSMainModel.self,
                 router: .poster(
                     .postRead(next: nextCursor.value,
                               limit: limit, productId: input.selectedProductID.value.identi
@@ -130,7 +130,7 @@ final class SNSPhotoMainViewModel: RxViewModelType {
                 
                 nextCursor.accept(nil)
                 
-                return NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.postRead(next: nil, limit: limit, productId: productId.identi)))
+                return NetworkManager.fetchNetwork(model: SNSMainModel.self, router: .poster(.postRead(next: nil, limit: limit, productId: productId.identi)))
             }
             .bind(with: self) { owner, result in
                 switch result {

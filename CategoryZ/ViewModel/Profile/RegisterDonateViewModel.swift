@@ -33,7 +33,7 @@ final class RegisterDonateViewModel: RxViewModelType {
         
         let networkError = PublishRelay<NetworkError> ()
         
-        let checkModel = PublishRelay<PostReadMainModel> ()
+        let checkModel = PublishRelay<SNSMainModel> ()
         
         let successTrigger = PublishRelay<Void> ()
         
@@ -42,7 +42,7 @@ final class RegisterDonateViewModel: RxViewModelType {
         input.viewWillTrigger
             .throttle(.milliseconds(50), scheduler: MainScheduler.asyncInstance)
             .flatMapLatest { _ in
-                NetworkManager.fetchNetwork(model: PostReadMainModel.self, router: .poster(.userCasePostRead(
+                NetworkManager.fetchNetwork(model: SNSMainModel.self, router: .poster(.userCasePostRead(
                     userId: input.behaiviorModel.value.userID,
                     next: nil,
                     limit: "5", // 개수는 1개로만 해야함
@@ -80,7 +80,7 @@ final class RegisterDonateViewModel: RxViewModelType {
                     product_id: ProductID.userProduct)
                 
                 return NetworkManager.fetchNetwork(
-                    model: PostModel.self,
+                    model: SNSDataModel.self,
                     router: .poster(.postWrite(
                         query: postsQuery)
                     )
