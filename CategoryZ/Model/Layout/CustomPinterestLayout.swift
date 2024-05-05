@@ -72,88 +72,48 @@ final class CustomPinterestLayout: UICollectionViewFlowLayout {
     // ... 해당 메서드는 레이아웃을 미리 계산 하고  메모리에 캐쉬하여
     // ... 불필요한 반복적인 연산을 하는것을 방지하도록 해야한다.
     override func prepare() {
-        guard let collectionView = collectionView,
-              collectionView.numberOfSections > 0,
-              collectionView.numberOfItems(inSection: 0) > 0 else {
-            return
-        }
+        super.prepare()
+        
+        guard let collectionView = collectionView else { return }
+        
         cache.removeAll()
-        contentsHeight = 0
         
-        let cellWidth = contetnsWidth / CGFloat(numberOfColums)
-        
-        var yOffSet:[CGFloat] = []
-        
-        if let headerHeight {
-            // 헤더 레이아웃 속성
-            let headerIndexPath = IndexPath(item: 0, section: 0)
-
-            let headerAttribute = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: headerIndexPath)
-            
-            headerAttribute.frame = CGRect(
-                x: 0,
-                y: 0,
-                width: collectionView.bounds.width,
-                height: headerHeight
-            ) // 헤더높이 지정
-            
-            cache.append(headerAttribute)
-            // cell 의 Y위치를 나타내는 배열입니다.
-            yOffSet = [CGFloat](repeating: headerAttribute.frame.maxY, count: numberOfColums)
-            
-            yOffSet[0] = headerAttribute.frame.maxY
-            
-        } else {
-            yOffSet = [CGFloat](repeating: 0, count: numberOfColums)
+        // xOffset 계산
+        let columnWidth: CGFloat = contetnsWidth / CGFloat(numberOfColums) // 컨텐츠 / 셀갯수
+        var xOffset: [CGFloat] = [] // X 축 저장 배열
+        for column in 0..<numberOfColums {
+            let offset = CGFloat(column) * columnWidth // 각열의 x축 위치 계산
+            xOffset += [offset] // "계산된 위치를 배열에 추가
         }
         
-        // cell 의 X위치를 나타내는 배열입니다.
-        let xOffSet:[CGFloat] = [0, cellWidth]
-
-        var colum: Int = 0 // 현재 행의 위치
-        
+        // yOffset 계산
+        var column = 0
+        var yOffset = [CGFloat](repeating: 0, count: numberOfColums) // 각 열의 y축 시작 위치를 저장할 배열
         for item in 0..<collectionView.numberOfItems(inSection: 0) {
-            // 인덱스 패스를 통해
             let indexPath = IndexPath(item: item, section: 0)
-            // 인덱스 패스에 맞는 셀의 크기를 계산합니다.
-            let customContentHeight = delegate?.collectionView(for: collectionView, heightForAtIndexPath: indexPath) ?? 100
-            // 상항 패딩(패딩 2배) 에 컨테트 높이를 더한 값은 높이
-            let height = cellPadding * 2 + customContentHeight
             
-            let frame = CGRect(
-                x: xOffSet[colum],
-                y: yOffSet[colum],
-                width: cellWidth,
-                height: height
-            )
+            let imageHeight = delegate?.collectionView(for: collectionView, heightForAtIndexPath: indexPath) ?? 0
             
-            // 생소한 dx, dy가 나왔는데
-            // dx: x축 방향의 패딩 값 -> 좌우 프레임 안으로 이동
-            // dy: y축 방향의 패딩 값 -> 상하 프레임 안으로 이동
-            let insetFrame = frame.insetBy(
-                dx: cellPadding, dy: cellPadding
-            )
+            // 셀의 전체 높이를 계산 (상하 패딩 포함)
+            let height = cellPadding * 2 + imageHeight
             
-            // 계산한 Frame를 통해 레이아웃정보를 반영하고 캐쉬에 저장
-            let attribute = UICollectionViewLayoutAttributes(
-                forCellWith: indexPath
-            )
-            // 레이아웃정보를 반영
-            attribute.frame = insetFrame
-            cache.append(attribute)
+            let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
             
-            // 컬렉션뷰의 높이를 다시 지정한다.
-            // frame.maxY -> 현재 셀의 프레임이 끝나는 Y축 위치 -> 셀 상단 위치에서 셀 높이를 더한값
+            let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
+            
+            // cache 저장
+            let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
+            
+            attributes.frame = insetFrame // 레이아웃 속성에 저장
+            
+            cache.append(attributes) // 캐시에도 저장
+            
+            // 새로 계산된 항목의 프레임을 설명하도록 확장
             contentsHeight = max(contentsHeight, frame.maxY)
-            // 새로운 셀의 frame.maxY중 더큰 값을 선택하여 컬렉션뷰의 전체 컨텐츠 높이를 업데이트
+            yOffset[column] = yOffset[column] + height
             
-            yOffSet[colum] = yOffSet[colum] + height
-            
-            // 다른 이미지 크기로 인해, 한쪽열에만 이미지가 추가됨을 방지
-            colum = yOffSet[0] > yOffSet[1] ? 1 : 0
-            // 만약 첫번째 열의 높이가 두번째 열의 높이보다 크다면
-            // 새 셀들 두번째 열에 배치하는데
-            // 아닐시 새 셀을 첫번째 열에 배치한다.
+            // 다음 항목이 다음 열에 배치되도록 설정
+            column = column < (numberOfColums - 1) ? (column + 1) : 0
         }
         
     }
