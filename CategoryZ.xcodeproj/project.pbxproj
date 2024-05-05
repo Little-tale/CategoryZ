@@ -415,9 +415,7 @@
 		7B11DC5B2BC58AD40055D423 = {
 			isa = PBXGroup;
 			children = (
-				7B9403452BE280A7004A1A8E /* DonateModel.swift */,
 				7BCF4A9A2BCBE5E100BCE635 /* Memo.txt */,
-				7B11DCA22BC58FB60055D423 /* APIKey.swift */,
 				7B11DCA02BC58F620055D423 /* .gitignore */,
 				7B11DC662BC58AD40055D423 /* CategoryZ */,
 				7B11DC652BC58AD40055D423 /* Products */,
@@ -435,6 +433,7 @@
 		7B11DC662BC58AD40055D423 /* CategoryZ */ = {
 			isa = PBXGroup;
 			children = (
+				7BC43D762BE79A39001A109B /* SecretFiles */,
 				7B61CAE32BE64CB800114BDE /* JsonFiles */,
 				7BCF4A3D2BC687C800BCE635 /* Storage */,
 				7BCF4A322BC5AA2900BCE635 /* Extention */,
@@ -884,6 +883,15 @@
 				7BC43D672BE79753001A109B /* UserWithDrawModel.swift */,
 			);
 			path = AuthModels;
+			sourceTree = "<group>";
+		};
+		7BC43D762BE79A39001A109B /* SecretFiles */ = {
+			isa = PBXGroup;
+			children = (
+				7B9403452BE280A7004A1A8E /* DonateModel.swift */,
+				7B11DCA22BC58FB60055D423 /* APIKey.swift */,
+			);
+			path = SecretFiles;
 			sourceTree = "<group>";
 		};
 		7BC4E50A2BE673E800F0C5C2 /* Tabbar */ = {

@@ -3,17 +3,13 @@
 
 ## My_ignore
 .DS_Store
-GoogleService-Info.plist
-APIKey.Swift
-/APIKey.Swift
-APIKey.Swift/
 Memo.txt
 /Memo.txt
 Memo.txt/
-/DonateModel.Swift
-DonateModel.Swift
+
 /CategoryZ/JsonFiles
 /CategoryZ/SecretFiles
+
 ### Swift ###
 # Xcode
 #
