@@ -8,18 +8,6 @@
 import Foundation
 import KeychainAccess
 
-
-extension TokenStorage {
-    
-    enum TokenStorageKeychain: String {
-        case searvice = "com.CategoryZ.tokenservice"
-        case accessToken
-        case refreshToken
-    }
-    
-}
-
-
 final class TokenStorage {
     
     static let shared = TokenStorage()
@@ -31,7 +19,7 @@ final class TokenStorage {
             return try? keyChain.get(TokenStorageKeychain.accessToken.rawValue)
         }
         set {
-            print("새로운 토큰 ::: ",newValue ?? "")
+           
             try? keyChain.set(newValue ?? "", key: TokenStorageKeychain.accessToken.rawValue)
         }
     }
@@ -41,7 +29,7 @@ final class TokenStorage {
             return try? keyChain.get(TokenStorageKeychain.refreshToken.rawValue)
         }
         set {
-            print("새로운 리프레시토큰 ::: ",newValue ?? "")
+            
             try? keyChain.set(newValue ?? "", key: TokenStorageKeychain.refreshToken.rawValue)
         }
     }

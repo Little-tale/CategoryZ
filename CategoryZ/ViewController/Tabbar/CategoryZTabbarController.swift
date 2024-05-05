@@ -10,9 +10,8 @@ import SnapKit
 import Then
 import RxSwift
 import RxCocoa
-/*
- 회고
- */
+
+
 final class CategoryZTabbarController: UITabBarController {
     
     // 1. 메인
@@ -34,8 +33,6 @@ final class CategoryZTabbarController: UITabBarController {
         setupMiddleButton()
         settingTabBarItems()
         subscribe()
-        
-        
     }
     
     func settingTabBarItems() {

@@ -8,13 +8,6 @@
 import Foundation
 import KeychainAccess
 
-extension UserIDStorage {
-    
-    enum UserIdStorageKeyChain: String {
-        case service = "com.CategoryZ.UserIdService"
-        case userID
-    }
-}
 
 final class UserIDStorage {
     
@@ -28,7 +21,7 @@ final class UserIDStorage {
             return try? keyChain.get(UserIdStorageKeyChain.userID.rawValue)
         }
         set {
-            print("유저 아이디 : \(newValue ?? "")")
+            
             try? keyChain.set(newValue ?? "", key: UserIdStorageKeyChain.userID.rawValue)
         }
     }
