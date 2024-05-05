@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import Kingfisher
+import Toast
 
 final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettingView> {
 
@@ -19,6 +20,7 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
         case phoneNumber
         case registerDonate
         case myPayments
+        case logOut
         case deleteAccount
     }
     
@@ -36,6 +38,7 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
         let section = Observable.just(SettingSection.allCases)
         
         let tryAccountDelete = PublishRelay<Void> ()
+        let tryLogout = PublishRelay<Void> ()
         
         // 프로필은 뷰가 보일때마다 로드해야 하지 않을까?
         let viewWillTrigger = rx.viewDidAppear
@@ -43,7 +46,8 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
             .map { _ in return () }
         
         let input = ProfileSettingViewModel.Input(
-            viewWiddTrigger: viewWillTrigger
+            viewWiddTrigger: viewWillTrigger,
+            logoutTrigger: tryLogout
         )
         
         let output = viewModel.transform(input)
@@ -84,6 +88,8 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
                 content.text = "후원 등록 / 취소"
             case .myPayments:
                 content.text = "결제 내역"
+            case .logOut:
+                content.text = "로그 아웃"
             }
             cell.contentConfiguration = content
             
@@ -130,10 +136,33 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
                 case .myPayments:
                     let vc = DonateListViewController()
                     owner.navigationController?.pushViewController(vc, animated: true)
+                case .logOut:
+                    owner.showAlert(
+                        title: "로그 아웃",
+                        message: "로그 아웃 하시겠습니까?",
+                        actionTitle: "확인",
+                        { _ in
+                            owner.view.makeToastActivity(.center)
+                            tryLogout.accept(())
+                        },
+                        .default)
                 }
             }
             .disposed(by: disPoseBag)
-
+        
+        
+        output.logoutSuccessTrigger
+            .delay(.seconds(2), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.view.hideToastActivity()
+                owner.showAlert(
+                    title: "로그아웃 완료",
+                    message: "로그아웃이 성공적으로 되었습니다.",
+                    actionTitle: "확인") { _ in
+                        owner.changeRootView(to: LunchScreenViewController(), isNavi: true)
+                    }
+            }
+            .disposed(by: disPoseBag)
         
         //CheckUserDeleteViewController
         tryAccountDelete.bind(with: self) { owner, _ in

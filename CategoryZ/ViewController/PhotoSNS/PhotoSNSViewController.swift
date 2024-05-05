@@ -32,7 +32,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         homeView.tableView.tableHeaderView = homeView.headerView
-        
+        navigationController?.hidesBarsOnSwipe = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,7 +93,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             }
             .disposed(by: disPoseBag)
     
-        navigationController?.hidesBarsOnSwipe = true
+        
     }
     
     override func subscribe() {

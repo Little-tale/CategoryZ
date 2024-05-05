@@ -37,7 +37,7 @@ final class CustomTabbar: UITabBar {
     
     
     override func draw(_ rect: CGRect) {
-       
+         addShape()
     }
     
     private
@@ -81,11 +81,14 @@ final class CustomTabbar: UITabBar {
         super.layoutSubviews()
         isTranslucent = true
         var tabFrame = frame
+        
+        print(safeAreaInsets.bottom)
         tabFrame.size.height = 65 + safeAreaInsets.bottom
         
         tabFrame.origin.y = frame.origin.y + frame.height - 65 - safeAreaInsets.bottom
         
         layer.frame = tabFrame
+        
         items?.forEach({
             $0.titlePositionAdjustment = UIOffset(
                 horizontal: 0, vertical: -5

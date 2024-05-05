@@ -14,17 +14,20 @@ final class ProfileSettingViewModel: RxViewModelType {
     
     struct Input {
         let viewWiddTrigger : Observable<Void>
+        let logoutTrigger: PublishRelay<Void>
     }
     
     struct Output {
         let outputNetwork: Driver<NetworkError>
         let successModel: Driver<ProfileModel>
+        let logoutSuccessTrigger: PublishRelay<Void>
     }
     
     func transform(_ input: Input) -> Output {
         
         let publishModel = PublishSubject<ProfileModel> ()
         let netwrokError = PublishSubject<NetworkError> ()
+        let logoutSuccessTrigger = PublishRelay<Void> ()
         
         input.viewWiddTrigger
             .flatMapLatest { _ in
@@ -40,9 +43,19 @@ final class ProfileSettingViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
+        input.logoutTrigger
+            .bind { _ in
+                UserIDStorage.shared.userID = nil
+                TokenStorage.shared.accessToken = nil
+                TokenStorage.shared.refreshToken = nil
+                logoutSuccessTrigger.accept(())
+            }
+            .disposed(by: disposeBag)
+        
         return Output(
             outputNetwork: netwrokError.asDriver(onErrorDriveWith: .never()),
-            successModel: publishModel.asDriver(onErrorDriveWith: .never())
+            successModel: publishModel.asDriver(onErrorDriveWith: .never()),
+            logoutSuccessTrigger: logoutSuccessTrigger
         )
     }
     
