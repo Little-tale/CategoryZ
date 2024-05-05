@@ -130,6 +130,12 @@ final class UserInfoRegViewController: RxHomeBaseViewController<UserInfoRegView>
             }
             .disposed(by: disPoseBag)
         
+        homeView.passwordHiddenButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.homeView.passWordTextField.isSecureTextEntry.toggle()
+            }
+            .disposed(by: disPoseBag)
+        
     }
     
     override func navigationSetting() {
