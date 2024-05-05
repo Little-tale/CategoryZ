@@ -55,7 +55,7 @@ extension UIImageView {
 
         let processor = DownsamplingImageProcessor(size: resizing)
         
-        var scale: CGFloat =  UIScreen.main.scale
+        let scale: CGFloat =  UIScreen.main.scale
         
         guard let imageUrl else {
             if defaultImage != nil {
