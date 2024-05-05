@@ -32,11 +32,11 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         homeView.tableView.tableHeaderView = homeView.headerView
-        navigationController?.hidesBarsOnSwipe = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.hidesBarsOnSwipe = true
         // disPoseBag = .init()
         NotificationCenter.default
             .rx

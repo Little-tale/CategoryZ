@@ -27,7 +27,8 @@ final class ProfileSettingView: RxBaseView {
     override func configureLayout() {
         print(profileView.intrinsicContentSize.height)
         profileView.snp.makeConstraints { make in
-            make.horizontalEdges.top.equalToSuperview()
+            make.horizontalEdges.top.equalTo(safeAreaLayoutGuide)
+                .inset(10)
             make.height.equalTo(profileView.intrinsicContentSize.height)
         }
         collectionView.snp.makeConstraints { make in
@@ -44,7 +45,7 @@ final class ProfileSettingView: RxBaseView {
             guard let self else { return }
             print("변경사항 발동",profileView.intrinsicContentSize.height)
             profileView.snp.updateConstraints{ make in
-                make.height.equalTo(self.profileView.intrinsicContentSize.height + 120)
+                make.height.equalTo(self.profileView.intrinsicContentSize.height + 10)
             }
             layoutIfNeeded()
         }

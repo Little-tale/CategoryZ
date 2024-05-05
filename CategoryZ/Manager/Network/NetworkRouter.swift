@@ -8,7 +8,6 @@
 import Foundation
 import Alamofire
 
-
 protocol ErrorCase {
     func errorCase(_ errorCode: Int,_ description: String) -> NetworkError
 }

@@ -29,22 +29,16 @@ final class AccessTokkenAdapter: RequestInterceptor {
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, any Error>) -> Void) {
         var urlRequest = urlRequest
             
-            // 액세스 토큰이 필요하지 않은 API 경로 리스트
-            let pathsWithoutToken = [
-                "/users/login",
-                "/users/join",
-                "/validation/email"
-            ]
-            
             // 현재 요청의 URL 경로를 확인
             if let urlPath = urlRequest.url?.path {
                 
                 // 요청 URL이 특정 경로를 포함하지 않는 경우에만 액세스 토큰 추가
-                let requiresToken = !pathsWithoutToken.contains(where: urlPath.contains)
+                // 액세스 토큰이 필요하지 않은 API 경로 리스트
+                let requiresToken = !NotNeedInterceptor.allCases.contains(where: { urlPath.contains($0.path) })
                 
                 if requiresToken,
                     let accessToken = TokenStorage.shared.accessToken {
-                    print("\n재시도")
+
                     urlRequest.headers.add(name: NetHTTPHeader.authorization.rawValue, value: accessToken)
                 }
             }
@@ -64,7 +58,7 @@ final class AccessTokkenAdapter: RequestInterceptor {
             print("retry : statusCode: \(statusCode)")
             if !refresing {
                 refresing = true
-                print("토큰 다이")
+
                 NetworkManager.requestRefreshTokken { [weak self] isSuccess in
                     guard let self else { return }
                     
@@ -107,8 +101,3 @@ final class AccessTokkenAdapter: RequestInterceptor {
         }
     }
 }
-
-
-/*
-     
- */

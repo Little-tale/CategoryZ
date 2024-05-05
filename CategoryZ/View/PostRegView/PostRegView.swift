@@ -15,12 +15,12 @@ import Kingfisher
 final class PostRegView: RxBaseView {
     
     let profileImage = UIImageView().then {
-        $0.image = UIImage.appLogo
+        $0.image = JHImage.defaultImage
         $0.clipsToBounds = true
         $0.contentMode = .scaleAspectFill
     }
     
-    let nameLabel = UILabel().then { $0.text = "이름들어감" }
+    let nameLabel = UILabel().then { $0.text = "불러오는 중" }
 
     let contentTextView = PlaceholderTextView().then {
         $0.placeholderText = "무엇이든 남겨요"
@@ -123,7 +123,7 @@ final class PostRegView: RxBaseView {
         nameLabel.text = data.nick
         
         guard let urlString = data.profileImage else {
-            profileImage.image = .appLogo
+            profileImage.image = JHImage.defaultImage
             return
         }
         let url = URL(string: urlString)

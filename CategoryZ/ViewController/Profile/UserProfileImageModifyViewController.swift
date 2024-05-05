@@ -25,7 +25,7 @@ final class UserProfileImageModifyViewController: RxBaseViewController {
 
     let profileImageView = CircleImageView(frame: .zero).then {
         $0.tintColor = JHColor.black
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleToFill
         $0.backgroundColor = JHColor.gray
     }
     

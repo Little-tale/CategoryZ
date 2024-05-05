@@ -99,6 +99,13 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
         
         let output = viewModel.transform(input)
         
+        rightBarButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.rightBarButton.isEnabled = false
+            }
+            .disposed(by: disPoseBag)
+        
+        
         /// 허용된 텍스트
         output.contentText.drive(homeView.contentTextView.rx.text)
             .disposed(by: disPoseBag)
@@ -117,6 +124,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                         print("OnlyImageCollectionViewCell Error")
                         return UICollectionViewCell.init()
                     }
+                    cell.settingImageMode(.scaleAspectFill)
                     cell.imageSetting(item)
                     return cell
                 } else {
@@ -210,14 +218,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                 }
             }
             .disposed(by: disPoseBag)
-        
-        /*
-         NotificationCenter.default.post(name: .modifyPost, object: nil)
-         NotificationCenter.default.post(
-             name: <#T##NSNotification.Name#>,
-             object: <#T##Any?#>,
-             userInfo: <#T##[AnyHashable : Any]?#>)
-         */
+
         
         // 카테고리 뿌리기
         category.bind(to: homeView.categoryCollectionView.rx.items(cellIdentifier: CategoryReusableCell.reusableIdenti, cellType: CategoryReusableCell.self)) {[weak self] row , item, cell in

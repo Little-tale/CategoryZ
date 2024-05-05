@@ -129,7 +129,9 @@ final class ProfileCell: RxBaseCollectionViewCell {
                     rightTitle = "좋아요한 게시글"
                     owner.rightButton.isHidden = false
                 case .other:
-                    owner.rightButton.isHidden = true
+                    leftTitle = ""
+                    rightTitle = "채팅"
+                    owner.rightButton.isHidden = false
                 }
                 owner.setButton(
                     lbt: leftTitle,

@@ -92,6 +92,7 @@ final class UserProfileViewController: RxBaseViewController {
     
     override func navigationSetting() {
         navigationItem.title = "프로필"
+        navigationController?.hidesBarsOnSwipe = false
     }
     
     private
@@ -268,7 +269,6 @@ extension UserProfileViewController {
                     return cell
                 case .poster:
                     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfilePostCollectionViewCell.reusableIdenti, for: indexPath) as? ProfilePostCollectionViewCell else {
-                        
                         return .init()
                     }
                     if let model = itemIdentifier as? SNSDataModel {

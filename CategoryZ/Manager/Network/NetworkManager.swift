@@ -14,20 +14,14 @@ protocol NetworkType {
     static func fetchNetwork<T:Decodable>(model: T.Type, router: NetworkRouter) -> Single<Result<T, NetworkError>>
     
     // 서버로 데이터를 보내는 함수입니다.
-    
-    
 }
 
 struct NetworkManager {
     
-    // 서버로부터 데이터 받을시
+    // 서버로부터 데이터 받을시 + 보낼시 통합
     typealias FetchType<T:Decodable> = Single<Result<T, NetworkError>>
-    
+    // 받아올 모델은 없을시
     typealias NoneModelFetchType = Single<Result<Void,NetworkError>>
-    
-    // 서버로부터 데이터 보낼시
-    typealias SendType<T:Encodable> = Single<Result<Void, NetworkError>>
-    
 }
 
 extension NetworkManager {
@@ -45,7 +39,7 @@ extension NetworkManager {
                         
                         single(.success(.success(success)))
                     case .failure(let failure):
-                        print(failure.responseCode)
+
                         if let stateCode = failure.responseCode {
                             if let commonCode = NetworkRouter.commonTest(status: stateCode) {
                                 single(.success(.failure(commonCode)))
@@ -77,12 +71,7 @@ extension NetworkManager {
                     handler(.failure(failure))
                 }
             }
-        // 테스트용
-//        AF.request(urlRequest, interceptor: AccessTokkenAdapter())
-//            .validate(statusCode: 200 ..< 300)
-//            .responseString { response in
-//                print(response)
-//            }
+        
     }
     
     /// 모델이 필요없는경우에는 이것을 사용해야 합니다.
@@ -164,7 +153,6 @@ extension NetworkManager {
         let urlRequest = try? authenticationRouter.refreshTokken(access: accessToken, Refresh: refreshToken).asURLRequest()
         
         guard let urlRequest else {
-            print("테스트")
             complite(.failure(.reqeustFail))
             return
         }
@@ -193,7 +181,7 @@ extension NetworkManager {
                     case .success(let success):
                         single(.success(.success(success)))
                     case .failure(let failure):
-                        print(failure.responseCode)
+                        
                         if let stateCode = failure.responseCode {
                             if let commonCode = NetworkRouter.commonTest(status: stateCode) {
                                 single(.success(.failure(commonCode)))
@@ -260,8 +248,6 @@ extension NetworkManager {
                     print(success)
                     single(.success(.success(success)))
                 case .failure(let failure):
-                    
-                    print("ERROR : CODE ++ ",failure.responseCode ?? "어나엄나어;머이자")
                     
                     if let stateCode = failure.responseCode {
                         if let commonCode = NetworkRouter.commonTest(status: stateCode) {

@@ -36,7 +36,6 @@
 		7B1EE3FB2BDE4DF100F109EB /* SingleSNSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE3FA2BDE4DF100F109EB /* SingleSNSViewController.swift */; };
 		7B1EE3FD2BDE4F8400F109EB /* SingleSNSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE3FC2BDE4F8400F109EB /* SingleSNSViewModel.swift */; };
 		7B1EE3FF2BDE57E100F109EB /* SingleViewRx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE3FE2BDE57E100F109EB /* SingleViewRx.swift */; };
-		7B1EE4022BDE897A00F109EB /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 7B1EE4012BDE897A00F109EB /* SkeletonView */; };
 		7B1EE46E2BDF9E3600F109EB /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE46D2BDF9E3600F109EB /* ProfileCell.swift */; };
 		7B1EE4702BDFACBB00F109EB /* ProfilePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE46F2BDFACBB00F109EB /* ProfilePostViewModel.swift */; };
 		7B1EE4722BDFBB3A00F109EB /* ProfileCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE4712BDFBB3A00F109EB /* ProfileCellViewModel.swift */; };
@@ -97,6 +96,7 @@
 		7BC06FD02BE0190F00651529 /* CheckUserDeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC06FCF2BE0190F00651529 /* CheckUserDeleteViewController.swift */; };
 		7BC06FD22BE019B100651529 /* CheckedUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC06FD12BE019B100651529 /* CheckedUserView.swift */; };
 		7BC06FD42BE01A6400651529 /* DeleteUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC06FD32BE01A6400651529 /* DeleteUserViewModel.swift */; };
+		7BC43D542BE75319001A109B /* NotNeedIntercoptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC43D532BE75319001A109B /* NotNeedIntercoptor.swift */; };
 		7BC4E5072BE6540400F0C5C2 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 7BC4E5062BE6540400F0C5C2 /* Lottie */; };
 		7BC4E5092BE6546B00F0C5C2 /* Lunning.json in Resources */ = {isa = PBXBuildFile; fileRef = 7BC4E5082BE6546B00F0C5C2 /* Lunning.json */; };
 		7BC4E50C2BE673F900F0C5C2 /* CustomTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC4E50B2BE673F900F0C5C2 /* CustomTabbar.swift */; };
@@ -262,6 +262,7 @@
 		7BC06FCF2BE0190F00651529 /* CheckUserDeleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserDeleteViewController.swift; sourceTree = "<group>"; };
 		7BC06FD12BE019B100651529 /* CheckedUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckedUserView.swift; sourceTree = "<group>"; };
 		7BC06FD32BE01A6400651529 /* DeleteUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserViewModel.swift; sourceTree = "<group>"; };
+		7BC43D532BE75319001A109B /* NotNeedIntercoptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotNeedIntercoptor.swift; sourceTree = "<group>"; };
 		7BC4E5082BE6546B00F0C5C2 /* Lunning.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Lunning.json; sourceTree = "<group>"; };
 		7BC4E50B2BE673F900F0C5C2 /* CustomTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabbar.swift; sourceTree = "<group>"; };
 		7BC51B452BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBaseTableViewCell.swift; sourceTree = "<group>"; };
@@ -363,7 +364,6 @@
 				7B11DC882BC58CF20055D423 /* Alamofire in Frameworks */,
 				7B11DC922BC58D2F0055D423 /* Kingfisher in Frameworks */,
 				7BC4E5072BE6540400F0C5C2 /* Lottie in Frameworks */,
-				7B1EE4022BDE897A00F109EB /* SkeletonView in Frameworks */,
 				7B94031E2BE1DCC2004A1A8E /* BetterSegmentedControl in Frameworks */,
 				7B9403412BE26F89004A1A8E /* iamport-ios in Frameworks */,
 				7B838E012BCFAE8C000F2E27 /* RxDataSources in Frameworks */,
@@ -537,6 +537,7 @@
 				7BC51B4A2BD019D600E5BF6C /* CursurModel.swift */,
 				7BCC9D862BE29DCB00A6CEC3 /* PaymentsModel.swift */,
 				7BDF40BE2BE3752A005274F9 /* PaymentsListModel.swift */,
+				7BC43D532BE75319001A109B /* NotNeedIntercoptor.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1091,7 +1092,6 @@
 				7B838DFE2BCFAE8C000F2E27 /* Differentiator */,
 				7B838E002BCFAE8C000F2E27 /* RxDataSources */,
 				7B5E51392BDA873400918C53 /* Toast */,
-				7B1EE4012BDE897A00F109EB /* SkeletonView */,
 				7B94031D2BE1DCC2004A1A8E /* BetterSegmentedControl */,
 				7B9403402BE26F89004A1A8E /* iamport-ios */,
 				7BC4E5062BE6540400F0C5C2 /* Lottie */,
@@ -1135,7 +1135,6 @@
 				7B838DF52BCFAE06000F2E27 /* XCRemoteSwiftPackageReference "ReusableKit" */,
 				7B838DFD2BCFAE8C000F2E27 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				7B5E51382BDA873400918C53 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
-				7B1EE4002BDE897A00F109EB /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				7B94031C2BE1DCC2004A1A8E /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 				7B94033F2BE26F89004A1A8E /* XCRemoteSwiftPackageReference "iamport-ios" */,
 				7BC4E5052BE6540300F0C5C2 /* XCRemoteSwiftPackageReference "lottie-ios" */,
@@ -1175,6 +1174,7 @@
 				7BD1D8E02BD6259700B5521F /* ProfileSettingView.swift in Sources */,
 				7BC06FD02BE0190F00651529 /* CheckUserDeleteViewController.swift in Sources */,
 				7B9403192BE119D8004A1A8E /* NetworkService.swift in Sources */,
+				7BC43D542BE75319001A109B /* NotNeedIntercoptor.swift in Sources */,
 				7B1EE46E2BDF9E3600F109EB /* ProfileCell.swift in Sources */,
 				7BCF4A572BC6E1C600BCE635 /* LoginButton.swift in Sources */,
 				7B11DC682BC58AD40055D423 /* AppDelegate.swift in Sources */,
@@ -1585,14 +1585,6 @@
 				minimumVersion = 7.0.2;
 			};
 		};
-		7B1EE4002BDE897A00F109EB /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.31.0;
-			};
-		};
 		7B5E51382BDA873400918C53 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
@@ -1694,11 +1686,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B11DC992BC58DA40055D423 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
-		};
-		7B1EE4012BDE897A00F109EB /* SkeletonView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7B1EE4002BDE897A00F109EB /* XCRemoteSwiftPackageReference "SkeletonView" */;
-			productName = SkeletonView;
 		};
 		7B5E51392BDA873400918C53 /* Toast */ = {
 			isa = XCSwiftPackageProductDependency;

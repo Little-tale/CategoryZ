@@ -34,6 +34,17 @@ final class ProfilePostCollectionViewCell: RxBaseCollectionViewCell {
         $0.font = JHFont.UIKit.li11
         $0.numberOfLines = 1
     }
+    private
+    let moreImage = UIImageView().then {
+        $0.image = JHImage.morePostImage
+        $0.contentMode = .scaleAspectFit
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.shadowOffset = CGSize(width: 0, height: 4)
+        $0.layer.shadowOpacity = 0.5
+        $0.layer.shadowRadius = 4
+        $0.layer.masksToBounds = false
+        $0.isHidden = true
+    }
     
 
     func setModel(_ model: SNSDataModel) {
@@ -51,6 +62,7 @@ final class ProfilePostCollectionViewCell: RxBaseCollectionViewCell {
                 }
                 owner.postContentLabel.text = model.content
                 owner.postDateLabel.text = DateManager.shared.differenceDateString(model.createdAt)
+                owner.moreImage.isHidden = model.files.count > 1 ? false : true
             }
             .disposed(by: disposeBag)
     }
@@ -58,20 +70,24 @@ final class ProfilePostCollectionViewCell: RxBaseCollectionViewCell {
     override func configureHierarchy() {
         contentView.addSubview(postImageView)
         contentView.addSubview(shadowView)
-        
         shadowView.addSubview(postContentLabel)
         shadowView.addSubview(postDateLabel)
-        
+        contentView.addSubview(moreImage)
     }
     override func configureLayout() {
         postImageView.snp.makeConstraints { make in
-            make.edges.equalTo(contentView.safeAreaLayoutGuide)
+            make.edges.equalToSuperview()
         }
+        
         shadowView.snp.makeConstraints { make in
             make.bottom.horizontalEdges.equalTo(postImageView)
             make.height.equalTo(postImageView).dividedBy(2.7)
         }
-        
+        moreImage.snp.makeConstraints { make in
+            make.size.equalToSuperview().dividedBy(7)
+            make.trailing.equalToSuperview().inset(4)
+            make.top.equalToSuperview().inset(4)
+        }
         postContentLabel.snp.makeConstraints { make in
             make.bottom.equalTo(postDateLabel.snp.top).inset( 2 )
             make.top.equalTo(shadowView).inset( 4 )
@@ -83,7 +99,7 @@ final class ProfilePostCollectionViewCell: RxBaseCollectionViewCell {
             make.bottom.equalToSuperview()
         }
     }
-    
+
     
 }
 

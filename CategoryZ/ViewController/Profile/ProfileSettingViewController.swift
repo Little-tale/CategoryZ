@@ -12,17 +12,19 @@ import RxDataSources
 import Kingfisher
 import Toast
 
+
+enum SettingSection: Int, CaseIterable {
+    case profileImage
+    case name
+    case phoneNumber
+    case registerDonate
+    case myPayments
+    case logOut
+    case deleteAccount
+}
+
 final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettingView> {
 
-    enum SettingSection: Int, CaseIterable {
-        case profileImage
-        case name
-        case phoneNumber
-        case registerDonate
-        case myPayments
-        case logOut
-        case deleteAccount
-    }
     
     let viewModel = ProfileSettingViewModel()
     
@@ -164,7 +166,7 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
             }
             .disposed(by: disPoseBag)
         
-        //CheckUserDeleteViewController
+        
         tryAccountDelete.bind(with: self) { owner, _ in
             let vc = CheckUserDeleteViewController()
             owner.navigationController?.pushViewController(vc, animated: true)
@@ -180,6 +182,6 @@ final class ProfileSettingViewController: RxHomeBaseViewController<ProfileSettin
     
     override func navigationSetting() {
         navigationItem.title = "설정"
-        // navigationController?.navigationBar.isTranslucent = true
+        
     }
 }
