@@ -11,10 +11,8 @@ import RxCocoa
 import Then
 import RxDataSources
 import RxReusableKit
-/*
- 데이터를 불러와야 하는데
- 커서기반 페이지 네이션을 알아보도록 하자
- */
+
+
 final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     
     typealias RxHeaderDataSource = RxCollectionViewSectionedReloadDataSource<SectionModel<String,ProductID>>
