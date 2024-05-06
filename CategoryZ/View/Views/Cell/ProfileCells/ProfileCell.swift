@@ -184,10 +184,7 @@ final class ProfileCell: RxBaseCollectionViewCell {
             .disposed(by: disposeBag)
         
     }
-    /*
-     Cannot assign value of type 'NSAttributedString' to type 'AttributedString?'
-     회고
-     */
+    
     private
     func setButton(lbt: String?, rbt: String?) {
         

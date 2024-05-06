@@ -250,7 +250,7 @@ extension CommentViewController {
     private
     func autoResizingTextView() {
         textBox.textView.rx.text.orEmpty
-            .observe(on: MainScheduler.instance) // *회고
+            .observe(on: MainScheduler.instance) 
             .bind(with: self) { owner, text in
                 let size = CGSize(width: owner.textBox.textView.frame.width, height: CGFloat.infinity)
                 let estimate = owner.textBox.textView.sizeThatFits(size)

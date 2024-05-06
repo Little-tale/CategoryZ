@@ -9,9 +9,6 @@ import UIKit
 import SnapKit
 import Then
 
-/*
- 회고 intrinsicContentSize
- */
 
 final class ProfileView: BaseView {
     

@@ -59,7 +59,7 @@ final class CommentTextView: BaseView {
         textView.snp.makeConstraints { make in
             make.verticalEdges.leading.equalTo(textBoxView).inset(10)
             make.trailing.equalTo(textBoxView).inset(60)
-            // * 회고
+           
             textViewHeightConstraint = make.height
                 .greaterThanOrEqualTo(40).constraint
         }

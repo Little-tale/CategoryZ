@@ -148,7 +148,7 @@ final class PostRegViewModel: RxViewModelType {
       // 버튼을 누르면 이미지 먼저 업로드후
        input.saveButtonTap
             .withLatestFrom(tapValidConbine)
-            .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance) // 회고
+            .throttle(.seconds(1), latest: false, scheduler: MainScheduler.instance) 
             .filter({ $0.2 != nil })
             .map({ content in
                 return (contents: content.0, datas: content.1, productId: content.2!)
