@@ -50,7 +50,7 @@ final class PinterestCell: RxBaseCollectionViewCell {
     func subscribe(_ model: SNSDataModel) {
         let behaiviorModel = BehaviorRelay(value: model)
         behaiviorModel
-            .observe(on: MainScheduler.asyncInstance)
+            .observe(on: MainScheduler.instance)
             .distinctUntilChanged()
             .bind(with: self) { owner, model in
                 if let url =  model.files.first {
