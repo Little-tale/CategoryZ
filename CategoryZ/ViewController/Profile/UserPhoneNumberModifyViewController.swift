@@ -106,13 +106,13 @@ extension UserPhoneNumberModifyViewController {
            textFiled.setDefaultPlaceHolder()
            break
        case .minCount:
-           textFiled.placeholderColor = .point
+           textFiled.placeholderColor = JHColor.point
            textFiled.placeholder = "글자수(숫자만)가 부족해요!"
        case .match:
            textFiled.placeholder = ""
            textFiled.borderActiveColor = JHColor.likeColor
        case .noMatch:
-           textFiled.placeholderColor = .point
+           textFiled.placeholderColor = JHColor.point
            textFiled.placeholder = "숫자만 넣어주세요"
        }
    }
