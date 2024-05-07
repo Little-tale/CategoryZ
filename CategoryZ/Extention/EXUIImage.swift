@@ -82,6 +82,7 @@ extension UIImageView {
         ]) {[unowned self] imageResult in
             switch imageResult {
             case .success(let result):
+                
                 image = result.image
             case .failure:
                 NotificationCenter.default.post(name: .cantChageUrlImage, object: nil)

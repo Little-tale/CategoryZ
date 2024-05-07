@@ -30,14 +30,14 @@ final class PostRegView: RxBaseView {
     private let imageMent = UILabel().then {
         $0.text = "이미지 (필수)"
         $0.font = JHFont.UIKit.re17
-        $0.textColor = JHColor.black
+        $0.textColor = JHColor.darkGray
     }
     
     let imageAddButton = BlackPointButton(title: "이미지 추가").then {
         $0.titleLabel?.font = JHFont.UIKit.li14
     }
     
-    let imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CustomFlowLayout.imagesLayout)
+    let imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CustomFlowLayout.imagesLayout).then { $0.backgroundColor = JHColor.white }
     
     private let categoryMent = UILabel().then {
         $0.text = "카테고리 (필수)"

@@ -8,7 +8,7 @@
 import UIKit
 
 
-protocol CustomPinterestLayoutDelegate: NSObject {
+protocol CustomPinterestLayoutDelegate: AnyObject {
     
     func collectionView(for collectionView: UICollectionView, heightForAtIndexPath indexPath: IndexPath) -> CGFloat
     
@@ -26,26 +26,15 @@ final class CustomPinterestLayout: UICollectionViewFlowLayout {
     private
     let headerHeight: CGFloat?
     
-    
-    init(numberOfColums: Int, cellPadding: CGFloat,_ headerHeight: CGFloat? = nil) {
-        self.numberOfColums = numberOfColums
-        self.cellPadding = cellPadding
-        self.headerHeight = headerHeight
-        super.init()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // Options 다시 레이아웃을 계산할 필요가 없도록 메모리에 저장한다.
+    private
+    var cache: [UICollectionViewLayoutAttributes] = []
     
     // 1. 컬렉션뷰 컨텐츠 사이즈를 지정해야한다.
     // 1.1 컨텐츠 높이의 그릇을 만들고 (프로퍼티)
     private
     var contentsHeight: CGFloat = 0
     
-    // Options 다시 레이아웃을 계산할 필요가 없도록 메모리에 저장한다.
-    private
-    var cache: [UICollectionViewLayoutAttributes] = []
     
     // 1.2 컨텐츠 넓이를 정하는데...
     private
@@ -61,11 +50,26 @@ final class CustomPinterestLayout: UICollectionViewFlowLayout {
         return collectionView.bounds.width - (totalInset)
     }
     
+    
+    init(numberOfColums: Int, cellPadding: CGFloat,_ headerHeight: CGFloat? = nil) {
+        self.numberOfColums = numberOfColums
+        self.cellPadding = cellPadding
+        self.headerHeight = headerHeight
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+  
+    
     // 1.END 컬렉션뷰의 컨텐츠 사이즈를 지정
     override var collectionViewContentSize: CGSize {
-        let minHeight = collectionView?.bounds.height ?? 0
+        // let minHeight = collectionView?.bounds.height ?? 0
         
-        return CGSize(width: contetnsWidth, height: max(contentsHeight,minHeight))
+        return CGSize(width: contetnsWidth, height: contentsHeight)
     }
         
     // 2. 컬렉션뷰가 처음 초기화 되거나, 뷰가 변경될때 실행됩니다.
@@ -74,9 +78,14 @@ final class CustomPinterestLayout: UICollectionViewFlowLayout {
     override func prepare() {
         super.prepare()
         
-        guard let collectionView = collectionView else { return }
+        guard
+            cache.isEmpty,
+            let collectionView = collectionView
+            else {
+              return
+          }
         
-        cache.removeAll()
+//        cache.removeAll()
         
         // xOffset 계산
         let columnWidth: CGFloat = contetnsWidth / CGFloat(numberOfColums) // 컨텐츠 / 셀갯수
@@ -89,17 +98,29 @@ final class CustomPinterestLayout: UICollectionViewFlowLayout {
         // yOffset 계산
         var column = 0
         var yOffset = [CGFloat](repeating: 0, count: numberOfColums) // 각 열의 y축 시작 위치를 저장할 배열
+        
         for item in 0..<collectionView.numberOfItems(inSection: 0) {
             let indexPath = IndexPath(item: item, section: 0)
             
-            let imageHeight = delegate?.collectionView(for: collectionView, heightForAtIndexPath: indexPath) ?? 0
+            let imageHeight = delegate?.collectionView(
+                for: collectionView,
+                heightForAtIndexPath: indexPath
+            ) ?? 0
             
             // 셀의 전체 높이를 계산 (상하 패딩 포함)
             let height = cellPadding * 2 + imageHeight
             
-            let frame = CGRect(x: xOffset[column], y: yOffset[column], width: columnWidth, height: height)
+            let frame = CGRect(
+                x: xOffset[column],
+                y: yOffset[column],
+                width: columnWidth,
+                height: height
+            )
             
-            let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
+            let insetFrame = frame.insetBy(
+                dx: cellPadding,
+                dy: cellPadding
+            )
             
             // cache 저장
             let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
