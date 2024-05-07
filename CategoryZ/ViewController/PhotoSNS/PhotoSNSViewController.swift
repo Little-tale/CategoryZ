@@ -35,7 +35,6 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.hidesBarsOnSwipe = true
-        // disPoseBag = .init()
         NotificationCenter.default
             .rx
             .notification(.moveToProfileForComment, object: nil)
@@ -45,9 +44,9 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                     print("ProfileType Fail b")
                     return
                 }
-                print("Fail? ")
                 let vc = UserProfileViewController()
                 vc.profileType = profileType
+                owner.navigationController?.setNavigationBarHidden(false, animated: true)
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)

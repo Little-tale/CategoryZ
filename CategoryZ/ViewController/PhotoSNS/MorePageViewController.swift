@@ -22,6 +22,7 @@ final class MorePageViewController: RxBaseViewController {
         $0.backgroundColor = JHColor.black
         $0.tintColor = JHColor.white
         $0.layer.cornerRadius = 6
+        $0.setTitleColor(JHColor.white, for: .normal)
         $0.clipsToBounds = true
     }
     
@@ -29,6 +30,7 @@ final class MorePageViewController: RxBaseViewController {
     let rightButton = UIButton().then {
         $0.backgroundColor = JHColor.black
         $0.tintColor = JHColor.white
+        $0.setTitleColor(JHColor.white, for: .normal)
         $0.layer.cornerRadius = 6
         $0.clipsToBounds = true
         $0.setTitle("프로필 이동", for: .normal)
