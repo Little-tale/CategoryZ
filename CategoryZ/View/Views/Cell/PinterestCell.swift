@@ -42,6 +42,7 @@ final class PinterestCell: RxBaseCollectionViewCell {
     
     
     func setModel(_ data: SNSDataModel) {
+        print("데이터 잘만 넘어옴",data )
         subscribe(data)
     }
     

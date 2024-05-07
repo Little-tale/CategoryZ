@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+/// 핀터레스트 컴포지셔널 레이아웃입니다.
 final class PinterestCompostionalLayout {
     
     /// 핀터레스트 레이아웃 구성에 필요한 세부사항들을 정의하는 구조체입니다.
@@ -68,10 +68,10 @@ final class PinterestCompostionalLayout {
             return CGRect(origin: origin, size: size) // 위치와 사이즈를 통해 REACT ( 사각형 알죠? ) 생성해요
         }
         
-        //
+        // 행 레이아웃 아이템 생성
         func makeLayoutItem(for row: Int) -> NSCollectionLayoutGroupCustomItem {
-            let frame = frame(for: row)
-            columnHeights[columnIndex()] = frame.maxY + interItemSpacing
+            let frame = frame(for: row) // 아이템 프레임을 계산해요
+            columnHeights[columnIndex()] = frame.maxY + interItemSpacing // 계산된 프레임 maxY 간격을 더한값을 현재 열의 높이로 설정합니다.
             return NSCollectionLayoutGroupCustomItem(frame: frame)
         }
         
