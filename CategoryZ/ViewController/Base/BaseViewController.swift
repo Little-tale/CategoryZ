@@ -12,7 +12,7 @@ class BaseViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white // 수정예정
+        view.backgroundColor = JHColor.white
         navigationSetting()
         configureHierarchy()
         configureLayout()

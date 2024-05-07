@@ -28,11 +28,11 @@ final class CategoryZTabbarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .white
         setupMiddleButton()
         settingTabBarItems()
         subscribe()
+        view.backgroundColor = JHColor.white
+        tabBar.isTranslucent = false
     }
     
     func settingTabBarItems() {

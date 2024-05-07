@@ -19,18 +19,18 @@ final class ProfilePostCollectionViewCell: RxBaseCollectionViewCell {
     }
     
     private let shadowView = UIView().then {
-        $0.backgroundColor = JHColor.black.withAlphaComponent(0.5)
+        $0.backgroundColor = JHColor.onlyBlack.withAlphaComponent(0.5)
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 4
     }
 
     let postContentLabel = UILabel().then {
-        $0.textColor = JHColor.white
+        $0.textColor = JHColor.onlyWhite
         $0.font = JHFont.UIKit.re14
         $0.numberOfLines = 0
     }
     let postDateLabel = UILabel().then {
-        $0.textColor = JHColor.white
+        $0.textColor = JHColor.onlyWhite
         $0.font = JHFont.UIKit.li11
         $0.numberOfLines = 1
     }

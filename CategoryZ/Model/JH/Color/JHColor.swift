@@ -14,6 +14,7 @@ extension JHColor {
     
     static let black: UIColor = .textBlack
     static let white: UIColor = .textWhite
+    static let onlyWhite: UIColor = .onlyWhite
     static let point: UIColor = .point
     static let currect: UIColor = .pointGreen
     static let gray: UIColor = .backGray
@@ -21,4 +22,5 @@ extension JHColor {
     static let likeColor: UIColor = .like
     static let settingColor: UIColor = .setting
     static let warningColor: UIColor = .warning
+    static let onlyBlack: UIColor = .onlyBlack
 }
