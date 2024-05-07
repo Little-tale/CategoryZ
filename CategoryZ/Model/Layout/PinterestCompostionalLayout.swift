@@ -4,6 +4,11 @@
 //
 //  Created by Jae hyung Kim on 5/7/24.
 //
+/*
+ 1. 프레임 계산 잘되고 있음....
+ 2. 근데 너무 크다..
+ 3. 셀이 보이지도 않음
+ */
 
 import UIKit
 /// 핀터레스트 컴포지셔널 레이아웃입니다.
@@ -17,11 +22,11 @@ final class PinterestCompostionalLayout {
         let itemHeightProvider: (_ index: Int,_ itemWidth: CGFloat) -> CGFloat // 특정 인뎃스 아이템 높이 클로저
         let itemCountProfider: () -> Int // 섹션의 항목(아이템)수 제공하는 클로저
         
-        init( numberOfColumns: Int, // 상동
-             interItemSpacing: CGFloat, // 상동
-             contentInsetsReference: UIContentInsetsReference, // 상동
-             itemHeightProvider: @escaping (_: Int, _: CGFloat) -> CGFloat, // 상동
-             itemCountProfider: @escaping () -> Int // 상동
+        init( numberOfColumns: Int = 2, // 상동
+              interItemSpacing: CGFloat = 8, // 상동
+              contentInsetsReference: UIContentInsetsReference = .automatic, // 상동
+              itemHeightProvider: @escaping (_: Int, _: CGFloat) -> CGFloat, // 상동 -> 개발자 깃허브 조사해보니 사이즈를 미리 알아야 하니 클로저로 해결한 케이스
+              itemCountProfider: @escaping () -> Int // 상동
         ) {
             self.numberOfColumns = numberOfColumns
             self.interItemSpacing = interItemSpacing
@@ -72,6 +77,7 @@ final class PinterestCompostionalLayout {
         func makeLayoutItem(for row: Int) -> NSCollectionLayoutGroupCustomItem {
             let frame = frame(for: row) // 아이템 프레임을 계산해요
             columnHeights[columnIndex()] = frame.maxY + interItemSpacing // 계산된 프레임 maxY 간격을 더한값을 현재 열의 높이로 설정합니다.
+            print("frame: \(frame)!")
             return NSCollectionLayoutGroupCustomItem(frame: frame)
         }
         
@@ -103,6 +109,7 @@ final class PinterestCompostionalLayout {
         fileprivate
         func maxcolumHeight() -> CGFloat {
             // 가장 높은 열의 높이를 받아요
+            print("columnHeights\(columnHeights)!!!")
             return columnHeights.max() ?? 0
         }
         
@@ -115,7 +122,9 @@ final class PinterestCompostionalLayout {
         environment: NSCollectionLayoutEnvironment, // 레이아웃 상태
         sectionIndex: Int // 섹션 인덱스
     ) -> NSCollectionLayoutSection {
+        
         var items: [NSCollectionLayoutGroupCustomItem] = [] // 아이템을 저장할 배열이죠
+        
         let itemProvider = LayoutBuilder(
             configuration: config,
             collectionWidth: environment.container.contentSize.width
@@ -141,7 +150,5 @@ final class PinterestCompostionalLayout {
         section.contentInsetsReference = config.contentInsetsReference // 색션 여백 설정
         return section
     }
-    
-    
-
 }
+

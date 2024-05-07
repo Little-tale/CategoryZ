@@ -25,21 +25,12 @@ final class LikeViewController: RxBaseViewController {
     private
     let viewModel = LikeViewModel()
 
-    var dataSource: DataSource?
+    var dataSource: DataSource!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationSetting()
-        
-//        let layout = CustomPinterestLayout(
-//            numberOfColums: 2,
-//            cellPadding: 4
-//        )
-//        layout.delegate = self
-//        collectionView.collectionViewLayout = layout
-        
-    
-        
+
     }
     
     override func subscriver() {
@@ -94,43 +85,11 @@ final class LikeViewController: RxBaseViewController {
     }
     private
     func collectionViewRxSetting(_ models: BehaviorRelay<[SNSDataModel]>) {
-        let viewWidth = view.bounds.width
         
         let publishLayoutConfig = PublishRelay<PinterestCompostionalLayout.Configuration> ()
         let nextTrigger = PublishRelay<Void> ()
-//        models
-//            .distinctUntilChanged()
-//            .bind(to: collectionView.rx.items(cellIdentifier: PinterestCell.reusableIdenti, cellType: PinterestCell.self)) {
-//                row, item, cell in
-//                print("** 방출시점 갯수",models.value.count)
-//                cell.layer.cornerRadius = 12
-//               
-//                cell.setModel(item)
-//            }
-//            .disposed(by: disPoseBag)
+     
         models
-            .distinctUntilChanged()
-            .bind(with: self , onNext: { owner, models in
-                let config = owner.makePinterestLayoutConfiguration(models, viewWidth: viewWidth)
-                publishLayoutConfig.accept(config)
-            })
-            .disposed(by: disPoseBag)
-    
-        publishLayoutConfig.bind(with: self) { owner, configuration in
-            let layout = UICollectionViewCompositionalLayout { index, environment in
-                return PinterestCompostionalLayout.makeLayoutSection(
-                    config: configuration,
-                    environment: environment,
-                    sectionIndex: index
-                )
-            }
-            owner.collectionView.setCollectionViewLayout(layout, animated: true)
-            nextTrigger.accept(())
-        }
-        .disposed(by: disPoseBag)
-        
-        nextTrigger
-            .withLatestFrom(models)
             .bind(with: self) { owner, models in
                 owner.makeSnapshot(models: models)
             }
@@ -145,6 +104,8 @@ final class LikeViewController: RxBaseViewController {
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
         
+        collectionView.setCollectionViewLayout(createLayout(), animated: true)
+        
         makeDataSource()
         makeSnapshot(models: [])
     }
@@ -154,30 +115,37 @@ final class LikeViewController: RxBaseViewController {
     }
     
     private
-    func makePinterestLayoutConfiguration(
-        _ models:[SNSDataModel],
-        viewWidth: CGFloat ) -> PinterestCompostionalLayout.Configuration {
+    func createPinterstLayout(env: NSCollectionLayoutEnvironment, models: [SNSDataModel], viewWidth: CGFloat) -> NSCollectionLayoutSection {
             
-            return PinterestCompostionalLayout.Configuration(
-            numberOfColumns: 2, // 몇줄?
-            interItemSpacing: 8, // 간격은?
-            contentInsetsReference: UIContentInsetsReference.automatic, // 알아서
-            itemHeightProvider: { item, _ in
-                
-                let aspectString = models[item].content3
-                let aspect = CGFloat(Double(aspectString) ?? 1)
-                let result = (viewWidth / 2 / aspect) + 60
-                print(" 여긴 작동중 ....\(result)")
-                return result
-            },
-            itemCountProfider: {
-                return models.count
-            }
+        let sectionSpacing:CGFloat = 20
+        
+        let layout = PinterestCompostionalLayout.makeLayoutSection(
+            config: .init(
+                numberOfColumns: 2, // 몇줄?
+                interItemSpacing: 8, // 간격은?
+                contentInsetsReference: UIContentInsetsReference.automatic, // 알아서
+                itemHeightProvider: { item, _ in
+                    let aspectString = models[item].content3
+                    let aspect = CGFloat(Double(aspectString) ?? 1)
+                    let result = (viewWidth / 2 / aspect) + 60
+                    print(" 여긴 작동중 ....\(result)")
+                    return result
+                },
+                itemCountProfider: {
+                    return models.count
+                }
+            ),
+            environment: env,
+            sectionIndex: 0
         )
+        
+       return layout
+           
     }
     
     private
     func makeDataSource(){
+        
         dataSource = DataSource(
             collectionView: collectionView,
             cellProvider: { collectionView, indexPath, itemIdentifier in
@@ -188,7 +156,6 @@ final class LikeViewController: RxBaseViewController {
                     print("PinterestCell Error")
                     return .init()
                 }
-                
                 cell.setModel(itemIdentifier)
                 cell.backgroundColor = .red
                 return cell
@@ -198,25 +165,24 @@ final class LikeViewController: RxBaseViewController {
     
     private
     func makeSnapshot(models: [SNSDataModel]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Int,SNSDataModel> ()
+        var snapshot = DataSourceSnapShot()
+        snapshot.deleteAllItems()
         snapshot.appendSections([0])
-        snapshot.appendItems(models, toSection: 0)
-        dataSource?.apply(snapshot, animatingDifferences: true)
+        
+        snapshot.appendItems(models.map{$0}, toSection: 0)
+        dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
+    private
+    func createLayout() -> UICollectionViewCompositionalLayout {
+        let viewWidth = view.bounds.width
+        let layout = UICollectionViewCompositionalLayout { [weak self] section, env in
+            guard let self else { return nil }
+            return createPinterstLayout(env: env, models: viewModel.realModel.value, viewWidth: viewWidth)
+        }
+        
+        return layout
+    }
     
 }
 
-//extension LikeViewController: CustomPinterestLayoutDelegate {
-//    
-//    func collectionView(for collectionView: UICollectionView, heightForAtIndexPath indexPath: IndexPath) -> CGFloat {
-//        print("**셀을 그리는 펑션입장 : \(indexPath.item)")
-//        let model = viewModel.realModel.value[indexPath.item]
-//        
-//        let aspectString = model.content3
-//        let aspect = CGFloat(Double(aspectString) ?? 1 )
-//        let cellWidth: CGFloat = view.bounds.width / 2
-//        let date: CGFloat = 24
-//        return (cellWidth / aspect) + 24 + date + 12
-//    }
-//}
