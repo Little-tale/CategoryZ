@@ -38,10 +38,10 @@ final class RegisterDonateViewController: RxBaseViewController {
     let control = BetterSegmentedControl(frame: .zero).then {
         $0.segments = LabelSegment.segments(
             withTitles: ["후원 ON", "후원 OFF"],
-            normalTextColor: JHColor.darkGray,
+            normalTextColor: JHColor.segementBlack,
             selectedTextColor: JHColor.likeColor
         )
-        $0.backgroundColor = JHColor.gray
+        $0.backgroundColor = JHColor.onlyDarkGray
     }
     
     private

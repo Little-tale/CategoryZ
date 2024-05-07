@@ -19,11 +19,11 @@ final class ProfileView: BaseView {
     }
     let userNameLabel = UILabel().then {
         $0.font = JHFont.UIKit.bo20
-        $0.textColor = JHColor.darkGray
+        $0.textColor = JHColor.onlyDarkGray
     }
     let phoneNumLabel = UILabel().then {
         $0.font = JHFont.UIKit.re17
-        $0.textColor = JHColor.darkGray
+        $0.textColor = JHColor.onlyDarkGray
     }
     override var intrinsicContentSize: CGSize {
         let height = 10 + 100 + 14 + userNameLabel.intrinsicContentSize.height + 4 + phoneNumLabel.intrinsicContentSize.height

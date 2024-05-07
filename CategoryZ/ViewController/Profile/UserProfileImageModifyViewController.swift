@@ -33,6 +33,7 @@ final class UserProfileImageModifyViewController: RxBaseViewController {
         $0.setTitle("수정하기", for: .normal)
         $0.backgroundColor = JHColor.black
         $0.tintColor = JHColor.white
+        $0.setTitleColor(JHColor.white, for: .normal)
         $0.layer.cornerRadius = 12
         $0.clipsToBounds = true
     }
@@ -41,6 +42,7 @@ final class UserProfileImageModifyViewController: RxBaseViewController {
         $0.setTitle("삭제", for: .normal)
         $0.backgroundColor = JHColor.black
         $0.tintColor = JHColor.white
+        $0.setTitleColor(JHColor.white, for: .normal)
         $0.layer.cornerRadius = 12
         $0.clipsToBounds = true
     }
@@ -49,6 +51,7 @@ final class UserProfileImageModifyViewController: RxBaseViewController {
         $0.setTitle("저장", for: .normal)
         $0.backgroundColor = JHColor.likeColor
         $0.tintColor = JHColor.white
+        $0.setTitleColor(JHColor.onlyWhite, for: .normal)
         $0.layer.cornerRadius = 12
         $0.clipsToBounds = true
     }
@@ -135,8 +138,6 @@ final class UserProfileImageModifyViewController: RxBaseViewController {
                 }
             }
             .disposed(by: disPoseBag)
-        
-        
         
     }
     

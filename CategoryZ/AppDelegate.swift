@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let appearnace = UINavigationBarAppearance()
             appearnace.configureWithOpaqueBackground()
             appearnace.titleTextAttributes = [NSAttributedString.Key.foregroundColor : JHColor.black]
+            appearnace.backButtonAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor : JHColor.black]
             appearnace.backgroundColor = JHColor.white
             UINavigationBar.appearance().standardAppearance = appearnace
             UINavigationBar.appearance().compactAppearance = appearnace
