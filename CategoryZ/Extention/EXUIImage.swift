@@ -89,6 +89,11 @@ extension UIImageView {
             }
         }
     }
+    
+    func stopDownloadTask() {
+        self.kf.cancelDownloadTask()
+        self.image = nil
+    }
 }
 
 extension UIViewController {

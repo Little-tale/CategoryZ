@@ -47,23 +47,20 @@ final class LikeViewController: RxBaseViewController {
         
         networkError(output.networkError)
         
-        
-        
         collectionViewRxSetting(output.successData)
         
-        let zipCollectionView = Observable.zip(collectionView.rx.itemSelected, collectionView.rx.modelSelected(SNSDataModel.self))
-            
-        zipCollectionView
-            .bind(with: self) { owner, collectionView in
+        collectionView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
                 let vc = SingleSNSViewController()
                 
-                let model = collectionView.1
+                let model = output.successData.value[indexPath.item]
                 
-                model.currentRow = collectionView.0.item
+                model.currentRow = indexPath.item
                 
                 vc.setModel(model)
                 
                 vc.ifChangeOfLikeDelegate = owner.viewModel
+                
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)
@@ -86,9 +83,6 @@ final class LikeViewController: RxBaseViewController {
     private
     func collectionViewRxSetting(_ models: BehaviorRelay<[SNSDataModel]>) {
         
-        let publishLayoutConfig = PublishRelay<PinterestCompostionalLayout.Configuration> ()
-        let nextTrigger = PublishRelay<Void> ()
-     
         models
             .bind(with: self) { owner, models in
                 owner.makeSnapshot(models: models)
@@ -116,8 +110,6 @@ final class LikeViewController: RxBaseViewController {
     
     private
     func createPinterstLayout(env: NSCollectionLayoutEnvironment, models: [SNSDataModel], viewWidth: CGFloat) -> NSCollectionLayoutSection {
-            
-        let sectionSpacing:CGFloat = 20
         
         let layout = PinterestCompostionalLayout.makeLayoutSection(
             config: .init(
@@ -157,7 +149,6 @@ final class LikeViewController: RxBaseViewController {
                     return .init()
                 }
                 cell.setModel(itemIdentifier)
-                cell.backgroundColor = .red
                 return cell
             }
         )
