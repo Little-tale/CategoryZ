@@ -51,11 +51,19 @@ extension UIImage {
 }
 
 extension UIImageView {
-    func downloadImage(imageUrl: String?, resizing: CGSize, _ defaultImage: UIImage? = nil) {
 
-        let processor = DownsamplingImageProcessor(size: resizing)
+    func stopDownloadTask() {
+        self.kf.cancelDownloadTask()
+        self.image = nil
+    }
+}
+
+
+extension UIImageView: ImageCachingType {
+    func downloadImage(imageUrl: String?, resizeCase: ImageCachingCase, _ defaultImage: UIImage?) {
+        let processor = DownsamplingImageProcessor(size: resizeCase.size)
         
-        let scale: CGFloat =  UIScreen.main.scale
+        let scale: CGFloat = UIScreen.main.scale
         
         guard let imageUrl else {
             if defaultImage != nil {
@@ -79,22 +87,19 @@ extension UIImageView {
             .scaleFactor(scale),
             .cacheOriginalImage,
             .transition(.fade(1))
-        ]) {[unowned self] imageResult in
+        ]) {[weak self] imageResult in
             switch imageResult {
             case .success(let result):
                 
-                image = result.image
+                self?.image = result.image
             case .failure:
                 NotificationCenter.default.post(name: .cantChageUrlImage, object: nil)
             }
         }
     }
-    
-    func stopDownloadTask() {
-        self.kf.cancelDownloadTask()
-        self.image = nil
-    }
+
 }
+
 
 extension UIViewController {
     func downloadImage(imageUrl: String?, resizing: CGSize, complite: @escaping (Result<Data?,NetworkError>)-> Void ) {

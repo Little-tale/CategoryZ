@@ -7,6 +7,7 @@
 
 import UIKit
 import IQKeyboardManagerSwift
+import Kingfisher
 import iamport_ios
 
 @main
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.resignOnTouchOutside = true
         IQKeyboardManager.shared.disabledToolbarClasses = [ CommentViewController.self ]
         IQKeyboardManager.shared.disabledDistanceHandlingClasses = [CommentViewController.self]
+        ImageCache.default.diskStorage.config.sizeLimit = 500 * 1024 * 1024 // 캐시 제한을 걸어야 할것 같다 1gb 를 가볍게 넘긴다.
         
         if #available(iOS 15, *) {
             let appearnace = UINavigationBarAppearance()

@@ -58,7 +58,12 @@ final class ProfilePostCollectionViewCell: RxBaseCollectionViewCell {
             .distinctUntilChanged()
             .bind(with: self) { owner, model in
                 if let url = model.files.first {
-                    owner.postImageView.downloadImage(imageUrl: url, resizing: owner.postImageView.frame.size)
+                    owner.postImageView
+                        .downloadImage(
+                            imageUrl: url,
+                            resizeCase: .low,
+                            JHImage.defaultImage
+                        )
                 }
                 owner.postContentLabel.text = model.content
                 owner.postDateLabel.text = DateManager.shared.differenceDateString(model.createdAt)

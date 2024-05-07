@@ -129,7 +129,13 @@ final class ScrollImageView: RxBaseView {
             view.contentMode = .scaleAspectFill
             view.clipsToBounds = true
             view.backgroundColor = JHColor.darkGray
-            view.downloadImage(imageUrl: image,resizing: .init(width: 400, height: 300))
+
+            view.downloadImage(
+                imageUrl: image,
+                resizeCase: .high,
+                JHImage.defaultImage
+            )
+            
             imageViews.append(view)
         }
         

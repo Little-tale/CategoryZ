@@ -138,7 +138,13 @@ final class SNSTableViewCell: RxBaseTableViewCell {
                     owner.profileImageView.image = JHImage.defaultImage
                     print("프로필 이미지 XXX ")
                 } else {
-                    owner.profileImageView.downloadImage(imageUrl: imageURL, resizing: owner.profileImageView.frame.size)
+                
+                    owner.profileImageView
+                        .downloadImage(
+                            imageUrl: imageURL,
+                            resizeCase: .low,
+                            JHImage.defaultImage
+                        )
                     print("프로필 이미지 있데")
                 }
             }

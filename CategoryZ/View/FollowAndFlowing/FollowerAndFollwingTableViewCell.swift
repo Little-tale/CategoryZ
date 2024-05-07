@@ -65,7 +65,8 @@ final class FollowerAndFollwingTableViewCell: RxBaseTableViewCell {
                 
                 if let image = creator.profileImage {
                     print("이미지 불러오긴함 ",image)
-                    owner.userImageView.downloadImage(imageUrl: image, resizing: owner.userImageView.frame.size)
+                    owner.userImageView
+                        .downloadImage(imageUrl: image, resizeCase: .low, JHImage.defaultImage)
                 } else {
                     owner.userImageView.image = JHImage.defaultImage
                 }

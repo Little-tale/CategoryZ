@@ -63,7 +63,8 @@ final class OnlyRxImageCollectionViewCell: RxBaseCollectionViewCell {
                 if let model = model.first {
                     owner.backgoundImage.downloadImage(
                         imageUrl: model,
-                        resizing: owner.backgoundImage.frame.size
+                        resizeCase: .middle,
+                        JHImage.defaultImage
                     )
                 } else {
                     owner.backgoundImage.image = JHImage.defaultImage

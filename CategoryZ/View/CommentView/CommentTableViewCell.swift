@@ -44,7 +44,8 @@ final class CommentTableViewCell: RxBaseTableViewCell {
         if let userImage = commentsModel.creator.profileImage {
             userImageView.downloadImage(
                 imageUrl: userImage,
-                resizing: userImageView.frame.size
+                resizeCase: .low,
+                JHImage.defaultImage
             )
         } else {
             userImageView.image = JHImage.defaultImage

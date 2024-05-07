@@ -113,7 +113,13 @@ final class ProfileCell: RxBaseCollectionViewCell {
                 
                 // 프로파일 이미지
                 if !profileModel.profileImage.isEmpty {
-                    owner.profileView.profileImageView.downloadImage(imageUrl: profileModel.profileImage, resizing: CGSize(width: 100, height: 100))
+
+                    owner.profileView.profileImageView
+                        .downloadImage(
+                            imageUrl: profileModel.profileImage,
+                            resizeCase: .low,
+                            JHImage.defaultImage
+                        )
                 }
             }
             .disposed(by: disposeBag)

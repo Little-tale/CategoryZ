@@ -62,10 +62,12 @@ final class DonateViewController: RxHomeBaseViewController<DonateView> {
         output.successProfile
             .drive(with: self) { owner, model in
                 if model.profileImage != "" {
-                    owner.homeView.profileImageView.downloadImage(
-                        imageUrl: model.profileImage,
-                        resizing: owner.homeView.profileImageView.frame.size
-                    )
+                    owner.homeView.profileImageView
+                        .downloadImage(
+                            imageUrl: model.profileImage,
+                            resizeCase: .low,
+                            JHImage.defaultImage
+                        )
                 } else {
                     owner.homeView.profileImageView.image = JHImage.defaultImage
                 }

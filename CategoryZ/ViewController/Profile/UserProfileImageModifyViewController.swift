@@ -65,7 +65,13 @@ final class UserProfileImageModifyViewController: RxBaseViewController {
         let behaiverProfileModel = BehaviorRelay(value: model)
         
         if !model.profileImage.isEmpty {
-            profileImageView.downloadImage(imageUrl:model.profileImage, resizing: .init(width: 200, height: 200))
+
+            profileImageView
+                .downloadImage(
+                    imageUrl: model.profileImage,
+                    resizeCase: .low,
+                    JHImage.defaultImage
+                )
         } else {
             profileImageView.image = JHImage.defaultImage
         }

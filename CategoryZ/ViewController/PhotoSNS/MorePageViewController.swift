@@ -151,7 +151,13 @@ final class MorePageViewController: RxBaseViewController {
         output.profileModel
             .drive(with: self) { owner, model in
                 if !model.profileImage.isEmpty {
-                    owner.profileView.profileImageView.downloadImage(imageUrl: model.profileImage, resizing: owner.profileView.profileImageView.frame.size)
+                    
+                    owner.profileView.profileImageView
+                        .downloadImage(
+                            imageUrl: model.profileImage,
+                            resizeCase: .low,
+                            JHImage.defaultImage
+                        )
                 }
             }
             .disposed(by: disPoseBag

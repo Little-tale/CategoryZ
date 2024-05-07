@@ -120,7 +120,6 @@ final class LikeViewController: RxBaseViewController {
                     let aspectString = models[item].content3
                     let aspect = CGFloat(Double(aspectString) ?? 1)
                     let result = (viewWidth / 2 / aspect) + 60
-                    print(" 여긴 작동중 ....\(result)")
                     return result
                 },
                 itemCountProfider: {

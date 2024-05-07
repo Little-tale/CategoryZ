@@ -99,11 +99,13 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
         output.profile
             .drive(with: self) { owner, creator in
                 owner.homeView.singleView.userNameLabel.text = creator.nick
-                owner.homeView.singleView.profileImageView.downloadImage(
-                    imageUrl: creator.profileImage,
-                    resizing: owner.homeView.singleView.profileImageView.frame.size,
-                    JHImage.defaultImage
-                )
+            
+                owner.homeView.singleView.profileImageView
+                    .downloadImage(
+                        imageUrl: creator.profileImage,
+                        resizeCase: .low,
+                        JHImage.defaultImage
+                    )
             }
             .disposed(by: disPoseBag)
         

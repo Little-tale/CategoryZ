@@ -46,6 +46,7 @@
 		7B5EF9F62BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */; };
 		7B5EF9F82BD4DFC000F022CB /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5EF9F72BD4DFC000F022CB /* ProfileHeaderView.swift */; };
 		7B80D9852BEA128F004D025A /* PinterestCompostionalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B80D9842BEA128F004D025A /* PinterestCompostionalLayout.swift */; };
+		7B80D9892BEA97B8004D025A /* ImageCachingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B80D9882BEA97B8004D025A /* ImageCachingType.swift */; };
 		7B838DDA2BCEC960000F2E27 /* FirstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DD92BCEC960000F2E27 /* FirstView.swift */; };
 		7B838DDC2BCEC9B9000F2E27 /* LunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DDB2BCEC9B9000F2E27 /* LunchScreenViewController.swift */; };
 		7B838DDE2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838DDD2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift */; };
@@ -235,6 +236,7 @@
 		7B5EF9F52BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostCollectionViewCell.swift; sourceTree = "<group>"; };
 		7B5EF9F72BD4DFC000F022CB /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		7B80D9842BEA128F004D025A /* PinterestCompostionalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestCompostionalLayout.swift; sourceTree = "<group>"; };
+		7B80D9882BEA97B8004D025A /* ImageCachingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCachingType.swift; sourceTree = "<group>"; };
 		7B838DD92BCEC960000F2E27 /* FirstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstView.swift; sourceTree = "<group>"; };
 		7B838DDB2BCEC9B9000F2E27 /* LunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunchScreenViewController.swift; sourceTree = "<group>"; };
 		7B838DDD2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewValidViewModel.swift; sourceTree = "<group>"; };
@@ -986,6 +988,7 @@
 				7BCF4A2E2BC5A65E00BCE635 /* ViewModelType.swift */,
 				7BCF4A302BC5A8DB00BCE635 /* ReusableIdentifier.swift */,
 				7BCF4A492BC6CF8600BCE635 /* BaseViewType.swift */,
+				7B80D9882BEA97B8004D025A /* ImageCachingType.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1378,6 +1381,7 @@
 				7B1EE3F92BDE4CFB00F109EB /* SingleSNSView.swift in Sources */,
 				7BCF4A5F2BC6E39700BCE635 /* JHColor.swift in Sources */,
 				7BA0E0E22BCD7458002F0516 /* CircleImageView.swift in Sources */,
+				7B80D9892BEA97B8004D025A /* ImageCachingType.swift in Sources */,
 				7BCF4A312BC5A8DB00BCE635 /* ReusableIdentifier.swift in Sources */,
 				7B11DCAB2BC591070055D423 /* TargetType.swift in Sources */,
 				7B1EE3F02BDE109500F109EB /* LikeViewController.swift in Sources */,
