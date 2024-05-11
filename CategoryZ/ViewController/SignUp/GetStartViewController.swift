@@ -36,6 +36,14 @@ final class GetStartViewController: RxHomeBaseViewController<GetStartView> {
             }
             .disposed(by: disPoseBag)
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        homeView.imageView.play()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        homeView.imageView.stop()
+    }
     
     deinit {
         print("GetStartViewController")

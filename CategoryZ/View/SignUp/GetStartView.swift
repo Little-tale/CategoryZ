@@ -9,18 +9,25 @@ import UIKit
 import SnapKit
 import Then
 import TextFieldEffects
+import Lottie
 
 
 final class GetStartView: RxBaseView {
     
-    private let imageView = UIImageView().then {
-        $0.image = UIImage.appLogo
-        $0.clipsToBounds = true
+//    private let imageView = UIImageView().then {
+//        $0.image = UIImage.appLogo
+//        $0.clipsToBounds = true
+//        $0.contentMode = .scaleAspectFit
+//    }
+    
+    let imageView = LottieAnimationView(name: "Welcome").then {
+        $0.loopMode = .autoReverse
         $0.contentMode = .scaleAspectFit
     }
+
     
     private let startLabel = UILabel().then {
-        $0.text = "Welcom to CategoryZ"
+        $0.text = "Welcome to CategoryZ"
         $0.font = JHFont.UIKit.bo24
         $0.textAlignment = .center
         $0.textColor = JHColor.black
@@ -49,16 +56,20 @@ final class GetStartView: RxBaseView {
     
     
     override func configureLayout() {
+        
+        imageView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.bottom.equalTo(startLabel.snp.top).inset( -24 )
+            make.height.equalTo(300)
+            make.centerX.equalToSuperview()
+        }
+        
         startLabel.snp.makeConstraints { make in
             make.center.equalTo(safeAreaLayoutGuide)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
         }
+
         
-        imageView.snp.makeConstraints { make in
-            make.size.equalToSuperview().dividedBy(3)
-            make.bottom.equalTo(startLabel.snp.top).inset(24)
-            make.centerX.equalToSuperview()
-        }
         
         subLabel.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(startLabel)
