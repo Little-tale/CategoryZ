@@ -13,7 +13,7 @@ final class PlaceholderTextView: UITextView {
     // MARK: Constant
     private enum Const {
         static let containerInset = UIEdgeInsets(top: 20, left: 14, bottom: 20, right: 14)
-        static let placeholderColor = UIColor(red: 0, green: 0, blue: 0.098, alpha: 0.22)
+        static let placeholderColor = JHColor.darkGray
     }
     
     var textFont: UIFont? {

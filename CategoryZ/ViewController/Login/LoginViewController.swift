@@ -33,7 +33,7 @@ final class LoginViewController: RxHomeBaseViewController<LoginView> {
         
         output.loginButtonEnabled
             .drive(with: self) { owner, bool in
-                owner.homeView.loginButton.backgroundColor = bool ? .point : .systemGray
+                owner.homeView.loginButton.backgroundColor = bool ? JHColor.point : JHColor.darkGray
             }
             .disposed(by: disPoseBag)
         
@@ -42,25 +42,17 @@ final class LoginViewController: RxHomeBaseViewController<LoginView> {
             .debounce(.milliseconds(100), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .bind { owner, error in
-                owner.showAlert(error: error) { _ in
-                    print("error")
-                    print(error.message)
-                    print(error.localizedDescription)
-                }
+                owner.showAlert(error: error)
             }
             .disposed(by: disPoseBag)
         
         // 로그인 성공
         output.loginSuccess
             .drive(with: self) { owner, login in
-                print(login)
                 let viewController = CategoryZTabbarController()
-            
                 owner.changeRootView(to: viewController, isNavi: false)
             }
             .disposed(by: disPoseBag)
-        
-        
     }
 }
 

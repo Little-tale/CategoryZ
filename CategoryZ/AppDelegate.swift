@@ -26,12 +26,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 15, *) {
             let appearnace = UINavigationBarAppearance()
             appearnace.configureWithOpaqueBackground()
+            
             appearnace.titleTextAttributes = [NSAttributedString.Key.foregroundColor : JHColor.black]
+            
             appearnace.backButtonAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor : JHColor.black]
+            
+            let image = UIImage(systemName: "chevron.backward")?.withTintColor(JHColor.black, renderingMode: .alwaysOriginal)
+            appearnace.setBackIndicatorImage(image, transitionMaskImage: image)
+            
             appearnace.backgroundColor = JHColor.white
+            
             UINavigationBar.appearance().standardAppearance = appearnace
             UINavigationBar.appearance().compactAppearance = appearnace
             UINavigationBar.appearance().scrollEdgeAppearance = appearnace
+            UINavigationBar.appearance().compactScrollEdgeAppearance = appearnace
         }
         return true
     }

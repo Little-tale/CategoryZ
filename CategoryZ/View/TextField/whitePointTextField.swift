@@ -26,7 +26,7 @@ final class WhitePointTextField: HoshiTextField {
     
     private func design(_ placeholderText: String?){
         textColor = .textBlack
-        placeholderColor = JHColor.gray
+        placeholderColor = JHColor.darkGray
         borderActiveColor = JHColor.point
         borderInactiveColor = JHColor.black
         placeholder = placeholderText

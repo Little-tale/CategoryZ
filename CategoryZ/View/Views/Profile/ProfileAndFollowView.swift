@@ -103,6 +103,6 @@ final class ProfileAndFollowView: BaseView {
         profileImageView.image = JHImage.defaultImage
         profileImageView.contentMode = .scaleAspectFill
         profileImageView.tintColor = JHColor.black
-        profileImageView.backgroundColor = .like
+        profileImageView.backgroundColor = JHColor.onlyWhite
     }
 }

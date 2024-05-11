@@ -4,11 +4,6 @@
 //
 //  Created by Jae hyung Kim on 5/7/24.
 //
-/*
- 1. 프레임 계산 잘되고 있음....
- 2. 근데 너무 크다..
- 3. 셀이 보이지도 않음
- */
 
 import UIKit
 /// 핀터레스트 컴포지셔널 레이아웃입니다.
@@ -48,6 +43,7 @@ final class PinterestCompostionalLayout {
             // 초기화시 기본값 설정 합니당
             // 모든 열의 초기 높이를 0으로 설정해요
             columnHeights = [CGFloat](repeating: 0, count: configuration.numberOfColumns)
+            // 구조체의 열의 수를 저장해요
             numberOfColumns = CGFloat(configuration.numberOfColumns)
             itemHeightProvider = configuration.itemHeightProvider
             interItemSpacing = configuration.interItemSpacing

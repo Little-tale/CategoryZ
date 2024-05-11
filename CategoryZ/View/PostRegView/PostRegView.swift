@@ -37,7 +37,9 @@ final class PostRegView: RxBaseView {
         $0.titleLabel?.font = JHFont.UIKit.li14
     }
     
-    let imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CustomFlowLayout.imagesLayout).then { $0.backgroundColor = JHColor.white }
+    let imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CustomFlowLayout.imagesLayout).then {
+        $0.backgroundColor = JHColor.white
+    }
     
     private let categoryMent = UILabel().then {
         $0.text = "카테고리 (필수)"
@@ -45,7 +47,9 @@ final class PostRegView: RxBaseView {
         $0.textColor = JHColor.black
     }
     
-    let categoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CustomFlowLayout.postLayout)
+    let categoryCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CustomFlowLayout.postLayout).then {
+        $0.backgroundColor = JHColor.white
+    }
     
     
     override func configureHierarchy() {

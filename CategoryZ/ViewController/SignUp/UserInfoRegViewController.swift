@@ -144,20 +144,20 @@ final class UserInfoRegViewController: RxHomeBaseViewController<UserInfoRegView>
     
     private
     func textFieldValidText(_ textFiled: WhitePointTextField, _ valid: textValidation) {
-        textFiled.borderActiveColor = .point
+        textFiled.borderActiveColor = JHColor.point
         switch valid {
         case .isEmpty:
-            textFiled.placeholderColor = .systemGray
+            textFiled.placeholderColor = JHColor.darkGray
             textFiled.setDefaultPlaceHolder()
             break
         case .minCount:
-            textFiled.placeholderColor = .point
+            textFiled.placeholderColor = JHColor.point
             textFiled.placeholder = "글자수가 부족해요!"
         case .match:
             textFiled.placeholder = ""
             textFiled.borderActiveColor = JHColor.currect
         case .noMatch:
-            textFiled.placeholderColor = .point
+            textFiled.placeholderColor = JHColor.point
             textFiled.placeholder = "양식에 맞지 않아요!"
         }
     }
@@ -166,28 +166,28 @@ final class UserInfoRegViewController: RxHomeBaseViewController<UserInfoRegView>
     func emailTextFieldValid(_ textFiled: WhitePointTextField, _ valid: EmailTextValid) {
         switch valid {
         case .isEmpty:
-            textFiled.borderActiveColor = .point
-            textFiled.placeholderColor = .systemGray
+            textFiled.borderActiveColor = JHColor.point
+            textFiled.placeholderColor = JHColor.darkGray
             textFiled.setDefaultPlaceHolder()
         case .minCount:
-            textFiled.borderActiveColor = .point
-            textFiled.placeholderColor = .point
+            textFiled.borderActiveColor = JHColor.point
+            textFiled.placeholderColor = JHColor.point
             textFiled.placeholder = "글자수가 부족해요!"
         case .match:
-            textFiled.placeholderColor = .point
+            textFiled.placeholderColor = JHColor.point
             textFiled.placeholder = "중복 검사가 필요해요!"
-            textFiled.borderActiveColor = .blue
+            textFiled.borderActiveColor = JHColor.warningColor
         case .noMatch:
-            textFiled.borderActiveColor = .point
+            textFiled.borderActiveColor = JHColor.point
             textFiled.placeholderColor = .point
             textFiled.placeholder = "양식에 맞지 않아요!"
         case .validCurrect:
-            textFiled.borderActiveColor = .green
+            textFiled.borderActiveColor = JHColor.point
             textFiled.placeholderColor = .green
             textFiled.placeholder = "좋은 이메일 이에요!"
         case .duplite:
-            textFiled.borderActiveColor = .point
-            textFiled.placeholderColor = .point
+            textFiled.borderActiveColor = JHColor.point
+            textFiled.placeholderColor = JHColor.point
             textFiled.placeholder = "중복된 이메일 입니다."
         }
     }

@@ -41,7 +41,7 @@ final class LoginView: RxBaseView {
             make.top.equalTo(startMent.snp.bottom).offset(20)
             make.centerX.equalTo(safeAreaLayoutGuide)
             make.width.equalTo(imageView.snp.height)
-            make.bottom.equalTo(emailTextField.snp.top).inset( -16 )
+            make.bottom.equalTo(emailTextField.snp.top).inset( -40)
         }
         emailTextField.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(passwordTextFeild)

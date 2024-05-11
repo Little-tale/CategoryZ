@@ -17,15 +17,18 @@ final class LikeViewController: RxBaseViewController {
     typealias DataSourceSnapShot = NSDiffableDataSourceSnapshot<Int, SNSDataModel>
     typealias DataSource = UICollectionViewDiffableDataSource<Int, SNSDataModel>
     
+    let button = UIButton()
+    
     private
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
         $0.register(PinterestCell.self, forCellWithReuseIdentifier: PinterestCell.reusableIdenti)
+    
     }
     
     private
     let viewModel = LikeViewModel()
 
-    var dataSource: DataSource!
+    var dataSource: DataSource?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,22 +138,18 @@ final class LikeViewController: RxBaseViewController {
     }
     
     private
-    func makeDataSource(){
-        
-        dataSource = DataSource(
-            collectionView: collectionView,
-            cellProvider: { collectionView, indexPath, itemIdentifier in
-                guard let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: PinterestCell.reusableIdenti,
-                    for: indexPath
-                ) as? PinterestCell else {
-                    print("PinterestCell Error")
-                    return .init()
-                }
-                cell.setModel(itemIdentifier)
-                return cell
-            }
-        )
+    func makeDataSource() {
+        let register = colelctionCellRegiter()
+        dataSource = DataSource(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+            collectionView.dequeueConfiguredReusableCell(using: register, for: indexPath, item: itemIdentifier)
+        })
+    }
+    
+    private
+    func colelctionCellRegiter() -> UICollectionView.CellRegistration<PinterestCell, SNSDataModel> {
+        UICollectionView.CellRegistration { cell, indexPath, itemIdentifier in
+            cell.setModel(itemIdentifier)
+        }
     }
     
     private
