@@ -1,3 +1,21 @@
+
+<style>
+    .appLogoStyle {
+        width: 100px;
+        height: 100px;
+    }
+</style>
+
+<style>
+    .screenShotStyle {
+        width: 200px;
+        height: 400px;
+}
+</style>
+
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/585addef-5680-4001-905b-90c6e86dc260" class="appLogoStyle" alt="AppLogo 001">
+
+
 # CategoryZ ReadMe
 
 - CategoryZ app은 LSLP ( **Service Location Protocol ) 프로젝트 입니다.**
