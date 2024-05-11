@@ -1,19 +1,5 @@
 
-<style>
-    .appLogoStyle {
-        width: 100px;
-        height: 100px;
-    }
-</style>
-
-<style>
-    .screenShotStyle {
-        width: 200px;
-        height: 400px;
-}
-</style>
-
-<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/585addef-5680-4001-905b-90c6e86dc260" class="appLogoStyle" alt="AppLogo 001">
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/585addef-5680-4001-905b-90c6e86dc260" width="100" height="100"/>
 
 
 # CategoryZ ReadMe
@@ -135,47 +121,47 @@ protocol TargetType: URLRequestConvertible {
 
 ## 메인화면
 
-![Simulator_Screen_Recording_-_13Pro_-_2024-05-05_at_15 07 01](https://github.com/Little-tale/CategoryZ/assets/116441522/9b27d1e4-11f5-4c25-b6dd-820518c95b5e)
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/9b27d1e4-11f5-4c25-b6dd-820518c95b5e" width="200" height="400"/>
 
 ## 글올리기
 
-![Simulator_Screen_Recording_-_13Pro_-_2024-05-05_at_15 23 29](https://github.com/Little-tale/CategoryZ/assets/116441522/989300aa-b995-4d3f-9851-240530c5e416)
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/989300aa-b995-4d3f-9851-240530c5e416" width="200" height="400"/>
 
 ## 프로필
 
-![IMG_0512_(1)](https://github.com/Little-tale/CategoryZ/assets/116441522/ac76a845-f4f1-4359-9c95-912ea3400987)
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/ac76a845-f4f1-4359-9c95-912ea3400987" width="200" height="400"/>
 
 ## 결제기능
 
-![Untitled](https://github.com/Little-tale/CategoryZ/assets/116441522/5a7480d2-8c45-4b49-9a81-08e30a8e04c2)
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/5a7480d2-8c45-4b49-9a81-08e30a8e04c2" width="200" height="400"/>
 
 ## 태그 검색
 
-![Simulator_Screen_Recording_-_13Pro_-_2024-05-05_at_15 08 52](https://github.com/Little-tale/CategoryZ/assets/116441522/e2a5d74e-82da-491f-bd03-57d0539a41d7)
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/e2a5d74e-82da-491f-bd03-57d0539a41d7" width="200" height="400"/>
 
 ## 글 수정하기
 
-![Simulator_Screen_Recording_-_13Pro_-_2024-05-05_at_15 25 54](https://github.com/Little-tale/CategoryZ/assets/116441522/7145c086-da52-47d7-9bc5-51cbd85d399f)
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/7145c086-da52-47d7-9bc5-51cbd85d399f" width="200" height="400"/>
 
 ## 좋아요 모아보기
 
-![Simulator_Screen_Recording_-_13Pro_-_2024-05-05_at_15 54 56](https://github.com/Little-tale/CategoryZ/assets/116441522/936ac279-8153-4e20-a111-5c9815083854)
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/936ac279-8153-4e20-a111-5c9815083854" width="200" height="400"/>
 
 ## 팔로잉/ 팔로우
 
-![Simulator_Screen_Recording_-_13Pro_-_2024-05-05_at_17 09 50](https://github.com/Little-tale/CategoryZ/assets/116441522/298628dd-c6d8-4548-b7eb-a9fa826941f8)
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/298628dd-c6d8-4548-b7eb-a9fa826941f8" width="200" height="400"/>
 
 ## 댓글
 
-![Simulator_Screen_Recording_-_13Pro_-_2024-05-05_at_12 40 42](https://github.com/Little-tale/CategoryZ/assets/116441522/5c621a72-2c8f-42fc-9c99-6ac1e29d9346)
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/5c621a72-2c8f-42fc-9c99-6ac1e29d9346" width="200" height="400"/>
 
 ## 글 삭제
 
-![Simulator_Screen_Recording_-_13Pro_-_2024-05-05_at_15 29 42](https://github.com/Little-tale/CategoryZ/assets/116441522/5eafc8b3-2518-4903-84b7-7f7a0686423b)
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/5eafc8b3-2518-4903-84b7-7f7a0686423b" width="200" height="400"/>
 
 ## 설정화면
 
-![Simulator_Screen_Recording_-_13Pro_-_2024-05-05_at_16 27 03](https://github.com/Little-tale/CategoryZ/assets/116441522/685880d4-a3b9-47ca-9a14-47844b98853e)
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/685880d4-a3b9-47ca-9a14-47844b98853e" width="200" height="400"/>
 
 # 새롭게 학습 한 부분 과 고려했던 사항
 
