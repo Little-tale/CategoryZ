@@ -1,5 +1,5 @@
 
-<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/585addef-5680-4001-905b-90c6e86dc260" width="100" height="100"/>
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/080ef485-879b-4ecb-b377-fe8dceeb3e11" width="100" height="100"/>
 
 
 # CategoryZ ReadMe
