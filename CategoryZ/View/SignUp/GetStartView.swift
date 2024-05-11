@@ -9,19 +9,13 @@ import UIKit
 import SnapKit
 import Then
 import TextFieldEffects
-import Lottie
 
 
 final class GetStartView: RxBaseView {
     
-//    private let imageView = UIImageView().then {
-//        $0.image = UIImage.appLogo
-//        $0.clipsToBounds = true
-//        $0.contentMode = .scaleAspectFit
-//    }
-    
-    let imageView = LottieAnimationView(name: "Welcome").then {
-        $0.loopMode = .autoReverse
+    private let imageView = UIImageView().then {
+        $0.image = JHImage.appLogoImage
+        $0.clipsToBounds = true
         $0.contentMode = .scaleAspectFit
     }
 
@@ -58,7 +52,7 @@ final class GetStartView: RxBaseView {
     override func configureLayout() {
         
         imageView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(80)
             make.bottom.equalTo(startLabel.snp.top).inset( -24 )
             make.height.equalTo(300)
             make.centerX.equalToSuperview()

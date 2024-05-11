@@ -9,11 +9,11 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-
 final class GetStartViewController: RxHomeBaseViewController<GetStartView> {
  
     override func viewDidLoad() {
         super.viewDidLoad()
+       
     }
     
     override func subscribe() {
@@ -35,14 +35,6 @@ final class GetStartViewController: RxHomeBaseViewController<GetStartView> {
                 owner.navigationController?.pushViewController(UserInfoRegViewController(), animated: true)
             }
             .disposed(by: disPoseBag)
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        homeView.imageView.play()
-    }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        homeView.imageView.stop()
     }
     
     deinit {
