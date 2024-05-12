@@ -125,7 +125,7 @@ protocol TargetType: URLRequestConvertible {
 
 | 태그 검색 | 글 수정하기 | 좋아요 모아보기 | 팔로잉/ 팔로우 |
 |:---:|:---:|:---:|:---:|
-|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/e2a5d74e-82da-491f-bd03-57d0539a41d7" width="200" height="400"/></picture>|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/7145c086-da52-47d7-9bc5-51cbd85d399f" width="200" height="400"/></picture>|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/7145c086-da52-47d7-9bc5-51cbd85d399f" width="200" height="400"/></picture><picture>|<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/298628dd-c6d8-4548-b7eb-a9fa826941f8" width="200" height="400"/></picture>
+|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/e2a5d74e-82da-491f-bd03-57d0539a41d7" width="200" height="400"/></picture>|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/7145c086-da52-47d7-9bc5-51cbd85d399f" width="200" height="400"/></picture>|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/936ac279-8153-4e20-a111-5c9815083854" width="200" height="400"/></picture><picture>|<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/298628dd-c6d8-4548-b7eb-a9fa826941f8" width="200" height="400"/></picture>
 
 
 | 댓글 | 글 삭제 | 설정화면 |
