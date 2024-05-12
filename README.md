@@ -11,9 +11,9 @@
 > 
 
 # 소개 사진
-
-![readMEEE 001](https://github.com/Little-tale/CategoryZ/assets/116441522/0d303f23-fd43-4b71-a249-abe96801e2ed)
-
+<picture>
+    <img src ="https://github.com/Little-tale/NaverShopping/assets/116441522/0ad703d1-bd6c-4283-b9f8-5700f9a45bdc">
+</picture>
 # 📷 CategoryZ 프로젝트 소개
 
 > 다양한 이미지와 글을을 올려 다른 사람과 소통할수 있는 SNS 앱 LSLP 프로젝트 앱입니다.
@@ -119,56 +119,27 @@ protocol TargetType: URLRequestConvertible {
 
 # UI
 
-## 메인화면
+| 메인화면 | 글올리기 | 프로필 | 결제기능 |
+|:---:|:---:|:---:|:---:|
+|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/9b27d1e4-11f5-4c25-b6dd-820518c95b5e" width="200" height="400"/></picture>| <picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/989300aa-b995-4d3f-9851-240530c5e416" width="200" height="400"/></picture>|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/ac76a845-f4f1-4359-9c95-912ea3400987" width="200" height="400"/></picture>|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/5a7480d2-8c45-4b49-9a81-08e30a8e04c2" width="200" height="400"/></picture>
 
-<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/9b27d1e4-11f5-4c25-b6dd-820518c95b5e" width="200" height="400"/>
+| 태그 검색 | 글 수정하기 | 좋아요 모아보기 | 팔로잉/ 팔로우 |
+|:---:|:---:|:---:|:---:|
+|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/e2a5d74e-82da-491f-bd03-57d0539a41d7" width="200" height="400"/></picture>|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/7145c086-da52-47d7-9bc5-51cbd85d399f" width="200" height="400"/></picture>|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/7145c086-da52-47d7-9bc5-51cbd85d399f" width="200" height="400"/></picture><picture>|<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/298628dd-c6d8-4548-b7eb-a9fa826941f8" width="200" height="400"/></picture>
 
-## 글올리기
 
-<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/989300aa-b995-4d3f-9851-240530c5e416" width="200" height="400"/>
+| 댓글 | 글 삭제 | 설정화면 |
+|:---:|:---:|:---:|
+|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/5c621a72-2c8f-42fc-9c99-6ac1e29d9346" width="200" height="400"/></picture>|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/5eafc8b3-2518-4903-84b7-7f7a0686423b" width="200" height="400"/></picture>|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/685880d4-a3b9-47ca-9a14-47844b98853e" width="200" height="400"/></picture>|
 
-## 프로필
 
-<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/ac76a845-f4f1-4359-9c95-912ea3400987" width="200" height="400"/>
-
-## 결제기능
-
-<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/5a7480d2-8c45-4b49-9a81-08e30a8e04c2" width="200" height="400"/>
-
-## 태그 검색
-
-<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/e2a5d74e-82da-491f-bd03-57d0539a41d7" width="200" height="400"/>
-
-## 글 수정하기
-
-<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/7145c086-da52-47d7-9bc5-51cbd85d399f" width="200" height="400"/>
-
-## 좋아요 모아보기
-
-<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/936ac279-8153-4e20-a111-5c9815083854" width="200" height="400"/>
-
-## 팔로잉/ 팔로우
-
-<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/298628dd-c6d8-4548-b7eb-a9fa826941f8" width="200" height="400"/>
-
-## 댓글
-
-<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/5c621a72-2c8f-42fc-9c99-6ac1e29d9346" width="200" height="400"/>
-
-## 글 삭제
-
-<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/5eafc8b3-2518-4903-84b7-7f7a0686423b" width="200" height="400"/>
-
-## 설정화면
-
-<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/685880d4-a3b9-47ca-9a14-47844b98853e" width="200" height="400"/>
 
 # 새롭게 학습 한 부분 과 고려했던 사항
 
 ### 메모리 누수 (instruments Check)
-
-![%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2024-05-05_%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE_5 27 04](https://github.com/Little-tale/CategoryZ/assets/116441522/07c4188c-2874-450f-8ced-d40ab7df75d4)
-
+<picture>
+<img src="https://github.com/Little-tale/CategoryZ/assets/116441522/07c4188c-2874-450f-8ced-d40ab7df75d4">
+</picture>
 > 
 SNS 앱이기 때문에 다양한 이미지들을 캐시하게 됩니다.
 같은 URL일 경우, 재요청하는 것이 아니라 원래 캐시된 이미지를 사용하므로 
