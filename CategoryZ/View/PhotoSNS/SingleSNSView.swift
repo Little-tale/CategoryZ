@@ -24,6 +24,7 @@ final class SingleSNSView: BaseView {
     let profileImageView = CircleImageView().then {
         $0.image = JHImage.defaultImage
         $0.tintColor = JHColor.black
+        $0.isUserInteractionEnabled = true
     }
     let rightMoreBuntton = UIButton().then {
         $0.setImage(JHImage.moreImage, for: .normal)

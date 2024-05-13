@@ -193,6 +193,23 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
             }
             .disposed(by: disPoseBag)
         
+        let imageTabGesture = UITapGestureRecognizer()
+        
+        homeView.singleView.profileImageView.addGestureRecognizer(imageTabGesture)
+        
+        imageTabGesture.rx.event
+            .filter({ _ in
+                UserIDStorage.shared.userID != nil
+            })
+            .filter({ _ in
+                SNSData.creator.userID != UserIDStorage.shared.userID
+            })
+            .bind(with: self) { owner, _ in
+                let vc = UserProfileViewController()
+                vc.profileType = .other(otherUserId: SNSData.creator.userID)
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
         settingLikeButton()
     }
     
