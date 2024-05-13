@@ -117,8 +117,8 @@ final class LikeViewController: RxBaseViewController {
         let layout = PinterestCompostionalLayout.makeLayoutSection(
             config: .init(
                 numberOfColumns: 2, // 몇줄?
-                interItemSpacing: 8, // 간격은?
-                contentInsetsReference: UIContentInsetsReference.automatic, // 알아서
+                interItemSpacing: 5, // 간격은?
+                edgeInset: NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4), // 알아서
                 itemHeightProvider: { item, _ in
                     let aspectString = models[item].content3
                     let aspect = CGFloat(Double(aspectString) ?? 1)
