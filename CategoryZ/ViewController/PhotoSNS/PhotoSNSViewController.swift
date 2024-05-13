@@ -120,6 +120,9 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         // 지우기 API 구성 해야함 일단 수정에서 해결해 볼것
         let deleteModel = PublishRelay<SNSDataModel> ()
         let checkedDeleteModel = PublishRelay<SNSDataModel> ()
+        
+        let alreadyDelete = PublishRelay<Int> ()
+        
         let reloadTrigger = PublishRelay<Void> ()
         
         let input = SNSPhotoMainViewModel.Input(
@@ -127,7 +130,8 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             needLoadPageTrigger: needLoadPage,
             selectedProductID: selectedProductID,
             checkedDeleteModel: checkedDeleteModel,
-            reloadTrigger: reloadTrigger
+            reloadTrigger: reloadTrigger,
+            alreadyDelete: alreadyDelete
         )
         
         let output = viewModel.transform(input)
@@ -269,7 +273,9 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 NotificationCenter.default.post(name: .hidesBottomBarWhenPushed, object: nil)
                 
                 vc.modifyDelegate = owner.viewModel
-                
+                vc.ifDeleteChanege = { at in
+                    alreadyDelete.accept(at)
+                }
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)

@@ -32,6 +32,8 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     
     var deleteClosure: (() -> Void)?
     
+    var ifDeleteChanege: ((Int) -> Void)?
+    
     private
     lazy var imageService = RxCameraImageService(presntationViewController: self, zipRate: 5)
     
@@ -296,6 +298,9 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                 owner.view.makeToast("삭제가 완료되었습니다.", duration: 2, position: .center)
 //                NotificationCenter.default.post(name: .successPost, object: nil)
                 owner.deleteClosure?()
+                if let model = owner.ifModifyModel {
+                    owner.ifDeleteChanege?(model.currentRow)
+                }
                 owner.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disPoseBag)

@@ -50,6 +50,8 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         let checkedDeleteModel: PublishRelay<SNSDataModel>
         // 리로드 트리거
         let reloadTrigger: PublishRelay<Void>
+        
+        let alreadyDelete: PublishRelay<Int> 
     }
     
     struct Output {
@@ -197,6 +199,13 @@ final class SNSPhotoMainViewModel: RxViewModelType {
                     owner.realPostData.remove(at: model.currentRow)
                     owner.postsDatas.accept(owner.realPostData)
                 }
+            }
+            .disposed(by: disposeBag)
+        input
+            .alreadyDelete
+            .bind(with: self) { owner, at in
+                owner.realPostData.remove(at: at)
+                owner.postsDatas.accept(owner.realPostData)
             }
             .disposed(by: disposeBag)
         
