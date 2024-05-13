@@ -14,6 +14,8 @@ import Then
 
 final class LikeViewController: RxBaseViewController {
     
+    weak var pinteresLayoutCreator: PinterestLayoutCreator?
+    let layoutClass = PinterestCompostionalLayout()
     typealias DataSourceSnapShot = NSDiffableDataSourceSnapshot<Int, SNSDataModel>
     typealias DataSource = UICollectionViewDiffableDataSource<Int, SNSDataModel>
     
@@ -97,11 +99,13 @@ final class LikeViewController: RxBaseViewController {
     override func configureHierarchy() {
         view.addSubview(collectionView)
         
+        pinteresLayoutCreator = layoutClass
+        
+        createLayout()
+        
         collectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
-        
-        collectionView.setCollectionViewLayout(createLayout(), animated: true)
         
         makeDataSource()
         makeSnapshot(models: [])
@@ -109,32 +113,6 @@ final class LikeViewController: RxBaseViewController {
     
     override func navigationSetting(){
         navigationItem.title = "좋아요 모아요"
-    }
-    
-    private
-    func createPinterstLayout(env: NSCollectionLayoutEnvironment, models: [SNSDataModel], viewWidth: CGFloat) -> NSCollectionLayoutSection {
-        
-        let layout = PinterestCompostionalLayout.makeLayoutSection(
-            config: .init(
-                numberOfColumns: 2, // 몇줄?
-                interItemSpacing: 5, // 간격은?
-                edgeInset: NSDirectionalEdgeInsets(top: 0, leading: 4, bottom: 0, trailing: 4), // 알아서
-                itemHeightProvider: { item, _ in
-                    let aspectString = models[item].content3
-                    let aspect = CGFloat(Double(aspectString) ?? 1)
-                    let result = (viewWidth / 2 / aspect) + 60
-                    return result
-                },
-                itemCountProfider: {
-                    return models.count
-                }
-            ),
-            environment: env,
-            sectionIndex: 0
-        )
-        
-       return layout
-           
     }
     
     private
@@ -163,14 +141,23 @@ final class LikeViewController: RxBaseViewController {
     }
     
     private
-    func createLayout() -> UICollectionViewCompositionalLayout {
-        let viewWidth = view.bounds.width
-        let layout = UICollectionViewCompositionalLayout { [weak self] section, env in
-            guard let self else { return nil }
-            return createPinterstLayout(env: env, models: viewModel.realModel.value, viewWidth: viewWidth)
-        }
+    func createLayout() {
+        let config = PinterestConfiguration(
+            numberOfColumns: 2,
+            interItemSpacing: 6,
+            edgeInset: .init(top: 0, leading: 6, bottom: 0, trailing: 6)) { [weak self] item, _ in
+                guard let self else { return 150 }
+                let aspectString = viewModel.realModel.value[item].content3
+                let aspect = CGFloat(Double(aspectString) ?? 1)
+                let result = (view.bounds.width / 2 / aspect) + 60
+                return result
+            } itemCountProfider: { [weak self] in
+                guard let self else { return 0 }
+                return viewModel.realModel.value.count
+            }
         
-        return layout
+        pinteresLayoutCreator?
+            .createPinterstLayout(for: collectionView, config: config, viewWidth: view.bounds.width)
     }
     
 }

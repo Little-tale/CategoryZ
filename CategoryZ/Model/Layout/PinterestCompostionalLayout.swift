@@ -6,30 +6,39 @@
 //
 
 import UIKit
+
+protocol PinterestLayoutCreator: AnyObject {
+    func createPinterstLayout(
+        for collectionView : UICollectionView,
+        config: PinterestConfiguration,
+        viewWidth: CGFloat
+    )
+}
+
+/// 핀터레스트 레이아웃 구성에 필요한 세부사항들을 정의하는 구조체입니다.
+struct PinterestConfiguration {
+    let numberOfColumns: Int // 열 갯수
+    let interItemSpacing: CGFloat // 열과 행 간격 -> 아이템 간격
+    let edgeInset: NSDirectionalEdgeInsets // 섹션 ( 컨텐츠 ) 인셋
+    let itemHeightProvider: (_ index: Int,_ itemWidth: CGFloat) -> CGFloat // 특정 인뎃스 아이템 높이 클로저
+    let itemCountProfider: () -> Int // 섹션의 항목(아이템)수 제공하는 클로저
+    
+    init( numberOfColumns: Int, // 상동
+          interItemSpacing: CGFloat, // 상동
+          edgeInset: NSDirectionalEdgeInsets, // 상동
+          itemHeightProvider: @escaping (_: Int, _: CGFloat) -> CGFloat, // 상동 -> 개발자 깃허브 조사해보니 사이즈를 미리 알아야 하니 클로저로 해결한 케이스
+          itemCountProfider: @escaping () -> Int // 상동
+    ) {
+        self.numberOfColumns = numberOfColumns
+        self.interItemSpacing = interItemSpacing
+        self.edgeInset = edgeInset
+        self.itemHeightProvider = itemHeightProvider
+        self.itemCountProfider = itemCountProfider
+    }
+}
+
 /// 핀터레스트 컴포지셔널 레이아웃입니다.
 final class PinterestCompostionalLayout {
-    
-    /// 핀터레스트 레이아웃 구성에 필요한 세부사항들을 정의하는 구조체입니다.
-    struct Configuration {
-        let numberOfColumns: Int // 열 갯수
-        let interItemSpacing: CGFloat // 열과 행 간격 -> 아이템 간격
-        let edgeInset: NSDirectionalEdgeInsets // 섹션 ( 컨텐츠 ) 인셋
-        let itemHeightProvider: (_ index: Int,_ itemWidth: CGFloat) -> CGFloat // 특정 인뎃스 아이템 높이 클로저
-        let itemCountProfider: () -> Int // 섹션의 항목(아이템)수 제공하는 클로저
-        
-        init( numberOfColumns: Int, // 상동
-              interItemSpacing: CGFloat, // 상동
-              edgeInset: NSDirectionalEdgeInsets, // 상동
-              itemHeightProvider: @escaping (_: Int, _: CGFloat) -> CGFloat, // 상동 -> 개발자 깃허브 조사해보니 사이즈를 미리 알아야 하니 클로저로 해결한 케이스
-              itemCountProfider: @escaping () -> Int // 상동
-        ) {
-            self.numberOfColumns = numberOfColumns
-            self.interItemSpacing = interItemSpacing
-            self.edgeInset = edgeInset
-            self.itemHeightProvider = itemHeightProvider
-            self.itemCountProfider = itemCountProfider
-        }
-    }
     
     // 레이아웃을 구성하는데에 필요한 데이터를 계산하는 클래스 입니다.
     final class LayoutBuilder {
@@ -40,7 +49,7 @@ final class PinterestCompostionalLayout {
         private let collectionWidth: CGFloat // 컬렉션뷰 넓이
         private let marginWidth: CGFloat
         
-        init(configuration: Configuration, collectionWidth: CGFloat) {
+        init(configuration: PinterestConfiguration, collectionWidth: CGFloat) {
             // 초기화시 기본값 설정 합니당
             // 모든 열의 초기 높이를 0으로 설정해요
             columnHeights = [CGFloat](repeating: 0, count: configuration.numberOfColumns)
@@ -116,7 +125,7 @@ final class PinterestCompostionalLayout {
     // 지정된 설정, 레이아웃 상태에 따라 컬렉션뷰 섹션의 레이아웃을 생성하는 메서드
     static
     func makeLayoutSection(
-        config: Configuration, // 위에서 만든 구조체를 활용
+        config: PinterestConfiguration, // 위에서 만든 구조체를 활용
         environment: NSCollectionLayoutEnvironment, // 레이아웃 상태
         sectionIndex: Int // 섹션 인덱스
     ) -> NSCollectionLayoutSection {
@@ -148,6 +157,37 @@ final class PinterestCompostionalLayout {
 //        section.contentInsetsReference = config.contentInsetsReference // 색션 여백 설정
         section.contentInsets = config.edgeInset
         return section
+    }
+}
+
+
+extension PinterestCompostionalLayout: PinterestLayoutCreator {
+   
+    func createPinterstLayout(
+        for collectionView: UICollectionView,
+        config: PinterestConfiguration,
+        viewWidth: CGFloat
+    ) {
+        let layout = UICollectionViewCompositionalLayout { [weak self] secton, env in
+            guard let self else {
+                
+                return nil
+            }
+            return createSectionLayout(config: config, env: env)
+        }
+        print("???", layout)
+        collectionView.setCollectionViewLayout(layout, animated: true)
+    }
+    
+    private
+    func createSectionLayout(config: PinterestConfiguration, env: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection{
+        let layout = PinterestCompostionalLayout.makeLayoutSection(
+            config: config,
+            environment: env,
+            sectionIndex: 0
+        )
+        print("???", layout)
+        return layout
     }
 }
 
