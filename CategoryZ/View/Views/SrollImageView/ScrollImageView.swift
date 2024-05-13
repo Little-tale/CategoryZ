@@ -15,6 +15,8 @@ import Kingfisher
 final class ScrollImageView: RxBaseView {
     
     let currentPageRx = BehaviorRelay(value: 0)
+    
+    let changedView = PublishRelay<Int> ()
  
     private
     let behaivorImageView = PublishRelay<[UIImageView]>()
@@ -65,6 +67,12 @@ final class ScrollImageView: RxBaseView {
                 print("current 값을 보내주는곳: \(page)")
                 owner.currentPageRx.accept(page)
                 owner.changeImageView(current: page)
+            }
+            .disposed(by: disposedBag)
+        
+        changedView
+            .bind(with: self) { owner, at in
+                owner.changeImageView(current: at)
             }
             .disposed(by: disposedBag)
     }

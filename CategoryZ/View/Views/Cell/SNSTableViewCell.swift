@@ -100,7 +100,7 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         print("Current: \(model). \(model.currentIamgeAt)")
         
         imageScrollView.pageController.currentPage = model.currentIamgeAt
-        
+        imageScrollView.changedView.accept(model.currentIamgeAt)
         // 좋아요 상태 딜리게이트
         viewModel.likeStateProtocol = delegate
         
