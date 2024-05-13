@@ -103,12 +103,15 @@ final class UserProfileViewController: RxBaseViewController {
 
         let currentCellAt = BehaviorRelay(value: 0)
         var currentCount = 0
-    
+        
+        let deleteTrigger = PublishRelay<Void> ()
+        
         let input = UserProfileViewModel.Input(
             inputProfileType: behaiviorProfile,
             inputProducID: selectedProductId,
             userId: UserIDStorage.shared.userID,
-            currentCellAt: currentCellAt
+            currentCellAt: currentCellAt,
+            deleteTrigger: deleteTrigger
         )
         
         let output = viewModel.transform(input)
@@ -178,6 +181,9 @@ final class UserProfileViewController: RxBaseViewController {
             .bind(with: self) { owner, model in
                 let vc = SingleSNSViewController()
                 vc.setModel(model, me: true)
+                vc.deleteClosure = {
+                    deleteTrigger.accept(())
+                }
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)

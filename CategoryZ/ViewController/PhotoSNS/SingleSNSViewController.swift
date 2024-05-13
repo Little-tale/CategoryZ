@@ -22,6 +22,8 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
     }
     weak var ifChangeOfLikeDelegate: changedModel?
     
+    var deleteClosure: (() -> Void)?
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -64,7 +66,8 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
         
         let input = SingleSNSViewModel.Input(
             setDataBe: setDataBe,
-            likeButtonTap: homeView.singleView.likeButton.rx.tap
+            likeButtonTap: homeView.singleView.likeButton.rx.tap,
+            deleteTrigger: checkedDeleteModel
         )
         
         homeView.singleView.dateLabel.text = DateManager.shared.differenceDateString(SNSData.createdAt) 
@@ -175,6 +178,10 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
                 
                 vc.modifyDelegate = self
                 
+                vc.deleteClosure = {
+                    owner.deleteClosure?()
+                    owner.navigationController?.popViewController(animated: true)
+                }
                 owner.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disPoseBag)
@@ -190,6 +197,14 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
                     },
                     .default
                 )
+            }
+            .disposed(by: disPoseBag)
+        
+        output
+            .deleteSuccessTrigger
+            .bind(with: self) { owner, _ in
+                owner.deleteClosure?()
+                owner.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disPoseBag)
         

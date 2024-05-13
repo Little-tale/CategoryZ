@@ -21,6 +21,7 @@ final class UserProfileViewModel: RxViewModelType {
         let inputProducID: BehaviorRelay<ProductID>
         let userId: String?
         let currentCellAt: BehaviorRelay<Int>
+        let deleteTrigger: PublishRelay<Void>
     }
     
     struct Output {
@@ -57,7 +58,7 @@ final class UserProfileViewModel: RxViewModelType {
             .disposed(by: disposeBag)
         
         let combineRequest = Observable.combineLatest(
-            input.inputProfileType.distinctUntilChanged(),
+            input.inputProfileType,
             start.startWith(input.inputProducID.value)
         )
         
@@ -151,7 +152,7 @@ final class UserProfileViewModel: RxViewModelType {
             
         needMoreTrigger
             .filter { _ in
-                print("needMoreTrigger: \(nextCursor)")
+               
                 return (nextCursor != "0" && nextCursor != nil)
             }
             .map({ _ in
@@ -177,8 +178,7 @@ final class UserProfileViewModel: RxViewModelType {
                 }
             }
             .flatMapLatest { request in
-                print("요청시 \(request)")
-                print("재 요청 시점: \(nextCursor)")
+              
                 return NetworkManager.fetchNetwork(model: SNSMainModel.self, router: .poster(.userCasePostRead(userId: request.0!, next: nextCursor, limit: String(limit), productId: request.1)))
             }
             .bind(with: self) {owner, result in
@@ -193,6 +193,18 @@ final class UserProfileViewModel: RxViewModelType {
                 case .failure(let fail):
                     networkError.onNext(fail)
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        input
+            .deleteTrigger
+            .bind(with: self) { owner, _ in
+                nextCursor = nil
+                currentTotal = 0
+                owner.realModel = []
+                postReadMainModel.accept( owner.realModel)
+                let value = input.inputProfileType.value
+                input.inputProfileType.accept(value)
             }
             .disposed(by: disposeBag)
         

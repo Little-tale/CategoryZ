@@ -43,9 +43,12 @@ final class LikeViewController: RxBaseViewController {
         
         let currentCellItemAt = PublishRelay<Int> ()
         
+        let reloadTrigger = PublishRelay<Void> ()
+        
         let input = LikeViewModel.Input(
             startTriggerSub: startTriggerSub,
-            currentCellItemAt: currentCellItemAt
+            currentCellItemAt: currentCellItemAt,
+            reloadTrigger: reloadTrigger
         )
         
         let output = viewModel.transform(input)
@@ -65,6 +68,10 @@ final class LikeViewController: RxBaseViewController {
                 vc.setModel(model)
                 
                 vc.ifChangeOfLikeDelegate = owner.viewModel
+                
+                vc.deleteClosure = {
+                    reloadTrigger.accept(())
+                }
                 
                 owner.navigationController?.pushViewController(vc, animated: true)
             }

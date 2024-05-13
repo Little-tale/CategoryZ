@@ -30,6 +30,8 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     
     weak var modifyDelegate: ModifyDelegate?
     
+    var deleteClosure: (() -> Void)?
+    
     private
     lazy var imageService = RxCameraImageService(presntationViewController: self, zipRate: 5)
     
@@ -62,9 +64,6 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             navigationItem.title =  "게시물 작성"
             deleteButton.isHidden = true
         }
-        
-        
-        
     }
     
     override func subscribe() {
@@ -295,7 +294,8 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
             .throttle(.milliseconds(120))
             .drive(with: self) { owner, _ in
                 owner.view.makeToast("삭제가 완료되었습니다.", duration: 2, position: .center)
-                NotificationCenter.default.post(name: .successPost, object: nil)
+//                NotificationCenter.default.post(name: .successPost, object: nil)
+                owner.deleteClosure?()
                 owner.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disPoseBag)

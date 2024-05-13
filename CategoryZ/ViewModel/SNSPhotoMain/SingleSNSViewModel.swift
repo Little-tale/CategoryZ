@@ -17,6 +17,7 @@ final class SingleSNSViewModel: RxViewModelType {
     struct Input {
         let setDataBe: BehaviorRelay<SNSDataModel>
         let likeButtonTap: ControlEvent<Void>
+        let deleteTrigger: PublishRelay<SNSDataModel>
     }
     
     struct Output {
@@ -28,6 +29,7 @@ final class SingleSNSViewModel: RxViewModelType {
         let profile: Driver<Creator>
         let networkError: PublishRelay<NetworkError>
         let moreButtonEnabled: Driver<Bool>
+        let deleteSuccessTrigger: PublishRelay<Void>
     }
     
     func transform(_ input: Input) -> Output {
@@ -46,6 +48,8 @@ final class SingleSNSViewModel: RxViewModelType {
         let contents = BehaviorRelay(value: "")
         
         let profile = BehaviorRelay<Creator> (value: .init(userID: "", nick: "", profileImage: ""))
+        let deleteSussess = PublishRelay<Void> ()
+        
         
         let moreButtonEnabled = BehaviorRelay(value: false)
         
@@ -113,6 +117,23 @@ final class SingleSNSViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
+        input
+            .deleteTrigger
+            .flatMapLatest { model in
+            NetworkManager.noneModelRequest(router: .poster(.postDelete(postID: model.postId)))
+                    .map { result in
+                        return (results: result, model: model)
+                    }
+            }
+            .bind(with: self) { owner, results in
+                switch results.results {
+                case .success:
+                    deleteSussess.accept(())
+                case .failure(let fail):
+                    networkError.accept(fail)
+                }
+            }
+            .disposed(by: disposeBag)
         
         
         return Output(
@@ -123,7 +144,8 @@ final class SingleSNSViewModel: RxViewModelType {
             contents: contents.asDriver(),
             profile: profile.asDriver(),
             networkError: networkError,
-            moreButtonEnabled: moreButtonEnabled.asDriver()
+            moreButtonEnabled: moreButtonEnabled.asDriver(),
+            deleteSuccessTrigger: deleteSussess
         )
     }
     private

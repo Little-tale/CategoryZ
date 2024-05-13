@@ -28,6 +28,7 @@ final class LikeViewModel: RxViewModelType {
     struct Input {
         let startTriggerSub: BehaviorRelay<Void>
         let currentCellItemAt: PublishRelay<Int>
+        let reloadTrigger: PublishRelay<Void>
     }
     
     struct Output {
@@ -119,6 +120,17 @@ final class LikeViewModel: RxViewModelType {
                     value[model.currentRow] = model
                     owner.realModel.accept(value)
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        input
+            .reloadTrigger
+            .bind(with: self) { owner, _ in
+                owner.next = nil
+                var value = owner.realModel.value
+                value = []
+                owner.realModel.accept(value)
+                input.startTriggerSub.accept(())
             }
             .disposed(by: disposeBag)
         
