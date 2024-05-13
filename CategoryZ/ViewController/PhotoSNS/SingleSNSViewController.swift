@@ -155,13 +155,6 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .bind(with: self) { owner, _ in
                 owner.showActionSheet(title: nil, message: nil, actions: [
-                    (title: "프로필보기", handler: { _ in
-                        let modalViewCon = MorePageViewController()
-                        modalViewCon.setModel(SNSData.creator)
-                        
-                        modalViewCon.modalPresentationStyle = .pageSheet
-                        owner.present(modalViewCon, animated: true)
-                    }),
                     (title: "게시글 수정", handler: {_ in
                         modifyModel.accept(SNSData)
                     }),
