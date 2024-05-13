@@ -102,16 +102,21 @@ final class LikeViewModel: RxViewModelType {
             })
             .bind(with: self) { owner, model in
                 let current = owner.realModel.value[model.currentRow]
-                print(current.likes, "", model.likes)
                 if current.likes != model.likes {
                     
                     var value = owner.realModel.value
                     value.remove(at: model.currentRow)
                     owner.realModel.accept(value)
+                    
                 }
                 else if !current.likes.contains(UserIDStorage.shared.userID!) {
                     var value = owner.realModel.value
                     value.remove(at: model.currentRow)
+                    owner.realModel.accept(value)
+                }
+                else if current.content != model.content || current.files != model.files {
+                    var value = owner.realModel.value
+                    value[model.currentRow] = model
                     owner.realModel.accept(value)
                 }
             }
@@ -126,8 +131,8 @@ final class LikeViewModel: RxViewModelType {
     
 }
 
-extension LikeViewModel: changedIfLikeModel {
-    func mayBeLike(_ model: SNSDataModel) {
+extension LikeViewModel: changedModel {
+    func ifChange(_ model: SNSDataModel) {
         ifModifyModel.accept(model)
     }
 }

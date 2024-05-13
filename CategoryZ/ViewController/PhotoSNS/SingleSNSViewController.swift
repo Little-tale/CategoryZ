@@ -10,18 +10,17 @@ import RxSwift
 import RxCocoa
 
 // MARK: 좋아요 한것을 바로 반영 하지 않기로 결정하였으나 대기.
-protocol changedIfLikeModel: AnyObject {
-    func mayBeLike(_ model: SNSDataModel)
+protocol changedModel: AnyObject {
+    func ifChange(_ model: SNSDataModel)
 }
 
 final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        homeView.singleView.rightMoreBuntton.isHidden = true
         homeView.singleView.contentLable.asHashTag()
     }
-    weak var ifChangeOfLikeDelegate: changedIfLikeModel?
+    weak var ifChangeOfLikeDelegate: changedModel?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -58,6 +57,10 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
     func subscribe(_ SNSData: SNSDataModel, me: Bool? = nil) {
         
         let setDataBe = BehaviorRelay(value: SNSData)
+        let moreButtonTap = PublishRelay<SNSDataModel> ()
+        let modifyModel = PublishRelay<SNSDataModel> ()
+        let deleteModel = PublishRelay<SNSDataModel> ()
+        let checkedDeleteModel = PublishRelay<SNSDataModel> ()
         
         let input = SingleSNSViewModel.Input(
             setDataBe: setDataBe,
@@ -141,6 +144,62 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
             }
             .disposed(by: disPoseBag)
         
+        output.moreButtonEnabled
+            .drive(with: self) { owner, bool in
+                owner.homeView.singleView.rightMoreBuntton.isHidden = !bool
+                owner.homeView.singleView.rightMoreBuntton.isEnabled = bool
+            }
+            .disposed(by: disPoseBag)
+        
+        homeView.singleView.rightMoreBuntton.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.showActionSheet(title: nil, message: nil, actions: [
+                    (title: "프로필보기", handler: { _ in
+                        let modalViewCon = MorePageViewController()
+                        modalViewCon.setModel(SNSData.creator)
+                        
+                        modalViewCon.modalPresentationStyle = .pageSheet
+                        owner.present(modalViewCon, animated: true)
+                    }),
+                    (title: "게시글 수정", handler: {_ in
+                        modifyModel.accept(SNSData)
+                    }),
+                    (title: "게시글 삭제", handler: {_ in
+                        deleteModel.accept(SNSData)
+                    })
+                ])
+            }
+            .disposed(by: disPoseBag)
+        
+        modifyModel
+            .bind(with: self) { owner, model in
+                let vc = PostRegViewController()
+                vc.ifModifyModel = model
+                vc.hidesBottomBarWhenPushed = true
+                
+                NotificationCenter.default.post(name: .hidesBottomBarWhenPushed, object: nil)
+                
+                vc.modifyDelegate = self
+                
+                owner.navigationController?.pushViewController(vc, animated: true)
+            }
+            .disposed(by: disPoseBag)
+    
+        deleteModel
+            .bind(with: self) { owner, model in
+                owner.showAlert(
+                    title: "삭제",
+                    message: "삭제하시면 복구하실수 없습니다!",
+                    actionTitle: "삭제",
+                    { _ in
+                        checkedDeleteModel.accept(model)
+                    },
+                    .default
+                )
+            }
+            .disposed(by: disPoseBag)
+        
         settingLikeButton()
     }
     
@@ -154,5 +213,14 @@ final class SingleSNSViewController: RxHomeBaseViewController<SingleViewRx> {
                 owner.homeView.singleView.likeButton.isSelected.toggle()
             }
             .disposed(by: disPoseBag)
+    }
+}
+
+extension SingleSNSViewController: ModifyDelegate {
+    
+    func mofifyedModel(_ model: SNSDataModel) {
+        disPoseBag = DisposeBag()
+        ifChangeOfLikeDelegate?.ifChange(model)
+        setModel(model)
     }
 }

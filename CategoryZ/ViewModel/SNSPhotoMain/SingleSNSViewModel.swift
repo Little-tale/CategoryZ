@@ -13,7 +13,7 @@ final class SingleSNSViewModel: RxViewModelType {
     var disposeBag: RxSwift.DisposeBag = .init()
     private
     let userId = UserIDStorage.shared.userID
-
+    
     struct Input {
         let setDataBe: BehaviorRelay<SNSDataModel>
         let likeButtonTap: ControlEvent<Void>
@@ -26,10 +26,10 @@ final class SingleSNSViewModel: RxViewModelType {
         let imageStrings: Driver<[String]>
         let contents: Driver<String>
         let profile: Driver<Creator>
-        
         let networkError: PublishRelay<NetworkError>
+        let moreButtonEnabled: Driver<Bool>
     }
-
+    
     func transform(_ input: Input) -> Output {
         let networkError = PublishRelay<NetworkError> ()
         
@@ -47,6 +47,8 @@ final class SingleSNSViewModel: RxViewModelType {
         
         let profile = BehaviorRelay<Creator> (value: .init(userID: "", nick: "", profileImage: ""))
         
+        let moreButtonEnabled = BehaviorRelay(value: false)
+        
         bebaviorModel
             .bind(with: self) { owner, model in
                 if model.likes.contains(owner.userId ?? "") {
@@ -62,6 +64,7 @@ final class SingleSNSViewModel: RxViewModelType {
                 imagesString.accept(model.files)
                 contents.accept(model.content)
                 profile.accept(model.creator)
+                moreButtonEnabled.accept(owner.isMe(model: model, userId: owner.userId ?? ""))
             }
             .disposed(by: disposeBag)
         
@@ -93,7 +96,7 @@ final class SingleSNSViewModel: RxViewModelType {
                     value.changeLikeModel(id, likeBool: like.like_status)// f
                     
                     print("반영 안됨>???",value.likes)
-
+                    
                     var count = likeCount.value
                     
                     if like.like_status {
@@ -101,9 +104,9 @@ final class SingleSNSViewModel: RxViewModelType {
                     } else {
                         count -= 1
                     }
-                
+                    
                     likeCount.accept(count)
-
+                    
                 case .failure(let fail):
                     networkError.accept(fail)
                 }
@@ -119,8 +122,13 @@ final class SingleSNSViewModel: RxViewModelType {
             imageStrings: imagesString.asDriver(),
             contents: contents.asDriver(),
             profile: profile.asDriver(),
-            networkError: networkError
+            networkError: networkError,
+            moreButtonEnabled: moreButtonEnabled.asDriver()
         )
+    }
+    private
+    func isMe(model: SNSDataModel, userId: String) -> Bool {
+        return model.creator.userID == userId
     }
     
 }
