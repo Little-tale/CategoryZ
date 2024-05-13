@@ -20,6 +20,9 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     typealias SNSSectionModel = AnimatableSectionModel<String, SNSDataModel>
     
     private
+    let represhControl = UIRefreshControl()
+    
+    private
     let headerItems = Observable.just([
         SectionModel(
             model: "Section",
@@ -32,6 +35,11 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     override func viewDidLoad() {
         super.viewDidLoad()
         homeView.tableView.tableHeaderView = homeView.headerView
+    }
+    
+    override func designView() {
+        super.designView()
+        homeView.tableView.refreshControl = represhControl
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,8 +95,10 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         
         rx.viewDidDisapear
             .bind(with: self) { owner, _ in
-                owner.navigationItem.searchController?.isActive = false
-                owner.navigationItem.searchController = nil
+                DispatchQueue.main.async {
+                    owner.navigationItem.searchController?.isActive = false
+                    owner.navigationItem.searchController = nil
+                }
             }
             .disposed(by: disPoseBag)
     
@@ -101,6 +111,7 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
             errorCatch(.loginError(statusCode: 419, description: "아이디가 조회되지 않고있어요!"))
             return
         }
+        let refreshAction = represhControl.rx.controlEvent(.valueChanged)
         
         // 카테고리(프로덕트 아이디) 선택시 방출
         let selectedProductID = BehaviorRelay<ProductID> (value: .dailyRoutine)
@@ -109,12 +120,14 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
         // 지우기 API 구성 해야함 일단 수정에서 해결해 볼것
         let deleteModel = PublishRelay<SNSDataModel> ()
         let checkedDeleteModel = PublishRelay<SNSDataModel> ()
+        let reloadTrigger = PublishRelay<Void> ()
         
         let input = SNSPhotoMainViewModel.Input(
             viewDidAppearTrigger: rx.viewDidAppear,
             needLoadPageTrigger: needLoadPage,
             selectedProductID: selectedProductID,
-            checkedDeleteModel: checkedDeleteModel
+            checkedDeleteModel: checkedDeleteModel,
+            reloadTrigger: reloadTrigger
         )
         
         let output = viewModel.transform(input)
@@ -316,6 +329,15 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                 owner.navigationController?.present(nvc, animated: true)
             }
             .disposed(by: disPoseBag)
+        
+        refreshAction
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                reloadTrigger.accept(())
+                owner.represhControl.endRefreshing()
+            }
+            .disposed(by: disPoseBag)
+        
     }
     
     

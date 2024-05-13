@@ -48,6 +48,8 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         let selectedProductID: BehaviorRelay<ProductID>
         // 체크확인된 지울모델
         let checkedDeleteModel: PublishRelay<SNSDataModel>
+        // 리로드 트리거
+        let reloadTrigger: PublishRelay<Void>
     }
     
     struct Output {
@@ -65,8 +67,9 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         let userId = BehaviorRelay<String> (value: UserIDStorage.shared.userID ?? "" )
     
         let pullDataCountBR = BehaviorRelay(value: 0)
-        let ifCanReqeust = BehaviorRelay(value: false
-        )
+        
+        let ifCanReqeust = BehaviorRelay(value: false)
+        
         let selectedProductId = BehaviorRelay(value: "")
         
         // 다음 커서
@@ -77,17 +80,18 @@ final class SNSPhotoMainViewModel: RxViewModelType {
         
         let request = input.needLoadPageTrigger.asObservable()
             .withUnretained(self)
-        .flatMapLatest { owner, _ in
-            NetworkManager
-                .fetchNetwork(
-                model: SNSMainModel.self,
-                router: .poster(
-                    .postRead(next: nextCursor.value,
-                              limit: limit, productId: input.selectedProductID.value.identi
-                             )
-                )
-            )
-        }
+            .flatMapLatest { owner, _ in
+                NetworkManager
+                    .fetchNetwork(
+                        model: SNSMainModel.self,
+                        router: .poster(
+                            .postRead(next: nextCursor.value,
+                                      limit: limit,
+                                      productId: input.selectedProductID.value.identi
+                                     )
+                        )
+                    )
+            }
         
         request.bind(with: self) { owner, result in
             switch result{
@@ -174,6 +178,13 @@ final class SNSPhotoMainViewModel: RxViewModelType {
                 case .failure(let fail):
                     owner.networkError.accept(fail)
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        // 리로드 트리거
+        input.reloadTrigger
+            .bind(with: self){ owner, _ in
+                owner.allReloadTrigger.accept(())
             }
             .disposed(by: disposeBag)
         

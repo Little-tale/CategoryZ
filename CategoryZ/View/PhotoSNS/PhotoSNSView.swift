@@ -19,7 +19,9 @@ final class PhotoSNSView: RxBaseView {
         $0.backgroundColor = JHColor.white
     }
     
-    let tableView = UITableView(frame: .zero).then {
+   
+    
+    lazy var tableView = UITableView(frame: .zero).then {
         $0.separatorStyle = .none
     }
    
