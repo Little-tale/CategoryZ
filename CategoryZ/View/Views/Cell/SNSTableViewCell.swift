@@ -22,6 +22,8 @@ import Kingfisher
 
 final class SNSTableViewCell: RxBaseTableViewCell {
     
+    weak var currentPageDelegate: CurrentPageProtocol?
+    
     // 이미지 스크롤 뷰 -> 안에 Rx 게심
     private
     let imageScrollView = ScrollImageView().then {
@@ -90,9 +92,14 @@ final class SNSTableViewCell: RxBaseTableViewCell {
     var viewModel = SNSTableViewModel()
     
     func setModel(_ model: SNSDataModel, _ userId: String, delegate: LikeStateProtocol) {
-        
         let behModel = BehaviorRelay<SNSDataModel> (value: model)
         let userId = BehaviorRelay<String> (value: userId)
+        let currentPage = imageScrollView.currentPageRx.skip(1)
+            
+        
+        print("Current: \(model). \(model.currentIamgeAt)")
+        
+        imageScrollView.pageController.currentPage = model.currentIamgeAt
         
         // 좋아요 상태 딜리게이트
         viewModel.likeStateProtocol = delegate
@@ -102,7 +109,8 @@ final class SNSTableViewCell: RxBaseTableViewCell {
             .Input(
                 snsModel: behModel,
                 inputUserId: userId,
-                likedButtonTab: likeButton.rx.tap
+                likedButtonTab: likeButton.rx.tap,
+                currentPage: currentPage
             )
         // 좋아요 버튼 탭시 토글 (UI 선 반영)
         likeButton.rx.tap
@@ -175,6 +183,12 @@ final class SNSTableViewCell: RxBaseTableViewCell {
         // 지난 시간 반영
         output.diffDate
             .drive(dateLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        output.diffCurrntPage
+            .bind(with: self) { owner, model in
+                owner.currentPageDelegate?.currentPage(model: model)
+            }
             .disposed(by: disposeBag)
         
         // more 버튼 클릭시 뷰컨에 알리기

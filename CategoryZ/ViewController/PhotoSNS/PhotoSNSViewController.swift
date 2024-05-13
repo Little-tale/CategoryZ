@@ -19,13 +19,15 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
     
     typealias SNSSectionModel = AnimatableSectionModel<String, SNSDataModel>
     
-    private let headerItems = Observable.just([
+    private
+    let headerItems = Observable.just([
         SectionModel(
             model: "Section",
             items: ProductID.allCases)
     ])
     
-    private let viewModel = SNSPhotoMainViewModel()
+    private 
+    let viewModel = SNSPhotoMainViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,10 +143,10 @@ final class SNSPhotoViewController: RxHomeBaseViewController<PhotoSNSView> {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: SNSTableViewCell.reusableIdenti, for: indexPath) as? SNSTableViewCell else {
                         return .init()
                     }
-                    
-                    let reciveModel = item
-                    reciveModel.currentRow = indexPath.item
-                    cell.setModel(reciveModel, output.userIDDriver.value, delegate: viewModel)
+                    print("Current: 변환되는거 맞니..?\(indexPath.item)",item.currentIamgeAt)
+                    item.currentRow = indexPath.item
+                    cell.setModel(item, output.userIDDriver.value, delegate: viewModel)
+                    cell.currentPageDelegate = viewModel
                     cell.selectionStyle = .none
                     return cell
                 }

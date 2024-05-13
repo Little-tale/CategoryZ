@@ -27,6 +27,11 @@ final class SNSDataModel: Decodable, Equatable, Hashable {
     var comments: [CommentsModel]
     var currentRow = 0
     var animated: Bool = false
+    var currentIamgeAt = 0 {
+        didSet{
+            print("Current 변화하는 중 \(currentIamgeAt)")
+        }
+    }
     
     enum CodingKeys: String, CodingKey {
         case postId = "post_id"

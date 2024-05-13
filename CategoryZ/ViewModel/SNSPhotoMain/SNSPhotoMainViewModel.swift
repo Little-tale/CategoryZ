@@ -252,5 +252,11 @@ extension SNSPhotoMainViewModel: ModifyDelegate {
         // 현재 로우 왜 현재 반영 안되고 있는지 확인할것.
         ifModifyModel.accept(model)
     }
-    
+}
+
+extension SNSPhotoMainViewModel: CurrentPageProtocol {
+    func currentPage(model: SNSDataModel) {
+        print("Current 변환되어 온 모델",model,model.currentIamgeAt)
+        ifModifyModel.accept(model)
+    }
 }

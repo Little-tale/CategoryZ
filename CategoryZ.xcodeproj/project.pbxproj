@@ -36,6 +36,7 @@
 		7B1EE46E2BDF9E3600F109EB /* ProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE46D2BDF9E3600F109EB /* ProfileCell.swift */; };
 		7B1EE4702BDFACBB00F109EB /* ProfilePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE46F2BDFACBB00F109EB /* ProfilePostViewModel.swift */; };
 		7B1EE4722BDFBB3A00F109EB /* ProfileCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B1EE4712BDFBB3A00F109EB /* ProfileCellViewModel.swift */; };
+		7B2D77022BF1E94700D51F49 /* CurrentPageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2D77012BF1E94700D51F49 /* CurrentPageProtocol.swift */; };
 		7B4F906F2BEF798700B191F2 /* Welcome.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B4F906E2BEF798700B191F2 /* Welcome.json */; };
 		7B4F90712BEF96CF00B191F2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7B4F90702BEF96CF00B191F2 /* README.md */; };
 		7B5E512D2BD9135E00918C53 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512C2BD9135E00918C53 /* CommentViewController.swift */; };
@@ -229,6 +230,7 @@
 		7B1EE46D2BDF9E3600F109EB /* ProfileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCell.swift; sourceTree = "<group>"; };
 		7B1EE46F2BDFACBB00F109EB /* ProfilePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostViewModel.swift; sourceTree = "<group>"; };
 		7B1EE4712BDFBB3A00F109EB /* ProfileCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCellViewModel.swift; sourceTree = "<group>"; };
+		7B2D77012BF1E94700D51F49 /* CurrentPageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPageProtocol.swift; sourceTree = "<group>"; };
 		7B4F906E2BEF798700B191F2 /* Welcome.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Welcome.json; sourceTree = "<group>"; };
 		7B4F90702BEF96CF00B191F2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7B5E512C2BD9135E00918C53 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
@@ -1003,6 +1005,7 @@
 				7BCF4A302BC5A8DB00BCE635 /* ReusableIdentifier.swift */,
 				7BCF4A492BC6CF8600BCE635 /* BaseViewType.swift */,
 				7B80D9882BEA97B8004D025A /* ImageCachingType.swift */,
+				7B2D77012BF1E94700D51F49 /* CurrentPageProtocol.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1355,6 +1358,7 @@
 				7BC43D682BE79753001A109B /* UserWithDrawModel.swift in Sources */,
 				7BD1D9182BD7B42A00B5521F /* FollowerFollowingViewModel.swift in Sources */,
 				7BA0E0F12BCE0791002F0516 /* KingFisherNet.swift in Sources */,
+				7B2D77022BF1E94700D51F49 /* CurrentPageProtocol.swift in Sources */,
 				7BCF4A382BC5AD7D00BCE635 /* BaseViewController.swift in Sources */,
 				7B80D9852BEA128F004D025A /* PinterestCompostionalLayout.swift in Sources */,
 				7BCF4A462BC6CEB900BCE635 /* RxHomeBaseViewController.swift in Sources */,

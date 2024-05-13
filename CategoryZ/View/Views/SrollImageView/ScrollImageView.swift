@@ -14,6 +14,7 @@ import Kingfisher
 
 final class ScrollImageView: RxBaseView {
     
+    let currentPageRx = BehaviorRelay(value: 0)
  
     private
     let behaivorImageView = PublishRelay<[UIImageView]>()
@@ -46,9 +47,11 @@ final class ScrollImageView: RxBaseView {
                 if owner.frame.width == 0 {
                     return 0
                 }else {
-                    return Int(round( // 가로축 좌표 / 뷰 윗스
-                        owner.scrollView.contentOffset.x / owner.scrollView.frame.width
-                    ))
+                    let roundInt = Int(round( // 가로축 좌표 / 뷰 윗스
+                        owner.scrollView.contentOffset.x / owner.scrollView.frame.width)
+                    )
+                    owner.currentPageRx.accept(roundInt)
+                    return roundInt
                 }
             }
             .bind(to: pageController.rx.currentPage)
@@ -59,6 +62,8 @@ final class ScrollImageView: RxBaseView {
             .bind(with: self) { owner, _ in
                 // 현재페이지를 받아 실제로 변환되게 하기
                 let page = owner.pageController.currentPage
+                print("current 값을 보내주는곳: \(page)")
+                owner.currentPageRx.accept(page)
                 owner.changeImageView(current: page)
             }
             .disposed(by: disposedBag)
@@ -161,23 +166,3 @@ extension ScrollImageView {
         
     }
 }
-
-
-//            view.kf.setImage(with: URL(string: image), options: [
-//                .processor(imageProcesor),
-//                .transition(.fade(1)),
-//                .cacheOriginalImage,
-//                .requestModifier(
-//                    KingFisherNet()
-//                ),
-//            ]) { result in
-//                switch result {
-//                case .success(let s):
-//                    // print(s)
-//                    break
-//                case .failure(let e):
-//                    // 에러 발생시 다 알려야 하는가? 애매한 부분
-//                    // print(e.errorDescription)
-//                    break
-//                }
-//            }

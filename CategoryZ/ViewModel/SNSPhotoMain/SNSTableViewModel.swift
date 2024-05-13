@@ -19,6 +19,7 @@ final class SNSTableViewModel: RxViewModelType {
         let snsModel: BehaviorRelay<SNSDataModel>
         let inputUserId: BehaviorRelay<String>
         let likedButtonTab: ControlEvent<Void>
+        let currentPage: Observable<Int>
     }
     
     struct Output {
@@ -30,6 +31,7 @@ final class SNSTableViewModel: RxViewModelType {
         let likeCount: Driver<String>
         let comentsCount: Driver<String>
         let diffDate: Driver<String>
+        let diffCurrntPage: PublishRelay<SNSDataModel>
     }
     
     func transform(_ input: Input) -> Output {
@@ -44,6 +46,7 @@ final class SNSTableViewModel: RxViewModelType {
         let likeCount = BehaviorRelay(value: "0")
         let comentsCount = BehaviorRelay(value: "0")
         let diffDate = BehaviorRelay(value: "")
+        let diffCurrntPage = PublishRelay<SNSDataModel> ()
         
         /// 현재 유저 라이크 모델
         let isUserLikeModel = BehaviorRelay<LikeQueryModel> (value: .init(like_status: false))
@@ -94,6 +97,16 @@ final class SNSTableViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
+        // 현재 위치 반영
+        input.currentPage
+            .bind(with: self) { owner, at in
+                print("Current . 변화해야할값 ", at)
+                input.snsModel.value.currentIamgeAt = at
+                diffCurrntPage.accept(input.snsModel.value)
+                print("Current . 변화해야할값 ", input.snsModel.value.currentIamgeAt)
+            }
+            .disposed(by: disposeBag)
+        
         // 유저 아이디 + 좋아요 상태
         let combineOfUserLike = Observable.combineLatest(
             isUserLikeModel,
@@ -132,6 +145,7 @@ final class SNSTableViewModel: RxViewModelType {
                 currnetLike = !currnetLike
             }
             .disposed(by: disposeBag)
+    
             
         return Output(
             imageURLStrings: imageUrl.asDriver(),
@@ -143,7 +157,8 @@ final class SNSTableViewModel: RxViewModelType {
             profileName: profileName.asDriver(),
             likeCount: likeCount.asDriver(),
             comentsCount: comentsCount.asDriver(),
-            diffDate: diffDate.asDriver()
+            diffDate: diffDate.asDriver(),
+            diffCurrntPage: diffCurrntPage
         )
     }
     deinit {
