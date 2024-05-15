@@ -43,6 +43,7 @@
 		7B52E5692BF4FE1E00977EC7 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E5682BF4FE1E00977EC7 /* ChatRoom.swift */; };
 		7B52E56B2BF4FF3800977EC7 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */; };
 		7B52E56D2BF500E400977EC7 /* ChatRoomListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E56C2BF500E400977EC7 /* ChatRoomListModel.swift */; };
+		7B52E56F2BF5024600977EC7 /* ChatPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E56E2BF5024600977EC7 /* ChatPostQuery.swift */; };
 		7B5E512D2BD9135E00918C53 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512C2BD9135E00918C53 /* CommentViewController.swift */; };
 		7B5E51302BD91BD700918C53 /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512F2BD91BD700918C53 /* CommentTextView.swift */; };
 		7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */; };
@@ -241,6 +242,7 @@
 		7B52E5682BF4FE1E00977EC7 /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		7B52E56C2BF500E400977EC7 /* ChatRoomListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomListModel.swift; sourceTree = "<group>"; };
+		7B52E56E2BF5024600977EC7 /* ChatPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPostQuery.swift; sourceTree = "<group>"; };
 		7B5E512C2BD9135E00918C53 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		7B5E512F2BD91BD700918C53 /* CommentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
 		7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -643,6 +645,7 @@
 			isa = PBXGroup;
 			children = (
 				7B52E5652BF4FC1B00977EC7 /* ChatsRoomQuery.swift */,
+				7B52E56E2BF5024600977EC7 /* ChatPostQuery.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1524,6 +1527,7 @@
 				7BC43D872BE7B682001A109B /* MainPostQuery.swift in Sources */,
 				7BC43D892BE7B6A3001A109B /* CommentWriteQuery.swift in Sources */,
 				7BDF40CB2BE3A9FB005274F9 /* RxCollectionView.swift in Sources */,
+				7B52E56F2BF5024600977EC7 /* ChatPostQuery.swift in Sources */,
 				7B5E51302BD91BD700918C53 /* CommentTextView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
