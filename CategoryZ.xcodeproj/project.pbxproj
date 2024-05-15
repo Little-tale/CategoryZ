@@ -39,6 +39,9 @@
 		7B2D77022BF1E94700D51F49 /* CurrentPageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2D77012BF1E94700D51F49 /* CurrentPageProtocol.swift */; };
 		7B4F906F2BEF798700B191F2 /* Welcome.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B4F906E2BEF798700B191F2 /* Welcome.json */; };
 		7B4F90712BEF96CF00B191F2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7B4F90702BEF96CF00B191F2 /* README.md */; };
+		7B52E5662BF4FC1B00977EC7 /* ChatsRoomQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E5652BF4FC1B00977EC7 /* ChatsRoomQuery.swift */; };
+		7B52E5692BF4FE1E00977EC7 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E5682BF4FE1E00977EC7 /* ChatRoom.swift */; };
+		7B52E56B2BF4FF3800977EC7 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */; };
 		7B5E512D2BD9135E00918C53 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512C2BD9135E00918C53 /* CommentViewController.swift */; };
 		7B5E51302BD91BD700918C53 /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512F2BD91BD700918C53 /* CommentTextView.swift */; };
 		7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */; };
@@ -233,6 +236,9 @@
 		7B2D77012BF1E94700D51F49 /* CurrentPageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentPageProtocol.swift; sourceTree = "<group>"; };
 		7B4F906E2BEF798700B191F2 /* Welcome.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Welcome.json; sourceTree = "<group>"; };
 		7B4F90702BEF96CF00B191F2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		7B52E5652BF4FC1B00977EC7 /* ChatsRoomQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsRoomQuery.swift; sourceTree = "<group>"; };
+		7B52E5682BF4FE1E00977EC7 /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
+		7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		7B5E512C2BD9135E00918C53 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		7B5E512F2BD91BD700918C53 /* CommentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
 		7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -631,6 +637,23 @@
 			path = welcome;
 			sourceTree = "<group>";
 		};
+		7B52E5642BF4FC0000977EC7 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				7B52E5652BF4FC1B00977EC7 /* ChatsRoomQuery.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		7B52E5672BF4FE1200977EC7 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				7B52E5682BF4FE1E00977EC7 /* ChatRoom.swift */,
+				7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
 		7B5E512A2BD9133500918C53 /* Comment */ = {
 			isa = PBXGroup;
 			children = (
@@ -935,6 +958,7 @@
 		7BC43D7A2BE7B4A6001A109B /* DecodableModel */ = {
 			isa = PBXGroup;
 			children = (
+				7B52E5672BF4FE1200977EC7 /* Chat */,
 				7BC43D592BE7956A001A109B /* ProfileModels */,
 				7BC43D692BE797A7001A109B /* AuthModels */,
 				7BC43D5E2BE795C3001A109B /* PostModels */,
@@ -946,6 +970,7 @@
 		7BC43D7D2BE7B5E3001A109B /* EncodableModel */ = {
 			isa = PBXGroup;
 			children = (
+				7B52E5642BF4FC0000977EC7 /* Chat */,
 				7BC43D852BE7B675001A109B /* Post */,
 				7BC43D802BE7B623001A109B /* Auth */,
 			);
@@ -1435,6 +1460,8 @@
 				7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */,
 				7BCF4A512BC6DDE200BCE635 /* GetStartViewController.swift in Sources */,
 				7B838DF12BCFACC2000F2E27 /* CategoryZTabbarController.swift in Sources */,
+				7B52E5692BF4FE1E00977EC7 /* ChatRoom.swift in Sources */,
+				7B52E56B2BF4FF3800977EC7 /* ChatModel.swift in Sources */,
 				7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */,
 				7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */,
 				7B838DDE2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift in Sources */,
@@ -1452,6 +1479,7 @@
 				7BCC9D892BE2A06400A6CEC3 /* PaymentsRouter.swift in Sources */,
 				7B5EF9F62BD4B98E00F022CB /* ProfilePostCollectionViewCell.swift in Sources */,
 				7BC43D642BE79658001A109B /* SNSDataModel.swift in Sources */,
+				7B52E5662BF4FC1B00977EC7 /* ChatsRoomQuery.swift in Sources */,
 				7BD1D9112BD798B800B5521F /* FollowerAndFollowingView.swift in Sources */,
 				7B9403462BE280A7004A1A8E /* DonateModel.swift in Sources */,
 				7B838DE02BCEF2DD000F2E27 /* AddCollectionViewCell.swift in Sources */,
