@@ -28,7 +28,7 @@ enum NetworkError: Error {
     /// 이미지 업로드 에러
     case imageUploadError(statusCode: Int, description: String)
     
-    /// 포스트 작성 에러
+    /// 포스트 작성 에러 +  쳇 에러
     case postWriteError(statusCode: Int, description: String)
     
     /// 포스트 조회 에러 + 다른혹은 자신의 포스트들 에러

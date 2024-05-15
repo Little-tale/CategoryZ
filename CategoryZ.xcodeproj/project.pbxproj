@@ -44,6 +44,9 @@
 		7B52E56B2BF4FF3800977EC7 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */; };
 		7B52E56D2BF500E400977EC7 /* ChatRoomListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E56C2BF500E400977EC7 /* ChatRoomListModel.swift */; };
 		7B52E56F2BF5024600977EC7 /* ChatPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E56E2BF5024600977EC7 /* ChatPostQuery.swift */; };
+		7B52E5722BF5094800977EC7 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 7B52E5712BF5094800977EC7 /* SocketIO */; };
+		7B52E5752BF509A900977EC7 /* ChatSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E5742BF509A900977EC7 /* ChatSocketManager.swift */; };
+		7B52E5772BF5112100977EC7 /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E5762BF5112100977EC7 /* ChatRouter.swift */; };
 		7B5E512D2BD9135E00918C53 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512C2BD9135E00918C53 /* CommentViewController.swift */; };
 		7B5E51302BD91BD700918C53 /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512F2BD91BD700918C53 /* CommentTextView.swift */; };
 		7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */; };
@@ -243,6 +246,8 @@
 		7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		7B52E56C2BF500E400977EC7 /* ChatRoomListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomListModel.swift; sourceTree = "<group>"; };
 		7B52E56E2BF5024600977EC7 /* ChatPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPostQuery.swift; sourceTree = "<group>"; };
+		7B52E5742BF509A900977EC7 /* ChatSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSocketManager.swift; sourceTree = "<group>"; };
+		7B52E5762BF5112100977EC7 /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
 		7B5E512C2BD9135E00918C53 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		7B5E512F2BD91BD700918C53 /* CommentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
 		7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -421,6 +426,7 @@
 				7B838E012BCFAE8C000F2E27 /* RxDataSources in Frameworks */,
 				7B838DF92BCFAE06000F2E27 /* RxReusableKit in Frameworks */,
 				7BCF4A6D2BC7C6E400BCE635 /* TextFieldEffects in Frameworks */,
+				7B52E5722BF5094800977EC7 /* SocketIO in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -568,6 +574,7 @@
 		7B11DC822BC58C510055D423 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				7B52E5732BF5098D00977EC7 /* Socket */,
 				7BCF4A7B2BC922CB00BCE635 /* SubRouter */,
 				7BCF4A272BC5976100BCE635 /* NetHTTPHeader.swift */,
 				7BCF4A292BC598D700BCE635 /* NetError.swift */,
@@ -658,6 +665,14 @@
 				7B52E56C2BF500E400977EC7 /* ChatRoomListModel.swift */,
 			);
 			path = Chat;
+			sourceTree = "<group>";
+		};
+		7B52E5732BF5098D00977EC7 /* Socket */ = {
+			isa = PBXGroup;
+			children = (
+				7B52E5742BF509A900977EC7 /* ChatSocketManager.swift */,
+			);
+			path = Socket;
 			sourceTree = "<group>";
 		};
 		7B5E512A2BD9133500918C53 /* Comment */ = {
@@ -1169,6 +1184,7 @@
 				7BCF4A942BCBA27F00BCE635 /* FollowRouter.swift */,
 				7BCF4A962BCBB6C900BCE635 /* ProfileRouter.swift */,
 				7BCC9D882BE2A06400A6CEC3 /* PaymentsRouter.swift */,
+				7B52E5762BF5112100977EC7 /* ChatRouter.swift */,
 			);
 			path = SubRouter;
 			sourceTree = "<group>";
@@ -1277,6 +1293,7 @@
 				7B94031D2BE1DCC2004A1A8E /* BetterSegmentedControl */,
 				7B9403402BE26F89004A1A8E /* iamport-ios */,
 				7BC4E5062BE6540400F0C5C2 /* Lottie */,
+				7B52E5712BF5094800977EC7 /* SocketIO */,
 			);
 			productName = CategoryZ;
 			productReference = 7B11DC642BC58AD40055D423 /* CategoryZ.app */;
@@ -1320,6 +1337,7 @@
 				7B94031C2BE1DCC2004A1A8E /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */,
 				7B94033F2BE26F89004A1A8E /* XCRemoteSwiftPackageReference "iamport-ios" */,
 				7BC4E5052BE6540300F0C5C2 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				7B52E5702BF5094800977EC7 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 			);
 			productRefGroup = 7B11DC652BC58AD40055D423 /* Products */;
 			projectDirPath = "";
@@ -1376,6 +1394,7 @@
 				7BCF4A6F2BC7D96400BCE635 /* UserInfoRegView.swift in Sources */,
 				7B1EE3FF2BDE57E100F109EB /* SingleViewRx.swift in Sources */,
 				7BCC9D852BE28A9100A6CEC3 /* CheckUserViewModel.swift in Sources */,
+				7B52E5752BF509A900977EC7 /* ChatSocketManager.swift in Sources */,
 				7BCF4A2C2BC59A8900BCE635 /* NetworkManager.swift in Sources */,
 				7BD1D9132BD7998800B5521F /* FollowerAndFolowingViewController.swift in Sources */,
 				7BA0E0D82BCD736C002F0516 /* PostRegView.swift in Sources */,
@@ -1414,6 +1433,7 @@
 				7BA0E0EF2BCD76D0002F0516 /* PostRegViewModel.swift in Sources */,
 				7BC43D5B2BE7957F001A109B /* ProfileModifyIn.swift in Sources */,
 				7BA0E0DD2BCD73DB002F0516 /* BaseCollectionViewCell.swift in Sources */,
+				7B52E5772BF5112100977EC7 /* ChatRouter.swift in Sources */,
 				7BC43D6F2BE797D9001A109B /* EmailValidModel.swift in Sources */,
 				7BC43D662BE79736001A109B /* SNSMainModel.swift in Sources */,
 				7BA0E0D52BCD730C002F0516 /* ProductID.swift in Sources */,
@@ -1793,6 +1813,14 @@
 				minimumVersion = 7.0.2;
 			};
 		};
+		7B52E5702BF5094800977EC7 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		7B5E51382BDA873400918C53 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
@@ -1894,6 +1922,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B11DC992BC58DA40055D423 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		7B52E5712BF5094800977EC7 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B52E5702BF5094800977EC7 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			productName = SocketIO;
 		};
 		7B5E51392BDA873400918C53 /* Toast */ = {
 			isa = XCSwiftPackageProductDependency;
