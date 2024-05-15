@@ -42,6 +42,7 @@
 		7B52E5662BF4FC1B00977EC7 /* ChatsRoomQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E5652BF4FC1B00977EC7 /* ChatsRoomQuery.swift */; };
 		7B52E5692BF4FE1E00977EC7 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E5682BF4FE1E00977EC7 /* ChatRoom.swift */; };
 		7B52E56B2BF4FF3800977EC7 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */; };
+		7B52E56D2BF500E400977EC7 /* ChatRoomListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E56C2BF500E400977EC7 /* ChatRoomListModel.swift */; };
 		7B5E512D2BD9135E00918C53 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512C2BD9135E00918C53 /* CommentViewController.swift */; };
 		7B5E51302BD91BD700918C53 /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512F2BD91BD700918C53 /* CommentTextView.swift */; };
 		7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */; };
@@ -239,6 +240,7 @@
 		7B52E5652BF4FC1B00977EC7 /* ChatsRoomQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsRoomQuery.swift; sourceTree = "<group>"; };
 		7B52E5682BF4FE1E00977EC7 /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
+		7B52E56C2BF500E400977EC7 /* ChatRoomListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomListModel.swift; sourceTree = "<group>"; };
 		7B5E512C2BD9135E00918C53 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		7B5E512F2BD91BD700918C53 /* CommentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
 		7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -650,6 +652,7 @@
 			children = (
 				7B52E5682BF4FE1E00977EC7 /* ChatRoom.swift */,
 				7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */,
+				7B52E56C2BF500E400977EC7 /* ChatRoomListModel.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1432,6 +1435,7 @@
 				7B1EE3F02BDE109500F109EB /* LikeViewController.swift in Sources */,
 				7B11DC6A2BC58AD40055D423 /* SceneDelegate.swift in Sources */,
 				7BDF40C52BE37886005274F9 /* DonateListCell.swift in Sources */,
+				7B52E56D2BF500E400977EC7 /* ChatRoomListModel.swift in Sources */,
 				7B838DF42BCFADE3000F2E27 /* PhotoSNSView.swift in Sources */,
 				7B0BB2F92BD4ACC800770A04 /* ExInt.swift in Sources */,
 				7BCF4A612BC6E5BD00BCE635 /* SignUpButton.swift in Sources */,
