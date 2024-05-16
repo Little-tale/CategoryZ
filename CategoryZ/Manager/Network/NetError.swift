@@ -22,7 +22,7 @@ enum NetworkError: Error {
     /// 리프레시 토큰 에러
     case refreshTokkenError(statusCode: Int, description: String)
     
-    /// 유저 정보 삭제 에러 또는 프로필 조회 에러
+    /// 유저 정보 삭제 에러 또는 프로필 조회 에러 +  + 나의 쳇 룸 에러
     case usurWithDrawError(statusCode: Int, description: String)
     
     /// 이미지 업로드 에러
@@ -60,6 +60,8 @@ enum NetworkError: Error {
     
     /// 결제 영수증 검증
     case paymentsValidError(statusCode: Int, description: String)
+    
+    case chatListError(statusCode: Int, description: String)
     
     /// 해쉬테그 에러
     
@@ -321,7 +323,22 @@ extension NetworkError {
             default:
                 return "알수 없는 에러 \(description)"
             }
-    
+            
+        case .chatListError(let statusCode, let description):
+            switch statusCode {
+            case 401:
+                return "인증할 수 없는 엑세스 토큰입니다."
+            case 403:
+                return "권한을 확인해주세요"
+            case 410:
+                return "채팅방을 찾을 수 없거나, 알수없는 계정입니다."
+            case 419:
+                return "엑세스 토큰이 만료되었습니다."
+            case 445:
+                return "채팅방 참여자가 아닙니다."
+            default:
+                return "알수 없는 에러 \(description)"
+            }
             
         case .failMakeURLRequest:
             return "URL Request Error"
@@ -342,6 +359,7 @@ extension NetworkError {
             default :
                 return "진짜 절대 나오면 안되는 에러"
             }
+       
         }
         
     }
