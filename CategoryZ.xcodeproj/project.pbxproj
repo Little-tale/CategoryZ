@@ -76,6 +76,7 @@
 		7B838E0E2BCFCBEA000F2E27 /* JHImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E0D2BCFCBEA000F2E27 /* JHImage.swift */; };
 		7B838E112BCFD97C000F2E27 /* ScrollImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E102BCFD97C000F2E27 /* ScrollImageView.swift */; };
 		7B87BCFF2BF60927000F0F79 /* RxOnlyRotateTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BCFE2BF60927000F0F79 /* RxOnlyRotateTableView.swift */; };
+		7B87BD012BF60E1F000F0F79 /* OnlyProfileImageAndUserNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD002BF60E1F000F0F79 /* OnlyProfileImageAndUserNameCell.swift */; };
 		7B87F0F82BD3FE2F0006178F /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */; };
 		7B87F0FC2BD3FE850006178F /* ProfileAndFollowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */; };
 		7B8CAEB42BD480D600347FAC /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */; };
@@ -273,6 +274,7 @@
 		7B838E0D2BCFCBEA000F2E27 /* JHImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHImage.swift; sourceTree = "<group>"; };
 		7B838E102BCFD97C000F2E27 /* ScrollImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollImageView.swift; sourceTree = "<group>"; };
 		7B87BCFE2BF60927000F0F79 /* RxOnlyRotateTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxOnlyRotateTableView.swift; sourceTree = "<group>"; };
+		7B87BD002BF60E1F000F0F79 /* OnlyProfileImageAndUserNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlyProfileImageAndUserNameCell.swift; sourceTree = "<group>"; };
 		7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAndFollowView.swift; sourceTree = "<group>"; };
 		7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -640,6 +642,7 @@
 			isa = PBXGroup;
 			children = (
 				7B1EE46D2BDF9E3600F109EB /* ProfileCell.swift */,
+				7B87BD002BF60E1F000F0F79 /* OnlyProfileImageAndUserNameCell.swift */,
 			);
 			path = ProfileCells;
 			sourceTree = "<group>";
@@ -1512,6 +1515,7 @@
 				7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */,
 				7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */,
 				7B838DDE2BCEC9FC000F2E27 /* FirstViewValidViewModel.swift in Sources */,
+				7B87BD012BF60E1F000F0F79 /* OnlyProfileImageAndUserNameCell.swift in Sources */,
 				7B1EE3F52BDE2A3700F109EB /* PinterestCell.swift in Sources */,
 				7BD1D8EE2BD6BA0F00B5521F /* ProfileNameModifyViewModel.swift in Sources */,
 				7B838E0B2BCFCBC5000F2E27 /* JHPont.swift in Sources */,
