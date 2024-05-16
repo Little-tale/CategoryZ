@@ -77,6 +77,7 @@
 		7B838E112BCFD97C000F2E27 /* ScrollImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E102BCFD97C000F2E27 /* ScrollImageView.swift */; };
 		7B87BCFF2BF60927000F0F79 /* RxOnlyRotateTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BCFE2BF60927000F0F79 /* RxOnlyRotateTableView.swift */; };
 		7B87BD012BF60E1F000F0F79 /* OnlyProfileImageAndUserNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD002BF60E1F000F0F79 /* OnlyProfileImageAndUserNameCell.swift */; };
+		7B87BD032BF61752000F0F79 /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD022BF61752000F0F79 /* ChattingViewController.swift */; };
 		7B87F0F82BD3FE2F0006178F /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */; };
 		7B87F0FC2BD3FE850006178F /* ProfileAndFollowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */; };
 		7B8CAEB42BD480D600347FAC /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */; };
@@ -275,6 +276,7 @@
 		7B838E102BCFD97C000F2E27 /* ScrollImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollImageView.swift; sourceTree = "<group>"; };
 		7B87BCFE2BF60927000F0F79 /* RxOnlyRotateTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxOnlyRotateTableView.swift; sourceTree = "<group>"; };
 		7B87BD002BF60E1F000F0F79 /* OnlyProfileImageAndUserNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlyProfileImageAndUserNameCell.swift; sourceTree = "<group>"; };
+		7B87BD022BF61752000F0F79 /* ChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
 		7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAndFollowView.swift; sourceTree = "<group>"; };
 		7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -800,6 +802,7 @@
 		7B87BCFC2BF6017C000F0F79 /* Chatting */ = {
 			isa = PBXGroup;
 			children = (
+				7B87BD022BF61752000F0F79 /* ChattingViewController.swift */,
 			);
 			path = Chatting;
 			sourceTree = "<group>";
@@ -1400,6 +1403,7 @@
 				7BC06FD02BE0190F00651529 /* CheckUserDeleteViewController.swift in Sources */,
 				7B9403192BE119D8004A1A8E /* NetworkService.swift in Sources */,
 				7BC43D542BE75319001A109B /* NotNeedIntercoptor.swift in Sources */,
+				7B87BD032BF61752000F0F79 /* ChattingViewController.swift in Sources */,
 				7B1EE46E2BDF9E3600F109EB /* ProfileCell.swift in Sources */,
 				7BCF4A572BC6E1C600BCE635 /* LoginButton.swift in Sources */,
 				7B11DC682BC58AD40055D423 /* AppDelegate.swift in Sources */,
