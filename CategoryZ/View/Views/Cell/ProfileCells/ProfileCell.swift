@@ -133,11 +133,9 @@ final class ProfileCell: RxBaseCollectionViewCell {
                 case .me:
                     leftTitle = "프로필 설정"
                     rightTitle = "좋아요한 게시글"
-                    owner.rightButton.isHidden = false
                 case .other:
                     leftTitle = ""
                     rightTitle = "채팅"
-                    owner.rightButton.isHidden = false
                 }
                 owner.setButton(
                     lbt: leftTitle,
@@ -172,8 +170,23 @@ final class ProfileCell: RxBaseCollectionViewCell {
             .disposed(by: disposeBag)
         
         rightButton.rx.tap
+            .filter({ _ in
+                return profileType == .me
+            })
             .bind(with: self) { owner, _ in
                 owner.moveLikesDelegate?.moveToLikes(profileType)
+            }
+            .disposed(by: disposeBag)
+        
+        rightButton.rx.tap
+            .map({ _ in
+                return profileType
+            })
+            .bind(with: self) { owner, profileType in
+                guard case .other(let otherUserId) = profileType else {
+                    return
+                }
+                print(otherUserId) // 채팅방 생성에 필요한 유저 아이디
             }
             .disposed(by: disposeBag)
         

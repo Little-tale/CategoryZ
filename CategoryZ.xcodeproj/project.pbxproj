@@ -75,6 +75,7 @@
 		7B838E0B2BCFCBC5000F2E27 /* JHPont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E0A2BCFCBC5000F2E27 /* JHPont.swift */; };
 		7B838E0E2BCFCBEA000F2E27 /* JHImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E0D2BCFCBEA000F2E27 /* JHImage.swift */; };
 		7B838E112BCFD97C000F2E27 /* ScrollImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B838E102BCFD97C000F2E27 /* ScrollImageView.swift */; };
+		7B87BCFF2BF60927000F0F79 /* RxOnlyRotateTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BCFE2BF60927000F0F79 /* RxOnlyRotateTableView.swift */; };
 		7B87F0F82BD3FE2F0006178F /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */; };
 		7B87F0FC2BD3FE850006178F /* ProfileAndFollowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */; };
 		7B8CAEB42BD480D600347FAC /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */; };
@@ -271,6 +272,7 @@
 		7B838E0A2BCFCBC5000F2E27 /* JHPont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHPont.swift; sourceTree = "<group>"; };
 		7B838E0D2BCFCBEA000F2E27 /* JHImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JHImage.swift; sourceTree = "<group>"; };
 		7B838E102BCFD97C000F2E27 /* ScrollImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollImageView.swift; sourceTree = "<group>"; };
+		7B87BCFE2BF60927000F0F79 /* RxOnlyRotateTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxOnlyRotateTableView.swift; sourceTree = "<group>"; };
 		7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAndFollowView.swift; sourceTree = "<group>"; };
 		7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 		7B11DC7B2BC58B330055D423 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7B87BCFD2BF60187000F0F79 /* Chatting */,
 				7B9403372BE25FA3004A1A8E /* Donate */,
 				7B5E512B2BD9134500918C53 /* CommentView */,
 				7BD1D90F2BD7989F00B5521F /* FollowAndFlowing */,
@@ -513,6 +516,7 @@
 		7B11DC7C2BC58B3A0055D423 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				7B87BCFC2BF6017C000F0F79 /* Chatting */,
 				7B9403422BE27B43004A1A8E /* Donate */,
 				7B1EE3EE2BDE107900F109EB /* Like */,
 				7B5E512A2BD9133500918C53 /* Comment */,
@@ -788,6 +792,20 @@
 				7B838E102BCFD97C000F2E27 /* ScrollImageView.swift */,
 			);
 			path = SrollImageView;
+			sourceTree = "<group>";
+		};
+		7B87BCFC2BF6017C000F0F79 /* Chatting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Chatting;
+			sourceTree = "<group>";
+		};
+		7B87BCFD2BF60187000F0F79 /* Chatting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Chatting;
 			sourceTree = "<group>";
 		};
 		7B87F0F92BD3FE410006178F /* Profile */ = {
@@ -1081,6 +1099,7 @@
 				7BA0E0DE2BCD73EC002F0516 /* BaseTableViewCell.swift */,
 				7BC51B452BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift */,
 				7B1EE3F62BDE417A00F109EB /* RxBaseCollectionViewCell.swift */,
+				7B87BCFE2BF60927000F0F79 /* RxOnlyRotateTableView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -1430,6 +1449,7 @@
 				7B1EE3FB2BDE4DF100F109EB /* SingleSNSViewController.swift in Sources */,
 				7BA0E0EA2BCD75F9002F0516 /* BlackPointButton.swift in Sources */,
 				7BC06FD22BE019B100651529 /* CheckedUserView.swift in Sources */,
+				7B87BCFF2BF60927000F0F79 /* RxOnlyRotateTableView.swift in Sources */,
 				7BA0E0EF2BCD76D0002F0516 /* PostRegViewModel.swift in Sources */,
 				7BC43D5B2BE7957F001A109B /* ProfileModifyIn.swift in Sources */,
 				7BA0E0DD2BCD73DB002F0516 /* BaseCollectionViewCell.swift in Sources */,

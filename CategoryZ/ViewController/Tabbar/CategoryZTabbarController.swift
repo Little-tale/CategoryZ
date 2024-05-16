@@ -67,6 +67,7 @@ final class CategoryZTabbarController: UITabBarController, UITabBarControllerDel
     
     // MARK: ADD 눌렀을때의 동작을 위해서 ... 원래의 버튼을 제거합니다.
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        // AddButtonViewController
         if viewController == viewControllers?[1] {
             presentedPostRegViewController()
             return false
