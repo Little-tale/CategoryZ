@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 
 
-final class CategoryZTabbarController: UITabBarController {
+final class CategoryZTabbarController: UITabBarController, UITabBarControllerDelegate {
     
     // 1. 메인
     // 2. 등록
@@ -28,11 +28,12 @@ final class CategoryZTabbarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupMiddleButton()
+        // setupMiddleButton()
         settingTabBarItems()
         subscribe()
         view.backgroundColor = JHColor.white
         tabBar.isTranslucent = false
+        delegate = self
     }
     
     func settingTabBarItems() {
@@ -45,86 +46,40 @@ final class CategoryZTabbarController: UITabBarController {
         let tabItem1 = UITabBarItem(title: nil, image: homeImage, selectedImage: homeImage)
         tabItem1.tag = 1
         controller1.tabBarItem = tabItem1
-        
         let nvc1 = UINavigationController(rootViewController: controller1)
-
-        let controller2 = UserProfileViewController()
-        let tabItem2 = UITabBarItem(title: nil, image: profileImage, selectedImage: profileImage)
-        tabItem2.tag = 2
-        controller2.tabBarItem = tabItem2
         
-        let nvc2 = UINavigationController(rootViewController: controller2)
+        // ADDViewController But is Empty cus if Presentation
+        let dummyVc = UIViewController()
+        let tabbarItem2 = UITabBarItem(title: nil, image: UIImage(systemName: "plus.circle"), selectedImage: UIImage(systemName: "plus.circle.fill"))
+        dummyVc.tabBarItem = tabbarItem2
         
-        viewControllers = [nvc1, nvc2]
+        // UserProfileViewController
+        let controller3 = UserProfileViewController()
+        let tabItem3 = UITabBarItem(title: nil, image: profileImage, selectedImage: profileImage)
+        tabItem3.tag = 3
+        controller3.tabBarItem = tabItem3
+        
+        let nvc2 = UINavigationController(rootViewController: controller3)
+        
+        viewControllers = [nvc1, dummyVc, nvc2]
         tabBar.tintColor = JHColor.black
     }
-
     
-    func setupMiddleButton() {
-        view.addSubview(addButton)
-        addButton.backgroundColor = JHColor.likeColor
-        
-        addButton.tintColor = JHColor.likeColor  // 이미지의 색상 설정
-        
-        addButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-15)
-            make.size.equalTo(60)
+    // MARK: ADD 눌렀을때의 동작을 위해서 ... 원래의 버튼을 제거합니다.
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if viewController == viewControllers?[1] {
+            presentedPostRegViewController()
+            return false
         }
-        if let image = JHImage.addImageNormal {
-            
-            let imageConfig = UIImage.SymbolConfiguration(pointSize: 22)
-            
-           let configuredImage =  image.withConfiguration(imageConfig)
-            
-            addButton.layer.cornerRadius = addButton.frame.height / 2
-            addButton.setImage(configuredImage, for: .normal)
-            addButton.tintColor = JHColor.white
-        }
-        
-        addButton.rx.tap
-            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
-            .bind(with: self) { owner, _ in
-                let vc = PostRegViewController()
-                vc.modalPresentationStyle = .pageSheet
-                let nvc = UINavigationController(rootViewController: vc)
-                owner.present(nvc, animated: true)
-            }
-            .disposed(by: disposeBag)
-        
-        NotificationCenter.default.rx.notification(.hidesBottomBarWhenPushed)
-            .bind(with: self) { owner, _ in
-                owner.setTabBarHidden(true, animated: true)
-        }
-        .disposed(by: disposeBag)
-        
-        
-        navigationController?.navigationBar.isHidden = true
-       
+        return true
     }
     
-   
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if !tabBar.isHidden {
-            setTabBarHidden(tabBar.isHidden, animated: true)
-        }
-        view.bringSubviewToFront(addButton)
+    func presentedPostRegViewController() {
+        let vc = PostRegViewController()
+        vc.modalPresentationStyle = .pageSheet
+        let nvc = UINavigationController(rootViewController: vc)
+        present(nvc, animated: true)
     }
-    
-    func setTabBarHidden(_ hidden: Bool, animated: Bool) {
-        UIView.animate(withDuration: animated ? 0.2 : 0.0) {
-            [weak self] in
-            
-            self?.tabBar.isHidden = hidden
-            self?.addButton.tintColor = hidden ? .clear : JHColor.white
-            self?.addButton.backgroundColor = hidden ? .clear : JHColor.likeColor
-            self?.addButton.isEnabled = !hidden
-            self?.view.layoutIfNeeded()
-        }
-    }
-
 }
 
 extension UITabBar {
@@ -167,8 +122,9 @@ extension CategoryZTabbarController {
                 owner.networkMonitor.startMonitor()
             }
             .disposed(by: disposeBag)
+        
+        
     }
-    
 }
 
 
