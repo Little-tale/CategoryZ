@@ -53,4 +53,19 @@ extension JHImage {
     static let morePostImage: UIImage = .more
     
     static let talent: UIImage = .talent
+    
+    enum ChatBubble {
+        case me
+        case other
+        
+        var image: UIImage {
+            switch self {
+            case .me:
+                return .meChat
+            case .other:
+                return .otherChat
+            }
+        }
+    }
+    
 }

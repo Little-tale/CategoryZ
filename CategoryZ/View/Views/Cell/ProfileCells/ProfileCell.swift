@@ -36,7 +36,7 @@ final class ProfileCell: RxBaseCollectionViewCell {
     
     weak var MoveToFollowOrFollower: MoveToFollowOrFollower?
     
-    
+    var goChatRoom: ((String) -> Void)?
     
     let leftButton = UIButton().then {
         var config = UIButton.Configuration.bordered()
@@ -186,7 +186,7 @@ final class ProfileCell: RxBaseCollectionViewCell {
                 guard case .other(let otherUserId) = profileType else {
                     return
                 }
-                print(otherUserId) // 채팅방 생성에 필요한 유저 아이디
+                owner.goChatRoom?(otherUserId) // 채팅방 생성에 필요한 유저 아이디
             }
             .disposed(by: disposeBag)
         

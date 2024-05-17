@@ -8,9 +8,9 @@
 import Foundation
 
 struct ChatRoomListModel: Decodable {
-    let chatRoomList: [ChatRoom]
+    let chatRoomList: [ChatRoomModel]
     
-    init(chatRoomList: [ChatRoom]) {
+    init(chatRoomList: [ChatRoomModel]) {
         self.chatRoomList = chatRoomList
     }
     
@@ -20,7 +20,7 @@ struct ChatRoomListModel: Decodable {
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.chatRoomList = try container.decode([ChatRoom].self, forKey: .chatRoomList)
+        self.chatRoomList = try container.decode([ChatRoomModel].self, forKey: .chatRoomList)
     }
 }
 

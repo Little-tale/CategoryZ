@@ -18,14 +18,11 @@ final class RxOnlyRotateTableView: RxBaseView {
     let commentTextView = CommentTextView(placeholedrText: "메시지를 남기세요")
     
     
-    private
-    func subscribe() {
-        autoResizingTextView()
-    }
     
     override func configureHierarchy() {
         addSubview(tableView)
         addSubview(commentTextView)
+        subscribe()
     }
     
     override func configureLayout() {
@@ -37,6 +34,17 @@ final class RxOnlyRotateTableView: RxBaseView {
             make.horizontalEdges.equalTo(safeAreaLayoutGuide)
             make.bottom.greaterThanOrEqualTo(keyboardLayoutGuide.snp.bottom)
         }
+    }
+    
+    private
+    func subscribe() {
+        autoResizingTextView()
+        
+        commentTextView.textView.rx.text.orEmpty
+            .bind(with: self) { owner, text in
+                owner.commentTextView.placholderTextLabel.isHidden = text != ""
+            }
+            .disposed(by: disposedBag)
     }
 }
 
@@ -50,7 +58,7 @@ extension RxOnlyRotateTableView {
                 let size = CGSize(width: owner.commentTextView.textView.frame.width, height: CGFloat.infinity)
                 let estimate = owner.commentTextView.textView.sizeThatFits(size)
 
-                owner.commentTextView.textViewHeightConstraint?.update(offset: max(40,min(estimate.height, 120)))
+                owner.commentTextView.textViewHeightConstraint?.update(offset: max(40,min(estimate.height, 200)))
             }
             .disposed(by: disposedBag)
     }

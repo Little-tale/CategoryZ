@@ -40,7 +40,7 @@
 		7B4F906F2BEF798700B191F2 /* Welcome.json in Resources */ = {isa = PBXBuildFile; fileRef = 7B4F906E2BEF798700B191F2 /* Welcome.json */; };
 		7B4F90712BEF96CF00B191F2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 7B4F90702BEF96CF00B191F2 /* README.md */; };
 		7B52E5662BF4FC1B00977EC7 /* ChatsRoomQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E5652BF4FC1B00977EC7 /* ChatsRoomQuery.swift */; };
-		7B52E5692BF4FE1E00977EC7 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E5682BF4FE1E00977EC7 /* ChatRoom.swift */; };
+		7B52E5692BF4FE1E00977EC7 /* ChatRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E5682BF4FE1E00977EC7 /* ChatRoomModel.swift */; };
 		7B52E56B2BF4FF3800977EC7 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */; };
 		7B52E56D2BF500E400977EC7 /* ChatRoomListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E56C2BF500E400977EC7 /* ChatRoomListModel.swift */; };
 		7B52E56F2BF5024600977EC7 /* ChatPostQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E56E2BF5024600977EC7 /* ChatPostQuery.swift */; };
@@ -78,6 +78,10 @@
 		7B87BCFF2BF60927000F0F79 /* RxOnlyRotateTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BCFE2BF60927000F0F79 /* RxOnlyRotateTableView.swift */; };
 		7B87BD012BF60E1F000F0F79 /* OnlyProfileImageAndUserNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD002BF60E1F000F0F79 /* OnlyProfileImageAndUserNameCell.swift */; };
 		7B87BD032BF61752000F0F79 /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD022BF61752000F0F79 /* ChattingViewController.swift */; };
+		7B87BD062BF61A1E000F0F79 /* ChattingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD052BF61A1E000F0F79 /* ChattingViewModel.swift */; };
+		7B87BD092BF623B1000F0F79 /* ChatLeftRightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD082BF623B1000F0F79 /* ChatLeftRightCell.swift */; };
+		7B87BD0C2BF62962000F0F79 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 7B87BD0B2BF62962000F0F79 /* Realm */; };
+		7B87BD0E2BF62962000F0F79 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7B87BD0D2BF62962000F0F79 /* RealmSwift */; };
 		7B87F0F82BD3FE2F0006178F /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */; };
 		7B87F0FC2BD3FE850006178F /* ProfileAndFollowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */; };
 		7B8CAEB42BD480D600347FAC /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */; };
@@ -245,7 +249,7 @@
 		7B4F906E2BEF798700B191F2 /* Welcome.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Welcome.json; sourceTree = "<group>"; };
 		7B4F90702BEF96CF00B191F2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7B52E5652BF4FC1B00977EC7 /* ChatsRoomQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsRoomQuery.swift; sourceTree = "<group>"; };
-		7B52E5682BF4FE1E00977EC7 /* ChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
+		7B52E5682BF4FE1E00977EC7 /* ChatRoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomModel.swift; sourceTree = "<group>"; };
 		7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		7B52E56C2BF500E400977EC7 /* ChatRoomListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomListModel.swift; sourceTree = "<group>"; };
 		7B52E56E2BF5024600977EC7 /* ChatPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPostQuery.swift; sourceTree = "<group>"; };
@@ -277,6 +281,8 @@
 		7B87BCFE2BF60927000F0F79 /* RxOnlyRotateTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxOnlyRotateTableView.swift; sourceTree = "<group>"; };
 		7B87BD002BF60E1F000F0F79 /* OnlyProfileImageAndUserNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlyProfileImageAndUserNameCell.swift; sourceTree = "<group>"; };
 		7B87BD022BF61752000F0F79 /* ChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
+		7B87BD052BF61A1E000F0F79 /* ChattingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewModel.swift; sourceTree = "<group>"; };
+		7B87BD082BF623B1000F0F79 /* ChatLeftRightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLeftRightCell.swift; sourceTree = "<group>"; };
 		7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAndFollowView.swift; sourceTree = "<group>"; };
 		7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -416,12 +422,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B838DF72BCFAE06000F2E27 /* ReusableKit in Frameworks */,
+				7B87BD0C2BF62962000F0F79 /* Realm in Frameworks */,
 				7B838DFF2BCFAE8C000F2E27 /* Differentiator in Frameworks */,
 				7B11DC8D2BC58D250055D423 /* RxRelay in Frameworks */,
 				7B5E513A2BDA873400918C53 /* Toast in Frameworks */,
 				7B11DC9B2BC58DA40055D423 /* IQKeyboardManagerSwift in Frameworks */,
 				7BCF4A422BC688F100BCE635 /* KeychainAccess in Frameworks */,
 				7B11DC8B2BC58D250055D423 /* RxCocoa in Frameworks */,
+				7B87BD0E2BF62962000F0F79 /* RealmSwift in Frameworks */,
 				7B11DC982BC58D640055D423 /* SnapKit in Frameworks */,
 				7B11DC8F2BC58D250055D423 /* RxSwift in Frameworks */,
 				7B11DC882BC58CF20055D423 /* Alamofire in Frameworks */,
@@ -540,6 +548,7 @@
 		7B11DC7D2BC58B440055D423 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7B87BD042BF61A12000F0F79 /* Chat */,
 				7BDF40CE2BE3B2D3005274F9 /* Search */,
 				7B94033A2BE260ED004A1A8E /* Donate */,
 				7B1EE3F12BDE11CE00F109EB /* Like */,
@@ -571,6 +580,7 @@
 		7B11DC7F2BC58B550055D423 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7B87BD462BF7146B000F0F79 /* DB */,
 				7B838E092BCFCB7F000F2E27 /* JH */,
 				7BCF4AAA2BCC175F00BCE635 /* Layout */,
 				7B11DC832BC58CAA0055D423 /* Network */,
@@ -669,7 +679,7 @@
 		7B52E5672BF4FE1200977EC7 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				7B52E5682BF4FE1E00977EC7 /* ChatRoom.swift */,
+				7B52E5682BF4FE1E00977EC7 /* ChatRoomModel.swift */,
 				7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */,
 				7B52E56C2BF500E400977EC7 /* ChatRoomListModel.swift */,
 			);
@@ -814,6 +824,29 @@
 			path = Chatting;
 			sourceTree = "<group>";
 		};
+		7B87BD042BF61A12000F0F79 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				7B87BD052BF61A1E000F0F79 /* ChattingViewModel.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		7B87BD072BF6239A000F0F79 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				7B87BD082BF623B1000F0F79 /* ChatLeftRightCell.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		7B87BD462BF7146B000F0F79 /* DB */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DB;
+			sourceTree = "<group>";
+		};
 		7B87F0F92BD3FE410006178F /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -902,6 +935,7 @@
 		7BA0E0D92BCD73A1002F0516 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				7B87BD072BF6239A000F0F79 /* Chat */,
 				7B1EE46C2BDF9E2700F109EB /* ProfileCells */,
 				7BA0E0DA2BCD73B0002F0516 /* CategoryReusableCell.swift */,
 				7BA0E0E52BCD7513002F0516 /* OnlyImageCollectionViewCell.swift */,
@@ -1319,6 +1353,8 @@
 				7B9403402BE26F89004A1A8E /* iamport-ios */,
 				7BC4E5062BE6540400F0C5C2 /* Lottie */,
 				7B52E5712BF5094800977EC7 /* SocketIO */,
+				7B87BD0B2BF62962000F0F79 /* Realm */,
+				7B87BD0D2BF62962000F0F79 /* RealmSwift */,
 			);
 			productName = CategoryZ;
 			productReference = 7B11DC642BC58AD40055D423 /* CategoryZ.app */;
@@ -1363,6 +1399,7 @@
 				7B94033F2BE26F89004A1A8E /* XCRemoteSwiftPackageReference "iamport-ios" */,
 				7BC4E5052BE6540300F0C5C2 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				7B52E5702BF5094800977EC7 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
+				7B87BD0A2BF62962000F0F79 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 7B11DC652BC58AD40055D423 /* Products */;
 			projectDirPath = "";
@@ -1407,6 +1444,7 @@
 				7B1EE46E2BDF9E3600F109EB /* ProfileCell.swift in Sources */,
 				7BCF4A572BC6E1C600BCE635 /* LoginButton.swift in Sources */,
 				7B11DC682BC58AD40055D423 /* AppDelegate.swift in Sources */,
+				7B87BD062BF61A1E000F0F79 /* ChattingViewModel.swift in Sources */,
 				7BC43D6D2BE797C7001A109B /* JoinModel.swift in Sources */,
 				7BCF4A2A2BC598D700BCE635 /* NetError.swift in Sources */,
 				7BA0E0D32BCD72C3002F0516 /* PostRegViewController.swift in Sources */,
@@ -1453,6 +1491,7 @@
 				7BCF4A592BC6E20600BCE635 /* BaseButton.swift in Sources */,
 				7BCF4A712BC7D9A900BCE635 /* UserInfoRegViewController.swift in Sources */,
 				7B9403202BE1EB3E004A1A8E /* RegisterDonateViewModel.swift in Sources */,
+				7B87BD092BF623B1000F0F79 /* ChatLeftRightCell.swift in Sources */,
 				7B1EE3FB2BDE4DF100F109EB /* SingleSNSViewController.swift in Sources */,
 				7BA0E0EA2BCD75F9002F0516 /* BlackPointButton.swift in Sources */,
 				7BC06FD22BE019B100651529 /* CheckedUserView.swift in Sources */,
@@ -1514,7 +1553,7 @@
 				7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */,
 				7BCF4A512BC6DDE200BCE635 /* GetStartViewController.swift in Sources */,
 				7B838DF12BCFACC2000F2E27 /* CategoryZTabbarController.swift in Sources */,
-				7B52E5692BF4FE1E00977EC7 /* ChatRoom.swift in Sources */,
+				7B52E5692BF4FE1E00977EC7 /* ChatRoomModel.swift in Sources */,
 				7B52E56B2BF4FF3800977EC7 /* ChatModel.swift in Sources */,
 				7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */,
 				7BCF4A4A2BC6CF8600BCE635 /* BaseViewType.swift in Sources */,
@@ -1873,6 +1912,14 @@
 				minimumVersion = 5.0.2;
 			};
 		};
+		7B87BD0A2BF62962000F0F79 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.47.0;
+			};
+		};
 		7B94031C2BE1DCC2004A1A8E /* XCRemoteSwiftPackageReference "BetterSegmentedControl" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gmarm/BetterSegmentedControl.git";
@@ -1980,6 +2027,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7B838DFD2BCFAE8C000F2E27 /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
+		};
+		7B87BD0B2BF62962000F0F79 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B87BD0A2BF62962000F0F79 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		7B87BD0D2BF62962000F0F79 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7B87BD0A2BF62962000F0F79 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		7B94031D2BE1DCC2004A1A8E /* BetterSegmentedControl */ = {
 			isa = XCSwiftPackageProductDependency;

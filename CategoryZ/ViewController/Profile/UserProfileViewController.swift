@@ -57,6 +57,9 @@ final class UserProfileViewController: RxBaseViewController {
     let moveProfile = PublishRelay<Creator> ()
     
     private
+    let goChatRoom = PublishRelay<String> ()
+    
+    private
     enum Section: Int {
         case profile // Profile 모델
         case poster // SNSDataModel
@@ -214,6 +217,13 @@ final class UserProfileViewController: RxBaseViewController {
         }
             .disposed(by: disPoseBag)
         
+        goChatRoom.bind(with: self) { owner, userID in
+            let vc = ChattingViewController()
+            vc.setModel(userID)
+            owner.navigationController?.pushViewController(vc, animated: true)
+        }
+        .disposed(by: disPoseBag)
+        
     }
     
     override func configureHierarchy() {
@@ -256,8 +266,8 @@ extension UserProfileViewController {
     func configureDataSource() {
         dataSource = DataSource(
             collectionView: collectionView,
-            cellProvider: {collectionView, indexPath, itemIdentifier in
-                // guard let self else { return nil }
+            cellProvider: { [weak self] collectionView, indexPath, itemIdentifier in
+                guard let stronhSelf = self else { return nil }
                 let section = Section(rawValue: indexPath.section)
                 switch section {
                 case .profile:
@@ -270,6 +280,9 @@ extension UserProfileViewController {
                         cell.moveProfileDelegate = self
                         cell.moveLikesDelegate = self
                         cell.MoveToFollowOrFollower = self
+                        cell.goChatRoom = { userID in
+                            stronhSelf.goChatRoom.accept(userID)
+                        }
                     }
                     
                     return cell

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ChatRoom: Decodable {
+struct ChatRoomModel: Decodable {
     let roomID, createdAt, updatedAt: String
     let participants: [Creator]
     let lastChat: ChatModel?
