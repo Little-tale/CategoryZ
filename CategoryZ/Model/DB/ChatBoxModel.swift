@@ -7,7 +7,9 @@
 
 import Foundation
 import RealmSwift
-
+/*
+ 현재 해당 모델의 LinkedList 부모를 알필요는 없다고 판단하여 없앱니다.
+ */
 final class ChatBoxModel: Object {
     
     @Persisted(primaryKey: true)
@@ -22,9 +24,6 @@ final class ChatBoxModel: Object {
     
     @Persisted
     var isMe: Bool
-    
-    @Persisted(originProperty: "chatBoxs")
-    var parentsAt: LinkingObjects<ChatRoomRealmModel>
     
     convenience
     init(id: String, contentText: String? = nil, imageFiles: [String], isMe: Bool) {
