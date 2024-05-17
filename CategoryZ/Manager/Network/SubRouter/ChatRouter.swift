@@ -14,7 +14,7 @@ enum ChatRouter {
     
     /// cursorDate -> UTC -> EX) 2024-05-06T05:13:54.357Z
     ///  But If you Don't return a value UTC Type -> 500Error
-    case readChatingList(cursorDate: String, roomID: String)
+    case readChatingList(cursorDate: String? = nil, roomID: String)
     case postChat(qeury: ChatPostQuery ,roomID: String)
     case chatingImageUpload(roomId: String)
 }
@@ -73,6 +73,9 @@ extension ChatRouter: TargetType {
         case .createChatRoom, .myChatRooms, .postChat, .chatingImageUpload:
             return nil
         case .readChatingList(let cursorDate, _):
+            guard let cursorDate else {
+                return nil
+            }
             return [
                 URLQueryItem(name: "cursor_date", value: cursorDate)
             ]

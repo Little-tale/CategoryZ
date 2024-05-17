@@ -87,6 +87,7 @@
 		7B87BD562BF72B11000F0F79 /* ChatBoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD552BF72B11000F0F79 /* ChatBoxModel.swift */; };
 		7B87BD582BF72D90000F0F79 /* ChatRoomRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD572BF72D90000F0F79 /* ChatRoomRealmModel.swift */; };
 		7B87BD5A2BF74CBD000F0F79 /* RealmServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD592BF74CBD000F0F79 /* RealmServiceManager.swift */; };
+		7B87BD5C2BF78A5F000F0F79 /* ChatRoomInChatsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD5B2BF78A5F000F0F79 /* ChatRoomInChatsModel.swift */; };
 		7B87F0F82BD3FE2F0006178F /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */; };
 		7B87F0FC2BD3FE850006178F /* ProfileAndFollowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */; };
 		7B8CAEB42BD480D600347FAC /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */; };
@@ -293,6 +294,7 @@
 		7B87BD552BF72B11000F0F79 /* ChatBoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBoxModel.swift; sourceTree = "<group>"; };
 		7B87BD572BF72D90000F0F79 /* ChatRoomRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomRealmModel.swift; sourceTree = "<group>"; };
 		7B87BD592BF74CBD000F0F79 /* RealmServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmServiceManager.swift; sourceTree = "<group>"; };
+		7B87BD5B2BF78A5F000F0F79 /* ChatRoomInChatsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomInChatsModel.swift; sourceTree = "<group>"; };
 		7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAndFollowView.swift; sourceTree = "<group>"; };
 		7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -694,6 +696,7 @@
 				7B52E5682BF4FE1E00977EC7 /* ChatRoomModel.swift */,
 				7B52E56A2BF4FF3800977EC7 /* ChatModel.swift */,
 				7B52E56C2BF500E400977EC7 /* ChatRoomListModel.swift */,
+				7B87BD5B2BF78A5F000F0F79 /* ChatRoomInChatsModel.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1486,6 +1489,7 @@
 				7BC43D7C2BE7B5C3001A109B /* CreatorModel.swift in Sources */,
 				7BC43D712BE797E7001A109B /* RefreshModel.swift in Sources */,
 				7B5EF9F82BD4DFC000F022CB /* ProfileHeaderView.swift in Sources */,
+				7B87BD5C2BF78A5F000F0F79 /* ChatRoomInChatsModel.swift in Sources */,
 				7BCF4A6F2BC7D96400BCE635 /* UserInfoRegView.swift in Sources */,
 				7B1EE3FF2BDE57E100F109EB /* SingleViewRx.swift in Sources */,
 				7BCC9D852BE28A9100A6CEC3 /* CheckUserViewModel.swift in Sources */,

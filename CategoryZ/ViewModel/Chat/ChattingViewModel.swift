@@ -20,10 +20,23 @@ final class ChattingViewModel: RxViewModelType {
     var disposeBag = DisposeBag()
     
     private
-    let repositry = RealmRepository()
+    let repository = RealmRepository()
     
     private
     let textValid = TextValid()
+    
+    private
+    let myID = UserIDStorage.shared.userID
+    
+    // ERROR
+    private
+    let realmError = PublishRelay<RealmError> ()
+    
+    private
+    let publishNetError = PublishRelay<NetworkError> ()
+    
+    private
+    let dateError = PublishRelay<DateManagerError> ()
     
     struct Input {
         let userIDRelay: BehaviorRelay<String>
@@ -36,14 +49,12 @@ final class ChattingViewModel: RxViewModelType {
         let realmError:Driver<RealmError>
         let saveButtonState: BehaviorRelay<Bool>
         let currentTextViewText: Driver<String>
+        let dateError: Driver<DateManagerError>
     }
     
     func transform(_ input: Input) -> Output {
         
-        // ERROR
-        let realmError = PublishRelay<RealmError> ()
-        
-        let publishNetError = PublishRelay<NetworkError> ()
+        var noneDataTrigger = true
         
         // Suceess
         let successChatRoomId = PublishRelay<ChatRoomModel> ()
@@ -61,13 +72,13 @@ final class ChattingViewModel: RxViewModelType {
                 
                 return NetworkManager.fetchNetwork(model: ChatRoomModel.self, router: .Chatting(.createChatRoom(query: roomQuery)))
             }
-            .bind { result in
+            .bind(with: self) { owner, result in
                 switch result {
                 case .success(let model):
                     print("Success : ",model)
                     successChatRoomId.accept(model)
                 case .failure(let error):
-                    publishNetError.accept(error)
+                    owner.publishNetError.accept(error)
                 }
             }
             .disposed(by: disposeBag)
@@ -76,7 +87,7 @@ final class ChattingViewModel: RxViewModelType {
         successChatRoomId
             .bind(with: self) { owner, model in
                 
-                let result = owner.repositry.findById(type: ChatRoomRealmModel.self, id: model.roomID)
+                let result = owner.repository.findById(type: ChatRoomRealmModel.self, id: model.roomID)
                 
                 switch result{
                 case .success(let roomModel):
@@ -84,9 +95,10 @@ final class ChattingViewModel: RxViewModelType {
                         chekedRoomModel.accept(roomModel)
                     } else {
                         nilRoomModel.accept(model)
+                        noneDataTrigger = false
                     }
                 case .failure(let error):
-                    realmError.accept(error)
+                    owner.realmError.accept(error)
                 }
             }
             .disposed(by: disposeBag)
@@ -95,8 +107,23 @@ final class ChattingViewModel: RxViewModelType {
         // 분기점 -> 존재할경우 아닐경우
         
         /// 존재 하지 않을경우
-        
-        
+        nilRoomModel
+            .filter({ _ in
+                noneDataTrigger == true
+            })
+            .flatMapLatest { model in
+                /// 요청 전체 채팅을 달라고.
+                return NetworkManager.fetchNetwork(model: ChatRoomInChatsModel.self, router: .Chatting(.readChatingList(roomID: model.roomID)))
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let model):
+                    owner.reMakeModel(model)
+                case .failure(let fail):
+                    owner.publishNetError.accept(fail)
+                }
+            }
+            .disposed(by: disposeBag)
         /// 존재 할 경우
         
     
@@ -119,7 +146,69 @@ final class ChattingViewModel: RxViewModelType {
             networkError: publishNetError.asDriver(onErrorJustReturn: .unknownError),
             realmError: realmError.asDriver(onErrorDriveWith: .never()),
             saveButtonState: saveButtonState,
-            currentTextViewText: currentTextViewText.asDriver()
+            currentTextViewText: currentTextViewText.asDriver(), dateError: dateError.asDriver(onErrorDriveWith: .never())
         )
+    }
+}
+
+
+// ChattingModel Is EMPTY?
+extension ChattingViewModel {
+    
+    private
+    func reMakeModel(_ model: ChatRoomInChatsModel) {
+        
+        guard let myID else {
+            publishNetError.accept(.loginError(statusCode: 419, description: "Re login"))
+            return
+        }
+        
+        if !model.chatList.isEmpty {
+            print("비어있지 않은 로직 시작")
+            var remake: [ChatBoxModel] = []
+            
+            model.chatList.forEach { model in
+                
+               let dateResult = DateManager.shared.makeStringToDate(model.createdAt)
+                
+                switch dateResult {
+                case .success(let date):
+                    let reModel = makeModel(model: model, date)
+                    remake.append(reModel)
+                    
+                case .failure(let error):
+                    dateError.accept(error)
+                }
+            }
+            let realmResult = repository.addChatBoxesToRealm(remake)
+            
+            passCaseRealm(caseOF: realmResult)
+        } else {
+            print("비어있어!")
+        }
+    }
+    
+    private
+    func makeModel(model:  ChatModel,_ date: Date) -> ChatBoxModel {
+        
+        let reModel = ChatBoxModel(
+            id: model.chatID,
+            imageFiles: model.files,
+            isMe: myID == model.sender.userID,
+            createAt: date
+        )
+        
+        return reModel
+    }
+    
+    private
+    func passCaseRealm(caseOF: Result<Void, RealmError>) {
+        switch caseOF {
+        case .success(let success):
+            print("성공입니다.")
+            break
+        case .failure(let failure):
+            realmError.accept(failure)
+        }
     }
 }

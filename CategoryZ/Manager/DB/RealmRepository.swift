@@ -98,4 +98,20 @@ final class RealmRepository: RealmRepositoryType {
             return .failure(.cantFindModel)
         }
     }
+    
+    
+    func addChatBoxesToRealm(_ chatBoxes: [ChatBoxModel]) -> Result<Void, RealmError> {
+        guard let realm = realm else {
+            return .failure(.cantLoadRealm)
+        }
+        
+        do {
+            try realm.write {
+                realm.add(chatBoxes, update: .modified)
+            }
+            return.success(())
+        } catch {
+            return .failure(.failAdd)
+        }
+    }
 }
