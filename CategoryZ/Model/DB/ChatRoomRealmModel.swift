@@ -8,16 +8,17 @@
 import Foundation
 import RealmSwift
 
-final class ChatRoomRealmModel: Object {
+final class ChatRoomRealmModel: Object, RealmFindType {
     
     @Persisted(primaryKey: true)
-    var roomId: String
+    var id: String
+    
     
     @Persisted
-    var createAt: String
+    var createAt: Date
     
     @Persisted
-    var updateAt: String
+    var updateAt: Date
     
     @Persisted
     var otherUserName: String
@@ -28,10 +29,11 @@ final class ChatRoomRealmModel: Object {
     @Persisted
     var chatBoxs: List<ChatBoxModel>
     
-    init(roomId: String, createAt: String, updateAt: String, otherUserName: String, otherUserProfile: String? = nil, chatBoxs: List<ChatBoxModel>) {
+    convenience
+    init(roomId: String, createAt: Date, updateAt: Date, otherUserName: String, otherUserProfile: String? = nil, chatBoxs: List<ChatBoxModel>) {
         self.init()
         
-        self.roomId = roomId
+        self.id = roomId
         self.createAt = createAt
         self.updateAt = updateAt
         self.otherUserName = otherUserName

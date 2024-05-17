@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum DateManagerError: Error {
+    case failTransform
+}
+
 final class DateManager {
     
     private 
@@ -68,5 +72,24 @@ final class DateManager {
             return "방금 전"
         }
     }
-
+    
+    func makeStringToDate(_ dateString: String) -> Result<Date, DateManagerError>{
+        
+        print(dateString)
+        var calendar = Calendar.current
+        
+        dateformatter.formatOptions = [
+            .withInternetDateTime,
+            .withFractionalSeconds
+        ]
+        
+        calendar.timeZone = .current
+        
+        guard let contentDate = dateformatter.date(from: dateString) else {
+            print("날짜 변환 실패")
+            return .failure(.failTransform)
+        }
+        
+        return .success(contentDate)
+    }
 }

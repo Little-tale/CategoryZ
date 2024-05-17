@@ -25,12 +25,16 @@ final class ChatBoxModel: Object {
     @Persisted
     var isMe: Bool
     
+    @Persisted
+    var createAt: Date
+    
     convenience
-    init(id: String, contentText: String? = nil, imageFiles: [String], isMe: Bool) {
+    init(id: String, contentText: String? = nil, imageFiles: [String], isMe: Bool, createAt: Date) {
         self.init()
         self.chatId = id
         self.contentText = contentText
         self.imageFiles.append(objectsIn: imageFiles)
         self.isMe = isMe
+        self.createAt = createAt
     }
 }

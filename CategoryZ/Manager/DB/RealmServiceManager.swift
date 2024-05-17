@@ -46,6 +46,7 @@ final class RealmServiceManager {
     
     func observeChatBoxes(
         with roomID: String,
+        ascending: Bool,
         onChange: @escaping (Result<[ChatBoxModel], RealmServiceManagerError>) -> Void
     ) {
         guard let realm = realm else {
@@ -57,7 +58,10 @@ final class RealmServiceManager {
             onChange(.failure(.ifEmpty))
             return
         }
-        notification = chatRoomModel.chatBoxs.observe({ changes in
+        
+        let chatBoxResults = chatRoomModel.chatBoxs.sorted(byKeyPath: "createAt", ascending: ascending)
+        
+        notification = chatBoxResults.observe({ changes in
             switch changes {
             case .initial(let models):
                 
@@ -66,10 +70,14 @@ final class RealmServiceManager {
     
                 onChange(.success(Array(models)))
             case .error(let error):
-                print("Error observing chat boxes: \(error)")
+                
                 onChange(.failure(.cantGetItem))
             }
         })
+    }
+    
+    func stop() {
+        notification?.invalidate()
     }
     
     deinit {
