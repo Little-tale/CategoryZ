@@ -416,25 +416,7 @@ final class ChattingViewModel: RxViewModelType {
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let model):
-                    owner.createChatBoxes(
-                        [model],
-                        isMe: owner.myID!
-                    ) { result in
-                        switch result {
-                        case .success(let success):
-                            let result = owner.repository.chatRoomInChats(room: ifChatRoomRealmModel!, chats: success)
-                            
-                            switch result {
-                            case .success(let success):
-                                print("좋아요!")
-                                break
-                            case .failure(let error):
-                                owner.realmError.accept(error)
-                            }
-                        case .failure(let error):
-                            owner.dateError.accept(error)
-                        }
-                    }
+                   break
                 case .failure(let error):
                     owner.publishNetError.accept(error)
                 }
@@ -465,8 +447,10 @@ extension ChattingViewModel {
     ) {
         
         var ifModels: [ChatBoxRealmModel] = []
-        
+        var count = 0
         for model in chatModels {
+            print(count + 1)
+            count += 1
             let dateResult = DateManager.shared.makeStringToDate(model.createdAt)
             
             switch dateResult {

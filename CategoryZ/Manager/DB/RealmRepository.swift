@@ -192,7 +192,7 @@ extension RealmRepository {
                 }
                 try realm.write {
                     for chat in chats {
-                        realm.add(chat, update: .all)
+                        realm.add(chat, update: .modified)
                     }
                 }
                 observer(.success(.success(chats)))
