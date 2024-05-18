@@ -23,6 +23,9 @@ final class ChattingViewController: RxHomeBaseViewController<RxOnlyRotateTableVi
         subscribe(userID)
     }
     
+    deinit {
+        print("deinit: ChattingViewController")
+    }
 }
 
 // SUBSCRIBE
@@ -39,6 +42,12 @@ extension ChattingViewController {
             )
         
         let output = viewModel.transform(input)
+        
+        rx.viewDidDisapear
+            .bind { _ in
+                ChatSocketManager.shared.stopSocket()
+            }
+            .disposed(by: disPoseBag)
         
         // ERROR
         networkError(error: output.networkError)

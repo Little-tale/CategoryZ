@@ -131,7 +131,7 @@ final class ChattingViewModel: RxViewModelType {
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let model):
-                    owner.reMakeModel(model, first: true)
+                    owner.firstReMakeModel(model, first: true)
                 case .failure(let fail):
                     owner.publishNetError.accept(fail)
                 }
@@ -218,6 +218,10 @@ final class ChattingViewModel: RxViewModelType {
             outputTableData: outputTableData.asDriver()
         )
     }
+    
+    deinit {
+        print("deinit : ChattingViewModel")
+    }
 }
 
 
@@ -225,9 +229,8 @@ final class ChattingViewModel: RxViewModelType {
 extension ChattingViewModel {
     
     private
-    func reMakeModel(_ model: ChatRoomInChatsModel, first: Bool) {
-        
-        guard let myID else {
+    func firstReMakeModel(_ model: ChatRoomInChatsModel, first: Bool) {
+        if myID == nil {
             publishNetError.accept(.loginError(statusCode: 419, description: "Re login"))
             return
         }
@@ -300,7 +303,7 @@ extension ChattingViewModel {
     private
     func passCaseRealm(caseOF: Result<Void, RealmError>) -> Bool {
         switch caseOF {
-        case .success(let success):
+        case .success(_):
             print("성공입니다.")
             return true
         case .failure(let failure):

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ErrorMessage: Error {
-    var message: String
+    var message: String { get }
 }

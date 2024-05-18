@@ -59,13 +59,19 @@ final class ChatSocketManager {
     private init() {
         setupManager()
     }
+    
+    deinit {
+        print("deinit: ChatSocketManager")
+    }
 
 }
 // 클라이언트
 extension ChatSocketManager {
     
     func setID(id: String) {
-        socket = manager?.socket(forNamespace: id)
+        stopSocket()
+        let roomId = "/chats-" + id
+        socket = manager?.socket(forNamespace: roomId)
         guard let socket else {
             chatSocketResult.onNext(.failure(.nilSocat))
             return
@@ -79,6 +85,10 @@ extension ChatSocketManager {
     
     func stopSocket() {
         socket?.disconnect()
+        if let socket {
+            manager?.removeSocket(socket)
+        }
+        socket = nil
     }
 }
 // 내부 코드
@@ -86,9 +96,9 @@ extension ChatSocketManager {
     
     private 
     func setupManager(){
-        var baseUrl = APIKey.baseURL.rawValue
-        var version = ChatRouter.myChatRooms.version
-        let url = URL(string: baseUrl + version)!
+        let baseUrl = APIKey.baseURL.rawValue
+        let version = ChatRouter.myChatRooms.version
+        let url = URL(string: baseUrl + "/" + version)!
         print("ChatSocketManager URL: \(url)")
         manager = SocketManager(
             socketURL: url,
@@ -102,12 +112,14 @@ extension ChatSocketManager {
         socket.on( // 소켓이 서버에 성공적 연결 되었음을 의미
             clientEvent: .connect
         ) { data, ack in
+            print("소켓 시작")
             print(data, ack)
         }
         
         socket.on( // 소켓이 서버와 연결이 끊어졌을때 발생함
             clientEvent: .disconnect
         ) { data, ack in
+            print("소켓 그만")
             print(data, ack)
         }
         
