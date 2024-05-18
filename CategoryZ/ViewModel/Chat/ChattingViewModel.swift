@@ -64,6 +64,8 @@ final class ChattingViewModel: RxViewModelType {
         
         var noneDataTrigger = true
         
+        var ifChatRoomID:String? = nil
+        
         let socketError = PublishRelay<ChatSocketManagerError> ()
         
         // Suceess
@@ -90,6 +92,7 @@ final class ChattingViewModel: RxViewModelType {
                     print("Success : ",model)
                     successChatRoomId.accept(model)
                     ChatSocketManager.shared.setID(id: model.roomID)
+                    ifChatRoomID = model.roomID
                 case .failure(let error):
                     owner.publishNetError.accept(error)
                 }
@@ -150,6 +153,41 @@ final class ChattingViewModel: RxViewModelType {
                     currentTextViewText.accept(string)
                 } else {
                     currentTextViewText.accept(currentTextViewText.value)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 채팅 전달 (Text 전용 후에가서 이미지 관련 존재시에 대한 필터 추가해야함)
+        input.sendButtonTap
+            .debounce(.milliseconds(50), scheduler: MainScheduler.instance)
+            .filter({ _ in
+                ifChatRoomID != nil
+            })
+            .flatMapLatest({ _ in
+                return input.inputText.orEmpty
+            })
+            .flatMapLatest({ text in
+                let chatQuery = ChatPostQuery(
+                    content: text,
+                    files: nil
+                )
+                
+                return NetworkManager.fetchNetwork(
+                    model: ChatModel.self,
+                    router: .Chatting(
+                        .postChat(
+                            qeury: chatQuery,
+                            roomID: ifChatRoomID!
+                        )
+                    )
+                )
+            })
+            .bind(with: self) {owner, result in
+                switch result {
+                case .success(let model):
+                    owner.remakeModel(model)
+                case .failure(let error):
+                    owner.publishNetError.accept(error)
                 }
             }
             .disposed(by: disposeBag)
