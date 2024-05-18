@@ -99,4 +99,18 @@ final class DateManager {
         
         return .success(contentDate)
     }
+    
+    func dateToString(date: Date) -> String {
+        var calendar = Calendar.current
+        
+        dateformatter.formatOptions = [
+            .withInternetDateTime,
+            .withFractionalSeconds
+        ]
+        
+        calendar.timeZone = .current
+        
+        let string = dateformatter.string(from: date)
+        return string
+    }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-enum RealmServiceManagerError: Error {
+enum RealmServiceManagerError: Error, ErrorMessage {
     case cantInitRealm
     case cantGetItem
     case ifEmpty

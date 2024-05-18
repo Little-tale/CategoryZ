@@ -8,7 +8,8 @@
 import Foundation
 
 struct ChatModel: Decodable {
-    let chatID, roomID, content, createdAt: String
+    let chatID, roomID, createdAt: String
+    let content: String?
     let sender: Creator
     let files: [String]
 

@@ -49,7 +49,44 @@ extension ChattingViewController {
             }
             .disposed(by: disPoseBag)
         
-       
+        
+        networkError(error: output.publishNetError)
+        dateError(error: output.dateError)
+        realmError(error: output.realmError)
+        socketError(error: output.socketError)
+        
+        output
+            .tableViewDraw
+            .drive(with: self) { owner, models in
+                print("비어 있어도 나오셔요 \(models)")
+            }
+            .disposed(by: disPoseBag)
+        
+        output.currentTextState
+            .drive(with: self) { owner, text in
+                owner.homeView.commentTextView.textView.text = text
+            }
+            .disposed(by: disPoseBag)
+        
+        output.buttonState
+            .drive(with: self) { owner, bool in
+                owner.homeView.commentTextView.regButton.isEnabled = bool
+                owner.homeView.commentTextView.regButton.tintColor = bool ? JHColor.likeColor : JHColor.darkGray
+            }
+            .disposed(by: disPoseBag)
+        
+        homeView.commentTextView.regButton.rx
+            .tap
+            .bind(with: self) { owner, _ in
+                owner.homeView.commentTextView.textView.text = ""
+            }
+            .disposed(by: disPoseBag)
+        
+        output.realmServiceError
+            .drive(with: self) { owner, error in
+                owner.showAlert(error: error)
+            }
+            .disposed(by: disPoseBag)
     }
 }
 

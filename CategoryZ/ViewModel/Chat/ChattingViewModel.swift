@@ -41,9 +41,6 @@ final class ChattingViewModel: RxViewModelType {
     private
     let realmServiceError = PublishRelay<RealmServiceManagerError> ()
     
-    private // SocketStartTrigger
-    let socketStartTrigger = PublishRelay<Void> ()
-    
     struct Input {
         let userIDRelay: BehaviorRelay<String>
         let inputText: ControlProperty<String?>
@@ -56,6 +53,9 @@ final class ChattingViewModel: RxViewModelType {
         let dateError: Driver<DateManagerError>
         let realmServiceError: Driver<RealmServiceManagerError>
         let tableViewDraw: Driver<[ChatBoxRealmModel]>
+        let socketError: Driver<ChatSocketManagerError>
+        let buttonState: Driver<Bool>
+        let currentTextState: Driver<String>
     }
     
     func transform(_ input: Input) -> Output {
@@ -64,6 +64,8 @@ final class ChattingViewModel: RxViewModelType {
         var ifChatRoomRealmModel: ChatRoomRealmModel? = nil
         
         let tableViewDraw = BehaviorRelay<[ChatBoxRealmModel]> (value: [])
+        
+        let socketError = PublishRelay<ChatSocketManagerError> ()
         
         // 채팅방(넷) 모델
         let chatRoomPub = PublishRelay<ChatRoomModel> ()
@@ -81,11 +83,30 @@ final class ChattingViewModel: RxViewModelType {
         let nilButmakedRoomTrigger = PublishRelay< (ChatRoomRealmModel, [ChatBoxRealmModel])> ()
         
         // 소켓 연결 트리거
-        
-        let socketStartTrigger = PublishRelay<String> ()
+        let socketStartTrigger = PublishRelay<Void> ()
         
         // 렘 데이터 바라볼 트리거
         let startRealmData = PublishRelay<String> ()
+        
+        
+        let buttonState = BehaviorRelay(value: false)
+        
+        let currentTextState = BehaviorRelay(value: "")
+        
+        // 0. 0번은 텍스트 변경 감지와 버튼의 상태 관리
+        input.inputText.orEmpty
+            .bind(with: self) { owner, text in
+                let bool = owner.textValid.commentValid(text, maxCount: 200)
+                buttonState.accept(bool)
+                if bool {
+                    currentTextState.accept(text)
+                } else if text == "" {
+                    currentTextState.accept(text)
+                } else {
+                    currentTextState.accept(currentTextState.value)
+                }
+            }
+            .disposed(by: disposeBag)
         
         // 1. RoomID 전환
         input
@@ -111,8 +132,10 @@ final class ChattingViewModel: RxViewModelType {
                 
                 switch result {
                 case .success(let model):
-                    chatRoomPub.accept(model)
+                    print("RoomID 전환후 모델 \(model)")
                     ifChatRoomModel = model
+                    chatRoomPub.accept(model)
+                    ChatSocketManager.shared.setID(id: model.roomID)
                 case .failure(let error):
                     owner.publishNetError.accept(error)
                 }
@@ -127,7 +150,8 @@ final class ChattingViewModel: RxViewModelType {
             .take(1)
             .withUnretained(self)
             .filter({ _ in
-                ifChatRoomModel != nil
+                print("예상외가 아니길 \(ifChatRoomModel != nil)")
+                return ifChatRoomModel != nil
             })
             .map({ owner, model in
                 owner.repository.findById(
@@ -160,7 +184,9 @@ final class ChattingViewModel: RxViewModelType {
                     
                     let sorted = owner.repository.chatSorted(model: model.chatBoxs)
                     if let sorted = sorted.first {
-                        date = sorted.createAt.description
+                        let datetrans = DateManager.shared.dateToString(date: sorted.createAt)
+                        print("날짜가 이상하게 보일가능성 ",datetrans)
+                        date = datetrans
                     }
                 }
                 
@@ -216,7 +242,7 @@ final class ChattingViewModel: RxViewModelType {
                 ifChatRoomModel != nil
             })
             .bind(with: self) { owner, models in
-                if let ifChatRoomRealmModel {
+                if let chatRoomModel = ifChatRoomRealmModel {
                     
                     let result = owner.repository
                         .addChatBoxesToRealm(models)
@@ -225,13 +251,14 @@ final class ChattingViewModel: RxViewModelType {
                     case .success(let chats):
                         let result = owner.repository
                             .chatRoomInChats(
-                                room: ifChatRoomRealmModel,
+                                room: chatRoomModel,
                                 chats: chats
                             )
                         switch result {
                         case .success(let success):
                             print("반영 성공 : \(success)")
                             startRealmData.accept(success.id)
+                            
                         case .failure(let error):
                             owner.realmError.accept(error)
                         }
@@ -277,6 +304,7 @@ final class ChattingViewModel: RxViewModelType {
                         case .success(let success):
                             print("반영 성공 : \(success)")
                             startRealmData.accept(success.id)
+                            ifChatRoomRealmModel = success
                         case .failure(let error):
                             owner.realmError.accept(error)
                         }
@@ -302,20 +330,127 @@ final class ChattingViewModel: RxViewModelType {
                     switch result {
                     case .success(let success):
                         tableViewDraw.accept(success)
+                        socketStartTrigger.accept(())
                     case .failure(let error):
                         owner.realmServiceError.accept(error)
                     }
                 }
             }
             .disposed(by: disposeBag)
-
+        
+        // 6. 소켓 시작
+        socketStartTrigger
+            .bind { _ in
+                ChatSocketManager.shared.startSocket()
+            }
+            .disposed(by: disposeBag)
+        
+        let socketGetData = PublishRelay<ChatModel> ()
+        
+        // 7. 소켓에서 받은 데이터를 렘에 추가
+        ChatSocketManager.shared.chatSocketResult
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let model):
+                    socketGetData.accept(model)
+                case .failure(let error):
+                    socketError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        // 8. 소켓을 통해 받은 모델을 렘에 반영 (이땐 무조건. 채팅방 렘테이블은 존재)
+        socketGetData
+            .filter{ _ in
+                if ifChatRoomRealmModel != nil {
+                    print(" 예상 외 ")
+                }
+                return ifChatRoomRealmModel != nil
+            }
+            .bind(with: self) { owner, model in
+                
+                owner.createChatBoxes(
+                    [model],
+                    isMe: owner.myID!
+                ) { result in
+                    switch result {
+                    case .success(let success):
+                        let result = owner.repository.chatRoomInChats(room: ifChatRoomRealmModel!, chats: success)
+                        
+                        switch result {
+                        case .success(let success):
+                            print("좋아요!")
+                            break
+                        case .failure(let error):
+                            owner.realmError.accept(error)
+                        }
+                    case .failure(let error):
+                        owner.dateError.accept(error)
+                    }
+                }
+                
+            }
+            .disposed(by: disposeBag)
+        
+        input.sendButtonTap
+            .throttle(.milliseconds(90), scheduler: MainScheduler.instance)
+            .withLatestFrom(input.inputText.orEmpty)
+            .filter({ text  in
+                return text != "" && ifChatRoomModel != nil
+            })
+            .flatMapLatest { string in
+                let chatQuery = ChatPostQuery(content: string, files: nil)
+                
+                return NetworkManager.fetchNetwork(
+                    model: ChatModel.self,
+                    router: .Chatting(.postChat(
+                        qeury: chatQuery, roomID: ifChatRoomModel!.roomID)
+                    )
+                )
+            }
+            .filter{ _ in
+                if ifChatRoomRealmModel != nil {
+                    print(" 예상 외 ")
+                }
+                return ifChatRoomRealmModel != nil
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let model):
+                    owner.createChatBoxes(
+                        [model],
+                        isMe: owner.myID!
+                    ) { result in
+                        switch result {
+                        case .success(let success):
+                            let result = owner.repository.chatRoomInChats(room: ifChatRoomRealmModel!, chats: success)
+                            
+                            switch result {
+                            case .success(let success):
+                                print("좋아요!")
+                                break
+                            case .failure(let error):
+                                owner.realmError.accept(error)
+                            }
+                        case .failure(let error):
+                            owner.dateError.accept(error)
+                        }
+                    }
+                case .failure(let error):
+                    owner.publishNetError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
         
         return Output(
             realmError: realmError.asDriver(onErrorDriveWith: .never()),
             publishNetError: publishNetError.asDriver(onErrorDriveWith: .never()),
             dateError: dateError.asDriver(onErrorDriveWith: .never()),
             realmServiceError: realmServiceError.asDriver(onErrorDriveWith: .never()),
-            tableViewDraw: tableViewDraw.asDriver()
+            tableViewDraw: tableViewDraw.asDriver(),
+            socketError: socketError.asDriver(onErrorDriveWith: .never()),
+            buttonState: buttonState.asDriver(),
+            currentTextState: currentTextState.asDriver()
         )
     }
 }
