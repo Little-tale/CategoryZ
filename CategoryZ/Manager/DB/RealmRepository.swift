@@ -99,6 +99,7 @@ final class RealmRepository: RealmRepositoryType {
     }
     
     
+    
     func addChatBoxesToRealm(_ chatBoxes: [ChatBoxRealmModel]) -> Result<[ChatBoxRealmModel], RealmError> {
         
         guard let realm = realm else {
@@ -116,5 +117,11 @@ final class RealmRepository: RealmRepositoryType {
     }
     
     
+    func chatSorted(model chatBoxs: List<ChatBoxRealmModel>) -> [ChatBoxRealmModel]{
+        
+        let sorted = chatBoxs.sorted(byKeyPath: "createAt", ascending: false)
+     
+        return Array(sorted)
+    }
     
 }
