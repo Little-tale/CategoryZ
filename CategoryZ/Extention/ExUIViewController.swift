@@ -112,7 +112,7 @@ extension UIViewController {
         present(alertCon,animated: true)
     }
     
-    func showAlert(error: NetworkError, actionTitle: String? = nil , complite: ((UIAlertAction) -> Void)? = nil) {
+    func showAlert(error: ErrorMessage, actionTitle: String? = nil , complite: ((UIAlertAction) -> Void)? = nil) {
         
         let alertCon = UIAlertController(title: "Error", message: error.message, preferredStyle: .alert)
         
@@ -189,7 +189,6 @@ extension UIViewController: NetworkErrorCatchProtocol {
             }
         }
     }
-    
 }
 
 // UIScreen.main 대체 2

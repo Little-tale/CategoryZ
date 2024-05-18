@@ -80,7 +80,7 @@ protocol NetworkErrorCatchProtocol: NSObject {
     func errorCatch(_ error: NetworkError)
 }
 
-extension NetworkError {
+extension NetworkError: ErrorMessage {
     
     /// 메시지를 보내고 싶을때
     var message: String {

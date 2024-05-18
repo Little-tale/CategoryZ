@@ -40,11 +40,19 @@ extension ChattingViewController {
         
         let output = viewModel.transform(input)
         
+        // ERROR
         networkError(error: output.networkError)
         realmError(error: output.realmError)
+        dateError(error: output.dateError)
+        socketError(error: output.socketError)
+        
+        // UI 
         buttonState(state: output.saveButtonState)
+        tableViewDraw(models: output.outputTableData)
     }
-    
+}
+
+extension ChattingViewController {
     private
     func networkError(error: Driver<NetworkError>) {
         error
@@ -55,13 +63,35 @@ extension ChattingViewController {
     }
     
     private
-    func realmError(error: Driver<RealmError>) {
+    func dateError(error: Driver<DateManagerError>) {
         error
             .drive(with: self) { owner, error in
-                owner.showAlert(title: "error", message: error.message)
+                owner.showAlert(error: error)
             }
             .disposed(by: disPoseBag)
     }
+    
+    private
+    func realmError(error: Driver<RealmError>) {
+        error
+            .drive(with: self) { owner, error in
+                owner.showAlert(error: error)
+            }
+            .disposed(by: disPoseBag)
+    }
+    
+    private
+    func socketError(error: Driver<ChatSocketManagerError>) {
+        error
+            .drive(with: self) { owner, error in
+                owner.showAlert(error: error)
+            }
+            .disposed(by: disPoseBag)
+    }
+}
+
+// MARK: UI
+extension ChattingViewController {
     
     private
     func buttonState(state: BehaviorRelay<Bool>) {
@@ -69,6 +99,15 @@ extension ChattingViewController {
             .bind(with: self) { owner, bool in
                 owner.homeView.commentTextView.regButton.isEnabled = bool
                 owner.homeView.commentTextView.regButton.tintColor = bool ? JHColor.likeColor : JHColor.darkGray
+            }
+            .disposed(by: disPoseBag)
+    }
+    
+    private
+    func tableViewDraw(models: Driver<[ChatBoxModel]>) {
+        models
+            .drive(with: self) { owner, models in
+                print(models)
             }
             .disposed(by: disPoseBag)
     }

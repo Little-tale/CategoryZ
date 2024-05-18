@@ -20,7 +20,7 @@ import RxSwift
  같이 비동기 디스페치를 사용하는 것으로 추정됨으로 바로 사용할 예정
  다만 밖에서 사용시 UI 반영때에 알아서 풀어서 준건지는 분석을 못함
  */
-enum ChatSocketManagerError: Error {
+enum ChatSocketManagerError: Error, ErrorMessage {
     case nilSocat
     case weakError
     case JSONDecodeError
@@ -66,12 +66,19 @@ extension ChatSocketManager {
     
     func setID(id: String) {
         socket = manager?.socket(forNamespace: id)
-        
         guard let socket else {
             chatSocketResult.onNext(.failure(.nilSocat))
             return
         }
         statrObserver(socket: socket)
+    }
+    
+    func startSocket(){
+        socket?.connect()
+    }
+    
+    func stopSocket() {
+        socket?.disconnect()
     }
 }
 // 내부 코드

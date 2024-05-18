@@ -7,8 +7,15 @@
 
 import Foundation
 
-enum DateManagerError: Error {
+enum DateManagerError: Error, ErrorMessage {
     case failTransform
+    
+    var message: String {
+        switch self {
+        case .failTransform:
+            return "날짜 변환에 문제가 발생했습니다."
+        }
+    }
 }
 
 final class DateManager {

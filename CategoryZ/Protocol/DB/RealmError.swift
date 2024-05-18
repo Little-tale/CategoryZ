@@ -7,9 +7,6 @@
 
 import Foundation
 
-protocol ErrorMessageType: Error {
-    var message: String { get }
-}
 
 enum RealmError: Error {
     case cantLoadRealm
@@ -19,7 +16,7 @@ enum RealmError: Error {
 }
 
 
-extension RealmError: ErrorMessageType {
+extension RealmError: ErrorMessage {
     var message: String {
         return switch self {
         case .cantLoadRealm:

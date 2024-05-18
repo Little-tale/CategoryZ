@@ -38,6 +38,12 @@ final class ChattingViewModel: RxViewModelType {
     private
     let dateError = PublishRelay<DateManagerError> ()
     
+    private
+    let realmServiceError = PublishRelay<RealmServiceManagerError> ()
+    
+    private // SocketStartTrigger
+    let socketStartTrigger = PublishRelay<Void> ()
+    
     struct Input {
         let userIDRelay: BehaviorRelay<String>
         let inputText: ControlProperty<String?>
@@ -50,11 +56,15 @@ final class ChattingViewModel: RxViewModelType {
         let saveButtonState: BehaviorRelay<Bool>
         let currentTextViewText: Driver<String>
         let dateError: Driver<DateManagerError>
+        let socketError: Driver<ChatSocketManagerError>
+        let outputTableData: Driver<[ChatBoxModel]>
     }
     
     func transform(_ input: Input) -> Output {
         
         var noneDataTrigger = true
+        
+        let socketError = PublishRelay<ChatSocketManagerError> ()
         
         // Suceess
         let successChatRoomId = PublishRelay<ChatRoomModel> ()
@@ -65,6 +75,8 @@ final class ChattingViewModel: RxViewModelType {
         
         let saveButtonState = BehaviorRelay(value: false)
         let currentTextViewText = BehaviorRelay(value: "")
+        
+        let outputTableData = BehaviorRelay<[ChatBoxModel]> (value: [])
         
         input.userIDRelay
             .flatMapLatest { userId in
@@ -77,6 +89,7 @@ final class ChattingViewModel: RxViewModelType {
                 case .success(let model):
                     print("Success : ",model)
                     successChatRoomId.accept(model)
+                    ChatSocketManager.shared.setID(id: model.roomID)
                 case .failure(let error):
                     owner.publishNetError.accept(error)
                 }
@@ -118,7 +131,7 @@ final class ChattingViewModel: RxViewModelType {
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let model):
-                    owner.reMakeModel(model)
+                    owner.reMakeModel(model, first: true)
                 case .failure(let fail):
                     owner.publishNetError.accept(fail)
                 }
@@ -126,7 +139,6 @@ final class ChattingViewModel: RxViewModelType {
             .disposed(by: disposeBag)
         /// 존재 할 경우
         
-    
         
         input.inputText.orEmpty
             .bind(with: self) { owner, string in
@@ -142,11 +154,68 @@ final class ChattingViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
+        ChatSocketManager.shared
+            .chatSocketResult
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let model):
+                    owner.remakeModel(model)
+                case .failure(let error):
+                    socketError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        
+        socketStartTrigger
+            .bind(with: self) { owner, _ in
+                ChatSocketManager.shared.startSocket()
+            }
+            .disposed(by: disposeBag)
+        
+        dateError
+            .bind { _ in
+                ChatSocketManager.shared.stopSocket()
+            }
+            .disposed(by: disposeBag)
+        
+        publishNetError
+            .bind { _ in
+                ChatSocketManager.shared.stopSocket()
+            }
+            .disposed(by: disposeBag)
+        
+        realmError
+            .bind { _ in
+                ChatSocketManager.shared.stopSocket()
+            }
+            .disposed(by: disposeBag)
+        
+        // MARK: 뷰는 해당것을 계속 바라봄
+        successChatRoomId
+            .bind(with: self) {owner, model in
+                RealmServiceManager.shared.observeChatBoxes(
+                    with: model.roomID,
+                    ascending: true
+                ) { result in
+                    switch result {
+                    case .success(let success):
+                        outputTableData.accept(success)
+                    case .failure(let error):
+                        owner.realmServiceError.accept(error)
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        
         return Output(
             networkError: publishNetError.asDriver(onErrorJustReturn: .unknownError),
             realmError: realmError.asDriver(onErrorDriveWith: .never()),
             saveButtonState: saveButtonState,
-            currentTextViewText: currentTextViewText.asDriver(), dateError: dateError.asDriver(onErrorDriveWith: .never())
+            currentTextViewText: currentTextViewText.asDriver(), dateError: dateError.asDriver(onErrorDriveWith: .never()),
+            socketError: socketError.asDriver(onErrorDriveWith: .never()),
+            outputTableData: outputTableData.asDriver()
         )
     }
 }
@@ -156,7 +225,7 @@ final class ChattingViewModel: RxViewModelType {
 extension ChattingViewModel {
     
     private
-    func reMakeModel(_ model: ChatRoomInChatsModel) {
+    func reMakeModel(_ model: ChatRoomInChatsModel, first: Bool) {
         
         guard let myID else {
             publishNetError.accept(.loginError(statusCode: 419, description: "Re login"))
@@ -165,50 +234,78 @@ extension ChattingViewModel {
         
         if !model.chatList.isEmpty {
             print("비어있지 않은 로직 시작")
-            var remake: [ChatBoxModel] = []
             
-            model.chatList.forEach { model in
-                
-               let dateResult = DateManager.shared.makeStringToDate(model.createdAt)
-                
-                switch dateResult {
-                case .success(let date):
-                    let reModel = makeModel(model: model, date)
-                    remake.append(reModel)
-                    
-                case .failure(let error):
-                    dateError.accept(error)
+            let make = makeModel(chatList: model.chatList)
+            
+            let realmResult = repository.addChatBoxesToRealm(make)
+            
+            if passCaseRealm(caseOF: realmResult) {
+                if first {
+                    socketStartTrigger.accept(())
                 }
             }
-            let realmResult = repository.addChatBoxesToRealm(remake)
-            
-            passCaseRealm(caseOF: realmResult)
         } else {
-            print("비어있어!")
+            if first {
+                socketStartTrigger.accept(())
+            }
         }
     }
     
     private
-    func makeModel(model:  ChatModel,_ date: Date) -> ChatBoxModel {
+    func remakeModel(_ model: ChatModel) {
         
+        let dateResult = DateManager.shared.makeStringToDate(model.createdAt)
+        
+        switch dateResult {
+        case .success(let success):
+            let reModel = makeRealmModel(model: model, success)
+            repository.add(reModel)
+        case .failure(let failure):
+            dateError.accept(failure)
+        }
+    }
+    
+    private
+    func makeRealmModel(model:  ChatModel,_ date: Date) -> ChatBoxModel {
         let reModel = ChatBoxModel(
             id: model.chatID,
             imageFiles: model.files,
             isMe: myID == model.sender.userID,
             createAt: date
         )
-        
         return reModel
     }
     
     private
-    func passCaseRealm(caseOF: Result<Void, RealmError>) {
+    func makeModel(chatList: [ChatModel]) -> [ChatBoxModel] {
+        
+        var remake: [ChatBoxModel] = []
+        
+        chatList.forEach { model in
+            
+           let dateResult = DateManager.shared.makeStringToDate(model.createdAt)
+            
+            switch dateResult {
+            case .success(let date):
+                let reModel = makeRealmModel(model: model, date)
+                remake.append(reModel)
+                
+            case .failure(let error):
+                dateError.accept(error)
+            }
+        }
+        return remake
+    }
+    
+    private
+    func passCaseRealm(caseOF: Result<Void, RealmError>) -> Bool {
         switch caseOF {
         case .success(let success):
             print("성공입니다.")
-            break
+            return true
         case .failure(let failure):
             realmError.accept(failure)
+            return false
         }
     }
 }
