@@ -30,7 +30,7 @@ final class ChatRoomRealmModel: Object, RealmFindType {
     var chatBoxs: List<ChatBoxRealmModel>
     
     convenience
-    init(roomId: String, createAt: Date, updateAt: Date, otherUserName: String, otherUserProfile: String? = nil, chatBoxs: [ChatBoxRealmModel]) {
+    init(roomId: String, createAt: Date, updateAt: Date, otherUserName: String, otherUserProfile: String? = nil) {
         self.init()
         
         self.id = roomId
@@ -38,7 +38,6 @@ final class ChatRoomRealmModel: Object, RealmFindType {
         self.updateAt = updateAt
         self.otherUserName = otherUserName
         self.otherUserProfile = otherUserProfile
-        self.chatBoxs.append(objectsIn: chatBoxs)
     }
     
 }

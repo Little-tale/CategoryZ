@@ -51,15 +51,19 @@ final class ChattingViewModel: RxViewModelType {
     }
     
     struct Output {
-        
+        let realmError: Driver<RealmError>
+        let publishNetError: Driver<NetworkError>
+        let dateError: Driver<DateManagerError>
+        let realmServiceError: Driver<RealmServiceManagerError>
+        let tableViewDraw: Driver<[ChatBoxRealmModel]>
     }
     
     func transform(_ input: Input) -> Output {
         
         var ifChatRoomModel: ChatRoomModel? = nil
-        var ifCharRealmModel: ChatRoomRealmModel? = nil
+        var ifChatRoomRealmModel: ChatRoomRealmModel? = nil
         
-        var firstTrigger: Bool = true
+        let tableViewDraw = BehaviorRelay<[ChatBoxRealmModel]> (value: [])
         
         // 채팅방(넷) 모델
         let chatRoomPub = PublishRelay<ChatRoomModel> ()
@@ -72,6 +76,16 @@ final class ChattingViewModel: RxViewModelType {
         
         // 추가적 채팅 내역 렘 모델화(Once) 트리거
         let moreChatOnceTrigger = PublishRelay<[ChatBoxRealmModel]> ()
+        
+        // 만약 렘에 없어서 새로 생성후 챗추가시
+        let nilButmakedRoomTrigger = PublishRelay< (ChatRoomRealmModel, [ChatBoxRealmModel])> ()
+        
+        // 소켓 연결 트리거
+        
+        let socketStartTrigger = PublishRelay<String> ()
+        
+        // 렘 데이터 바라볼 트리거
+        let startRealmData = PublishRelay<String> ()
         
         // 1. RoomID 전환
         input
@@ -124,12 +138,9 @@ final class ChattingViewModel: RxViewModelType {
             .bind(with: self) {owner, result in
                 switch result {
                 case .success(let modelOREmpty):
-                    if let model = modelOREmpty {
-                        ifCharRealmModel = model
-                        firstTrigger = false
-                    } else {
-                        firstTrigger = true
-                    }
+                    
+                    ifChatRoomRealmModel = modelOREmpty
+                    
                     chatReadTrigger.accept(ifChatRoomModel!)
                 case .failure(let error):
                     owner.realmError.accept(error)
@@ -144,7 +155,9 @@ final class ChattingViewModel: RxViewModelType {
             .flatMapLatest({owner, model in
                 var date: String? = nil
                 
-                if let model = ifCharRealmModel {
+                // 만약 존재시 이때 바로 뷰는 미리 렘의 데이터를 받아 보고있게
+                if let model = ifChatRoomRealmModel {
+                    
                     let sorted = owner.repository.chatSorted(model: model.chatBoxs)
                     if let sorted = sorted.first {
                         date = sorted.createAt.description
@@ -175,6 +188,11 @@ final class ChattingViewModel: RxViewModelType {
         // 4.1 만약 추가적 내용이 존재 했더라면, 가져옴( NET )
         chattingResult
             .filter { model in
+                if model.chatList.isEmpty {
+                    if let ifChatRoomModel {
+                        startRealmData.accept(ifChatRoomModel.roomID)
+                    }
+                }
                 return !model.chatList.isEmpty || ifChatRoomModel != nil
             }
             .bind(with: self) { owner, model in
@@ -193,12 +211,112 @@ final class ChattingViewModel: RxViewModelType {
             .disposed(by: disposeBag)
         
         // 렘모델을 먼저 반영후
+        moreChatOnceTrigger
+            .filter({ _ in
+                ifChatRoomModel != nil
+            })
+            .bind(with: self) { owner, models in
+                if let ifChatRoomRealmModel {
+                    
+                    let result = owner.repository
+                        .addChatBoxesToRealm(models)
+            
+                    switch result {
+                    case .success(let chats):
+                        let result = owner.repository
+                            .chatRoomInChats(
+                                room: ifChatRoomRealmModel,
+                                chats: chats
+                            )
+                        switch result {
+                        case .success(let success):
+                            print("반영 성공 : \(success)")
+                            startRealmData.accept(success.id)
+                        case .failure(let error):
+                            owner.realmError.accept(error)
+                        }
+                    case .failure(let failure):
+                        owner.realmError.accept(failure)
+                    }
+                    
+                } else {
+                    owner.makeChatRoomRealmModel(
+                        model: ifChatRoomModel!) { result in
+                            switch result {
+                            case .success(let realm):
+                                nilButmakedRoomTrigger.accept((realm, models))
+                            case .failure(let error):
+                                owner.dateError.accept(error)
+                            }
+                        }
+                }
+            }
+            .disposed(by: disposeBag)
         
+        nilButmakedRoomTrigger
+            .bind(with: self) { owner, trigger in
+                
+                let result = owner.repository.add(trigger.0)
+                let chats = trigger.1
+                
+                switch result{
+                case .success(let room):
+                    
+                    let result = owner.repository
+                        .addChatBoxesToRealm(chats)
+                    
+                    switch result {
+                    case .success(let chats):
+                        let result = owner.repository
+                            .chatRoomInChats(
+                                room: room,
+                                chats: chats
+                            )
+
+                        switch result {
+                        case .success(let success):
+                            print("반영 성공 : \(success)")
+                            startRealmData.accept(success.id)
+                        case .failure(let error):
+                            owner.realmError.accept(error)
+                        }
+                        
+                    case .failure(let error):
+                        owner.realmError.accept(error)
+                    }
+                    
+                case .failure(let error):
+                    owner.realmError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+    
         
+        // 5 or 3.1. view반영
+        startRealmData
+            .bind(with: self) {owner, id in
+                RealmServiceManager.shared.observeChatBoxes(
+                    with: id,
+                    ascending: false
+                ) { result in
+                    switch result {
+                    case .success(let success):
+                        tableViewDraw.accept(success)
+                    case .failure(let error):
+                        owner.realmServiceError.accept(error)
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+
         
-        // 5. view반영
-      
-        return .init()
+        return Output(
+            realmError: realmError.asDriver(onErrorDriveWith: .never()),
+            publishNetError: publishNetError.asDriver(onErrorDriveWith: .never()),
+            dateError: dateError.asDriver(onErrorDriveWith: .never()),
+            realmServiceError: realmServiceError.asDriver(onErrorDriveWith: .never()),
+            tableViewDraw: tableViewDraw.asDriver()
+        )
     }
 }
 
@@ -232,5 +350,47 @@ extension ChattingViewModel {
             }
         }
         handler(.success(ifModels))
+    }
+    
+    private
+    func makeChatRoomRealmModel(
+        model: ChatRoomModel,
+        handler: @escaping((Result<ChatRoomRealmModel,DateManagerError>) -> Void)
+    ){
+        
+        let creatDateResult = DateManager.shared.makeStringToDate(model.createdAt)
+        
+        guard case .success(let creatDate) = creatDateResult else {
+            print("date Error : creatDateResult")
+            handler(.failure(.failTransform))
+            return
+        }
+        
+        let updatedResult = DateManager.shared.makeStringToDate(model.updatedAt)
+        
+        guard case .success(let updatedAt) = updatedResult else {
+            print("date Error : failTransform")
+            handler(.failure(.failTransform))
+            return
+        }
+        
+        guard let otherUser = model.participants.last else {
+            print("사실상 불가능한 에러")
+            publishNetError.accept(.loginError(
+                statusCode: 419,
+                description: "치명적 이슈")
+            )
+            handler(.failure(.failTransform))
+            return
+        }
+        
+        let model = ChatRoomRealmModel(
+            roomId: model.roomID,
+            createAt: creatDate,
+            updateAt: updatedAt,
+            otherUserName: otherUser.nick
+        )
+        
+        handler(.success(model))
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 import RealmSwift
-
+import RxSwift
 
 protocol RealmRepositoryType: AnyObject {
     func fetchAll<M: Object>(type modelType: M.Type) -> Result<Results<M>,RealmError>
@@ -116,6 +116,27 @@ final class RealmRepository: RealmRepositoryType {
         }
     }
     
+    @discardableResult
+    func chatRoomInChats(
+        room: ChatRoomRealmModel,
+        chats: [ChatBoxRealmModel]) -> Result<ChatRoomRealmModel,RealmError>
+    {
+        guard let realm = realm else {
+            return .failure(.cantLoadRealm)
+        }
+        do {
+            try realm.write {
+                chats.forEach { chat in
+                    room.chatBoxs.append(chat)
+                }
+            }
+            return .success(room)
+        } catch {
+            return .failure(.failAdd)
+        }
+        
+    }
+    
     
     func chatSorted(model chatBoxs: List<ChatBoxRealmModel>) -> [ChatBoxRealmModel]{
         
@@ -123,5 +144,62 @@ final class RealmRepository: RealmRepositoryType {
      
         return Array(sorted)
     }
+}
+
+
+extension RealmRepository {
     
+    func addChatRoom(
+        _ room: ChatRoomRealmModel
+    ) -> Single<Result<ChatRoomRealmModel,RealmError>>
+    {
+        return Single<Result<ChatRoomRealmModel,RealmError>>.create {[weak self] observer in
+            guard let self else {
+                observer(.success(.failure(.cantLoadRealm)))
+                return Disposables.create()
+            }
+            guard let realm else {
+                observer(.success(.failure(.cantLoadRealm)))
+                return Disposables.create()
+            }
+            do {
+                try realm.write {
+                    realm.add(room, update: .modified)
+                }
+                observer(.success(.success(room)))
+                
+            } catch {
+                observer(.success(.failure(.failAdd)))
+            }
+            return Disposables.create()
+        }
+    }
+
+    func addChatBoxes(
+        _ chats: [ChatBoxRealmModel]
+    ) -> Single<Result<[ChatBoxRealmModel], RealmError>>
+    {
+        return Single.create {[weak self] observer in
+            
+            guard let self else {
+                observer(.success(.failure(.cantLoadRealm)))
+                return Disposables.create()
+            }
+            do {
+                guard let realm else {
+                    observer(.success(.failure(.cantLoadRealm)))
+                    return Disposables.create()
+                }
+                try realm.write {
+                    for chat in chats {
+                        realm.add(chat, update: .all)
+                    }
+                }
+                observer(.success(.success(chats)))
+            } catch {
+                observer(.success(.failure(.failAdd)))
+            }
+            return Disposables.create()
+        }
+    }
 }
