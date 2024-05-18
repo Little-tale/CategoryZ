@@ -47,7 +47,7 @@ final class RealmServiceManager {
     func observeChatBoxes(
         with roomID: String,
         ascending: Bool,
-        onChange: @escaping (Result<[ChatBoxModel], RealmServiceManagerError>) -> Void
+        onChange: @escaping (Result<[ChatBoxRealmModel], RealmServiceManagerError>) -> Void
     ) {
         guard let realm = realm else {
             onChange(.failure(.cantInitRealm))
@@ -64,12 +64,12 @@ final class RealmServiceManager {
         notification = chatBoxResults.observe({ changes in
             switch changes {
             case .initial(let models):
-                
+                print("현재 렘 서비스 입장(이닛) \(models)")
                 onChange(.success(Array(models)))
             case .update(let models, _, _, _):
-    
+                print("현재 렘 서비스 입장(업데이트) \(models)")
                 onChange(.success(Array(models)))
-            case .error(let error):
+            case .error(_):
                 
                 onChange(.failure(.cantGetItem))
             }

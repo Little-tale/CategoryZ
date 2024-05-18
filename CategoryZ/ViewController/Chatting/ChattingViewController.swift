@@ -49,15 +49,7 @@ extension ChattingViewController {
             }
             .disposed(by: disPoseBag)
         
-        // ERROR
-        networkError(error: output.networkError)
-        realmError(error: output.realmError)
-        dateError(error: output.dateError)
-        socketError(error: output.socketError)
-        
-        // UI 
-        buttonState(state: output.saveButtonState)
-        tableViewDraw(models: output.outputTableData)
+       
     }
 }
 
@@ -113,7 +105,7 @@ extension ChattingViewController {
     }
     
     private
-    func tableViewDraw(models: Driver<[ChatBoxModel]>) {
+    func tableViewDraw(models: Driver<[ChatBoxRealmModel]>) {
         models
             .drive(with: self) { owner, models in
                 print(models)

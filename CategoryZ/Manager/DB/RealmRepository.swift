@@ -54,8 +54,7 @@ final class RealmRepository: RealmRepositoryType {
         guard let realm else { return .failure(.cantLoadRealm)}
         do {
             try realm.write {
-                realm.add(model)
-                
+                realm.add(model, update: .modified)
             }
             return .success(model)
         } catch {
@@ -94,13 +93,14 @@ final class RealmRepository: RealmRepositoryType {
             guard let success else { return .failure(.cantFindModel)}
             
             return remove(success)
-        case .failure(let failure):
+        case .failure:
             return .failure(.cantFindModel)
         }
     }
     
     
-    func addChatBoxesToRealm(_ chatBoxes: [ChatBoxModel]) -> Result<Void, RealmError> {
+    func addChatBoxesToRealm(_ chatBoxes: [ChatBoxRealmModel]) -> Result<[ChatBoxRealmModel], RealmError> {
+        
         guard let realm = realm else {
             return .failure(.cantLoadRealm)
         }
@@ -109,9 +109,12 @@ final class RealmRepository: RealmRepositoryType {
             try realm.write {
                 realm.add(chatBoxes, update: .modified)
             }
-            return.success(())
+            return.success(chatBoxes)
         } catch {
             return .failure(.failAdd)
         }
     }
+    
+    
+    
 }

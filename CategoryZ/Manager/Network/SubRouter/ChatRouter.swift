@@ -96,6 +96,7 @@ extension ChatRouter: TargetType {
         case .myChatRooms, .readChatingList, .chatingImageUpload:
             return nil
         case .postChat(let query, _):
+            print("현재 라우터 입장 \(query)")
             return NetworkRouter.jsEncoding(query)
         }
     }

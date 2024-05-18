@@ -10,7 +10,7 @@ import RealmSwift
 /*
  현재 해당 모델의 LinkedList 부모를 알필요는 없다고 판단하여 없앱니다.
  */
-final class ChatBoxModel: Object {
+final class ChatBoxRealmModel: Object {
     
     @Persisted(primaryKey: true)
     var chatId: String
