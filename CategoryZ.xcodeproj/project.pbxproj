@@ -89,6 +89,7 @@
 		7B87BD5A2BF74CBD000F0F79 /* RealmServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD592BF74CBD000F0F79 /* RealmServiceManager.swift */; };
 		7B87BD5C2BF78A5F000F0F79 /* ChatRoomInChatsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD5B2BF78A5F000F0F79 /* ChatRoomInChatsModel.swift */; };
 		7B87BD612BF85817000F0F79 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD602BF85817000F0F79 /* ErrorMessage.swift */; };
+		7B87BD652BFA3612000F0F79 /* SelectedImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD642BFA3612000F0F79 /* SelectedImageCollectionViewCell.swift */; };
 		7B87F0F82BD3FE2F0006178F /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */; };
 		7B87F0FC2BD3FE850006178F /* ProfileAndFollowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */; };
 		7B8CAEB42BD480D600347FAC /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */; };
@@ -297,6 +298,7 @@
 		7B87BD592BF74CBD000F0F79 /* RealmServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmServiceManager.swift; sourceTree = "<group>"; };
 		7B87BD5B2BF78A5F000F0F79 /* ChatRoomInChatsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomInChatsModel.swift; sourceTree = "<group>"; };
 		7B87BD602BF85817000F0F79 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
+		7B87BD642BFA3612000F0F79 /* SelectedImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAndFollowView.swift; sourceTree = "<group>"; };
 		7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -990,6 +992,7 @@
 				7B1EE3F42BDE2A3700F109EB /* PinterestCell.swift */,
 				7BDF40C42BE37886005274F9 /* DonateListCell.swift */,
 				7BD421A42BE3E8E00005562F /* OnlyRxImageCell.swift */,
+				7B87BD642BFA3612000F0F79 /* SelectedImageCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1560,6 +1563,7 @@
 				7B838DDA2BCEC960000F2E27 /* FirstView.swift in Sources */,
 				7BD1D8EC2BD6B70300B5521F /* NameModifyViewController.swift in Sources */,
 				7B838DDC2BCEC9B9000F2E27 /* LunchScreenViewController.swift in Sources */,
+				7B87BD652BFA3612000F0F79 /* SelectedImageCollectionViewCell.swift in Sources */,
 				7BA0E0DF2BCD73EC002F0516 /* BaseTableViewCell.swift in Sources */,
 				7B94033C2BE260FC004A1A8E /* DonateViewModel.swift in Sources */,
 				7BC51B492BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift in Sources */,

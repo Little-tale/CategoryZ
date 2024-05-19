@@ -10,6 +10,8 @@ import RxSwift
 import RxCocoa
 
 final class ChattingViewController: RxHomeBaseViewController<RxOnlyRotateTableView> {
+    private
+    var collectionViewLayoutTrigger = true
     
     private
     lazy var imageService = RxCameraImageService(presntationViewController: self, zipRate: 5)
@@ -29,6 +31,17 @@ final class ChattingViewController: RxHomeBaseViewController<RxOnlyRotateTableVi
     deinit {
         print("deinit: ChattingViewController")
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if collectionViewLayoutTrigger {
+            homeView.imageCollectionView.setCollectionViewLayout(
+                homeView.customLayout.comentImageLayout(),
+                animated: true
+            )
+            collectionViewLayoutTrigger = false
+        }
+    }
 }
 
 // SUBSCRIBE
@@ -41,13 +54,15 @@ extension ChattingViewController {
         
         let imageModeCancelTap = PublishRelay<Void> ()
         
+        let selectedImage = PublishRelay<Int> ()
+        
         let input = ChattingViewModel
             .Input(
                 userIDRelay: userIDRelay,
                 inputText: homeView.commentTextView.textView.rx.text,
                 sendButtonTap: homeView.commentTextView.regButton.rx.tap,
                 insertImageData: insertImageData,
-                imageModeCancelTap: imageModeCancelTap
+                imageModeCancelTap: imageModeCancelTap, selectedImage: selectedImage
             )
         
         let output = viewModel.transform(input)
@@ -78,6 +93,7 @@ extension ChattingViewController {
                     cell.setModel(model: item)
                     cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
                     cell.selectionStyle = .none
+                    
                     return cell
                 } else {
                     
@@ -158,11 +174,15 @@ extension ChattingViewController {
         output.outputIamgeDataDriver
             .skip(1)
             .drive(homeView.imageCollectionView.rx.items(
-                cellIdentifier: OnlyImageCollectionViewCell.reusableIdenti,
-                cellType: OnlyImageCollectionViewCell.self
+                cellIdentifier: SelectedImageCollectionViewCell.reusableIdenti,
+                cellType: SelectedImageCollectionViewCell.self
             )) { row, item, cell in
                 cell.settingImageMode(.scaleToFill)
-                cell.imageSetting(item)
+                cell.setModel(model: item)
+                cell.selectedButton.tag = row
+                cell.selectButtonTap = { at in
+                    selectedImage.accept(at)
+                }
             }
             .disposed(by: disPoseBag)
             
@@ -178,6 +198,14 @@ extension ChattingViewController {
         output.maxCout
             .drive(imageService.rx.maxCount)
             .disposed(by: disPoseBag)
+        
+        homeView.imageCollectionView.rx.itemSelected
+            .bind { item in
+                selectedImage.accept(item.row)
+            }
+            .disposed(by: disPoseBag)
+        
+            
         
     }
 }

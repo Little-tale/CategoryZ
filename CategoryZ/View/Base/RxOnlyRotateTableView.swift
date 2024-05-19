@@ -12,6 +12,8 @@ import RxSwift
 import RxCocoa
 
 final class RxOnlyRotateTableView: RxBaseView {
+    
+   
     let tableView = UITableView().then {
         $0.transform = CGAffineTransform(scaleX: 1, y: -1)
         $0.register(ChatLeftRightCell.self, forCellReuseIdentifier: ChatLeftRightCell.reusableIdenti)
@@ -41,11 +43,13 @@ final class RxOnlyRotateTableView: RxBaseView {
         $0.isHidden = true
     }
     
-    let imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CustomFlowLayout.imagesLayout).then {
+    let imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
         $0.backgroundColor = JHColor.white
-        $0.register(OnlyImageCollectionViewCell.self, forCellWithReuseIdentifier: OnlyImageCollectionViewCell.reusableIdenti)
+        $0.register(SelectedImageCollectionViewCell.self, forCellWithReuseIdentifier: SelectedImageCollectionViewCell.reusableIdenti)
         $0.isHidden = true
     }
+    
+    lazy var customLayout = CustomFlowLayout(collectionView: imageCollectionView)
     
     override func configureHierarchy() {
         addSubview(tableView)

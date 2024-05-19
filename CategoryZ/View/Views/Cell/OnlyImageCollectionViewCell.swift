@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
  
-final class OnlyImageCollectionViewCell: BaseCollectionViewCell {
+class OnlyImageCollectionViewCell: BaseCollectionViewCell {
     
     let backgoundImage = UIImageView()
     
@@ -22,15 +22,8 @@ final class OnlyImageCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    override func designView() {
-        self.layer.cornerRadius = 14
-        self.clipsToBounds = true
-        self.backgroundColor = .black
-        self.layer.cornerRadius = 30
-        self.clipsToBounds = true
-    }
-    
     override func prepareForReuse() {
+        super.prepareForReuse()
         backgoundImage.image = nil
     }
     

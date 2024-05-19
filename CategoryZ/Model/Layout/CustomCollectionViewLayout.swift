@@ -9,6 +9,8 @@ import UIKit
 
 final class CustomFlowLayout {
     
+    weak var collectionView: UICollectionView?
+    
     static var postLayout: UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 80, height: 80)
@@ -28,6 +30,25 @@ final class CustomFlowLayout {
         
         layout.scrollDirection = .horizontal
         return layout
+    }
+    
+    func comentImageLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        let width = (collectionView?.frame.width ?? UIScreen.main.bounds.width) / 2.5
+        print("현재 컬렉션뷰 \(collectionView?.frame.height)")
+        let height = collectionView?.frame.height
+        
+        layout.itemSize = CGSize(width: width, height: height ?? 200)
+        
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 0
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        
+        layout.scrollDirection = .horizontal
+        return layout
+    }
+    init(collectionView: UICollectionView? = nil) {
+        self.collectionView = collectionView
     }
 }
 

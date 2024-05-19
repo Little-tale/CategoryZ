@@ -18,6 +18,12 @@ import RxCocoa
  셀에다가 보내는것이 최선 하지만 네트워크 단절시에 아예 못보게 됨.
  */
 
+struct ImageItem {
+    let imageData: Data
+    var isSelected: Bool
+}
+
+
 final class ChattingViewModel: RxViewModelType {
     
     var disposeBag = DisposeBag()
@@ -44,8 +50,6 @@ final class ChattingViewModel: RxViewModelType {
     private
     let realmServiceError = PublishRelay<RealmServiceManagerError> ()
     
-    private
-    var imageDatas: [Data] = []
     
     struct Input {
         let userIDRelay: BehaviorRelay<String>
@@ -53,6 +57,7 @@ final class ChattingViewModel: RxViewModelType {
         let sendButtonTap: ControlEvent<Void>
         let insertImageData: BehaviorRelay<[Data]>
         let imageModeCancelTap: PublishRelay<Void>
+        let selectedImage: PublishRelay<Int>
     }
     
     struct Output {
@@ -65,7 +70,7 @@ final class ChattingViewModel: RxViewModelType {
         let buttonState: Driver<Bool>
         let currentTextState: Driver<String>
         let userProfile: Driver<ProfileModel>
-        let outputIamgeDataDriver: Driver<[Data]>
+        let outputIamgeDataDriver: Driver<[ImageItem]>
         let maxCout: Driver<Int>
     }
     
@@ -81,7 +86,7 @@ final class ChattingViewModel: RxViewModelType {
         let socketError = PublishRelay<ChatSocketManagerError> ()
         
         // 이미지 스틸
-        let imageStill = BehaviorRelay<[Data]> (value: [])
+        let imageStill = BehaviorRelay<[ImageItem]> (value: [])
         let outputImageMaxCount = BehaviorRelay(value: 5)
         
         // 채팅방(넷) 모델
@@ -464,23 +469,38 @@ final class ChattingViewModel: RxViewModelType {
         // 이미지 관련
         input.insertImageData
             .bind(with: self) { owner, datas in
-                var before = owner.imageDatas
-                before.append(contentsOf: datas)
-                owner.imageDatas = before
-                imageStill.accept(owner.imageDatas)
+                var before = imageStill.value
+                let new = datas.map { ImageItem(imageData: $0 , isSelected: false)}
+
+                before.append(contentsOf: new)
+               
+                imageStill.accept(before)
                 
-                outputImageMaxCount.accept( 5 - owner.imageDatas.count)
+                outputImageMaxCount.accept( 5 - before.count)
             }
             .disposed(by: disposeBag)
         
         // 이미지 모드 그만둘시
         input.imageModeCancelTap
             .bind(with: self) { owner, _ in
-                owner.imageDatas = []
-                imageStill.accept([])
+
+                var before = imageStill.value
+                before = []
+                imageStill.accept(before)
                 outputImageMaxCount.accept(5)
             }
             .disposed(by: disposeBag)
+        
+        // 이미지 선택 로직
+        
+        input.selectedImage
+            .bind(with: self) { owner, index in
+                var items = imageStill.value
+                items[index].isSelected.toggle()
+                imageStill.accept(items)
+            }
+            .disposed(by: disposeBag)
+        
         
         return Output(
             realmError: realmError.asDriver(onErrorDriveWith: .never()),

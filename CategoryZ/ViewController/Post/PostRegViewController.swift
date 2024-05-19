@@ -127,6 +127,9 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
                         return UICollectionViewCell.init()
                     }
                     cell.settingImageMode(.scaleAspectFill)
+                    cell.backgroundColor = .black
+                    cell.layer.cornerRadius = 30
+                    cell.clipsToBounds = true
                     cell.imageSetting(item)
                     return cell
                 } else {
