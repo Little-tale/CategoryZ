@@ -28,13 +28,22 @@ final class RxOnlyRotateTableView: RxBaseView {
     }
     
     override func configureLayout() {
-        tableView.snp.makeConstraints { make in
-            make.horizontalEdges.top.equalToSuperview()
-            make.bottom.equalTo(commentTextView.snp.top)
-        }
+        
         commentTextView.snp.makeConstraints { make in
             make.horizontalEdges.equalTo(safeAreaLayoutGuide)
-            make.bottom.greaterThanOrEqualTo(keyboardLayoutGuide.snp.bottom)
+            // 키보드가 있을 때 위치
+            make.bottom.equalTo(keyboardLayoutGuide.snp.top).priority(.high)
+        }
+        
+        /*
+         // 키보드가 없을 때
+         //make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).priority(.low)
+         */
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.horizontalEdges.equalToSuperview()
+            // 테이블뷰 아래 댓글뷰 상단에 맞춤
+            make.bottom.equalTo(commentTextView.snp.top)
         }
     }
     

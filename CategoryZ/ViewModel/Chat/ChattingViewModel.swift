@@ -507,7 +507,7 @@ extension ChattingViewModel {
             return
         }
         
-        guard let otherUser = model.participants.last else {
+        guard let otherUser = model.participants.first(where: { $0.userID != myID! }) else {
             print("사실상 불가능한 에러")
             publishNetError.accept(.loginError(
                 statusCode: 419,

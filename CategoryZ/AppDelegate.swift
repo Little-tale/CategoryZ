@@ -19,8 +19,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = false
         IQKeyboardManager.shared.resignOnTouchOutside = true
-        IQKeyboardManager.shared.disabledToolbarClasses = [ CommentViewController.self ]
-        IQKeyboardManager.shared.disabledDistanceHandlingClasses = [CommentViewController.self]
+        IQKeyboardManager.shared.disabledToolbarClasses = [
+            CommentViewController.self,
+            ChattingViewController.self
+        ]
+        IQKeyboardManager.shared.disabledDistanceHandlingClasses = [
+            CommentViewController.self,
+            ChattingViewController.self
+        ]
         ImageCache.default.diskStorage.config.sizeLimit = 500 * 1024 * 1024 // 캐시 제한을 걸어야 할것 같다 1gb 를 가볍게 넘긴다.
         
         if #available(iOS 15, *) {
