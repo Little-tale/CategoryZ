@@ -23,6 +23,7 @@ enum ImageCachingCase {
     case high
     case middle
     case low
+    case superLow
     
     var size: CGSize {
         switch self {
@@ -32,6 +33,8 @@ enum ImageCachingCase {
             return .init(width: 150, height: 150)
         case .low:
             return .init(width: 100, height: 100)
+        case .superLow:
+            return .init(width: 50, height: 50)
         }
     }
 }

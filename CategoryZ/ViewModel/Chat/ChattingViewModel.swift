@@ -129,6 +129,13 @@ final class ChattingViewModel: RxViewModelType {
                 }
             }
             .disposed(by: disposeBag)
+        // 0. 2번 이미지선택한것이 존재 할때도 샌드버튼은 활성화
+        imageStill
+            .bind { dats in
+                let result = dats.first { $0.isSelected == true }
+                buttonState.accept(result != nil)
+            }
+            .disposed(by: disposeBag)
         
         // 1. RoomID 전환
         input
@@ -466,6 +473,8 @@ final class ChattingViewModel: RxViewModelType {
             .disposed(by: disposeBag)
         
         
+
+        
         // 이미지 관련
         input.insertImageData
             .bind(with: self) { owner, datas in
@@ -479,6 +488,64 @@ final class ChattingViewModel: RxViewModelType {
                 outputImageMaxCount.accept( 5 - before.count)
             }
             .disposed(by: disposeBag)
+        
+        let imageResult = PublishRelay<ImageDataModel> ()
+        
+        // 이미지모드 버튼 탭 경우
+        input.sendButtonTap
+            .throttle(.milliseconds(90), scheduler: MainScheduler.instance)
+            .withLatestFrom(imageStill)
+            .filter({ image  in
+                let text = currentTextState.value
+                return text == "" && ifChatRoomModel != nil
+            })
+            .map { $0.filter { $0.isSelected == true }}
+            .map({ items in
+                items.map { $0.imageData }
+            })
+            .flatMapLatest { datas in
+                return NetworkManager.uploadChatImages(
+                    model: ImageDataModel.self,
+                    router: .chatingImageUpload(roomId: ifChatRoomModel!.roomID),
+                    images: datas
+                )
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let imageData):
+                    imageResult.accept(imageData)
+                case .failure(let error):
+                    owner.publishNetError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 이미지 서버 반영 결과 후
+        imageResult
+            .filter({ _ in
+                ifChatRoomModel != nil
+            })
+            .flatMapLatest { model in
+                let chatQuery = ChatPostQuery(content: nil, files: model.files)
+                
+                return NetworkManager.fetchNetwork(
+                    model: ChatModel.self,
+                    router: .Chatting(.postChat(
+                        qeury: chatQuery, roomID: ifChatRoomModel!.roomID)
+                    )
+                )
+            }
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let success):
+                    print("서버엔 반영됨")
+                    break
+                case .failure(let error):
+                    owner.publishNetError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
         
         // 이미지 모드 그만둘시
         input.imageModeCancelTap

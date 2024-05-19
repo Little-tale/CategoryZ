@@ -96,10 +96,15 @@ extension ChattingViewController {
                     
                     return cell
                 } else {
-                    
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatOnlyImagesCell.reusableIdenti, for: IndexPath(row: index, section: 0)) as? ChatOnlyImagesCell else {
+                        print("ChatOnlyImagesCell Error")
+                        return .init()
+                    }
+                    cell.setModel(model: item)
+                    cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+                    cell.selectionStyle = .none
+                    return cell
                 }
-                print("이리로 오지말아요...")
-                return .init()
             }
             .disposed(by: disPoseBag)
         
@@ -183,6 +188,7 @@ extension ChattingViewController {
                 cell.selectButtonTap = { at in
                     selectedImage.accept(at)
                 }
+                
             }
             .disposed(by: disPoseBag)
             
@@ -204,8 +210,6 @@ extension ChattingViewController {
                 selectedImage.accept(item.row)
             }
             .disposed(by: disPoseBag)
-        
-            
         
     }
 }

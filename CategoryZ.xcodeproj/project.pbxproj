@@ -90,6 +90,8 @@
 		7B87BD5C2BF78A5F000F0F79 /* ChatRoomInChatsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD5B2BF78A5F000F0F79 /* ChatRoomInChatsModel.swift */; };
 		7B87BD612BF85817000F0F79 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD602BF85817000F0F79 /* ErrorMessage.swift */; };
 		7B87BD652BFA3612000F0F79 /* SelectedImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD642BFA3612000F0F79 /* SelectedImageCollectionViewCell.swift */; };
+		7B87BD692BFA5BA0000F0F79 /* ChatOnlyImagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD682BFA5BA0000F0F79 /* ChatOnlyImagesCell.swift */; };
+		7B87BD6B2BFA6653000F0F79 /* BlockImageSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87BD6A2BFA6653000F0F79 /* BlockImageSetView.swift */; };
 		7B87F0F82BD3FE2F0006178F /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */; };
 		7B87F0FC2BD3FE850006178F /* ProfileAndFollowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */; };
 		7B8CAEB42BD480D600347FAC /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */; };
@@ -299,6 +301,8 @@
 		7B87BD5B2BF78A5F000F0F79 /* ChatRoomInChatsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomInChatsModel.swift; sourceTree = "<group>"; };
 		7B87BD602BF85817000F0F79 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		7B87BD642BFA3612000F0F79 /* SelectedImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		7B87BD682BFA5BA0000F0F79 /* ChatOnlyImagesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatOnlyImagesCell.swift; sourceTree = "<group>"; };
+		7B87BD6A2BFA6653000F0F79 /* BlockImageSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockImageSetView.swift; sourceTree = "<group>"; };
 		7B87F0F72BD3FE2F0006178F /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		7B87F0FB2BD3FE850006178F /* ProfileAndFollowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAndFollowView.swift; sourceTree = "<group>"; };
 		7B8CAEB32BD480D600347FAC /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
@@ -856,6 +860,7 @@
 			isa = PBXGroup;
 			children = (
 				7B87BD082BF623B1000F0F79 /* ChatLeftRightCell.swift */,
+				7B87BD682BFA5BA0000F0F79 /* ChatOnlyImagesCell.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1008,6 +1013,7 @@
 				7BA0E0E12BCD7458002F0516 /* CircleImageView.swift */,
 				7BA0E0D92BCD73A1002F0516 /* Cell */,
 				7BA0E0E72BCD7593002F0516 /* PlaceholderTextView.swift */,
+				7B87BD6A2BFA6653000F0F79 /* BlockImageSetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1537,6 +1543,7 @@
 				7B87F0F82BD3FE2F0006178F /* UserProfileView.swift in Sources */,
 				7BC51B462BCFF4BD00E5BF6C /* RxBaseTableViewCell.swift in Sources */,
 				7B838E062BCFB98F000F2E27 /* SNSTableViewCell.swift in Sources */,
+				7B87BD6B2BFA6653000F0F79 /* BlockImageSetView.swift in Sources */,
 				7BCF4AA12BCBEB3300BCE635 /* LoginViewController.swift in Sources */,
 				7B838E0E2BCFCBEA000F2E27 /* JHImage.swift in Sources */,
 				7BCF4A592BC6E20600BCE635 /* BaseButton.swift in Sources */,
@@ -1568,6 +1575,7 @@
 				7B94033C2BE260FC004A1A8E /* DonateViewModel.swift in Sources */,
 				7BC51B492BCFF64600E5BF6C /* SNSPhotoMainViewModel.swift in Sources */,
 				7BDF40C12BE37752005274F9 /* DonateListViewController.swift in Sources */,
+				7B87BD692BFA5BA0000F0F79 /* ChatOnlyImagesCell.swift in Sources */,
 				7B1EE3F92BDE4CFB00F109EB /* SingleSNSView.swift in Sources */,
 				7BCF4A5F2BC6E39700BCE635 /* JHColor.swift in Sources */,
 				7BA0E0E22BCD7458002F0516 /* CircleImageView.swift in Sources */,

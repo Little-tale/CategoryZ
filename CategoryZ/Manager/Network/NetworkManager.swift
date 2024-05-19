@@ -137,6 +137,54 @@ extension NetworkManager {
         }
         
     }
+    
+    static func uploadChatImages<T:Decodable>(model: T.Type, router: ChatRouter, images: [Data]) -> FetchType<T>  {
+        
+        return FetchType.create { single in
+            
+            let version = router.version
+            let path = version + router.path
+            
+            guard let baseUrl = URL(string: APIKey.baseURL.rawValue) else {
+                single(.success(.failure(.failMakeURLRequest)))
+                return Disposables.create()
+            }
+            
+            guard case .chatingImageUpload = router else {
+                single(.success(.failure(.failMakeURLRequest)))
+                return Disposables.create()
+            }
+            
+            let url = baseUrl.appendingPathComponent(path, conformingTo: .url)
+            
+            AF.upload(multipartFormData: { multiPartFromData in
+                for (index, imageData ) in images.enumerated() {
+                    multiPartFromData.append(
+                        imageData,
+                        withName: "files",
+                        fileName: "CategoryZ_\(index).jpeg",
+                        mimeType: "image/jpeg"
+                    )
+                }
+            }, to: url, method: .post, headers: HTTPHeaders(router.headers), interceptor:  AccessTokkenAdapter()).responseDecodable(of: model) { response in
+                switch response.result {
+                case .success(let success):
+                    return single(.success(.success(success)))
+                case .failure(let fails):
+                    if let stateCode = fails.responseCode {
+                        if let commonCode = NetworkRouter.commonTest(status: stateCode) {
+                            single(.success(.failure(commonCode)))
+                        }
+                        
+                        single(.success(.failure(router.errorCase(stateCode, fails.localizedDescription))))
+                    }
+                    single(.success(.failure(.unknownError)))
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
 
 }
 

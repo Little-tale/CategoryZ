@@ -17,6 +17,7 @@ final class RxOnlyRotateTableView: RxBaseView {
     let tableView = UITableView().then {
         $0.transform = CGAffineTransform(scaleX: 1, y: -1)
         $0.register(ChatLeftRightCell.self, forCellReuseIdentifier: ChatLeftRightCell.reusableIdenti)
+        $0.register(ChatOnlyImagesCell.self, forCellReuseIdentifier: ChatOnlyImagesCell.reusableIdenti)
         $0.rowHeight = UITableView.automaticDimension
         $0.estimatedRowHeight = 100
         $0.separatorStyle = .none
