@@ -13,6 +13,9 @@ import RxCocoa
  렘에 대해서 조회를 먼저 진행 없다면
  채팅이 정상적으로 이루어졌을때 렘테이블에 생성
  렘 테이블에 반영
+ 
+ 1 : 1 이면서 렘에 민감한 정보를 저장하는것을 피하려면 한번 프로필 조회만 딱 하고
+ 셀에다가 보내는것이 최선 하지만 네트워크 단절시에 아예 못보게 됨.
  */
 
 final class ChattingViewModel: RxViewModelType {
@@ -435,6 +438,10 @@ final class ChattingViewModel: RxViewModelType {
             currentTextState: currentTextState.asDriver()
         )
     }
+    
+    deinit {
+        print("deinit Chat 뷰모델")
+    }
 }
 
 // MARK: Realm Model Creator
@@ -460,7 +467,9 @@ extension ChattingViewModel {
                     contentText: model.content,
                     imageFiles: model.files,
                     isMe: isMe == model.sender.userID,
-                    createAt: date
+                    createAt: date,
+                    userName: model.sender.nick,
+                    userProfile: model.sender.profileImage
                 )
                 ifModels.append(realmModel)
             case .failure:

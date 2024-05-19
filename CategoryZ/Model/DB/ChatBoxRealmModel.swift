@@ -26,15 +26,31 @@ final class ChatBoxRealmModel: Object {
     var isMe: Bool
     
     @Persisted
+    var userName: String
+    
+    @Persisted
+    var userProfileURL: String?
+    
+    @Persisted
     var createAt: Date
     
     convenience
-    init(id: String, contentText: String? = nil, imageFiles: [String], isMe: Bool, createAt: Date) {
+    init(
+        id: String,
+        contentText: String? = nil,
+        imageFiles: [String],
+        isMe: Bool,
+        createAt: Date,
+        userName: String,
+        userProfile: String?
+    ) {
         self.init()
         self.chatId = id
         self.contentText = contentText
         self.imageFiles.append(objectsIn: imageFiles)
         self.isMe = isMe
         self.createAt = createAt
+        self.userName = userName
+        self.userProfileURL = userProfile
     }
 }

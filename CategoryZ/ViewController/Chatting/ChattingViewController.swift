@@ -55,10 +55,13 @@ extension ChattingViewController {
         realmError(error: output.realmError)
         socketError(error: output.socketError)
         
-        output
-            .tableViewDraw
-            .drive(with: self) { owner, models in
-                print("비어 있어도 나오셔요 \(models)")
+       
+        output.tableViewDraw
+            .distinctUntilChanged()
+            .drive(homeView.tableView.rx.items(cellIdentifier: ChatLeftRightCell.reusableIdenti, cellType: ChatLeftRightCell.self)) {row, item, cell in
+                cell.setModel(model: item)
+                cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+                
             }
             .disposed(by: disPoseBag)
         

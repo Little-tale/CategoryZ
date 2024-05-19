@@ -65,6 +65,7 @@ final class RealmServiceManager {
             switch changes {
             case .initial(let models):
                 print("현재 렘 서비스 입장(이닛) \(models)")
+                dump(models)
                 onChange(.success(Array(models)))
             case .update(let models, _, _, _):
                 print("현재 렘 서비스 입장(업데이트) \(models)")

@@ -14,10 +14,12 @@ import RxCocoa
 final class RxOnlyRotateTableView: RxBaseView {
     let tableView = UITableView().then {
         $0.transform = CGAffineTransform(scaleX: 1, y: -1)
+        $0.register(ChatLeftRightCell.self, forCellReuseIdentifier: ChatLeftRightCell.reusableIdenti)
+        $0.rowHeight = UITableView.automaticDimension
+        $0.estimatedRowHeight = 100
     }
+    
     let commentTextView = CommentTextView(placeholedrText: "메시지를 남기세요")
-    
-    
     
     override func configureHierarchy() {
         addSubview(tableView)
