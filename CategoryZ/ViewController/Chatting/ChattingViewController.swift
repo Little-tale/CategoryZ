@@ -5,7 +5,7 @@
 //  Created by Jae hyung Kim on 5/16/24.
 //
 
-import Foundation
+import UIKit
 import RxSwift
 import RxCocoa
 
@@ -55,13 +55,25 @@ extension ChattingViewController {
         realmError(error: output.realmError)
         socketError(error: output.socketError)
         
-       
+        
         output.tableViewDraw
             .distinctUntilChanged()
-            .drive(homeView.tableView.rx.items(cellIdentifier: ChatLeftRightCell.reusableIdenti, cellType: ChatLeftRightCell.self)) {row, item, cell in
-                cell.setModel(model: item)
-                cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
-                
+            .drive(homeView.tableView.rx.items) { tableView, index, item -> UITableViewCell in
+                let images = Array(item.imageFiles)
+                dump(images)
+                if images.isEmpty {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: ChatLeftRightCell.reusableIdenti, for: IndexPath(row: index, section: 0)) as? ChatLeftRightCell else {
+                        print("ChatLeftRightCell Error")
+                        return .init()
+                    }
+                    cell.setModel(model: item)
+                    cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+                    return cell
+                } else {
+                    
+                }
+                print("이리로 오지말아요...")
+                return .init()
             }
             .disposed(by: disPoseBag)
         
@@ -88,6 +100,11 @@ extension ChattingViewController {
         output.realmServiceError
             .drive(with: self) { owner, error in
                 owner.showAlert(error: error)
+            }
+            .disposed(by: disPoseBag)
+        output.userProfile
+            .drive(with: self) { owner, model in
+                owner.navigationItem.title = model.nick + "와 채팅"
             }
             .disposed(by: disPoseBag)
     }

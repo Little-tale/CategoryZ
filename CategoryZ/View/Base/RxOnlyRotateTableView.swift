@@ -17,24 +17,45 @@ final class RxOnlyRotateTableView: RxBaseView {
         $0.register(ChatLeftRightCell.self, forCellReuseIdentifier: ChatLeftRightCell.reusableIdenti)
         $0.rowHeight = UITableView.automaticDimension
         $0.estimatedRowHeight = 100
+        $0.separatorStyle = .none
     }
     
     let commentTextView = CommentTextView(placeholedrText: "메시지를 남기세요")
     
+    let imageAddButton = UIButton().then {
+        let resize = JHImage.plus?.resizingImage(
+            targetSize: CGSize(width: 26, height: 26)
+        )
+        let template = resize?.withRenderingMode(.alwaysTemplate)
+        $0.setImage(template, for: .normal)
+        $0.tintColor = JHColor.likeColor
+    }
+    
+    let imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CustomFlowLayout.imagesLayout).then {
+        $0.backgroundColor = JHColor.white
+        $0.register(OnlyImageCollectionViewCell.self, forCellWithReuseIdentifier: OnlyImageCollectionViewCell.reusableIdenti)
+    }
+    
     override func configureHierarchy() {
         addSubview(tableView)
         addSubview(commentTextView)
+        addSubview(imageAddButton)
         subscribe()
     }
     
     override func configureLayout() {
         
         commentTextView.snp.makeConstraints { make in
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide)
+            make.trailing.equalTo(safeAreaLayoutGuide)
+            make.leading.equalTo(imageAddButton.snp.trailing)
             // 키보드가 있을 때 위치
             make.bottom.equalTo(keyboardLayoutGuide.snp.top).priority(.high)
         }
-        
+        imageAddButton.snp.makeConstraints { make in
+            make.verticalEdges.equalTo(commentTextView).inset(10)
+            make.width.equalTo(imageAddButton.snp.height)
+            make.leading.equalTo(safeAreaLayoutGuide).offset(6)
+        }
         /*
          // 키보드가 없을 때
          //make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).priority(.low)

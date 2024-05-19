@@ -22,6 +22,7 @@ final class ChatLeftRightCell: BaseTableViewCell {
         $0.numberOfLines = 0
         $0.backgroundColor = .clear
         $0.font = JHFont.UIKit.re14
+        $0.textAlignment = .center
     }
 
     override func configureHierarchy() {
@@ -62,8 +63,6 @@ final class ChatLeftRightCell: BaseTableViewCell {
         )
         
         contentLabel.text = model.contentText
-        contentLabel.backgroundColor = .gray
-        chatBoxImageView.backgroundColor = .red
     }
 }
 

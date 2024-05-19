@@ -54,6 +54,8 @@ extension JHImage {
     
     static let talent: UIImage = .talent
     
+    static let plus = UIImage(systemName: "plus.app")
+    
     enum ChatBubble {
         case me
         case other

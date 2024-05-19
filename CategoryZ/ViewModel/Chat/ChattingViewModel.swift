@@ -59,12 +59,15 @@ final class ChattingViewModel: RxViewModelType {
         let socketError: Driver<ChatSocketManagerError>
         let buttonState: Driver<Bool>
         let currentTextState: Driver<String>
+        let userProfile: Driver<ProfileModel>
     }
     
     func transform(_ input: Input) -> Output {
         
         var ifChatRoomModel: ChatRoomModel? = nil
         var ifChatRoomRealmModel: ChatRoomRealmModel? = nil
+        
+        let userProfile = PublishRelay<ProfileModel> ()
         
         let tableViewDraw = BehaviorRelay<[ChatBoxRealmModel]> (value: [])
         
@@ -139,6 +142,21 @@ final class ChattingViewModel: RxViewModelType {
                     ifChatRoomModel = model
                     chatRoomPub.accept(model)
                     ChatSocketManager.shared.setID(id: model.roomID)
+                case .failure(let error):
+                    owner.publishNetError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 0.2 프로필 조회
+        input.userIDRelay
+            .flatMapLatest({ userID in
+                NetworkManager.fetchNetwork(model: ProfileModel.self, router: .profile(.otherUserProfileRead(userId: userID)))
+            })
+            .bind(with: self) { owner, profile in
+                switch profile {
+                case .success(let model):
+                    userProfile.accept(model)
                 case .failure(let error):
                     owner.publishNetError.accept(error)
                 }
@@ -440,7 +458,8 @@ final class ChattingViewModel: RxViewModelType {
             tableViewDraw: tableViewDraw.asDriver(),
             socketError: socketError.asDriver(onErrorDriveWith: .never()),
             buttonState: buttonState.asDriver(),
-            currentTextState: currentTextState.asDriver()
+            currentTextState: currentTextState.asDriver(),
+            userProfile: userProfile.asDriver(onErrorDriveWith: .never())
         )
     }
     
