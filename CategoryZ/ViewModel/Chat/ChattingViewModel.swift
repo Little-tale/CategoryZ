@@ -154,7 +154,7 @@ final class ChattingViewModel: RxViewModelType {
             .withUnretained(self)
             .filter({ _ in
                 print("예상외가 아니길 \(ifChatRoomModel != nil)")
-                return ifChatRoomModel != nil
+                return ifChatRoomModel != nil // 룸 자체가 없다면 안됨
             })
             .map({ owner, model in
                 owner.repository.findById(
@@ -166,6 +166,7 @@ final class ChattingViewModel: RxViewModelType {
                 switch result {
                 case .success(let modelOREmpty):
                     
+                    // 렘의 룸을 조회한 결과를
                     ifChatRoomRealmModel = modelOREmpty
                     
                     chatReadTrigger.accept(ifChatRoomModel!)
@@ -188,10 +189,10 @@ final class ChattingViewModel: RxViewModelType {
                     let sorted = owner.repository.chatSorted(model: model.chatBoxs)
                     if let sorted = sorted.first {
                         let datetrans = DateManager.shared.dateToString(date: sorted.createAt)
-                        print("날짜가 이상하게 보일가능성 ",datetrans)
                         date = datetrans
                     }
                 }
+                // 만약 존재 하지 않을시 date는 nil 처리 되어 처음부터 조회할것
                 
                 return NetworkManager.fetchNetwork(
                     model: ChatRoomInChatsModel.self,
@@ -206,6 +207,7 @@ final class ChattingViewModel: RxViewModelType {
             .bind(with: self, onNext: { owner, result in
                 switch result {
                 case .success(let model):
+                    // 채팅 리스트를 조회
                     chattingResult.accept(model)
                 case .failure(let error):
                     owner.publishNetError.accept(error)
@@ -217,14 +219,10 @@ final class ChattingViewModel: RxViewModelType {
         // 4.1 만약 추가적 내용이 존재 했더라면, 가져옴( NET )
         chattingResult
             .filter { model in
-                if model.chatList.isEmpty {
-                    if let ifChatRoomModel {
-                        startRealmData.accept(ifChatRoomModel.roomID)
-                    }
-                }
                 return !model.chatList.isEmpty || ifChatRoomModel != nil
             }
             .bind(with: self) { owner, model in
+                
                 owner.createChatBoxes(
                     model.chatList,
                     isMe: owner.myID!
@@ -238,6 +236,13 @@ final class ChattingViewModel: RxViewModelType {
                 }
             }
             .disposed(by: disposeBag)
+        /*
+         if model.chatList.isEmpty {
+             if let ifChatRoomModel {
+                 startRealmData.accept(ifChatRoomModel.roomID)
+             }
+         }
+         */
         
         // 렘모델을 먼저 반영후
         moreChatOnceTrigger

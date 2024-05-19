@@ -9,7 +9,7 @@ import Foundation
 
 final class ChatRoomInChatsModel: Decodable {
 
-    let chatList: [ChatModel]
+    let chatList: [ChatModel] // 왼만하면 무조건이네...
     
     init(chatList: [ChatModel]) {
         self.chatList = chatList

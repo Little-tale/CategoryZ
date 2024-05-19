@@ -140,7 +140,7 @@ final class RealmRepository: RealmRepositoryType {
     
     func chatSorted(model chatBoxs: List<ChatBoxRealmModel>) -> [ChatBoxRealmModel]{
         
-        let sorted = chatBoxs.sorted(byKeyPath: "createAt", ascending: true)
+        let sorted = chatBoxs.sorted(byKeyPath: "createAt", ascending: false)
      
         return Array(sorted)
     }
