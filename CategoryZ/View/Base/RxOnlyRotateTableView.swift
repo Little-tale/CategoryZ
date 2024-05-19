@@ -31,15 +31,28 @@ final class RxOnlyRotateTableView: RxBaseView {
         $0.tintColor = JHColor.likeColor
     }
     
+    let cancelButton = UIButton().then {
+        let resize = JHImage.xMark?.resizingImage(
+            targetSize: CGSize(width: 26, height: 26)
+        )
+        let template = resize?.withRenderingMode(.alwaysTemplate)
+        $0.setImage(template, for: .normal)
+        $0.tintColor = JHColor.likeColor
+        $0.isHidden = true
+    }
+    
     let imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CustomFlowLayout.imagesLayout).then {
         $0.backgroundColor = JHColor.white
         $0.register(OnlyImageCollectionViewCell.self, forCellWithReuseIdentifier: OnlyImageCollectionViewCell.reusableIdenti)
+        $0.isHidden = true
     }
     
     override func configureHierarchy() {
         addSubview(tableView)
         addSubview(commentTextView)
         addSubview(imageAddButton)
+        addSubview(cancelButton)
+        addSubview(imageCollectionView)
         subscribe()
     }
     
@@ -52,19 +65,60 @@ final class RxOnlyRotateTableView: RxBaseView {
             make.bottom.equalTo(keyboardLayoutGuide.snp.top).priority(.high)
         }
         imageAddButton.snp.makeConstraints { make in
-            make.verticalEdges.equalTo(commentTextView).inset(10)
+            make.verticalEdges.equalTo(commentTextView).inset(12)
             make.width.equalTo(imageAddButton.snp.height)
             make.leading.equalTo(safeAreaLayoutGuide).offset(6)
         }
-        /*
-         // 키보드가 없을 때
-         //make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).priority(.low)
-         */
+        
+        cancelButton.snp.makeConstraints { make in
+            make.edges.equalTo(imageAddButton)
+        }
+        
+        imageCollectionView.snp.makeConstraints { make in
+            make.height.equalTo(216)
+            make.horizontalEdges.equalToSuperview()
+            make.bottom.equalTo(safeAreaLayoutGuide)
+        }
+        
         tableView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top)
             make.horizontalEdges.equalToSuperview()
             // 테이블뷰 아래 댓글뷰 상단에 맞춤
             make.bottom.equalTo(commentTextView.snp.top)
+        }
+    }
+    
+    func setImageMode() {
+        commentTextView.textView.text = ""
+        commentTextView.placholderTextLabel.isHidden = true
+        commentTextView.textView.isEditable = false
+        commentTextView.textView.isSelectable = false
+        
+        cancelButton.isHidden = false
+        imageAddButton.isHidden = true
+        imageCollectionView.isHidden = false
+        
+        commentTextView.snp.remakeConstraints { make in
+            make.trailing.equalTo(safeAreaLayoutGuide)
+            make.leading.equalTo(imageAddButton.snp.trailing)
+            
+            make.bottom.equalTo(imageCollectionView.snp.top).priority(.high)
+        }
+        
+    }
+    func disSetImageMode() {
+        imageCollectionView.isHidden = true
+        commentTextView.placholderTextLabel.isHidden = false
+        commentTextView.textView.isEditable = true
+        commentTextView.textView.isSelectable = true
+        cancelButton.isHidden = true
+        imageAddButton.isHidden = false
+        
+        commentTextView.snp.remakeConstraints { make in
+            make.trailing.equalTo(safeAreaLayoutGuide)
+            make.leading.equalTo(imageAddButton.snp.trailing)
+            // 키보드가 있을 때 위치
+            make.bottom.equalTo(keyboardLayoutGuide.snp.top).priority(.high)
         }
     }
     
@@ -95,3 +149,8 @@ extension RxOnlyRotateTableView {
             .disposed(by: disposedBag)
     }
 }
+
+/*
+ // 키보드가 없을 때
+ //make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).priority(.low)
+ */

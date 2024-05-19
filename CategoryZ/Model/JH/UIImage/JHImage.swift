@@ -56,6 +56,8 @@ extension JHImage {
     
     static let plus = UIImage(systemName: "plus.app")
     
+    static let xMark = UIImage(systemName: "xmark.app")
+    
     enum ChatBubble {
         case me
         case other

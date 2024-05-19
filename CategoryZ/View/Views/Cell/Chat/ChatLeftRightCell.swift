@@ -11,23 +11,33 @@ import Then
 
 final class ChatLeftRightCell: BaseTableViewCell {
     
+    private
     let chatBoxImageView = UIImageView()
     
+    private
     let profileImageView = CircleImageView().then {
         $0.image = JHImage.defaultImage
         $0.contentMode = .scaleToFill
     }
     
+    private
     let contentLabel = UILabel().then {
         $0.numberOfLines = 0
         $0.backgroundColor = .clear
         $0.font = JHFont.UIKit.re14
         $0.textAlignment = .center
     }
+    
+    private
+    let dateLabel = UILabel().then {
+        $0.numberOfLines = 1
+        $0.font = JHFont.UIKit.re10
+    }
 
     override func configureHierarchy() {
         contentView.addSubview(profileImageView)
         contentView.addSubview(chatBoxImageView)
+        contentView.addSubview(dateLabel)
         contentView.addSubview(contentLabel)
     }
     
@@ -44,7 +54,10 @@ final class ChatLeftRightCell: BaseTableViewCell {
             make.leading.equalTo(profileImageView.snp.trailing).offset(20)
             make.trailing.lessThanOrEqualToSuperview().dividedBy(2)
         }
-        
+        dateLabel.snp.makeConstraints { make in
+            make.leading.equalTo(chatBoxImageView.snp.trailing)
+            make.bottom.equalTo(chatBoxImageView)
+        }
         contentLabel.snp.makeConstraints { make in
             make.horizontalEdges.top.equalTo(chatBoxImageView).inset(10)
             make.bottom.equalTo(chatBoxImageView).inset(24)
@@ -61,7 +74,7 @@ final class ChatLeftRightCell: BaseTableViewCell {
             resizeCase: .low,
             JHImage.defaultImage
         )
-        
+        dateLabel.text = DateManager.shared.differenceDateFormatString(model.createAt)
         contentLabel.text = model.contentText
     }
 }
@@ -91,8 +104,13 @@ extension ChatLeftRightCell {
                 make.leading.greaterThanOrEqualToSuperview().dividedBy(2)
                 make.trailing.equalToSuperview().inset(20)
             }
-        } else {
             
+            dateLabel.snp.remakeConstraints { make in
+                make.trailing.equalTo(chatBoxImageView.snp.leading).offset( -10 )
+                make.bottom.equalTo(chatBoxImageView)
+                    .inset(20)
+            }
+        } else {
             chatBoxImageView.snp.remakeConstraints{ make in
                 make.top.equalToSuperview().offset(10)
                 make.bottom.equalToSuperview().inset(10)
@@ -105,6 +123,12 @@ extension ChatLeftRightCell {
                 make.bottom.equalToSuperview().inset(10)
                 make.leading.equalToSuperview().offset(10)
             }
+            
+            dateLabel.snp.remakeConstraints { make in
+                make.leading.equalTo(chatBoxImageView.snp.trailing).offset(10)
+                make.bottom.equalTo(chatBoxImageView).inset(20)
+            }
+            
             profileImageView.isHidden = false
         }
     }

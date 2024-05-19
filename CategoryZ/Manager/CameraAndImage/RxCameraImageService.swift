@@ -38,7 +38,7 @@ enum RxImageSearviceError: Error {
 final class RxCameraImageService: NSObject {
     
     /// 이미지 피커를 띄울 뷰컨을 정의해주세요
-    private weak var presntationViewController: UIViewController?
+    private weak var presntationViewController: UIViewController!
     
     // 전체 카운트
     var maxCount: Int?

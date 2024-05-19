@@ -37,6 +37,7 @@ final class PostRegViewController: RxHomeBaseViewController<PostRegView> {
     private
     lazy var imageService = RxCameraImageService(presntationViewController: self, zipRate: 5)
     
+    private
     var viewModel = PostRegViewModel()
     
     var selected: ProductID?

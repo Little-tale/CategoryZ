@@ -12,6 +12,9 @@ import RxCocoa
 final class ChattingViewController: RxHomeBaseViewController<RxOnlyRotateTableView> {
     
     private
+    lazy var imageService = RxCameraImageService(presntationViewController: self, zipRate: 5)
+    
+    private
     let viewModel = ChattingViewModel()
     
     override func viewDidLoad() {
@@ -32,13 +35,19 @@ final class ChattingViewController: RxHomeBaseViewController<RxOnlyRotateTableVi
 extension ChattingViewController {
     private
     func subscribe(_ userID: String) {
+        
         let userIDRelay = BehaviorRelay<String> (value: userID)
+        let insertImageData = BehaviorRelay<[Data]> (value: [])
+        
+        let imageModeCancelTap = PublishRelay<Void> ()
         
         let input = ChattingViewModel
             .Input(
                 userIDRelay: userIDRelay,
                 inputText: homeView.commentTextView.textView.rx.text,
-                sendButtonTap: homeView.commentTextView.regButton.rx.tap
+                sendButtonTap: homeView.commentTextView.regButton.rx.tap,
+                insertImageData: insertImageData,
+                imageModeCancelTap: imageModeCancelTap
             )
         
         let output = viewModel.transform(input)
@@ -68,6 +77,7 @@ extension ChattingViewController {
                     }
                     cell.setModel(model: item)
                     cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+                    cell.selectionStyle = .none
                     return cell
                 } else {
                     
@@ -102,11 +112,73 @@ extension ChattingViewController {
                 owner.showAlert(error: error)
             }
             .disposed(by: disPoseBag)
+        
         output.userProfile
             .drive(with: self) { owner, model in
                 owner.navigationItem.title = model.nick + "와 채팅"
             }
             .disposed(by: disPoseBag)
+        
+        // 이미지 선택 로직 구성
+        homeView.imageAddButton.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(with: self) { owner, _ in
+                owner.imageService.showImageModeSelectAlert()
+            }
+            .disposed(by: disPoseBag)
+        
+        // 이미지 서비스의 결과 받기
+        imageService.imageResult
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let datas):
+                    print(datas)
+                    insertImageData.accept(datas)
+                case .failure(let error):
+                    if case .noAuth = error {
+                        owner.SettingAlert()
+                    } else {
+                        owner.showAlert(
+                            title: "경고",
+                            message: error.message
+                        )
+                    }
+                }
+            }
+            .disposed(by: disPoseBag)
+        
+        output.outputIamgeDataDriver
+            .skip(1)
+            .drive(with: self) { owner, _ in
+                owner.view.endEditing(true)
+                owner.homeView.setImageMode()
+            }
+            .disposed(by: disPoseBag)
+        
+        output.outputIamgeDataDriver
+            .skip(1)
+            .drive(homeView.imageCollectionView.rx.items(
+                cellIdentifier: OnlyImageCollectionViewCell.reusableIdenti,
+                cellType: OnlyImageCollectionViewCell.self
+            )) { row, item, cell in
+                cell.settingImageMode(.scaleToFill)
+                cell.imageSetting(item)
+            }
+            .disposed(by: disPoseBag)
+            
+        // 취소 버튼 눌렀을때
+        homeView.cancelButton.rx.tap
+            .bind(with: self) { owner, _ in
+                imageModeCancelTap.accept(())
+                owner.homeView.disSetImageMode()
+            }
+            .disposed(by: disPoseBag)
+        
+        // 이미지 최대 갯수
+        output.maxCout
+            .drive(imageService.rx.maxCount)
+            .disposed(by: disPoseBag)
+        
     }
 }
 

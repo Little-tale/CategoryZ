@@ -44,10 +44,15 @@ final class ChattingViewModel: RxViewModelType {
     private
     let realmServiceError = PublishRelay<RealmServiceManagerError> ()
     
+    private
+    var imageDatas: [Data] = []
+    
     struct Input {
         let userIDRelay: BehaviorRelay<String>
         let inputText: ControlProperty<String?>
         let sendButtonTap: ControlEvent<Void>
+        let insertImageData: BehaviorRelay<[Data]>
+        let imageModeCancelTap: PublishRelay<Void>
     }
     
     struct Output {
@@ -60,6 +65,8 @@ final class ChattingViewModel: RxViewModelType {
         let buttonState: Driver<Bool>
         let currentTextState: Driver<String>
         let userProfile: Driver<ProfileModel>
+        let outputIamgeDataDriver: Driver<[Data]>
+        let maxCout: Driver<Int>
     }
     
     func transform(_ input: Input) -> Output {
@@ -72,6 +79,10 @@ final class ChattingViewModel: RxViewModelType {
         let tableViewDraw = BehaviorRelay<[ChatBoxRealmModel]> (value: [])
         
         let socketError = PublishRelay<ChatSocketManagerError> ()
+        
+        // 이미지 스틸
+        let imageStill = BehaviorRelay<[Data]> (value: [])
+        let outputImageMaxCount = BehaviorRelay(value: 5)
         
         // 채팅방(넷) 모델
         let chatRoomPub = PublishRelay<ChatRoomModel> ()
@@ -450,6 +461,27 @@ final class ChattingViewModel: RxViewModelType {
             .disposed(by: disposeBag)
         
         
+        // 이미지 관련
+        input.insertImageData
+            .bind(with: self) { owner, datas in
+                var before = owner.imageDatas
+                before.append(contentsOf: datas)
+                owner.imageDatas = before
+                imageStill.accept(owner.imageDatas)
+                
+                outputImageMaxCount.accept( 5 - owner.imageDatas.count)
+            }
+            .disposed(by: disposeBag)
+        
+        // 이미지 모드 그만둘시
+        input.imageModeCancelTap
+            .bind(with: self) { owner, _ in
+                owner.imageDatas = []
+                imageStill.accept([])
+                outputImageMaxCount.accept(5)
+            }
+            .disposed(by: disposeBag)
+        
         return Output(
             realmError: realmError.asDriver(onErrorDriveWith: .never()),
             publishNetError: publishNetError.asDriver(onErrorDriveWith: .never()),
@@ -459,7 +491,9 @@ final class ChattingViewModel: RxViewModelType {
             socketError: socketError.asDriver(onErrorDriveWith: .never()),
             buttonState: buttonState.asDriver(),
             currentTextState: currentTextState.asDriver(),
-            userProfile: userProfile.asDriver(onErrorDriveWith: .never())
+            userProfile: userProfile.asDriver(onErrorDriveWith: .never()),
+            outputIamgeDataDriver: imageStill.asDriver(),
+            maxCout: outputImageMaxCount.asDriver()
         )
     }
     

@@ -113,4 +113,34 @@ final class DateManager {
         let string = dateformatter.string(from: date)
         return string
     }
+    
+    func differenceDateFormatString(_ date: Date) -> String{
+    
+        var calendar = Calendar.current
+        
+        dateformatter.formatOptions = [
+            .withInternetDateTime,
+            .withFractionalSeconds
+        ]
+        
+        calendar.timeZone = .current
+        
+        let diffComponents = calendar
+            .dateComponents(
+                [.year, .month, .day, .hour, .minute],
+                from: date,
+                to: .now
+            )
+        
+        guard let year = diffComponents.year,
+              let month = diffComponents.month,
+              let day = diffComponents.day,
+              let hour = diffComponents.hour,
+              let min = diffComponents.minute else {
+            print("날짜 계산 실패")
+            return ""
+        }
+        
+        return formattedDiff(year: year, month: month, day: day, hour: hour, min: min)
+    }
 }
