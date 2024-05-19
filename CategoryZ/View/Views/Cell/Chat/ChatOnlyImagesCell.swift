@@ -12,7 +12,7 @@ import Then
 final class ChatOnlyImagesCell: BaseTableViewCell {
     
     private
-    let chatBoxImageView = UIImageView()
+    let emptyView = UIView()
     
     private
     let imageCollectionTypeView = BlockImageSetView()
@@ -31,7 +31,7 @@ final class ChatOnlyImagesCell: BaseTableViewCell {
     
     override func configureHierarchy() {
         contentView.addSubview(profileImageView)
-        contentView.addSubview(chatBoxImageView)
+        contentView.addSubview(emptyView)
         contentView.addSubview(imageCollectionTypeView)
         contentView.addSubview(dateLabel)
     }
@@ -42,21 +42,21 @@ final class ChatOnlyImagesCell: BaseTableViewCell {
             make.bottom.equalToSuperview().inset(10)
             make.leading.equalToSuperview().offset(10)
         }
-        chatBoxImageView.snp.makeConstraints { make in
+        emptyView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.bottom.equalToSuperview().inset(10)
             make.leading.equalTo(profileImageView.snp.trailing).offset(20)
 //            make.trailing.equalToSuperview().dividedBy(2)
         }
         dateLabel.snp.makeConstraints { make in
-            make.leading.equalTo(chatBoxImageView.snp.trailing)
-            make.bottom.equalTo(chatBoxImageView)
+            make.leading.equalTo(emptyView.snp.trailing)
+            make.bottom.equalTo(emptyView)
         }
         imageCollectionTypeView.snp.makeConstraints { make in
-            make.horizontalEdges.top.equalTo(chatBoxImageView).inset(10)
-            make.width.equalTo(230)
-            make.height.equalTo(230)
-            make.bottom.equalTo(chatBoxImageView).inset(24)
+            make.horizontalEdges.top.equalTo(emptyView).inset(10)
+            make.width.equalTo(200)
+            make.height.equalTo(200)
+            make.bottom.equalTo(emptyView).inset(24)
         }
     }
     
@@ -74,16 +74,31 @@ extension ChatOnlyImagesCell {
         dateLabel.text = DateManager.shared.differenceDateFormatString(model.createAt)
         
         let height: CGFloat
-        
+        let width: CGFloat
         switch imageFiles.count {
-        case 1: height = 230
-        case 2, 3: height = 200
-        case 4, 5: height = 270
-        default: height = 250
+        case 1: 
+            height = 180
+            width = 180
+        case 2:
+            height = 100
+            width = 200
+        case 3:
+            height = 120
+            width = 210
+        case 4:
+            height = 200
+            width = 200
+        case 5:
+            height = 200
+            width = 230
+        default:
+            height = 200
+            width = 200
         }
         
         imageCollectionTypeView.snp.updateConstraints { make in
             make.height.equalTo(height)
+            make.width.equalTo(width)
         }
         imageCollectionTypeView.setModel(imageFiles)
     }
@@ -100,12 +115,14 @@ extension ChatOnlyImagesCell {
 
 
 extension ChatOnlyImagesCell {
+    
+    private
     func remakeLayoutFor(isMe: Bool) {
         if isMe {
             profileImageView.isHidden = true
             profileImageView.snp.removeConstraints()
             
-            chatBoxImageView.snp.remakeConstraints { make in
+            emptyView.snp.remakeConstraints { make in
                 make.top.equalToSuperview().offset(10)
                 make.bottom.equalToSuperview().inset(10)
                 make.trailing.equalToSuperview().inset(20)
@@ -113,12 +130,12 @@ extension ChatOnlyImagesCell {
             }
             
             dateLabel.snp.remakeConstraints { make in
-                make.trailing.equalTo(chatBoxImageView.snp.leading).offset( -10 )
-                make.bottom.equalTo(chatBoxImageView)
+                make.trailing.equalTo(emptyView.snp.leading).offset( -10 )
+                make.bottom.equalTo(emptyView)
                     .inset(20)
             }
         } else {
-            chatBoxImageView.snp.remakeConstraints{ make in
+            emptyView.snp.remakeConstraints{ make in
                 make.top.equalToSuperview().offset(10)
                 make.bottom.equalToSuperview().inset(10)
                 make.leading.equalTo(profileImageView.snp.trailing).offset(20)
@@ -132,8 +149,8 @@ extension ChatOnlyImagesCell {
             }
             
             dateLabel.snp.remakeConstraints { make in
-                make.leading.equalTo(chatBoxImageView.snp.trailing).offset(10)
-                make.bottom.equalTo(chatBoxImageView).inset(20)
+                make.leading.equalTo(emptyView.snp.trailing).offset(10)
+                make.bottom.equalTo(emptyView).inset(20)
             }
             
             profileImageView.isHidden = false
