@@ -28,6 +28,9 @@ final class ChattingListViewModel: RxViewModelType {
     private
     let repository = RealmRepository()
     
+    private
+    let myId = UserIDStorage.shared.userID
+    
     struct Input {
         let viewDidAppear: Observable<Void>
     }
@@ -46,6 +49,8 @@ final class ChattingListViewModel: RxViewModelType {
         
         let networkError = PublishRelay<NetworkError> ()
         
+        let dateError = PublishRelay<DateManagerError> ()
+        
         RealmServiceManager.shared.observeForRoom { result in
             switch result {
             case .success(let success):
@@ -63,6 +68,18 @@ final class ChattingListViewModel: RxViewModelType {
                     router: .Chatting(.myChatRooms)
                 )
             })
+            .withUnretained(self)
+            .map({ owner, result in
+                if owner.myId == nil {
+                    networkError.accept(
+                        .loginError(
+                            statusCode: 419,
+                            description: "loginError"
+                        )
+                    )
+                }
+                return result
+            })
             .bind(with: self) { owner, result in
                 switch result {
                 case .success(let model):
@@ -75,7 +92,36 @@ final class ChattingListViewModel: RxViewModelType {
         
         successRoomList
             .bind(with: self) { owner, model in
-                
+
+                model.chatRoomList.forEach { model in
+                    
+                    let create = DateManager.shared.makeStringToDate(model.createdAt)
+                    
+                    guard case .success(let create) = create else {
+                        dateError.accept(.failTransform)
+                        return
+                    }
+                    
+                    let other = model.participants.first { $0.userID != owner.myId }
+                    
+                    guard let other else { return }
+                    
+                    var contents: String?
+                    
+                    if !((model.lastChat?.files.isEmpty) != nil) {
+                        contents = "이미지"
+                    } else {
+                        contents = model.lastChat?.content
+                    }
+                    
+                    owner.repository.roomUpdate(
+                        id: model.roomID,
+                        createAt: create,
+                        otherUserName: other.nick,
+                        otherUserProfile: other.profileImage,
+                        lastChatString: contents
+                    )
+                }
             }
             .disposed(by: disposeBag)
         

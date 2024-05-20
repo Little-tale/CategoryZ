@@ -220,24 +220,46 @@ extension RealmRepository {
     @discardableResult
     func roomUpdate(
         id: String,
-        createAt: Date,
-        updateAt: Date,
-        otherUserName: String,
+        createAt: Date? = nil,
+        updateAt: Date? = nil,
+        otherUserName: String? = nil,
         otherUserProfile: String?,
-        lastChatWatch: Date
+        lastChatWatch: Date? = nil,
+        lastChatString: String? = nil
     ) -> ChatRoomRealmModel? {
         guard let realm else { return nil }
         do {
             try realm.write {
-                realm.create(ChatRoomRealmModel.self,
-                             value: [
-                                "id": id,
-                                "createAt":createAt,
-                                "updateAt": updateAt,
-                                "otherUserName": otherUserName,
-                                "otherUserProfile": otherUserProfile as Any,
-                                "lastChatWatch": lastChatWatch],
-                             update: .modified)
+                
+                var value: [String: Any] = [
+                    "id": id,
+                    "otherUserProfile": otherUserProfile as Any
+                ]
+                if let otherUserName {
+                    value["otherUserName"] = otherUserName
+                }
+                
+                if let createAt {
+                    value["createAt"] = createAt
+                }
+                
+                if let updateAt {
+                    value["updateAt"] = updateAt
+                }
+                
+                if let lastChatWatch {
+                    value["lastChatWatch"] = lastChatWatch
+                }
+                
+                if let lastChatString {
+                    value["serverLastChat"] = lastChatString
+                }
+                
+                realm.create(
+                    ChatRoomRealmModel.self,
+                    value: value,
+                    update: .modified
+                )
             }
             
             return realm.object(ofType: ChatRoomRealmModel.self, forPrimaryKey: id)

@@ -82,6 +82,7 @@ final class ChattingViewModel: RxViewModelType {
         
         var ifChatRoomModel: ChatRoomModel? = nil
         var ifChatRoomRealmModel: ChatRoomRealmModel? = nil
+        var otherUserId: String? = nil
         
         let userProfile = PublishRelay<ProfileModel> ()
         
@@ -116,6 +117,7 @@ final class ChattingViewModel: RxViewModelType {
         // 렘 데이터 바라볼 트리거
         let startRealmData = PublishRelay<ChatRoomRealmModel> ()
         
+        let ifneedRoomUpdate = PublishRelay<ChatRoomRealmModel> ()
         
         let buttonState = BehaviorRelay(value: false)
         
@@ -149,7 +151,7 @@ final class ChattingViewModel: RxViewModelType {
         input
             .userIDRelay
             .flatMapLatest({ userId in
-                
+                otherUserId = userId
                 let query = ChatsRoomQuery(opponent_id: userId)
                 return NetworkManager.fetchNetwork(
                     model: ChatRoomModel.self,
@@ -173,6 +175,48 @@ final class ChattingViewModel: RxViewModelType {
                     ifChatRoomModel = model
                     chatRoomPub.accept(model)
                     ChatSocketManager.shared.setID(id: model.roomID)
+                case .failure(let error):
+                    owner.publishNetError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        ifneedRoomUpdate
+            .filter({ _ in
+                otherUserId != nil
+            })
+            .map({ _ in
+                return otherUserId!
+            })
+            .flatMapLatest({ model in
+                
+                let query = ChatsRoomQuery(opponent_id: model)
+                return NetworkManager.fetchNetwork(
+                    model: ChatRoomModel.self,
+                    router: .Chatting(
+                        .createChatRoom(query: query)
+                    )
+                )
+            })
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let model):
+                    
+                    let other = model.participants.first {
+                        $0.userID != owner.myID!
+                    }
+                    let update = DateManager.shared.makeStringToDate(model.updatedAt)
+                    
+                    guard case .success(let update) = update else {
+                        owner.dateError.accept(.failTransform)
+                        return
+                    }
+                    
+                    owner.repository.roomUpdate(
+                        id: model.roomID,
+                        updateAt: update,
+                        otherUserProfile: other?.profileImage
+                    )
                 case .failure(let error):
                     owner.publishNetError.accept(error)
                 }
@@ -240,30 +284,6 @@ final class ChattingViewModel: RxViewModelType {
                 chatReadTrigger.accept(ifChatRoomModel!)
             }
             .disposed(by: disposeBag)
-            
-        
-        /*
-         //
-         owner.repository.findById(
-             type: ChatRoomRealmModel.self,
-             id: model.roomID
-         )
-         //
-         .bind(with: self) {owner, result in
-             switch result {
-             case .success(let modelOREmpty):
-                 
-                 // 렘의 룸을 조회한 결과를
-                 ifChatRoomRealmModel = modelOREmpty
-                 
-                 chatReadTrigger.accept(ifChatRoomModel!)
-             case .failure(let error):
-                 owner.realmError.accept(error)
-             }
-         }
-         .disposed(by: disposeBag)
-         */
-        
         
         // 3. 채팅 내역 조회
         chatReadTrigger
@@ -323,13 +343,6 @@ final class ChattingViewModel: RxViewModelType {
                 }
             }
             .disposed(by: disposeBag)
-        /*
-         if model.chatList.isEmpty {
-             if let ifChatRoomModel {
-                 startRealmData.accept(ifChatRoomModel.roomID)
-             }
-         }
-         */
         
         // 렘모델을 먼저 반영후
         moreChatOnceTrigger
@@ -436,14 +449,6 @@ final class ChattingViewModel: RxViewModelType {
         // 6. 소켓 시작
         socketStartTrigger
             .bind(with: self) {owner, model in
-                /*
-                 if let model {
-                     owner.repository.roomUpdate(
-                         roomId: ifChatRoomModel!.roomID,
-                         lastChatString: model.contentText ?? "이미지"
-                     )
-                 }
-                 */
                 ChatSocketManager.shared.startSocket()
             }
             .disposed(by: disposeBag)
@@ -462,6 +467,9 @@ final class ChattingViewModel: RxViewModelType {
                 }
             }
             .disposed(by: disposeBag)
+        
+      
+        
         // 8. 소켓을 통해 받은 모델을 렘에 반영 (이땐 무조건. 채팅방 렘테이블은 존재)
         socketGetData
             .filter{ _ in
@@ -483,7 +491,7 @@ final class ChattingViewModel: RxViewModelType {
                         switch result {
                         case .success(let success):
                             print("좋아요!")
-                            
+                            ifneedRoomUpdate.accept(success)
                             break
                         case .failure(let error):
                             owner.realmError.accept(error)

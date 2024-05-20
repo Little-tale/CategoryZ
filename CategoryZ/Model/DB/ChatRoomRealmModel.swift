@@ -18,7 +18,7 @@ final class ChatRoomRealmModel: Object, RealmFindType {
     var createAt: Date
     
     @Persisted
-    var updateAt: Date
+    var updateAt: Date?
     
     @Persisted
     var otherUserName: String
@@ -39,7 +39,7 @@ final class ChatRoomRealmModel: Object, RealmFindType {
     init(
         roomId: String,
         createAt: Date,
-        updateAt: Date,
+        updateAt: Date?,
         otherUserName: String,
         otherUserProfile: String? = nil,
         lastChatWatch: Date
