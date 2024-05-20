@@ -121,6 +121,8 @@ final class ChattingViewModel: RxViewModelType {
         
         let currentTextState = BehaviorRelay(value: "")
         
+        // 긴급 패치 서버에 받은 업데이트 가 반영이 안됨으로 긴급으로 우회적으로 대처
+        
         // 0. 0번은 텍스트 변경 감지와 버튼의 상태 관리
         input.inputText.orEmpty
             .bind(with: self) { owner, text in
@@ -198,30 +200,69 @@ final class ChattingViewModel: RxViewModelType {
         // 단 한번만 이루어질것
         chatRoomPub
             .take(1)
-            .withUnretained(self)
             .filter({ _ in
                 print("예상외가 아니길 \(ifChatRoomModel != nil)")
                 return ifChatRoomModel != nil // 룸 자체가 없다면 안됨
             })
-            .map({ owner, model in
-                owner.repository.findById(
-                    type: ChatRoomRealmModel.self,
-                    id: model.roomID
-                )
-            })
-            .bind(with: self) {owner, result in
-                switch result {
-                case .success(let modelOREmpty):
-                    
-                    // 렘의 룸을 조회한 결과를
-                    ifChatRoomRealmModel = modelOREmpty
-                    
-                    chatReadTrigger.accept(ifChatRoomModel!)
-                case .failure(let error):
-                    owner.realmError.accept(error)
+            .bind(with: self) { owner, room in
+                let cratedateResult = DateManager.shared.makeStringToDate(room.createdAt)
+                let updateAtResult = DateManager.shared.makeStringToDate(room.updatedAt)
+                
+                guard case .success(let create) = cratedateResult else {
+                    owner.dateError.accept(.failTransform)
+                    return
                 }
+
+                guard case .success(let update) = updateAtResult else {
+                    owner.dateError.accept(.failTransform)
+                    return
+                }
+                
+                guard let otherUser = room.participants.first(where: { $0.userID != owner.myID! }) else {
+                    print("사실상 불가능한 에러")
+                    owner.publishNetError.accept(.loginError(
+                        statusCode: 419,
+                        description: "치명적 이슈")
+                    )
+                    return
+                }
+                
+                let result = owner.repository.roomUpdate(
+                    id: room.roomID,
+                    createAt: create,
+                    updateAt: update,
+                    otherUserName: otherUser.nick,
+                    otherUserProfile: otherUser.profileImage,
+                    lastChatWatch: Date()
+                )
+                
+                ifChatRoomRealmModel = result
+                chatReadTrigger.accept(ifChatRoomModel!)
             }
             .disposed(by: disposeBag)
+            
+        
+        /*
+         //
+         owner.repository.findById(
+             type: ChatRoomRealmModel.self,
+             id: model.roomID
+         )
+         //
+         .bind(with: self) {owner, result in
+             switch result {
+             case .success(let modelOREmpty):
+                 
+                 // 렘의 룸을 조회한 결과를
+                 ifChatRoomRealmModel = modelOREmpty
+                 
+                 chatReadTrigger.accept(ifChatRoomModel!)
+             case .failure(let error):
+                 owner.realmError.accept(error)
+             }
+         }
+         .disposed(by: disposeBag)
+         */
         
         
         // 3. 채팅 내역 조회
@@ -269,7 +310,6 @@ final class ChattingViewModel: RxViewModelType {
                 return !model.chatList.isEmpty || ifChatRoomModel != nil
             }
             .bind(with: self) { owner, model in
-                
                 owner.createChatBoxes(
                     model.chatList,
                     isMe: owner.myID!
@@ -596,7 +636,8 @@ final class ChattingViewModel: RxViewModelType {
                 let model = ifChatRoomRealmModel!
                 
                 owner.repository.roomUpdate(
-                    id: model.id,
+                    id: model.id, 
+                    createAt: model.createAt,
                     updateAt: model.updateAt,
                     otherUserName: model.otherUserName,
                     otherUserProfile: model.otherUserProfile,

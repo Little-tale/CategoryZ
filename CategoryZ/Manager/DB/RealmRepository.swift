@@ -205,29 +205,33 @@ extension RealmRepository {
 }
 
 extension RealmRepository {
+    
+    @discardableResult
     func roomUpdate(
         id: String,
+        createAt: Date,
         updateAt: Date,
         otherUserName: String,
         otherUserProfile: String?,
-        lastChatWatch: Date)
-    {
-        guard let realm else { return }
+        lastChatWatch: Date
+    ) -> ChatRoomRealmModel? {
+        guard let realm else { return nil }
         do {
             try realm.write {
                 realm.create(ChatRoomRealmModel.self,
                              value: [
                                 "id": id,
+                                "createAt":createAt,
                                 "updateAt": updateAt,
                                 "otherUserName": otherUserName,
-                                "otherUserProfile": otherUserProfile,
-                                "lastChatWatch": lastChatWatch]
-                             ,
-                             update: .modified
-                )
+                                "otherUserProfile": otherUserProfile as Any,
+                                "lastChatWatch": lastChatWatch],
+                             update: .modified)
             }
+            
+            return realm.object(ofType: ChatRoomRealmModel.self, forPrimaryKey: id)
         } catch {
-            return
+            return nil
         }
     }
 }
