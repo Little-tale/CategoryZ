@@ -72,6 +72,7 @@ final class ChattingViewModel: RxViewModelType {
         let userProfile: Driver<ProfileModel>
         let outputIamgeDataDriver: Driver<[ImageItem]>
         let maxCout: Driver<Int>
+        let imageSendSuccess: Driver<Void>
     }
     
     func transform(_ input: Input) -> Output {
@@ -88,6 +89,7 @@ final class ChattingViewModel: RxViewModelType {
         // 이미지 스틸
         let imageStill = BehaviorRelay<[ImageItem]> (value: [])
         let outputImageMaxCount = BehaviorRelay(value: 5)
+        let iamgeSendSuccess = PublishRelay<Void> ()
         
         // 채팅방(넷) 모델
         let chatRoomPub = PublishRelay<ChatRoomModel> ()
@@ -537,7 +539,9 @@ final class ChattingViewModel: RxViewModelType {
             }
             .bind(with: self) { owner, result in
                 switch result {
-                case .success(let success):
+                case .success(_):
+                    imageStill.accept([])
+                    iamgeSendSuccess.accept(())
                     print("서버엔 반영됨")
                     break
                 case .failure(let error):
@@ -580,7 +584,8 @@ final class ChattingViewModel: RxViewModelType {
             currentTextState: currentTextState.asDriver(),
             userProfile: userProfile.asDriver(onErrorDriveWith: .never()),
             outputIamgeDataDriver: imageStill.asDriver(),
-            maxCout: outputImageMaxCount.asDriver()
+            maxCout: outputImageMaxCount.asDriver(),
+            imageSendSuccess: iamgeSendSuccess.asDriver(onErrorJustReturn: ())
         )
     }
     

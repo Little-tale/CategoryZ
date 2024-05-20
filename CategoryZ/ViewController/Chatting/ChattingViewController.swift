@@ -214,6 +214,12 @@ extension ChattingViewController {
             }
             .disposed(by: disPoseBag)
         
+        output.imageSendSuccess
+            .drive(with: self) { owner, _ in
+                owner.homeView.disSetImageMode()
+            }
+            .disposed(by: disPoseBag)
+        
     }
 }
 

@@ -120,6 +120,7 @@
 		7BA0E0EC2BCD7664002F0516 /* CustomCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0EB2BCD7664002F0516 /* CustomCollectionViewLayout.swift */; };
 		7BA0E0EF2BCD76D0002F0516 /* PostRegViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0EE2BCD76D0002F0516 /* PostRegViewModel.swift */; };
 		7BA0E0F12BCE0791002F0516 /* KingFisherNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0F02BCE0791002F0516 /* KingFisherNet.swift */; };
+		7BB81F4A2BFB22C5004B75CA /* CustomDebouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB81F492BFB22C5004B75CA /* CustomDebouncer.swift */; };
 		7BC06FD02BE0190F00651529 /* CheckUserDeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC06FCF2BE0190F00651529 /* CheckUserDeleteViewController.swift */; };
 		7BC06FD22BE019B100651529 /* CheckedUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC06FD12BE019B100651529 /* CheckedUserView.swift */; };
 		7BC06FD42BE01A6400651529 /* DeleteUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC06FD32BE01A6400651529 /* DeleteUserViewModel.swift */; };
@@ -329,6 +330,7 @@
 		7BA0E0EB2BCD7664002F0516 /* CustomCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewLayout.swift; sourceTree = "<group>"; };
 		7BA0E0EE2BCD76D0002F0516 /* PostRegViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRegViewModel.swift; sourceTree = "<group>"; };
 		7BA0E0F02BCE0791002F0516 /* KingFisherNet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingFisherNet.swift; sourceTree = "<group>"; };
+		7BB81F492BFB22C5004B75CA /* CustomDebouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDebouncer.swift; sourceTree = "<group>"; };
 		7BC06FCF2BE0190F00651529 /* CheckUserDeleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserDeleteViewController.swift; sourceTree = "<group>"; };
 		7BC06FD12BE019B100651529 /* CheckedUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckedUserView.swift; sourceTree = "<group>"; };
 		7BC06FD32BE01A6400651529 /* DeleteUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserViewModel.swift; sourceTree = "<group>"; };
@@ -594,6 +596,7 @@
 				7BCF4A782BC7EBAE00BCE635 /* TextValid */,
 				7B11DC822BC58C510055D423 /* Network */,
 				7BD7FE7B2BE4F77A0016C626 /* RegularExpressionManager.swift */,
+				7BB81F492BFB22C5004B75CA /* CustomDebouncer.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1628,6 +1631,7 @@
 				7BD1D8C12BD53BBD00B5521F /* MorePageViewController.swift in Sources */,
 				7BA0E0E62BCD7513002F0516 /* OnlyImageCollectionViewCell.swift in Sources */,
 				7BCF4A3C2BC6873600BCE635 /* AccessTokkenAdapter.swift in Sources */,
+				7BB81F4A2BFB22C5004B75CA /* CustomDebouncer.swift in Sources */,
 				7BA0E0E82BCD7593002F0516 /* PlaceholderTextView.swift in Sources */,
 				7BC43D5D2BE79594001A109B /* ProfileModel.swift in Sources */,
 				7BD1D8E82BD6596F00B5521F /* UserProfileImageModifyViewController.swift in Sources */,
