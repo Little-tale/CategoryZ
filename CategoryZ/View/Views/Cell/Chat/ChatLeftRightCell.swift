@@ -101,7 +101,7 @@ extension ChatLeftRightCell {
             chatBoxImageView.snp.remakeConstraints { make in
                 make.top.equalToSuperview().offset(10)
                 make.bottom.equalToSuperview().inset(10)
-                make.leading.greaterThanOrEqualToSuperview().dividedBy(2)
+                make.width.lessThanOrEqualToSuperview().dividedBy(2)
                 make.trailing.equalToSuperview().inset(20)
             }
             
@@ -115,7 +115,7 @@ extension ChatLeftRightCell {
                 make.top.equalToSuperview().offset(10)
                 make.bottom.equalToSuperview().inset(10)
                 make.leading.equalTo(profileImageView.snp.trailing).offset(20)
-                make.trailing.lessThanOrEqualToSuperview().dividedBy(2)
+                make.width.lessThanOrEqualToSuperview().dividedBy(2)
             }
             
             profileImageView.snp.remakeConstraints { make in

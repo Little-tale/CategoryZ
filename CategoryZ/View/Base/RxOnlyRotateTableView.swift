@@ -54,29 +54,33 @@ final class RxOnlyRotateTableView: RxBaseView {
     
     override func configureHierarchy() {
         addSubview(tableView)
-        addSubview(commentTextView)
         addSubview(imageAddButton)
         addSubview(cancelButton)
+        addSubview(commentTextView)
         addSubview(imageCollectionView)
         subscribe()
     }
     
     override func configureLayout() {
         
-        commentTextView.snp.makeConstraints { make in
-            make.trailing.equalTo(safeAreaLayoutGuide)
-            make.leading.equalTo(imageAddButton.snp.trailing)
-            // 키보드가 있을 때 위치
-            make.bottom.equalTo(keyboardLayoutGuide.snp.top).priority(.high)
-        }
+        
         imageAddButton.snp.makeConstraints { make in
-            make.verticalEdges.equalTo(commentTextView).inset(12)
-            make.width.equalTo(imageAddButton.snp.height)
+            make.centerY.equalTo(commentTextView.regButton)
+            make.size.equalTo(30)
             make.leading.equalTo(safeAreaLayoutGuide).offset(6)
         }
         
         cancelButton.snp.makeConstraints { make in
-            make.edges.equalTo(imageAddButton)
+            make.centerY.equalTo(commentTextView.regButton)
+            make.size.equalTo(30)
+            make.leading.equalTo(safeAreaLayoutGuide).offset(6)
+        }
+        
+        commentTextView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview()
+            make.leading.equalTo(imageAddButton.snp.trailing)
+            // 키보드가 있을 때 위치
+            make.bottom.equalTo(keyboardLayoutGuide.snp.top).priority(.high)
         }
         
         imageCollectionView.snp.makeConstraints { make in
@@ -111,6 +115,7 @@ final class RxOnlyRotateTableView: RxBaseView {
         }
         
     }
+    
     func disSetImageMode() {
         imageCollectionView.isHidden = true
         commentTextView.placholderTextLabel.isHidden = false
@@ -129,27 +134,9 @@ final class RxOnlyRotateTableView: RxBaseView {
     
     private
     func subscribe() {
-        autoResizingTextView()
-        
         commentTextView.textView.rx.text.orEmpty
             .bind(with: self) { owner, text in
                 owner.commentTextView.placholderTextLabel.isHidden = text != ""
-            }
-            .disposed(by: disposedBag)
-    }
-}
-
-
-extension RxOnlyRotateTableView {
-    private
-    func autoResizingTextView() {
-        commentTextView.textView.rx.text.orEmpty
-            .observe(on: MainScheduler.instance)
-            .bind(with: self) { owner, text in
-                let size = CGSize(width: owner.commentTextView.textView.frame.width, height: CGFloat.infinity)
-                let estimate = owner.commentTextView.textView.sizeThatFits(size)
-
-                owner.commentTextView.textViewHeightConstraint?.update(offset: max(40,min(estimate.height, 200)))
             }
             .disposed(by: disposedBag)
     }

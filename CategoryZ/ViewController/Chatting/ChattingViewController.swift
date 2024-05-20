@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import SnapKit
 
 final class ChattingViewController: RxHomeBaseViewController<RxOnlyRotateTableView> {
     private
@@ -22,6 +23,8 @@ final class ChattingViewController: RxHomeBaseViewController<RxOnlyRotateTableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // chattingView AutoLayout
+        autoResizingTextView()
     }
     
     func setModel(_ userID: String) {
@@ -270,6 +273,23 @@ extension ChattingViewController {
         models
             .drive(with: self) { owner, models in
                 print(models)
+            }
+            .disposed(by: disPoseBag)
+    }
+}
+
+extension ChattingViewController {
+    private
+    func autoResizingTextView() {
+        homeView.commentTextView.textView.rx.text.orEmpty
+            .observe(on: MainScheduler.instance)
+            .bind(with: self) { owner, text in
+                let size = CGSize(width: owner.homeView.commentTextView.textView.frame.width, height: CGFloat.infinity)
+                print("사이즈 \(size)")
+                
+                let estimate = owner.homeView.commentTextView.textView.sizeThatFits(size)
+                print("예상 사이즈 \(estimate)")
+                owner.homeView.commentTextView.textViewHeightConstraint?.update(offset: max(40,min(estimate.height, 200)))
             }
             .disposed(by: disPoseBag)
     }
