@@ -74,4 +74,18 @@ extension JHImage {
         }
     }
     
+    
+    enum ChatTap {
+        case dis
+        case select
+        
+        var image: UIImage? {
+            switch self {
+            case .dis:
+                return UIImage(systemName: "paperplane.circle")
+            case .select:
+                return UIImage(systemName: "paperplane.circle.fill")
+            }
+        }
+    }
 }

@@ -19,11 +19,6 @@ final class CategoryZTabbarController: UITabBarController, UITabBarControllerDel
     // 3. 프로필
     let disposeBag = DisposeBag()
     
-    let addButton = UIButton().then {
-        $0.backgroundColor = JHColor.likeColor
-        $0.frame.size = CGSize(width: 60, height: 60)
-    }
-    
     let networkMonitor = NetWorkServiceMonitor.shared
     
     override func viewDidLoad() {
@@ -43,25 +38,51 @@ final class CategoryZTabbarController: UITabBarController, UITabBarControllerDel
 
         // SNSPhotoViewController
         let controller1 = SNSPhotoViewController()
-        let tabItem1 = UITabBarItem(title: nil, image: homeImage, selectedImage: homeImage)
+        let tabItem1 = UITabBarItem(
+            title: nil,
+            image: homeImage,
+            selectedImage: homeImage
+        )
+        
         tabItem1.tag = 1
         controller1.tabBarItem = tabItem1
         let nvc1 = UINavigationController(rootViewController: controller1)
         
         // ADDViewController But is Empty cus if Presentation
         let dummyVc = UIViewController()
-        let tabbarItem2 = UITabBarItem(title: nil, image: UIImage(systemName: "plus.circle"), selectedImage: UIImage(systemName: "plus.circle.fill"))
+        let tabbarItem2 = UITabBarItem(
+            title: nil,
+            image: UIImage(systemName: "plus.circle"),
+            selectedImage: UIImage(systemName: "plus.circle.fill")
+        )
         dummyVc.tabBarItem = tabbarItem2
+        
+        let controller4 = ChattingListViewController()
+        
+        let tabbarItem4 = UITabBarItem(
+            title: nil,
+            image: JHImage.ChatTap.dis.image,
+            selectedImage: JHImage.ChatTap.select.image
+        )
+        tabbarItem4.tag = 3
+        controller4.tabBarItem = tabbarItem4
+        let nv4 = UINavigationController(rootViewController: controller4)
+        
         
         // UserProfileViewController
         let controller3 = UserProfileViewController()
-        let tabItem3 = UITabBarItem(title: nil, image: profileImage, selectedImage: profileImage)
-        tabItem3.tag = 3
+        let tabItem3 = UITabBarItem(
+            title: nil,
+            image: profileImage,
+            selectedImage: profileImage
+        )
+        
+        tabItem3.tag = 4
         controller3.tabBarItem = tabItem3
         
         let nvc2 = UINavigationController(rootViewController: controller3)
         
-        viewControllers = [nvc1, dummyVc, nvc2]
+        viewControllers = [nvc1, dummyVc, nv4, nvc2]
         tabBar.tintColor = JHColor.black
     }
     
