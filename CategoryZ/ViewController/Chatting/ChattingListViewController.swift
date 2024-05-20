@@ -48,6 +48,13 @@ final class ChattingListViewController: RxBaseViewController {
             viewDidAppear: viewDidApear
         )
         
+        let output = viewModel.transform(input)
+            
+        output.chatRoomModels
+            .drive(with: self) { owner, models in
+                print(models.count)
+            }
+            .disposed(by: disPoseBag)
     }
 }
 

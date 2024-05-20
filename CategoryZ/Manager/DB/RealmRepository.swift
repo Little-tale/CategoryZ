@@ -128,12 +128,23 @@ final class RealmRepository: RealmRepositoryType {
                 chats.forEach { chat in
                     room.chatBoxs.append(chat)
                 }
+                
+                let result = room.chatBoxs.sorted(byKeyPath: "createAt", ascending: false)
+                if let result =  result.first {
+                    
+                    if !result.imageFiles.isEmpty {
+                        room.serverLastChat = "이미지"
+                    } else {
+                        if let text = result.contentText{
+                            room.serverLastChat = text
+                        }
+                    }
+                }
             }
             return .success(room)
         } catch {
             return .failure(.failAdd)
         }
-        
     }
     
     
@@ -234,4 +245,24 @@ extension RealmRepository {
             return nil
         }
     }
+    
+    @discardableResult
+    func roomUpdate(roomId: String, lastChatString: String) -> ChatRoomRealmModel? {
+        guard let realm else { return nil }
+        do {
+            try realm.write {
+                realm.create(ChatRoomRealmModel.self,
+                             value: [
+                                "id": roomId,
+                                "serverLastChat": lastChatString
+                                ],
+                             update: .modified)
+            }
+            
+            return realm.object(ofType: ChatRoomRealmModel.self, forPrimaryKey: roomId)
+        } catch {
+            return nil
+        }
+    }
+    
 }

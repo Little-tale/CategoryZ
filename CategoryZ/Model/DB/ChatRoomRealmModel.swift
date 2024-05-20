@@ -32,6 +32,9 @@ final class ChatRoomRealmModel: Object, RealmFindType {
     @Persisted
     var lastChatWatch: Date
     
+    @Persisted
+    var serverLastChat: String
+    
     convenience
     init(
         roomId: String,
@@ -49,6 +52,7 @@ final class ChatRoomRealmModel: Object, RealmFindType {
         self.otherUserName = otherUserName
         self.otherUserProfile = otherUserProfile
         self.lastChatWatch = lastChatWatch
+        self.serverLastChat = ""
     }
     
     override class func primaryKey() -> String? {

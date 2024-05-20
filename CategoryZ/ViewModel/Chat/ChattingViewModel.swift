@@ -111,10 +111,10 @@ final class ChattingViewModel: RxViewModelType {
         let nilButmakedRoomTrigger = PublishRelay< (ChatRoomRealmModel, [ChatBoxRealmModel])> ()
         
         // 소켓 연결 트리거
-        let socketStartTrigger = PublishRelay<Void> ()
+        let socketStartTrigger = PublishRelay<ChatBoxRealmModel?> ()
         
         // 렘 데이터 바라볼 트리거
-        let startRealmData = PublishRelay<String> ()
+        let startRealmData = PublishRelay<ChatRoomRealmModel> ()
         
         
         let buttonState = BehaviorRelay(value: false)
@@ -352,7 +352,7 @@ final class ChattingViewModel: RxViewModelType {
                         switch result {
                         case .success(let success):
                             print("반영 성공 : \(success)")
-                            startRealmData.accept(success.id)
+                            startRealmData.accept(success)
                             
                         case .failure(let error):
                             owner.realmError.accept(error)
@@ -398,7 +398,7 @@ final class ChattingViewModel: RxViewModelType {
                         switch result {
                         case .success(let success):
                             print("반영 성공 : \(success)")
-                            startRealmData.accept(success.id)
+                            startRealmData.accept(success)
                             ifChatRoomRealmModel = success
                         case .failure(let error):
                             owner.realmError.accept(error)
@@ -417,15 +417,15 @@ final class ChattingViewModel: RxViewModelType {
         
         // 5 or 3.1. view반영
         startRealmData
-            .bind(with: self) {owner, id in
+            .bind(with: self) {owner, room in
                 RealmServiceManager.shared.observeChatBoxes(
-                    with: id,
+                    with: room.id,
                     ascending: false
                 ) { result in
                     switch result {
                     case .success(let success):
                         tableViewDraw.accept(success)
-                        socketStartTrigger.accept(())
+                        socketStartTrigger.accept(success.last)
                     case .failure(let error):
                         owner.realmServiceError.accept(error)
                     }
@@ -435,7 +435,15 @@ final class ChattingViewModel: RxViewModelType {
         
         // 6. 소켓 시작
         socketStartTrigger
-            .bind { _ in
+            .bind(with: self) {owner, model in
+                /*
+                 if let model {
+                     owner.repository.roomUpdate(
+                         roomId: ifChatRoomModel!.roomID,
+                         lastChatString: model.contentText ?? "이미지"
+                     )
+                 }
+                 */
                 ChatSocketManager.shared.startSocket()
             }
             .disposed(by: disposeBag)
@@ -448,6 +456,7 @@ final class ChattingViewModel: RxViewModelType {
                 switch result {
                 case .success(let model):
                     socketGetData.accept(model)
+                    
                 case .failure(let error):
                     socketError.accept(error)
                 }
@@ -474,6 +483,7 @@ final class ChattingViewModel: RxViewModelType {
                         switch result {
                         case .success(let success):
                             print("좋아요!")
+                            
                             break
                         case .failure(let error):
                             owner.realmError.accept(error)

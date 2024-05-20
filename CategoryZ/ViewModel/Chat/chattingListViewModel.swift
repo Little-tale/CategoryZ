@@ -25,6 +25,9 @@ final class ChattingListViewModel: RxViewModelType {
     
     var disposeBag = DisposeBag()
     
+    private
+    let repository = RealmRepository()
+    
     struct Input {
         let viewDidAppear: Observable<Void>
     }
@@ -36,7 +39,12 @@ final class ChattingListViewModel: RxViewModelType {
     func transform(_ input: Input) -> Output {
         
         let chatRoomModels = BehaviorRelay<[ChatRoomRealmModel]> (value: [])
+        
+        let successRoomList = PublishRelay<ChatRoomListModel> ()
+        
         let realmSearviceError = PublishRelay<RealmServiceManagerError> ()
+        
+        let networkError = PublishRelay<NetworkError> ()
         
         RealmServiceManager.shared.observeForRoom { result in
             switch result {
@@ -47,6 +55,29 @@ final class ChattingListViewModel: RxViewModelType {
             }
         }
         
+        chatRoomModels
+            .skip(1)
+            .flatMapLatest({ _ in
+                return NetworkManager.fetchNetwork(
+                    model: ChatRoomListModel.self,
+                    router: .Chatting(.myChatRooms)
+                )
+            })
+            .bind(with: self) { owner, result in
+                switch result {
+                case .success(let model):
+                    successRoomList.accept(model)
+                case .failure(let error):
+                    networkError.accept(error)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        successRoomList
+            .bind(with: self) { owner, model in
+                
+            }
+            .disposed(by: disposeBag)
         
         return Output(
             chatRoomModels: chatRoomModels.asDriver()

@@ -133,7 +133,7 @@ extension ChatSocketManager {
                     
                     chatSocketResult.onNext(.success(decoded))
                 }
-            } catch(let error) {
+            } catch(_) {
                 chatSocketResult.onNext(.failure(.JSONDecodeError))
             }
         }
