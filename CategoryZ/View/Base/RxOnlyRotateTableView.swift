@@ -34,7 +34,28 @@ final class RxOnlyRotateTableView: RxBaseView {
         $0.tintColor = JHColor.likeColor
     }
     
-    let cancelButton = UIButton().then {
+    var cancelClosure: (() -> Void)?
+    
+    var deleteClosure: (() -> Void)?
+    
+    private
+    lazy var cancelAction = UIAction( handler: {[weak self] _ in
+        self?.cancelClosure?()
+    }).then {
+        $0.title = "취소하기"
+        $0.image = JHImage.xMark
+    }
+    
+    private
+    lazy var deleteAction = UIAction( handler: {[weak self] _ in
+        self?.deleteClosure?()
+    }).then {
+        $0.title = "지우기"
+        $0.image = JHImage.trash
+    }
+    
+    private
+    lazy var cancelButton = UIButton().then {
         let resize = JHImage.xMark?.resizingImage(
             targetSize: CGSize(width: 26, height: 26)
         )
@@ -42,6 +63,8 @@ final class RxOnlyRotateTableView: RxBaseView {
         $0.setImage(template, for: .normal)
         $0.tintColor = JHColor.likeColor
         $0.isHidden = true
+        $0.menu = UIMenu(title:"메뉴", children: [cancelAction,deleteAction])
+        $0.showsMenuAsPrimaryAction = true
     }
     
     let imageCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {

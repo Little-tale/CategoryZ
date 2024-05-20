@@ -58,6 +58,7 @@ final class ChattingViewModel: RxViewModelType {
         let insertImageData: BehaviorRelay<[Data]>
         let imageModeCancelTap: PublishRelay<Void>
         let selectedImage: PublishRelay<Int>
+        let selectDelete: PublishRelay<Void>
     }
     
     struct Output {
@@ -73,6 +74,7 @@ final class ChattingViewModel: RxViewModelType {
         let outputIamgeDataDriver: Driver<[ImageItem]>
         let maxCout: Driver<Int>
         let imageSendSuccess: Driver<Void>
+        let selectDeleteAfterEmpty: Driver<Void>
     }
     
     func transform(_ input: Input) -> Output {
@@ -90,6 +92,7 @@ final class ChattingViewModel: RxViewModelType {
         let imageStill = BehaviorRelay<[ImageItem]> (value: [])
         let outputImageMaxCount = BehaviorRelay(value: 5)
         let iamgeSendSuccess = PublishRelay<Void> ()
+        let selectDeleteAfterEmpty = PublishRelay<Void> ()
         
         // 채팅방(넷) 모델
         let chatRoomPub = PublishRelay<ChatRoomModel> ()
@@ -562,6 +565,17 @@ final class ChattingViewModel: RxViewModelType {
             }
             .disposed(by: disposeBag)
         
+        input.selectDelete
+            .withLatestFrom(imageStill)
+            .map({ $0.filter { $0.isSelected == false } })
+            .bind(with: self) { owner, value in
+                imageStill.accept(value)
+                if value.isEmpty {
+                    selectDeleteAfterEmpty.accept(())
+                }
+            }
+            .disposed(by: disposeBag)
+        
         // 이미지 선택 로직
         
         input.selectedImage
@@ -569,6 +583,7 @@ final class ChattingViewModel: RxViewModelType {
                 var items = imageStill.value
                 items[index].isSelected.toggle()
                 imageStill.accept(items)
+                outputImageMaxCount.accept(5)
             }
             .disposed(by: disposeBag)
         
@@ -585,7 +600,8 @@ final class ChattingViewModel: RxViewModelType {
             userProfile: userProfile.asDriver(onErrorDriveWith: .never()),
             outputIamgeDataDriver: imageStill.asDriver(),
             maxCout: outputImageMaxCount.asDriver(),
-            imageSendSuccess: iamgeSendSuccess.asDriver(onErrorJustReturn: ())
+            imageSendSuccess: iamgeSendSuccess.asDriver(onErrorJustReturn: ()),
+            selectDeleteAfterEmpty: selectDeleteAfterEmpty.asDriver(onErrorDriveWith: .never())
         )
     }
     

@@ -59,13 +59,17 @@ extension ChattingViewController {
         
         let selectedImage = PublishRelay<Int> ()
         
+        let imageCancelForDeleteTap = PublishRelay<Void> ()
+        
         let input = ChattingViewModel
             .Input(
                 userIDRelay: userIDRelay,
                 inputText: homeView.commentTextView.textView.rx.text,
                 sendButtonTap: homeView.commentTextView.regButton.rx.tap,
                 insertImageData: insertImageData,
-                imageModeCancelTap: imageModeCancelTap, selectedImage: selectedImage
+                imageModeCancelTap: imageModeCancelTap,
+                selectedImage: selectedImage,
+                selectDelete: imageCancelForDeleteTap
             )
         
         let output = viewModel.transform(input)
@@ -196,12 +200,16 @@ extension ChattingViewController {
             .disposed(by: disPoseBag)
             
         // 취소 버튼 눌렀을때
-        homeView.cancelButton.rx.tap
-            .bind(with: self) { owner, _ in
-                imageModeCancelTap.accept(())
-                owner.homeView.disSetImageMode()
-            }
-            .disposed(by: disPoseBag)
+
+        homeView.cancelClosure = { [weak self] in
+            guard let self else { return }
+            imageModeCancelTap.accept(())
+            homeView.disSetImageMode()
+        }
+        
+        homeView.deleteClosure = {
+            imageCancelForDeleteTap.accept(())
+        }
         
         // 이미지 최대 갯수
         output.maxCout
@@ -215,6 +223,12 @@ extension ChattingViewController {
             .disposed(by: disPoseBag)
         
         output.imageSendSuccess
+            .drive(with: self) { owner, _ in
+                owner.homeView.disSetImageMode()
+            }
+            .disposed(by: disPoseBag)
+        
+        output.selectDeleteAfterEmpty
             .drive(with: self) { owner, _ in
                 owner.homeView.disSetImageMode()
             }
