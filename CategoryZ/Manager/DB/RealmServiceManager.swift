@@ -44,6 +44,17 @@ final class RealmServiceManager {
         }
     }
     
+    func stop() {
+        notification?.invalidate()
+    }
+    
+    deinit {
+        notification?.invalidate()
+    }
+}
+
+extension RealmServiceManager {
+    
     func observeChatBoxes(
         with roomID: String,
         ascending: Bool,
@@ -76,12 +87,35 @@ final class RealmServiceManager {
             }
         })
     }
-    
-    func stop() {
-        notification?.invalidate()
-    }
-    
-    deinit {
-        notification?.invalidate()
+}
+
+extension RealmServiceManager {
+    func observeForRoom(
+        onChange: @escaping (
+            Result<[ChatRoomRealmModel], RealmServiceManagerError>
+        ) -> Void
+    ) {
+        
+        guard let realm = realm else {
+            onChange(.failure(.cantInitRealm))
+            return
+        }
+        let models = realm.objects(ChatRoomRealmModel.self)
+        
+        let sorted = models.sorted(byKeyPath: "updateAt", ascending: false)
+        
+        notification = sorted.observe{ changed in
+            switch changed {
+            case .initial(let models):
+                print("현재 렘 서비스 입장(이닛) \(models)")
+                dump(models)
+                onChange(.success(Array(models)))
+            case .update(let models, _, _, _):
+                print("현재 렘 서비스 입장(업데이트) \(models)")
+                onChange(.success(Array(models)))
+            case .error(_):
+                onChange(.failure(.cantGetItem))
+            }
+        }
     }
 }

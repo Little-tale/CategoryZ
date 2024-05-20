@@ -69,7 +69,8 @@ extension ChattingViewController {
                 insertImageData: insertImageData,
                 imageModeCancelTap: imageModeCancelTap,
                 selectedImage: selectedImage,
-                selectDelete: imageCancelForDeleteTap
+                selectDelete: imageCancelForDeleteTap,
+                viewDidDisapear: rx.viewDidDisapear.map({ _ in () })
             )
         
         let output = viewModel.transform(input)

@@ -83,7 +83,6 @@ final class RealmRepository: RealmRepositoryType {
     }
     
     func findIDAndRemove<M>(type modelType: M.Type, id: M.ID) -> Result<Void, RealmError> where M: Object & RealmFindType{
-        guard let realm else { return .failure(.cantLoadRealm) }
         
         let findResult = findById(type: modelType, id: id)
         
@@ -199,7 +198,36 @@ extension RealmRepository {
             } catch {
                 observer(.success(.failure(.failAdd)))
             }
+            
             return Disposables.create()
+        }
+    }
+}
+
+extension RealmRepository {
+    func roomUpdate(
+        id: String,
+        updateAt: Date,
+        otherUserName: String,
+        otherUserProfile: String?,
+        lastChatWatch: Date)
+    {
+        guard let realm else { return }
+        do {
+            try realm.write {
+                realm.create(ChatRoomRealmModel.self,
+                             value: [
+                                "id": id,
+                                "updateAt": updateAt,
+                                "otherUserName": otherUserName,
+                                "otherUserProfile": otherUserProfile,
+                                "lastChatWatch": lastChatWatch]
+                             ,
+                             update: .modified
+                )
+            }
+        } catch {
+            return
         }
     }
 }

@@ -122,7 +122,7 @@
 		7BA0E0F12BCE0791002F0516 /* KingFisherNet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BA0E0F02BCE0791002F0516 /* KingFisherNet.swift */; };
 		7BB81F4A2BFB22C5004B75CA /* CustomDebouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB81F492BFB22C5004B75CA /* CustomDebouncer.swift */; };
 		7BB81F4C2BFB3638004B75CA /* ChattingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB81F4B2BFB3638004B75CA /* ChattingListViewController.swift */; };
-		7BB81F4E2BFB3787004B75CA /* chattingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB81F4D2BFB3787004B75CA /* chattingListViewController.swift */; };
+		7BB81F4E2BFB3787004B75CA /* chattingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB81F4D2BFB3787004B75CA /* chattingListViewModel.swift */; };
 		7BC06FD02BE0190F00651529 /* CheckUserDeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC06FCF2BE0190F00651529 /* CheckUserDeleteViewController.swift */; };
 		7BC06FD22BE019B100651529 /* CheckedUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC06FD12BE019B100651529 /* CheckedUserView.swift */; };
 		7BC06FD42BE01A6400651529 /* DeleteUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC06FD32BE01A6400651529 /* DeleteUserViewModel.swift */; };
@@ -334,7 +334,7 @@
 		7BA0E0F02BCE0791002F0516 /* KingFisherNet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KingFisherNet.swift; sourceTree = "<group>"; };
 		7BB81F492BFB22C5004B75CA /* CustomDebouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDebouncer.swift; sourceTree = "<group>"; };
 		7BB81F4B2BFB3638004B75CA /* ChattingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingListViewController.swift; sourceTree = "<group>"; };
-		7BB81F4D2BFB3787004B75CA /* chattingListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chattingListViewController.swift; sourceTree = "<group>"; };
+		7BB81F4D2BFB3787004B75CA /* chattingListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chattingListViewModel.swift; sourceTree = "<group>"; };
 		7BC06FCF2BE0190F00651529 /* CheckUserDeleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserDeleteViewController.swift; sourceTree = "<group>"; };
 		7BC06FD12BE019B100651529 /* CheckedUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckedUserView.swift; sourceTree = "<group>"; };
 		7BC06FD32BE01A6400651529 /* DeleteUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserViewModel.swift; sourceTree = "<group>"; };
@@ -860,7 +860,7 @@
 			isa = PBXGroup;
 			children = (
 				7B87BD052BF61A1E000F0F79 /* ChattingViewModel.swift */,
-				7BB81F4D2BFB3787004B75CA /* chattingListViewController.swift */,
+				7BB81F4D2BFB3787004B75CA /* chattingListViewModel.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1625,7 +1625,7 @@
 				7BA0E0D02BCD7251002F0516 /* RxCameraImageService.swift in Sources */,
 				7BCF4A512BC6DDE200BCE635 /* GetStartViewController.swift in Sources */,
 				7B838DF12BCFACC2000F2E27 /* CategoryZTabbarController.swift in Sources */,
-				7BB81F4E2BFB3787004B75CA /* chattingListViewController.swift in Sources */,
+				7BB81F4E2BFB3787004B75CA /* chattingListViewModel.swift in Sources */,
 				7B87BD582BF72D90000F0F79 /* ChatRoomRealmModel.swift in Sources */,
 				7B52E5692BF4FE1E00977EC7 /* ChatRoomModel.swift in Sources */,
 				7B52E56B2BF4FF3800977EC7 /* ChatModel.swift in Sources */,

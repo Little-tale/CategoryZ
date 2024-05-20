@@ -29,8 +29,18 @@ final class ChatRoomRealmModel: Object, RealmFindType {
     @Persisted
     var chatBoxs: List<ChatBoxRealmModel>
     
+    @Persisted
+    var lastChatWatch: Date
+    
     convenience
-    init(roomId: String, createAt: Date, updateAt: Date, otherUserName: String, otherUserProfile: String? = nil) {
+    init(
+        roomId: String,
+        createAt: Date,
+        updateAt: Date,
+        otherUserName: String,
+        otherUserProfile: String? = nil,
+        lastChatWatch: Date
+    ) {
         self.init()
         
         self.id = roomId
@@ -38,6 +48,10 @@ final class ChatRoomRealmModel: Object, RealmFindType {
         self.updateAt = updateAt
         self.otherUserName = otherUserName
         self.otherUserProfile = otherUserProfile
+        self.lastChatWatch = lastChatWatch
     }
     
+    override class func primaryKey() -> String? {
+        return "id"
+    }
 }

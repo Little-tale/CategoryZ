@@ -37,6 +37,18 @@ final class ChattingListViewController: RxBaseViewController {
         title.textColor = JHColor.black
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: title)
     }
+    
+    override func subscriver() {
+        
+        let viewDidApear = rx.viewDidAppear
+            .map { $0 == true }
+            .map { _ in return () }
+        
+        let input = ChattingListViewModel.Input(
+            viewDidAppear: viewDidApear
+        )
+        
+    }
 }
 
 extension ChattingListViewController {

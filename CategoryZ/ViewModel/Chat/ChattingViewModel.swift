@@ -59,6 +59,7 @@ final class ChattingViewModel: RxViewModelType {
         let imageModeCancelTap: PublishRelay<Void>
         let selectedImage: PublishRelay<Int>
         let selectDelete: PublishRelay<Void>
+        let viewDidDisapear: Observable<Void>
     }
     
     struct Output {
@@ -586,7 +587,25 @@ final class ChattingViewModel: RxViewModelType {
                 outputImageMaxCount.accept(5)
             }
             .disposed(by: disposeBag)
-        
+        // 뒤로간 시점을 기준으로 날짜
+        input.viewDidDisapear
+            .filter({ _ in
+                ifChatRoomRealmModel != nil
+            })
+            .bind(with: self) { owner, _ in
+                let model = ifChatRoomRealmModel!
+                
+                owner.repository.roomUpdate(
+                    id: model.id,
+                    updateAt: model.updateAt,
+                    otherUserName: model.otherUserName,
+                    otherUserProfile: model.otherUserProfile,
+                    lastChatWatch: Date()
+                )
+                
+                owner.repository.add(model)
+            }
+            .disposed(by: disposeBag)
         
         return Output(
             realmError: realmError.asDriver(onErrorDriveWith: .never()),
@@ -682,7 +701,8 @@ extension ChattingViewModel {
             roomId: model.roomID,
             createAt: creatDate,
             updateAt: updatedAt,
-            otherUserName: otherUser.nick
+            otherUserName: otherUser.nick,
+            lastChatWatch: Date()
         )
         
         handler(.success(model))

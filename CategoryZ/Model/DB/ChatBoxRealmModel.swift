@@ -53,4 +53,8 @@ final class ChatBoxRealmModel: Object {
         self.userName = userName
         self.userProfileURL = userProfile
     }
+    
+    override class func primaryKey() -> String? {
+        return "chatId"
+    }
 }
