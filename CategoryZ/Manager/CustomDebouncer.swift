@@ -11,39 +11,31 @@ import Foundation
 final class CustomDebouncer {
     
     private
-    let delayTime: UInt64
+    var workItem: DispatchWorkItem?
     
     private
-    var task: Task<Void, Error>?
+    let miliSeconds: Int
     
-    init(delayTime: UInt64, task: Task<Void, Error>? = nil) {
-        self.delayTime = UInt64(delayTime * 1_000_000_000)
-        self.task = task
+    init(miliSeconds: Int) {
+        self.miliSeconds = miliSeconds
     }
     
     deinit {
-        cancle()
+        cancel()
     }
 }
 
 extension CustomDebouncer {
-    func actionHandler(action: @escaping() async -> Void) {
-        execute(action: action)
+    
+    func setAction(_ action: @escaping () -> Void) {
+        workItem?.cancel()
+        let new = DispatchWorkItem(block: action)
+        workItem = new
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + Double(miliSeconds / 100), execute: new)
     }
     
-    func execute(action: @escaping () async -> Void) {
-        task?.cancel()
-        task = Task { [delayTime] in
-            do {
-                try await Task.sleep(nanoseconds: delayTime)
-            } catch {
-                return
-            }
-        }
-    }
-    
-    func cancle() {
-        task?.cancel()
-        task = nil
+    func cancel() {
+        workItem?.cancel()
     }
 }

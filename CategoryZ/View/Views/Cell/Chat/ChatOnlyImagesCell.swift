@@ -18,6 +18,9 @@ final class ChatOnlyImagesCell: BaseTableViewCell {
     let imageCollectionTypeView = BlockImageSetView()
     
     private
+    let debouce = CustomDebouncer(miliSeconds: 40)
+    
+    private
     let profileImageView = CircleImageView().then {
         $0.image = JHImage.defaultImage
         $0.contentMode = .scaleToFill
@@ -68,7 +71,10 @@ extension ChatOnlyImagesCell {
         remakeLayoutFor(isMe: model.isMe)
         
         if !model.isMe {
-            settingProfile(url: model.userProfileURL)
+            debouce.setAction { [weak self] in
+                guard let self else { return }
+                settingProfile(url: model.userProfileURL)
+            }
         }
         print("이미지 갯수 \(imageFiles.count)")
         dateLabel.text = DateManager.shared.differenceDateFormatString(model.createAt)
