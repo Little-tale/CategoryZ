@@ -82,6 +82,7 @@ final class RealmRepository: RealmRepositoryType {
         return .success(object)
     }
     
+    @discardableResult
     func findIDAndRemove<M>(type modelType: M.Type, id: M.ID) -> Result<Void, RealmError> where M: Object & RealmFindType{
         
         let findResult = findById(type: modelType, id: id)

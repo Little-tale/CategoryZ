@@ -652,17 +652,22 @@ final class ChattingViewModel: RxViewModelType {
             })
             .bind(with: self) { owner, _ in
                 let model = ifChatRoomRealmModel!
-                
-                owner.repository.roomUpdate(
-                    id: model.id, 
-                    createAt: model.createAt,
-                    updateAt: model.updateAt,
-                    otherUserName: model.otherUserName,
-                    otherUserProfile: model.otherUserProfile,
-                    lastChatWatch: Date()
-                )
-                
-                owner.repository.add(model)
+
+                if model.chatBoxs.isEmpty {
+                    owner.repository.findIDAndRemove(
+                        type: ChatRoomRealmModel.self,
+                        id: model.id
+                    )
+                } else {
+                    owner.repository.roomUpdate(
+                        id: model.id,
+                        createAt: model.createAt,
+                        updateAt: model.updateAt,
+                        otherUserName: model.otherUserName,
+                        otherUserProfile: model.otherUserProfile,
+                        lastChatWatch: Date()
+                    )
+                }
             }
             .disposed(by: disposeBag)
         
