@@ -68,6 +68,16 @@ final class ChattingListViewController: RxBaseViewController {
                 cell.selectionStyle = .none
             }
             .disposed(by: disPoseBag)
+        
+        tableView.rx.modelSelected(ChattingListModel.self)
+            .bind(with: self) { owner, model in
+                if let userId = model.userID {
+                    let vc = ChattingViewController()
+                    vc.setModel(userId, roomId: model.roomID)
+                    owner.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
+            .disposed(by: disPoseBag)
     }
 }
 

@@ -219,7 +219,7 @@ final class UserProfileViewController: RxBaseViewController {
         
         goChatRoom.bind(with: self) { owner, userID in
             let vc = ChattingViewController()
-            vc.setModel(userID)
+            vc.setModel(userID, roomId: nil)
             owner.navigationController?.pushViewController(vc, animated: true)
         }
         .disposed(by: disPoseBag)

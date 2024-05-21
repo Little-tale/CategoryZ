@@ -27,8 +27,8 @@ final class ChattingViewController: RxHomeBaseViewController<RxOnlyRotateTableVi
         autoResizingTextView()
     }
     
-    func setModel(_ userID: String) {
-        subscribe(userID)
+    func setModel(_ userID: String, roomId: String?) {
+        subscribe(userID:userID, roomId: roomId)
     }
     
     deinit {
@@ -50,11 +50,11 @@ final class ChattingViewController: RxHomeBaseViewController<RxOnlyRotateTableVi
 // SUBSCRIBE
 extension ChattingViewController {
     private
-    func subscribe(_ userID: String) {
+    func subscribe(userID: String, roomId: String? = nil) {
         
         let userIDRelay = BehaviorRelay<String> (value: userID)
         let insertImageData = BehaviorRelay<[Data]> (value: [])
-        
+        let behaiverRoomID = BehaviorRelay<String> (value: roomId ?? "")
         let imageModeCancelTap = PublishRelay<Void> ()
         
         let selectedImage = PublishRelay<Int> ()
@@ -70,7 +70,8 @@ extension ChattingViewController {
                 imageModeCancelTap: imageModeCancelTap,
                 selectedImage: selectedImage,
                 selectDelete: imageCancelForDeleteTap,
-                viewDidDisapear: rx.viewDidDisapear.map({ _ in () })
+                viewDidDisapear: rx.viewDidDisapear.map({ _ in () }),
+                ifChatRoom: behaiverRoomID
             )
         
         let output = viewModel.transform(input)
@@ -201,7 +202,6 @@ extension ChattingViewController {
             .disposed(by: disPoseBag)
             
         // 취소 버튼 눌렀을때
-
         homeView.cancelClosure = { [weak self] in
             guard let self else { return }
             imageModeCancelTap.accept(())

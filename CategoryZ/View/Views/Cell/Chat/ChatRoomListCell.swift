@@ -89,17 +89,26 @@ final class ChatRoomListCell: BaseTableViewCell {
             make.horizontalEdges.equalTo(emptyView).inset(6)
         }
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        profileImageView.image = nil
+    }
 }
 
 extension ChatRoomListCell {
     
     func setModel(_ model: ChattingListModel) {
+        if let profile = model.userProfie {
+            profileImageView.downloadImage(
+                imageUrl: profile,
+                resizeCase: .superLow,
+                JHImage.defaultImage
+            )
+        } else {
+            profileImageView.image = JHImage.defaultImage
+        }
         
-        profileImageView.downloadImage(
-            imageUrl: model.userProfie,
-            resizeCase: .superLow,
-            JHImage.defaultImage
-        )
         
         lastChatString.text = model.lastChat
         if let date = model.updateAt {
@@ -107,6 +116,6 @@ extension ChatRoomListCell {
         }
         userName.text = model.userName
         ifNewLabel.isHidden = !model.ifNew
+        emptyView.isHidden = !model.ifNew
     }
-    
 }

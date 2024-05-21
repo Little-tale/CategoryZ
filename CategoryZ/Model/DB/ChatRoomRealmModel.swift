@@ -41,6 +41,9 @@ final class ChatRoomRealmModel: Object, RealmFindType {
     @Persisted
     var lastChatDate: Date? // 채팅실제와 분리위해
     
+    @Persisted
+    var otherUserId: String?
+    
     convenience
     init(
         roomId: String,

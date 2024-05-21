@@ -228,7 +228,8 @@ extension RealmRepository {
         lastChatWatch: Date? = nil,
         lastChatString: String? = nil,
         ifNew: Bool = false,
-        lastChatDate: Date? = nil
+        lastChatDate: Date? = nil,
+        otherUserID: String? = nil
     ) -> ChatRoomRealmModel? {
         guard let realm else { return nil }
         do {
@@ -261,6 +262,10 @@ extension RealmRepository {
                 
                 if let lastChatDate {
                     value["lastChatDate"] = lastChatDate
+                }
+                
+                if let otherUserID {
+                    value["otherUserId"] = otherUserID
                 }
                 
                 realm.create(

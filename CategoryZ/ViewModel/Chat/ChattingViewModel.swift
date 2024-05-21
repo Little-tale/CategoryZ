@@ -60,6 +60,7 @@ final class ChattingViewModel: RxViewModelType {
         let selectedImage: PublishRelay<Int>
         let selectDelete: PublishRelay<Void>
         let viewDidDisapear: Observable<Void>
+        let ifChatRoom: BehaviorRelay<String>
     }
     
     struct Output {
@@ -211,12 +212,19 @@ final class ChattingViewModel: RxViewModelType {
                         owner.dateError.accept(.failTransform)
                         return
                     }
+                    if input.ifChatRoom.value != "" {
+                        owner.repository.roomUpdate(
+                            id: model.roomID,
+                            otherUserProfile: other?.profileImage
+                        )
+                    } else {
+                        owner.repository.roomUpdate(
+                            id: model.roomID,
+                            updateAt: update,
+                            otherUserProfile: other?.profileImage
+                        )
+                    }
                     
-                    owner.repository.roomUpdate(
-                        id: model.roomID,
-                        updateAt: update,
-                        otherUserProfile: other?.profileImage
-                    )
                 case .failure(let error):
                     owner.publishNetError.accept(error)
                 }

@@ -22,7 +22,9 @@ import RxCocoa
  */
 
 struct ChattingListModel {
+    var roomID: String
     var userName: String
+    var userID: String?
     var userProfie: String?
     var lastChat: String
     var updateAt: Date?
@@ -60,25 +62,30 @@ final class ChattingListViewModel: RxViewModelType {
         let dateError = PublishRelay<DateManagerError> ()
         
         let realmError = PublishRelay<RealmError> ()
-        
-        RealmServiceManager.shared.observeForRoom { result in
-            switch result {
-            case .success(let success):
-                let model = success.map { model in
-                    let model =  ChattingListModel(
-                        userName: model.otherUserName,
-                        userProfie: model.otherUserProfile,
-                        lastChat: model.serverLastChat,
-                        updateAt: model.lastChatDate,
-                        ifNew: model.ifNew
-                    )
-                    return model
+        input.viewDidAppear
+            .bind { _ in
+                RealmServiceManager.shared.observeForRoom { result in
+                    switch result {
+                    case .success(let success):
+                        let model = success.map { model in
+                            let model =  ChattingListModel(
+                                roomID: model.id,
+                                userName: model.otherUserName,
+                                userID: model.otherUserId,
+                                userProfie: model.otherUserProfile,
+                                lastChat: model.serverLastChat,
+                                updateAt: model.lastChatDate,
+                                ifNew: model.ifNew
+                            )
+                            return model
+                        }
+                        chatRoomModels.accept(model)
+                    case .failure(let error):
+                        realmSearviceError.accept(error)
+                    }
                 }
-                chatRoomModels.accept(model)
-            case .failure(let error):
-                realmSearviceError.accept(error)
             }
-        }
+            .disposed(by: disposeBag)
         
         chatRoomModels
             .skip(1)
@@ -115,8 +122,6 @@ final class ChattingListViewModel: RxViewModelType {
                 
                 model.chatRoomList.forEach { model in
                     
-                    let create = DateManager.shared.makeStringToDate(model.createdAt)
-                   
                     let other = model.participants.first { $0.userID != owner.myId }
                     
                     guard let other else { return }
@@ -158,7 +163,8 @@ final class ChattingListViewModel: RxViewModelType {
                         otherUserProfile: other.profileImage,
                         lastChatString: contents,
                         ifNew: bool,
-                        lastChatDate: date
+                        lastChatDate: date,
+                        otherUserID: other.userID
                     )
                 }
             }
