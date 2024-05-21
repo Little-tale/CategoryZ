@@ -299,11 +299,15 @@ extension RealmRepository {
             return nil
         }
     }
-}
-
-extension RealmProperty {
     
-    func howManyDidntReadRoom() {
+    
+    func deleteAll() {
+        if let realm {
+            try? realm.write {
+                realm.deleteAll()
+            }
+        }
         
     }
 }
+

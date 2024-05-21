@@ -12,6 +12,9 @@ import RxCocoa
 final class ProfileSettingViewModel: RxViewModelType {
     var disposeBag: RxSwift.DisposeBag = .init()
     
+    private
+    let repository = RealmRepository()
+    
     struct Input {
         let viewWiddTrigger : Observable<Void>
         let logoutTrigger: PublishRelay<Void>
@@ -44,10 +47,11 @@ final class ProfileSettingViewModel: RxViewModelType {
             .disposed(by: disposeBag)
         
         input.logoutTrigger
-            .bind { _ in
+            .bind(with: self) { owner, _ in
                 UserIDStorage.shared.userID = nil
                 TokenStorage.shared.accessToken = nil
                 TokenStorage.shared.refreshToken = nil
+                owner.repository.deleteAll()
                 logoutSuccessTrigger.accept(())
             }
             .disposed(by: disposeBag)
