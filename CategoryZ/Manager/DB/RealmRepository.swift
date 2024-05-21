@@ -226,7 +226,9 @@ extension RealmRepository {
         otherUserName: String? = nil,
         otherUserProfile: String?,
         lastChatWatch: Date? = nil,
-        lastChatString: String? = nil
+        lastChatString: String? = nil,
+        ifNew: Bool = false,
+        lastChatDate: Date? = nil
     ) -> ChatRoomRealmModel? {
         guard let realm else { return nil }
         do {
@@ -234,7 +236,8 @@ extension RealmRepository {
                 
                 var value: [String: Any] = [
                     "id": id,
-                    "otherUserProfile": otherUserProfile as Any
+                    "otherUserProfile": otherUserProfile as Any,
+                    "ifNew": ifNew
                 ]
                 if let otherUserName {
                     value["otherUserName"] = otherUserName
@@ -254,6 +257,10 @@ extension RealmRepository {
                 
                 if let lastChatString {
                     value["serverLastChat"] = lastChatString
+                }
+                
+                if let lastChatDate {
+                    value["lastChatDate"] = lastChatDate
                 }
                 
                 realm.create(
@@ -287,5 +294,11 @@ extension RealmRepository {
             return nil
         }
     }
+}
+
+extension RealmProperty {
     
+    func howManyDidntReadRoom() {
+        
+    }
 }

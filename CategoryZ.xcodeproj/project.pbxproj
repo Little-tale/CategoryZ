@@ -47,6 +47,7 @@
 		7B52E5722BF5094800977EC7 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 7B52E5712BF5094800977EC7 /* SocketIO */; };
 		7B52E5752BF509A900977EC7 /* ChatSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E5742BF509A900977EC7 /* ChatSocketManager.swift */; };
 		7B52E5772BF5112100977EC7 /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B52E5762BF5112100977EC7 /* ChatRouter.swift */; };
+		7B5DFB7B2BFBACF30040086A /* ChatRoomListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5DFB7A2BFBACF30040086A /* ChatRoomListCell.swift */; };
 		7B5E512D2BD9135E00918C53 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512C2BD9135E00918C53 /* CommentViewController.swift */; };
 		7B5E51302BD91BD700918C53 /* CommentTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E512F2BD91BD700918C53 /* CommentTextView.swift */; };
 		7B5E51322BD967D100918C53 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */; };
@@ -268,6 +269,7 @@
 		7B52E56E2BF5024600977EC7 /* ChatPostQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatPostQuery.swift; sourceTree = "<group>"; };
 		7B52E5742BF509A900977EC7 /* ChatSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSocketManager.swift; sourceTree = "<group>"; };
 		7B52E5762BF5112100977EC7 /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
+		7B5DFB7A2BFBACF30040086A /* ChatRoomListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomListCell.swift; sourceTree = "<group>"; };
 		7B5E512C2BD9135E00918C53 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		7B5E512F2BD91BD700918C53 /* CommentTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextView.swift; sourceTree = "<group>"; };
 		7B5E51312BD967D100918C53 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -870,6 +872,7 @@
 			children = (
 				7B87BD082BF623B1000F0F79 /* ChatLeftRightCell.swift */,
 				7B87BD682BFA5BA0000F0F79 /* ChatOnlyImagesCell.swift */,
+				7B5DFB7A2BFBACF30040086A /* ChatRoomListCell.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1495,6 +1498,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B5DFB7B2BFBACF30040086A /* ChatRoomListCell.swift in Sources */,
 				7BCF4A912BCB69E500BCE635 /* CommentRouter.swift in Sources */,
 				7BC43D6B2BE797B4001A109B /* LoginModel.swift in Sources */,
 				7BDF40C32BE3775D005274F9 /* DonateListView.swift in Sources */,

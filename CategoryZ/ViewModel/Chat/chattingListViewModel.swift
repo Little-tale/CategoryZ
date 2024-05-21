@@ -21,6 +21,14 @@ import RxCocoa
  4. 뷰에 다시한번 반영
  */
 
+struct ChattingListModel {
+    var userName: String
+    var userProfie: String?
+    var lastChat: String
+    var updateAt: Date?
+    var ifNew: Bool
+}
+
 final class ChattingListViewModel: RxViewModelType {
     
     var disposeBag = DisposeBag()
@@ -36,12 +44,12 @@ final class ChattingListViewModel: RxViewModelType {
     }
     
     struct Output {
-        let chatRoomModels: Driver<[ChatRoomRealmModel]>
+        let chatRoomModels: Driver<[ChattingListModel]>
     }
     
     func transform(_ input: Input) -> Output {
         
-        let chatRoomModels = BehaviorRelay<[ChatRoomRealmModel]> (value: [])
+        let chatRoomModels = BehaviorRelay<[ChattingListModel]> (value: [])
         
         let successRoomList = PublishRelay<ChatRoomListModel> ()
         
@@ -51,10 +59,22 @@ final class ChattingListViewModel: RxViewModelType {
         
         let dateError = PublishRelay<DateManagerError> ()
         
+        let realmError = PublishRelay<RealmError> ()
+        
         RealmServiceManager.shared.observeForRoom { result in
             switch result {
             case .success(let success):
-                chatRoomModels.accept(success)
+                let model = success.map { model in
+                    let model =  ChattingListModel(
+                        userName: model.otherUserName,
+                        userProfie: model.otherUserProfile,
+                        lastChat: model.serverLastChat,
+                        updateAt: model.lastChatDate,
+                        ifNew: model.ifNew
+                    )
+                    return model
+                }
+                chatRoomModels.accept(model)
             case .failure(let error):
                 realmSearviceError.accept(error)
             }
@@ -92,16 +112,11 @@ final class ChattingListViewModel: RxViewModelType {
         
         successRoomList
             .bind(with: self) { owner, model in
-
+                
                 model.chatRoomList.forEach { model in
                     
                     let create = DateManager.shared.makeStringToDate(model.createdAt)
-                    
-                    guard case .success(let create) = create else {
-                        dateError.accept(.failTransform)
-                        return
-                    }
-                    
+                   
                     let other = model.participants.first { $0.userID != owner.myId }
                     
                     guard let other else { return }
@@ -109,17 +124,41 @@ final class ChattingListViewModel: RxViewModelType {
                     var contents: String?
                     
                     if !((model.lastChat?.files.isEmpty) != nil) {
-                        contents = "이미지"
+                        contents = "[이미지]"
                     } else {
                         contents = model.lastChat?.content
+                    }
+                    let before = owner.repository.findById(
+                        type: ChatRoomRealmModel.self,
+                        id: model.roomID
+                    )
+                    var bool = false
+                    var date: Date? = nil
+                    switch before {
+                    case .success(let success):
+                        if let success {
+                            let modelDate = DateManager.shared.makeStringToDate(model.updatedAt)
+                            
+                            guard case .success(let update) = modelDate else {
+                                dateError.accept(.failTransform)
+                                return
+                            }
+                            date = update
+                            if success.lastChatWatch < update {
+                                bool = true
+                            }
+                        }
+                    case .failure(let failure):
+                        realmError.accept(failure)
                     }
                     
                     owner.repository.roomUpdate(
                         id: model.roomID,
-                        createAt: create,
                         otherUserName: other.nick,
                         otherUserProfile: other.profileImage,
-                        lastChatString: contents
+                        lastChatString: contents,
+                        ifNew: bool,
+                        lastChatDate: date
                     )
                 }
             }

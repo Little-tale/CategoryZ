@@ -35,6 +35,12 @@ final class ChatRoomRealmModel: Object, RealmFindType {
     @Persisted
     var serverLastChat: String
     
+    @Persisted
+    var ifNew: Bool
+    
+    @Persisted
+    var lastChatDate: Date? // 채팅실제와 분리위해
+    
     convenience
     init(
         roomId: String,
@@ -53,6 +59,7 @@ final class ChatRoomRealmModel: Object, RealmFindType {
         self.otherUserProfile = otherUserProfile
         self.lastChatWatch = lastChatWatch
         self.serverLastChat = ""
+        self.ifNew = false
     }
     
     override class func primaryKey() -> String? {

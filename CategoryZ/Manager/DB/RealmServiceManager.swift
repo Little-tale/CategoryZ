@@ -26,8 +26,8 @@ enum RealmServiceManagerError: Error, ErrorMessage {
 }
 
 final class RealmServiceManager {
-    
-    static 
+
+    static
     let shared = RealmServiceManager()
     
     private 
