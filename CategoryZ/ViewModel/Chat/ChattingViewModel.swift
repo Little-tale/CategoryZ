@@ -79,6 +79,7 @@ final class ChattingViewModel: RxViewModelType {
         let selectDeleteAfterEmpty: Driver<Void>
     }
     
+    
     func transform(_ input: Input) -> Output {
         
         var ifChatRoomModel: ChatRoomModel? = nil
@@ -125,6 +126,24 @@ final class ChattingViewModel: RxViewModelType {
         let currentTextState = BehaviorRelay(value: "")
         
         // 긴급 패치 서버에 받은 업데이트 가 반영이 안됨으로 긴급으로 우회적으로 대처
+        
+        input.ifChatRoom
+            .filter { $0 != "" }
+            .bind(with: self) { owner, roomId in
+                RealmServiceManager.shared.observeChatBoxes(
+                    with: roomId,
+                    ascending: false
+                ) { result in
+                    switch result {
+                    case .success(let success):
+                        tableViewDraw.accept(success)
+                        socketStartTrigger.accept(success.last)
+                    case .failure(let error):
+                        owner.realmServiceError.accept(error)
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
         
         // 0. 0번은 텍스트 변경 감지와 버튼의 상태 관리
         input.inputText.orEmpty

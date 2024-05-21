@@ -82,6 +82,13 @@ extension ChattingViewController {
             }
             .disposed(by: disPoseBag)
         
+        rx.viewDidAppear
+            .skip(1)
+            .bind { _ in
+                ChatSocketManager.shared.startSocket()
+            }
+            .disposed(by: disPoseBag)
+        
         
         networkError(error: output.publishNetError)
         dateError(error: output.dateError)

@@ -60,6 +60,7 @@ extension RealmServiceManager {
         ascending: Bool,
         onChange: @escaping (Result<[ChatBoxRealmModel], RealmServiceManagerError>) -> Void
     ) {
+        stop()
         guard let realm = realm else {
             onChange(.failure(.cantInitRealm))
             return
