@@ -24,10 +24,11 @@
 - 다른 유저를 팔로우 할수 있습니다!
 - 좋아요를 남겨 모아 볼수 있습니다.
 - 네트워크 상태를 실시간으로 감지하여, 사용자에게 네트워크 상태를 알려줍니다.
+- 실시간 1:1 채팅 기능
 
 ## 📸 개발기간
 
-> 4/13 ~ 5/3 ( 대략 3주 )
+> 4/13 ~ 5/3 + 5/20 ~ 5/22(채팅 기능 추가) ( 대략 3주 )
 > 
 
 # 📷 사용한 기술들
@@ -132,6 +133,9 @@ protocol TargetType: URLRequestConvertible {
 |:---:|:---:|:---:|
 |<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/5c621a72-2c8f-42fc-9c99-6ac1e29d9346" width="200" height="400"/></picture>|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/5eafc8b3-2518-4903-84b7-7f7a0686423b" width="200" height="400"/></picture>|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/685880d4-a3b9-47ca-9a14-47844b98853e" width="200" height="400"/></picture>|
 
+ 채팅 | 이미지 |
+|:---:|:---:|
+|<picture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/f1b73d17-2830-497b-a9e5-5a45f448db73" width="400" height="400"/></picture>|<pickture><img src="https://github.com/Little-tale/CategoryZ/assets/116441522/39d77a27-d191-49eb-b5b7-61482ae1c2d0" width="200" height="400"/></picture>|
 
 
 # 새롭게 학습 한 부분 과 고려했던 사항

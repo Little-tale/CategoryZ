@@ -89,7 +89,7 @@ extension ChatOnlyImagesCell {
             height = 100
             width = 200
         case 3:
-            height = 120
+            height = 110
             width = 210
         case 4:
             height = 200
