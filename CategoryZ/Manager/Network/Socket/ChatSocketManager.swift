@@ -39,6 +39,10 @@ enum ChatSocketManagerError: Error, ErrorMessage {
 
 final class ChatSocketManager {
     
+    enum SocketCase: String {
+        case Chat = "/chats-"
+    }
+    
     typealias ChatSocketManagerResult = PublishSubject<Result<ChatModel,ChatSocketManagerError>>
     
     static
@@ -69,8 +73,8 @@ final class ChatSocketManager {
 extension ChatSocketManager {
     
     func setID(id: String) {
-        stopSocket()
-        let roomId = "/chats-" + id
+        removeSocket()
+        let roomId = SocketCase.Chat.rawValue + id
         socket = manager?.socket(forNamespace: roomId)
         guard let socket else {
             chatSocketResult.onNext(.failure(.nilSocat))
