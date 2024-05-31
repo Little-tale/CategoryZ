@@ -78,7 +78,7 @@ extension ChattingViewController {
         
         rx.viewDidDisapear
             .bind { _ in
-                ChatSocketManager.shared.stopSocket()
+                ChatSocketManager.shared.removeSocket()
             }
             .disposed(by: disPoseBag)
         

@@ -85,6 +85,9 @@ extension ChatSocketManager {
     
     func stopSocket() {
         socket?.disconnect()
+
+    }
+    func removeSocket() {
         if let socket {
             manager?.removeSocket(socket)
         }
