@@ -76,7 +76,7 @@ extension ChatSocketManager {
             chatSocketResult.onNext(.failure(.nilSocat))
             return
         }
-        statrObserver(socket: socket)
+        startObserver(socket: socket)
     }
     
     func startSocket(){
@@ -110,7 +110,7 @@ extension ChatSocketManager {
     }
     
     private
-    func statrObserver(socket: SocketIOClient){
+    func startObserver(socket: SocketIOClient){
         
         socket.on( // 소켓이 서버에 성공적 연결 되었음을 의미
             clientEvent: .connect
