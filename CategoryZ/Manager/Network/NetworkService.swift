@@ -66,7 +66,7 @@ final class NetWorkServiceMonitor {
     /// NWPath 에서 path.status 열겨헝중
     /// .satisfied는 인터넷이 연결된 상태임을 뜻한다.
     /// usesInterfaceType 에선 셀룰러 와이파이 무선 연결 등이 더 존재한다.
-    fileprivate
+    private
     func getConnectionType(_ path: NWPath) {
         if path.usesInterfaceType(.wifi){
             connectionType = .wifi

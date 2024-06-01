@@ -2,31 +2,27 @@
 
 # CategoryZ ReadMe
 
-- CategoryZ app은 LSLP ( **Service Location Protocol ) 프로젝트 입니다.**
-
-> **당신의 일상과 특별한 순간! 그외 에도** 다양한 경험을 카테고리 Z 로 공유해 보세요!
-> 당신의 이야기로 다른 사람들과 소통할수 있는 앱입니다.
-
-# 소개 사진
-
-<picture>
-    <img src ="https://github.com/Little-tale/NaverShopping/assets/116441522/0ad703d1-bd6c-4283-b9f8-5700f9a45bdc">
-</picture>
 # 📷 CategoryZ 프로젝트 소개
 
-> 다양한 이미지와 글을을 올려 다른 사람과 소통할수 있는 SNS 앱 LSLP 프로젝트 앱입니다.
+> 다양한 이미지와 글을을 올려 다른 사람과 소통할수 있는 SNS 앱 입니다.
 
 - CategoryZ는 서버를 기반으로 이미지와 글을 공유하고 소통할수있습니다.
 - 다른 유저에게 후원할수 있습니다. (설정에서 등록시)
 - 카테고리 별로 올릴수 있으며 보고싶은 카테고리만 골라 볼수 있습니다.
-- 다른 유저를 팔로우 할수 있습니다!
-- 좋아요를 남겨 모아 볼수 있습니다.
-- 네트워크 상태를 실시간으로 감지하여, 사용자에게 네트워크 상태를 알려줍니다.
-- 실시간 1:1 채팅 기능
+- 다른 유저를 팔로잉 팔로우 할수 있습니다.
+- 좋아요 기능과, 좋아요만을 모아 볼수 있습니다.
+- 네트워크 상태를 실시간으로 감지하여, 네트워크 단절시 사용자에게 알려줍니다.
+- 실시간 1:1 채팅 기능이 지원됩니다.
+
+# 소개 사진
+
+<picture>
+    <img src ="https://github.com/Little-tale/CategoryZ/assets/116441522/10f3cb7b-5626-4805-aa29-aac8a473317c">
+</picture>
 
 ## 📸 개발기간
 
-> 4/13 ~ 5/3 + 5/20 ~ 5/22(채팅 기능 추가) ( 대략 3주 )
+> 4/13 ~ 5/3 + 5/20 ~ 5/22 (채팅 기능 추가) ( 대략 3주 )
 
 # 📷 사용한 기술들
 
@@ -166,6 +162,48 @@ func sceneWillEnterForeground(_ scene: UIScene) {
 
 func sceneDidEnterBackground(_ scene: UIScene) {
     ChatSocketManager.shared.stopSocket()
+}
+```
+
+## NWPathMonitor 를 통해 네트워크 단절 고려
+
+> `NWPathMonitor` 를 통해
+> 실시간으로 사용자의 네트워크 상태를 분석하여, 네트워크 단절시 사용자에게 알릴수 있도록 하였습니다.
+> 모니터링 클래스가 여러개가 될것을 대비해, SingleTon 패턴으로 구성하였습니다.
+
+```swift
+final class NetWorkServiceMonitor {
+
+    enum ConnectionType {
+        case cellular
+        case ethernet
+        case unknown
+        case wifi
+    }
+
+    static let shared = NetWorkServiceMonitor()
+
+    fileprivate let queue = DispatchQueue.global(qos: .background)
+
+    fileprivate let monitor: NWPathMonitor
+
+    fileprivate(set) var isConnected: Bool = false
+
+    fileprivate(set) var connectionType: ConnectionType = .unknown
+
+    let behaivorNetwork = PublishRelay<Bool> ()
+
+    let behaiborNetworkType = PublishRelay<ConnectionType> ()
+}
+
+extention NetWorkServiceMonitor {
+
+    func startMonitor()
+
+    private func getConnectionType(_ path: NWPath)
+
+    private func stopMonitoring()
+
 }
 ```
 
