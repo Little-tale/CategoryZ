@@ -30,7 +30,7 @@
 - MVVM / Facade / Router / SingleTon /
 - Alamofire / Kingfisher/ SocketIO / Decodable / Encodable
 - CodeBaseUI / SnapKit / Then / CompositionalLayout / RxDataSource / ReusableKit
-- IQKeyboard / Toast / Lottie / TextFieldEffects / Lottie / KeychainAccess
+- IQKeyboard / Toast / Lottie / TextFieldEffects / KeychainAccess
 - 다크모드 대응 Asset
 
 # 📷 기술설명

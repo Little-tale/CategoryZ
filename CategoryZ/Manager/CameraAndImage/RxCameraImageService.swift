@@ -8,7 +8,7 @@
 import UIKit.UIImage
 import PhotosUI
 import AVFoundation
-import Photos
+//import Photos
 import RxSwift
 
 
