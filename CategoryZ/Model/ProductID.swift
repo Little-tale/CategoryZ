@@ -15,6 +15,7 @@ enum ProductID: String, CaseIterable {
     case talent = "CategoryZ_telent"
     case song = "CategoryZ_song"
     case book = "CategoryZ_books"
+    case healthKing = "myLoveGym"
     
     static let userProduct = "CategoryZ_UserDonate"
     
@@ -36,23 +37,27 @@ enum ProductID: String, CaseIterable {
             return .song
         case .book:
             return .book
+        case .healthKing:
+            return JHImage.health
         }
     }
     
     var title: String {
-        switch self {
+        return switch self {
         case .dailyRoutine:
-            return "일상"
+             "일상"
         case .fashion:
-            return "패션"
+             "패션"
         case .pet:
-            return "애완동물"
+             "애완동물"
         case .talent:
-            return "연예인"
+             "연예인"
         case .song:
-            return "Sing"
+             "Sing"
         case .book:
-            return "독서"
+             "독서"
+        case .healthKing:
+             "헬스킹"
         }
     }
     

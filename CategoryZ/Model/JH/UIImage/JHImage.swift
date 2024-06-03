@@ -60,6 +60,8 @@ extension JHImage {
     
     static let trash = UIImage(systemName: "trash")
     
+    static let health: UIImage = .healthKing
+    
     enum ChatBubble {
         case me
         case other
