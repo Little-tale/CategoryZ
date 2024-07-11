@@ -32,10 +32,20 @@ final class CategoryZTabbarController: UITabBarController, UITabBarControllerDel
     }
     
     func settingTabBarItems() {
-        let homeImage = JHImage.homeImage?.resizingImage(targetSize: CGSize(width: 30, height: 30))
+        let homeImage = JHImage.homeImage?.resizingImage(
+            targetSize: CGSize(width: 26, height: 26)
+        )
+        if let homeImage {
+            homeImage.withRenderingMode(.alwaysTemplate)
+        }
+         
         
         let profileImage = JHImage.profileImage?.resizingImage(targetSize: CGSize(width: 26, height: 26))
-
+        
+        if let profileImage {
+            profileImage.withRenderingMode(.alwaysTemplate)
+        }
+        
         // SNSPhotoViewController
         let controller1 = SNSPhotoViewController()
         let tabItem1 = UITabBarItem(
